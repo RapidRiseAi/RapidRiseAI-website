@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-0: #05060A;
+  --bg-1: #0B0F1A;
+  --stroke: rgba(255,255,255,0.10);
+  --text-0: #F5F7FF;
+  --text-1: rgba(245,247,255,0.78);
+  --blue: #2D7CFF;
+  --blueGlow: rgba(45,124,255,0.35);
+  --success: #22C55E;
+  --danger: #EF4444;
+}
+
+* { border-color: var(--stroke); }
+body { background: var(--bg-0); color: var(--text-0); }
+
+.section-padding { @apply py-16 md:py-24; }
+.card { @apply rounded-card border border-stroke shadow-sm; background: color-mix(in srgb, var(--bg-1) 60%, transparent); }
