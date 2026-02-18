@@ -2,7 +2,7 @@ export const siteContent = {
   metadata: {
     siteName: 'Rapid Rise AI',
     baseUrl: 'https://rapidriseai.com',
-    defaultOg: '/og-image-placeholder.png',
+    defaultOg: '/images/brand/og-image.svg',
   },
   nav: {
     items: [

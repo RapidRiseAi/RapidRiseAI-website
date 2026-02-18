@@ -2,20 +2,40 @@
 
 import Link from 'next/link';
 import Script from 'next/script';
-import { motion } from 'framer-motion';
+import { usePathname } from 'next/navigation';
+import { Menu, X, MessageCircle } from 'lucide-react';
+import { useState } from 'react';
 import { CONFIG } from '@/lib/config';
 import { Container } from './ui/container';
 import { Button } from './ui/button';
 import { siteContent } from '@/content/siteContent';
+import { cn } from '@/lib/utils';
+
+const solutionLinks = [
+  { label: 'Lead Capture and Follow Up', href: '/solutions/lead-capture' },
+  { label: 'Workflow Automation and Integrations', href: '/solutions/workflow-automation' },
+  { label: 'Smart Google Workspace', href: '/solutions/google-workspace' },
+  { label: 'Web Apps and Internal Tools', href: '/solutions/web-apps' },
+  { label: 'Websites that Convert', href: '/solutions/websites' },
+  { label: 'Training and Enablement', href: '/solutions/training' },
+];
 
 export function Header() {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-40 border-b border-stroke bg-bg0/85 backdrop-blur">
-      <Container className="flex h-16 items-center justify-between gap-4">
-        <Link href="/" className="font-semibold">Rapid Rise AI</Link>
-        <nav className="hidden items-center gap-4 md:flex">{siteContent.nav.items.map((item) => <Link key={item.href} href={item.href} className="text-sm text-text1 hover:text-text0">{item.label}</Link>)}</nav>
-        <Button href="/quote" className="text-sm">Request a Quote</Button>
+    <header className="sticky top-0 z-50 border-b border-stroke bg-bg0/80 backdrop-blur-xl">
+      <Container className="flex h-16 items-center justify-between gap-3">
+        <Link href="/" className="font-[var(--font-jakarta)] text-sm font-semibold tracking-[0.18em]">RAPID RISE AI</Link>
+        <nav className="hidden items-center gap-2 md:flex">
+          {siteContent.nav.items.map((item) => <Link key={item.href} href={item.href} className={cn('rounded-full px-3 py-2 text-sm transition', pathname === item.href || pathname.startsWith(`${item.href}/`) ? 'bg-blue/15 text-blue' : 'text-text1 hover:text-text0')}>{item.label}</Link>)}
+        </nav>
+        <div className="flex items-center gap-2">
+          <Button href="/quote" className="px-4 py-2">Request a Quote</Button>
+          <button className="rounded-full border border-stroke p-2 md:hidden" onClick={() => setOpen(true)} aria-label="Open menu"><Menu className="h-4 w-4" /></button>
+        </div>
       </Container>
+      {open ? <div className="fixed inset-0 z-50 bg-black/70 md:hidden" onClick={() => setOpen(false)}><aside className="absolute right-0 top-0 h-full w-[88%] max-w-sm overflow-y-auto border-l border-stroke bg-bg0 p-5" onClick={(e) => e.stopPropagation()}><div className="mb-4 flex items-center justify-between"><p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue">Menu</p><button onClick={() => setOpen(false)} aria-label="Close menu"><X className="h-5 w-5" /></button></div><p className="mb-3 text-sm text-text2">Solutions</p><div className="space-y-2">{solutionLinks.map((link) => <Link className="block rounded-lg border border-stroke px-3 py-2 text-sm" key={link.href} href={link.href} onClick={() => setOpen(false)}>{link.label}</Link>)}</div><div className="mt-5 space-y-1">{siteContent.nav.items.map((item) => <Link className="block rounded-lg px-3 py-2 text-sm text-text1 hover:bg-white/5" key={item.href} href={item.href} onClick={() => setOpen(false)}>{item.label}</Link>)}<Link className="block rounded-lg px-3 py-2 text-sm text-text1 hover:bg-white/5" href="/book" onClick={() => setOpen(false)}>Book</Link></div></aside></div> : null}
     </header>
   );
 }
@@ -24,9 +44,13 @@ export function Footer() {
   const f = siteContent.footer;
   return (
     <footer className="border-t border-stroke py-12">
-      <Container className="space-y-3 text-sm text-text1">
-        <p className="text-text0">{f.company}</p><p>{f.tagline}</p><p>Email: {f.email}</p><p>Phone: {f.phone}</p><p>CIPC: {f.cipc}</p><p>{f.vat}</p>
-        <div className="flex gap-4">{f.links.map((l) => <Link key={l.href} href={l.href}>{l.label}</Link>)}</div>
+      <Container className="grid gap-8 md:grid-cols-3">
+        <div>
+          <p className="font-[var(--font-jakarta)] text-lg">{f.company}</p>
+          <p className="mt-2 text-sm text-text1">{f.tagline}</p>
+        </div>
+        <div className="space-y-1 text-sm text-text1"><p>Email: {f.email}</p><p>Phone: {f.phone}</p><p>CIPC: {f.cipc}</p><p>{f.vat}</p></div>
+        <div className="flex flex-wrap gap-4 text-sm text-text1">{f.links.map((l) => <Link key={l.href} href={l.href}>{l.label}</Link>)}</div>
       </Container>
     </footer>
   );
@@ -36,13 +60,12 @@ export function ChatWidget() {
   return (
     <>
       {CONFIG.botpressEmbedUrl ? <Script src={CONFIG.botpressEmbedUrl} strategy="afterInteractive" /> : null}
-      <motion.a initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} href="/contact" className="fixed bottom-6 right-6 rounded-full border border-stroke bg-bg1 px-4 py-2 text-sm">Chat</motion.a>
-      <div className="fixed bottom-20 right-6 hidden rounded-card border border-stroke bg-bg1 p-3 text-xs text-text1 md:block">Ask a question · Request a quote · View work</div>
+      <Link href="/contact" className="fixed bottom-6 right-6 z-30 inline-flex items-center gap-2 rounded-full border border-stroke bg-bg1 px-4 py-2 text-sm text-text1 hover:text-text0"><MessageCircle className="h-4 w-4" />Chat</Link>
     </>
   );
 }
 
 export function CookieBanner() {
   if (!CONFIG.analyticsEnabled) return null;
-  return <div className="fixed inset-x-4 bottom-4 rounded-card border border-stroke bg-bg1 p-4 text-sm">This site uses cookies for analytics.</div>;
+  return <div className="fixed inset-x-4 bottom-4 z-40 rounded-card border border-stroke bg-bg1 p-4 text-sm text-text1">This site uses cookies for analytics.</div>;
 }

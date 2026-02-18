@@ -45,14 +45,14 @@ export function LeadForm({ type }: { type: 'quote' | 'contact' | 'booking' }) {
     } catch { setStatus('error'); }
   }
 
-  return <form action={submit} className="space-y-4">
+  return <form action={submit} className="space-y-5">
     {status === 'success' ? <Toast message={type === 'quote' ? 'Request received. Thanks. We will review it and respond within 24 hours.' : type === 'contact' ? 'Message received. Thanks. We will reply within 24 hours.' : 'Request received. We will confirm a time within 24 hours.'} /> : null}
     {status === 'error' ? <Toast message="Something went wrong. Please try again." type="error" /> : null}
-    <TextField name="full_name" label={type === 'booking' ? 'Name' : 'Full name'} placeholder="Your name" error={errors.full_name} required />
+    <TextField name="full_name" label={type === 'booking' ? 'Name' : 'Full name'} placeholder="Your name" helper="Use your preferred contact name" error={errors.full_name} required />
     {type === 'quote' ? <TextField name="company" label="Company name" placeholder="Company or team name" error={errors.company} required /> : null}
     <TextField name="role" label={type === 'quote' ? 'Role optional' : type === 'booking' ? 'Preferred day/time' : 'WhatsApp (optional)'} placeholder={type === 'quote' ? 'Manager, Owner, Ops, Admin, etc' : ''} />
-    <TextField name="email" label="Email" placeholder="you@company.com" error={errors.email} required />
-    <TextField name="whatsapp" label="WhatsApp number" placeholder="+27 ..." error={errors.whatsapp} required />
+    <TextField name="email" label="Email" placeholder="you@company.com" helper="We send scope details here" error={errors.email} required />
+    <TextField name="whatsapp" label="WhatsApp number" placeholder="+27 ..." helper="For quick updates if needed" error={errors.whatsapp} required />
     {type === 'quote' ? <TextField name="website" label="Website URL optional" placeholder="https://" /> : null}
     {type === 'quote' ? <fieldset><legend className="mb-2 text-sm text-text1">What do you want to build?</legend>{['Lead capture and follow up','Workflow automation and integrations','Smart Google Workspace','Web app or internal tool','Website build','Training and enablement'].map((option)=><label key={option} className="mb-2 flex gap-2 text-sm"><input type="checkbox" onChange={(e)=>setRequestTypes((prev)=>e.target.checked?[...prev,option]:prev.filter((p)=>p!==option))} />{option}</label>)}{errors.request_types ? <p className="text-sm text-red-400">{errors.request_types}</p> : null}</fieldset> : null}
     <TextArea name="description" label={type === 'contact' ? 'Message' : type === 'booking' ? 'Notes' : 'Describe your situation'} placeholder={type === 'quote' ? 'What is manual right now? What keeps going wrong? What would “better” look like?' : ''} error={errors.description} required={type !== 'booking'} />
@@ -61,7 +61,7 @@ export function LeadForm({ type }: { type: 'quote' | 'contact' | 'booking' }) {
     {type === 'quote' ? <SelectField name="budget" label="Budget optional" options={['Under R10k','R10k to R25k','R25k to R60k','R60k+']} /> : null}
     {type === 'quote' ? <CheckboxField name="consent" label="I agree to be contacted about this request." error={errors.consent} /> : null}
     <TurnstileWidget />
-    <button className="rounded-button bg-blue px-6 py-3 font-semibold text-white" type="submit">{status === 'loading' ? 'Submitting…' : type === 'contact' ? 'Send message' : type === 'booking' ? 'Request a time' : 'Submit request'}</button>
-    {type === 'quote' && status === 'success' ? <div className="flex gap-3"><Button href="/work" variant="secondary">View Work</Button><Button href="/book" variant="secondary">Book a Call</Button></div> : null}
+    <button className="rounded-button bg-blue px-6 py-3 font-semibold text-white transition hover:shadow-glow" type="submit">{status === 'loading' ? 'Submitting…' : type === 'contact' ? 'Send message' : type === 'booking' ? 'Request a time' : 'Submit request'}</button>
+    {status === 'success' ? <div className="rounded-button border border-blue/40 bg-blue/10 p-4 text-sm"><p className="mb-3">Next steps are ready.</p><div className="flex flex-wrap gap-3"><Button href="/work" variant="secondary">View Work</Button><Button href="/book" variant="secondary">Book a Call</Button></div></div> : null}
   </form>;
 }
