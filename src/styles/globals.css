@@ -3,19 +3,53 @@
 @tailwind utilities;
 
 :root {
-  --bg-0: #05060A;
-  --bg-1: #0B0F1A;
-  --stroke: rgba(255,255,255,0.10);
-  --text-0: #F5F7FF;
-  --text-1: rgba(245,247,255,0.78);
-  --blue: #2D7CFF;
-  --blueGlow: rgba(45,124,255,0.35);
-  --success: #22C55E;
-  --danger: #EF4444;
+  --bg-0: #05070d;
+  --bg-1: #0a1020;
+  --bg-2: #0d1630;
+  --stroke: rgba(255, 255, 255, 0.12);
+  --text-0: #f5f7ff;
+  --text-1: rgba(245, 247, 255, 0.74);
+  --text-2: rgba(245, 247, 255, 0.52);
+  --blue: #2d7cff;
+  --blue-soft: rgba(45, 124, 255, 0.18);
+  --blue-glow: rgba(45, 124, 255, 0.35);
+  --success: #22c55e;
+  --danger: #ef4444;
 }
 
 * { border-color: var(--stroke); }
-body { background: var(--bg-0); color: var(--text-0); }
 
-.section-padding { @apply py-16 md:py-24; }
-.card { @apply rounded-card border border-stroke shadow-sm; background: color-mix(in srgb, var(--bg-1) 60%, transparent); }
+body {
+  min-height: 100vh;
+  color: var(--text-0);
+  background:
+    radial-gradient(900px 500px at 80% -20%, rgba(45, 124, 255, 0.22), transparent 60%),
+    radial-gradient(700px 400px at 10% -10%, rgba(45, 124, 255, 0.12), transparent 65%),
+    var(--bg-0);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0);
+  background-size: 3px 3px;
+  z-index: 0;
+}
+
+main, header, footer { position: relative; z-index: 1; }
+
+@layer components {
+  .section-padding { @apply py-16 md:py-24; }
+  .card-surface {
+    @apply rounded-card border shadow-lg;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--bg-2) 72%, transparent), color-mix(in srgb, var(--bg-1) 78%, transparent));
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.3);
+  }
+  .chip {
+    @apply inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium;
+    background: color-mix(in srgb, var(--bg-1) 80%, transparent);
+  }
+}

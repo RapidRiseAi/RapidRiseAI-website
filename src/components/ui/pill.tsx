@@ -1,3 +1,5 @@
-export function Pill({ children }: { children: React.ReactNode }) {
-  return <span className="inline-flex rounded-full border border-blue/60 bg-blue/10 px-3 py-1 text-xs font-medium text-blue">{children}</span>;
+import { cn } from '@/lib/utils';
+
+export function Pill({ children, className }: { children: React.ReactNode; className?: string }) {
+  return <span className={cn('chip border-stroke text-text1', className)}>{children}</span>;
 }
