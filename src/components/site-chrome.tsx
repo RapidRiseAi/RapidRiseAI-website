@@ -26,7 +26,10 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-stroke bg-bg0/80 backdrop-blur-xl">
       <Container className="flex h-16 items-center justify-between gap-3">
-        <Link href="/" className="font-[var(--font-jakarta)] text-sm font-semibold tracking-[0.18em]">RAPID RISE AI</Link>
+        <Link href="/" className="inline-flex items-center gap-[10px] font-[var(--font-jakarta)] text-sm font-semibold tracking-[0.18em]">
+          <img src="/brand/rapid-rise-ai-logo.png" alt="Rapid Rise AI" className="h-[22px] w-auto" />
+          <span>RAPID RISE AI</span>
+        </Link>
         <nav className="hidden items-center gap-2 md:flex">
           {siteContent.nav.items.map((item) => <Link key={item.href} href={item.href} className={cn('rounded-full px-3 py-2 text-sm transition', pathname === item.href || pathname.startsWith(`${item.href}/`) ? 'bg-blue/15 text-blue' : 'text-text1 hover:text-text0')}>{item.label}</Link>)}
         </nav>
