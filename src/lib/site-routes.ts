@@ -8,6 +8,7 @@ export const staticRoutes = [
   '/solutions/websites',
   '/solutions/training',
   '/work',
+  '/products/pricing',
   '/pricing',
   '/education',
   '/education/ai-for-work',

@@ -8,7 +8,7 @@ export const siteContent = {
     items: [
       { label: 'Solutions', href: '/solutions' },
       { label: 'Work', href: '/work' },
-      { label: 'Pricing', href: '/pricing' },
+      { label: 'Products and Pricing', href: '/products/pricing' },
       { label: 'Education', href: '/education' },
       { label: 'About', href: '/about' },
       { label: 'Contact', href: '/contact' },
