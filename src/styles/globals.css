@@ -42,7 +42,8 @@ body::before {
 main, header, footer { position: relative; z-index: 1; }
 
 @layer components {
-  .section-padding { @apply py-16 md:py-24; }
+  .section-padding { @apply py-10 md:py-14; }
+  .hero-padding { @apply flex min-h-[100svh] items-center py-16 md:py-24; }
   .card-surface {
     @apply rounded-card border shadow-lg;
     background: linear-gradient(180deg, color-mix(in srgb, var(--bg-2) 72%, transparent), color-mix(in srgb, var(--bg-1) 78%, transparent));
