@@ -9,7 +9,7 @@ import { Pill } from './ui/pill';
 
 export function Hero({ h1, sub, cta2, visual = '/images/hero/hero-visual.svg', alt = '' }: { h1: string; sub: string; cta2?: string; visual?: string; alt?: string }) {
   return (
-    <section className="section-padding border-b border-stroke">
+    <section className="hero-padding border-b border-stroke">
       <Container className="grid items-center gap-8 lg:grid-cols-2">
         <div>
           <h1 className="max-w-3xl font-[var(--font-jakarta)] text-4xl font-bold tracking-tight md:text-6xl">{h1}</h1>
