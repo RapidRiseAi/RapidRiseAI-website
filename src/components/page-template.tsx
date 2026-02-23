@@ -89,10 +89,13 @@ export function ProofStrip() {
     <Section label="Capabilities" title="Built for real operations">
       <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
         {capabilities.map((item) => (
-          <Card key={item} className="flex items-start gap-2 p-4 text-sm text-text1">
-            <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-blue" />
+          <div
+            key={item}
+            className="flex min-h-9 items-center gap-2 rounded-[14px] border border-stroke/80 bg-[color:color-mix(in_srgb,var(--bg-2)_76%,transparent)] px-3 py-2 text-[13px] leading-[1.3] text-text1 shadow-[0_8px_20px_rgba(0,0,0,0.2)]"
+          >
+            <Sparkles className="h-3.5 w-3.5 shrink-0 text-blue" />
             <span>{item}</span>
-          </Card>
+          </div>
         ))}
       </div>
     </Section>
