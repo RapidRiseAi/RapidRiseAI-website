@@ -10,11 +10,12 @@ import { getUtmPayload } from '@/lib/utils';
 import { isEmail, isWhatsapp, required } from '@/lib/validation';
 import { TurnstileWidget } from './turnstile-widget';
 
-export function LeadForm({ type }: { type: 'quote' | 'contact' | 'booking' }) {
+export function LeadForm({ type, selectedProduct = '' }: { type: 'quote' | 'contact' | 'booking'; selectedProduct?: string }) {
   const [status, setStatus] = useState<'idle'|'loading'|'success'|'error'>('idle');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const pathname = usePathname();
   const [requestTypes, setRequestTypes] = useState<string[]>([]);
+  const productSelection = (selectedProduct || (typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('product') || '' : '')).trim();
 
   async function submit(formData: FormData) {
     const full_name = String(formData.get('full_name') ?? '');
@@ -46,6 +47,7 @@ export function LeadForm({ type }: { type: 'quote' | 'contact' | 'booking' }) {
   }
 
   return <form action={submit} className="space-y-5">
+    {type === 'quote' && productSelection ? <input type="hidden" name="selected_product" value={productSelection} /> : null}
     {status === 'success' ? <Toast message={type === 'quote' ? 'Request received. Thanks. We will review it and respond within 24 hours.' : type === 'contact' ? 'Message received. Thanks. We will reply within 24 hours.' : 'Request received. We will confirm a time within 24 hours.'} /> : null}
     {status === 'error' ? <Toast message="Something went wrong. Please try again." type="error" /> : null}
     <TextField name="full_name" label={type === 'booking' ? 'Name' : 'Full name'} placeholder="Your name" helper="Use your preferred contact name" error={errors.full_name} required />
