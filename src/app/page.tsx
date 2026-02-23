@@ -14,7 +14,7 @@ import { Pill } from '@/components/ui/pill';
 export default function HomePage() {
   return (
     <>
-      <Hero h1={siteContent.home.hero.h1} sub={siteContent.home.hero.sub} cta2="View Work" />
+      <Hero h1={siteContent.home.hero.h1} sub={siteContent.home.hero.sub} cta2="View Work" visual="/images/hero/rapid-rise-ai-business-automation-client-portal-hero.jpg" alt="Client portal dashboard with integrations" />
       <ProofStrip />
       <Section label="Services" title="What we build" intro="Pick what you need now. Expand later.">
         <FeatureGrid items={[{title:'Lead Capture and Follow Up',description:'Turn enquiries into tracked requests and consistent follow-ups.',href:'/solutions/lead-capture'},{title:'Workflow Automation and Integrations',description:'Connect tools, remove repetition, keep work moving.',href:'/solutions/workflow-automation'},{title:'Smart Google Workspace',description:'Automate Sheets, Gmail, Drive, Calendar, approvals, and reporting.',href:'/solutions/google-workspace'},{title:'Web Apps and Internal Tools',description:'Portals, dashboards, trackers, and lightweight internal systems.',href:'/solutions/web-apps'},{title:'Websites that Convert',description:'Clean messaging, strong trust, better capture.',href:'/solutions/websites'},{title:'Training and Enablement',description:'Help your team use modern tools properly and safely.',href:'/solutions/training'}]} />

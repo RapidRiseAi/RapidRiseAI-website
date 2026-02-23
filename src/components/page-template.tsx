@@ -7,7 +7,7 @@ import { Section } from './ui/section';
 import { Card } from './ui/card';
 import { Pill } from './ui/pill';
 
-export function Hero({ h1, sub, cta2, visual = '/images/hero/hero-visual.svg' }: { h1: string; sub: string; cta2?: string; visual?: string }) {
+export function Hero({ h1, sub, cta2, visual = '/images/hero/hero-visual.svg', alt = '' }: { h1: string; sub: string; cta2?: string; visual?: string; alt?: string }) {
   return (
     <section className="section-padding border-b border-stroke">
       <Container className="grid items-center gap-8 lg:grid-cols-2">
@@ -18,7 +18,7 @@ export function Hero({ h1, sub, cta2, visual = '/images/hero/hero-visual.svg' }:
           <div className="mt-5 flex flex-wrap gap-2"><Pill>Response within 24 hours</Pill><Pill>No spam</Pill><Pill>No pressure</Pill></div>
         </div>
         <Card className="overflow-hidden border-blue/30 p-2">
-          <Image src={visual} alt="" width={800} height={600} className="h-full w-full rounded-xl object-cover" priority />
+          <Image src={visual} alt={alt} width={800} height={600} className="h-full w-full rounded-xl object-cover" priority />
         </Card>
       </Container>
     </section>

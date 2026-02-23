@@ -4,7 +4,7 @@ import { FeatureGrid } from '@/components/ui/feature-grid';
 import { Button } from '@/components/ui/button';
 
 export default function SolutionsPage() {
-  return <><Hero h1="Choose your outcome." sub="We build systems that reduce admin, speed up response, and make operations easier to run." cta2="View Work" visual="/images/sections/workflow-map.svg" />
+  return <><Hero h1="Choose your outcome." sub="We build systems that reduce admin, speed up response, and make operations easier to run." cta2="View Work" visual="/images/hero/rapid-rise-ai-workflow-automation-integrations-hero.jpg" alt="Workflow automation integrations diagram" />
   <Section label="Solutions" title="What do you want to improve?"><FeatureGrid items={[
     {title:'Capture more leads',description:'Stop missing enquiries and keep follow-ups moving.',href:'/solutions/lead-capture'},
     {title:'Reduce admin and mistakes',description:'Use cleaner workflows so execution is reliable.',href:'/solutions/workflow-automation'},
