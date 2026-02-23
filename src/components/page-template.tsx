@@ -67,7 +67,36 @@ export function SolutionTemplate({ content, image }: { content: any; image: stri
 }
 
 export function ProofStrip() {
-  return <Section label="Capabilities" title="Built for real operations"><div className="flex flex-wrap gap-2">{['Google Workspace automation','Workflow integrations','Web apps and internal tools','Lead capture systems','Support assistants when needed','Documentation and handover'].map((i)=> <Pill key={i}><Sparkles className="h-3.5 w-3.5 text-blue" />{i}</Pill>)}</div></Section>;
+  const capabilities = [
+    'Workflow automation across your business',
+    'Tool integrations and data sync',
+    'Lead capture and fast follow-up systems',
+    'Inbox and enquiry routing',
+    'Customer support assistants and smart handoff',
+    'Smart workspace systems and automations (email, files, calendar, docs)',
+    'Custom dashboards and reporting (multi-tool visibility)',
+    'Internal portals and client portals',
+    'Web apps and internal tools (built for your workflow)',
+    'Quote, invoice, and document generation',
+    'Onboarding and handover systems (clients or staff)',
+    'Approvals and compliance flows',
+    'Scheduling and booking automation',
+    'Recurring reminders and renewals',
+    'Training, SOPs, and enablement (so your team can run it)',
+  ];
+
+  return (
+    <Section label="Capabilities" title="Built for real operations">
+      <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+        {capabilities.map((item) => (
+          <Card key={item} className="flex items-start gap-2 p-4 text-sm text-text1">
+            <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-blue" />
+            <span>{item}</span>
+          </Card>
+        ))}
+      </div>
+    </Section>
+  );
 }
 
 export function ArrowText() { return <ArrowRight className="h-4 w-4" />; }
