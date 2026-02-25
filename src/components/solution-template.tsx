@@ -101,11 +101,6 @@ export function SolutionTemplate({ data }: { data: SolutionPageData }) {
       <Section title="Related work">
         <div className="grid gap-3 md:grid-cols-2">
           <Card>
-            <Link href="/work" className="text-sm font-semibold text-text0 hover:text-blue">
-              View related work
-            </Link>
-          </Card>
-          <Card>
             <Link href="/products/pricing" className="text-sm font-semibold text-text0 hover:text-blue">
               Browse products and pricing
             </Link>
