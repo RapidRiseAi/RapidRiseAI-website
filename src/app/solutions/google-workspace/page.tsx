@@ -1,4 +1,14 @@
-import { siteContent } from '@/content/siteContent';
-import { SolutionTemplate } from '@/components/page-template';
+import type { Metadata } from 'next';
+import { SolutionTemplate } from '@/components/solution-template';
+import { solutionPages } from '@/content/solutionPages';
 
-export default function Page(){ return <SolutionTemplate content={siteContent.solutionPages['google-workspace']} image={'/images/solutions/google-workspace.svg'} />; }
+const data = solutionPages['google-workspace'];
+
+export const metadata: Metadata = {
+  title: data.metaTitle,
+  description: data.metaDescription,
+};
+
+export default function Page() {
+  return <SolutionTemplate data={data} />;
+}
