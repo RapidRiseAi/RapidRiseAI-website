@@ -1,9 +1,11 @@
-import Image from 'next/image';
 import { Hero } from '@/components/page-template';
 import { Section } from '@/components/ui/section';
 import { WorkGrid } from '@/components/ui/work-grid';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Pill } from '@/components/ui/pill';
+import { WorkProofGallery } from '@/components/ui/work-proof-gallery';
+import { getWorkProofTypeLabel, workProofProjects } from '@/content/workProof';
 
 const workItems = [
   {
@@ -62,27 +64,6 @@ const workItems = [
   },
 ];
 
-const proofCards = [
-  {
-    title: 'Handover pack',
-    image: '/images/work/rapid-rise-ai-work-proof-handover-pack.jpg',
-    alt: 'Handover pack deliverables including setup guide, admin notes, and team walkthrough',
-    bullets: ['Setup guide', 'Admin notes', 'Team walkthrough'],
-  },
-  {
-    title: 'Build map',
-    image: '/images/work/rapid-rise-ai-work-proof-build-map.jpg',
-    alt: 'Build map showing modules connected through an integration layer',
-    bullets: ['System map before build', 'Integration points defined', 'Single source of truth'],
-  },
-  {
-    title: 'Quality checks',
-    image: '/images/work/rapid-rise-ai-work-proof-qa-checklist.jpg',
-    alt: 'Quality checks panel showing access verification, error handling, and logging',
-    bullets: ['Access verified', 'Errors handled', 'Edge cases tested'],
-  },
-];
-
 export default function WorkPage() {
   return (
     <>
@@ -97,33 +78,49 @@ export default function WorkPage() {
         imagePriority
       />
 
-      <Section label="PROOF" title="Proof you can verify" intro="Process, QA, and handover are built into every delivery.">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {proofCards.map((card) => (
-            <Card key={card.title} className="p-4">
-              <Image
-                src={card.image}
-                alt={card.alt}
-                width={1200}
-                height={675}
-                className="mb-4 aspect-video w-full rounded-xl border border-stroke object-cover object-center"
-                loading="lazy"
-              />
-              <h3 className="font-[var(--font-jakarta)] text-xl font-semibold">{card.title}</h3>
-              <ul className="mt-3 space-y-2 text-sm text-text1">
-                {card.bullets.map((bullet) => (
-                  <li key={bullet}>• {bullet}</li>
+      <div id="proof">
+        <Section label="PROOF" title="Proof of work" intro="Real builds, documented and delivered.">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {workProofProjects.map((project) => (
+            <Card key={project.id} className="space-y-4 p-4">
+              <div className="flex items-start justify-between gap-3">
+                <h3 className="font-[var(--font-jakarta)] text-xl font-semibold">{project.title}</h3>
+                <Pill className="border-blue/50 text-blue">{getWorkProofTypeLabel(project.type)}</Pill>
+              </div>
+
+              <p className="text-sm text-text1">
+                <strong className="text-text0">Built for</strong>: {project.builtForLabel}
+              </p>
+
+              <WorkProofGallery images={project.images} projectTitle={project.title} />
+
+              <div className="space-y-3 text-sm text-text1">
+                <p>
+                  <strong className="text-text0">Problem:</strong> {project.problem}
+                </p>
+                <p>
+                  <strong className="text-text0">Build:</strong> {project.build}
+                </p>
+                <p>
+                  <strong className="text-text0">Outcome:</strong> {project.outcome}
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <Pill key={tag}>{tag}</Pill>
                 ))}
-              </ul>
+              </div>
             </Card>
           ))}
         </div>
       </Section>
+      </div>
 
       <Section>
         <WorkGrid
           filters={['All', 'Lead capture', 'Automations', 'Google Workspace', 'Web apps', 'Websites', 'Training']}
-          microcopy="Sample builds are shown below. Real project screenshots are added as systems go live."
+          microcopy="Sample builds are shown below."
           items={[...workItems]}
         />
       </Section>
