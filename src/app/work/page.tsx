@@ -89,7 +89,6 @@ export default function WorkPage() {
       <Hero
         h1="Systems we build"
         sub="Clean workflows, reliable tracking, faster operations."
-        cta2="View Work"
         visual="/images/hero/rapid-rise-ai-work-hero-intake-to-handover-timeline.jpg"
         alt="Delivery timeline showing intake, build, test, launch, and handover stages"
         imageClassName="aspect-video w-full rounded-xl object-cover object-center"
