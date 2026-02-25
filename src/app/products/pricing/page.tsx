@@ -62,8 +62,8 @@ export default function ProductsPricingPage() {
           </div>
           <Card className="overflow-hidden border-blue/30 p-2">
             <Image
-              src="/images/products-pricing/rapid-rise-ai-products-pricing-hero.jpg"
-              alt="Products and pricing selector showing fixed-price products and quoted builds"
+              src="/images/hero/rapid-rise-ai-pricing-packages-quick-wins-core-system-scale.jpg"
+              alt="Service packages: Quick Wins, Core System, Scale and Support"
               width={1200}
               height={900}
               className="h-full w-full rounded-xl object-cover"
@@ -96,15 +96,7 @@ export default function ProductsPricingPage() {
       </Section>
 
       <Section title="Fixed-price products" intro="These are packaged systems with defined scope. If you need more, we extend it with add-ons or a custom quote.">
-        <div id="fixed-price-products" className="mb-8 overflow-hidden rounded-card border border-stroke">
-          <Image
-            src="/images/products-pricing/rapid-rise-ai-fixed-price-products-grid.jpg"
-            alt="Fixed-price products grid for business automation systems"
-            width={1400}
-            height={800}
-            className="h-full w-full object-cover"
-          />
-        </div>
+        <div id="fixed-price-products" />
         <div className="grid gap-4 md:grid-cols-2">
           {[
             {
@@ -227,15 +219,6 @@ export default function ProductsPricingPage() {
           <li>• Full websites with multiple pages and custom components</li>
           <li>• Migration and restructuring of large datasets</li>
         </ul>
-        <div className="mb-8 overflow-hidden rounded-card border border-stroke">
-          <Image
-            src="/images/products-pricing/rapid-rise-ai-quoting-process-diagram.jpg"
-            alt="Diagram showing the quoting process from intake to fixed quote"
-            width={1400}
-            height={800}
-            className="h-full w-full object-cover"
-          />
-        </div>
         <h3 className="font-[var(--font-jakarta)] text-2xl font-semibold">How quoting works</h3>
         <div className="mt-4 grid gap-4 md:grid-cols-3">
           <Card>
@@ -263,15 +246,6 @@ export default function ProductsPricingPage() {
       </Section>
 
       <Section title="Scale and Support" intro="For ongoing changes, monitoring, and improvements.">
-        <div className="mb-8 overflow-hidden rounded-card border border-stroke">
-          <Image
-            src="/images/products-pricing/rapid-rise-ai-support-plans-cards.jpg"
-            alt="Monthly support plans for ongoing improvements and maintenance"
-            width={1400}
-            height={800}
-            className="h-full w-full object-cover"
-          />
-        </div>
         <div className="grid gap-4 md:grid-cols-3">
           <Card>
             <h3 className="font-[var(--font-jakarta)] text-2xl font-semibold">Essential Support</h3>
