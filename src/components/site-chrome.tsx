@@ -1,15 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import Script from 'next/script';
 import { usePathname } from 'next/navigation';
 import { Menu, X, MessageCircle } from 'lucide-react';
 import { useState } from 'react';
-import { CONFIG } from '@/lib/config';
 import { Container } from './ui/container';
 import { Button } from './ui/button';
 import { siteContent } from '@/content/siteContent';
 import { cn } from '@/lib/utils';
+import { CONFIG } from '@/lib/config';
 
 const solutionLinks = [
   { label: 'Lead Capture and Follow Up', href: '/solutions/lead-capture' },
@@ -62,7 +61,6 @@ export function Footer() {
 export function ChatWidget() {
   return (
     <>
-      {CONFIG.botpressEmbedUrl ? <Script src={CONFIG.botpressEmbedUrl} strategy="afterInteractive" /> : null}
       <Link href="/contact" className="fixed bottom-6 right-6 z-30 inline-flex items-center gap-2 rounded-full border border-stroke bg-bg1 px-4 py-2 text-sm text-text1 hover:text-text0"><MessageCircle className="h-4 w-4" />Chat</Link>
     </>
   );
