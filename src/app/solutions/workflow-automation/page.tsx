@@ -1,4 +1,14 @@
-import { siteContent } from '@/content/siteContent';
-import { SolutionTemplate } from '@/components/page-template';
+import type { Metadata } from 'next';
+import { SolutionTemplate } from '@/components/solution-template';
+import { solutionPages } from '@/content/solutionPages';
 
-export default function Page(){ return <SolutionTemplate content={siteContent.solutionPages['workflow-automation']} image={'/images/solutions/workflow-automation.svg'} />; }
+const data = solutionPages['workflow-automation'];
+
+export const metadata: Metadata = {
+  title: data.metaTitle,
+  description: data.metaDescription,
+};
+
+export default function Page() {
+  return <SolutionTemplate data={data} />;
+}
