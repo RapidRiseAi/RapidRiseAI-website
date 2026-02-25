@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Pill } from '@/components/ui/pill';
 import { getWorkProofTypeLabel, workProofProjects } from '@/content/workProof';
+import { workItems } from '@/content/workItems';
 
 export default function HomePage() {
   return (
@@ -65,21 +66,21 @@ export default function HomePage() {
       </Section>
       <Section label="Portfolio" title="Systems we build" intro="You do not need everything. You need the right system.">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {[
-            'Enquiry to quote pipeline',
-            'Follow-up reminders and escalation',
-            'Workspace automation for admin tasks',
-            'Internal dashboards and reporting',
-            'Onboarding and folder automation',
-            'Sample build: Hospitality enquiry assistant',
-          ].map((x, idx) => (
-            <Card key={x}>
-              <Image src={`/images/work/work-0${idx + 1}.svg`} alt="" width={400} height={240} className="mb-4 h-36 w-full rounded-xl border border-stroke object-cover" />
+          {workItems.map((item) => (
+            <Card key={item.title}>
+              <Image
+                src={item.image ?? '/images/work/rapid-rise-ai-sample-build-automations.jpg'}
+                alt={`Sample build preview: ${item.title}`}
+                width={1200}
+                height={675}
+                className="mb-4 h-36 w-full rounded-xl border border-stroke object-cover"
+                loading="lazy"
+              />
               <div className="flex items-center justify-between gap-2">
-                <h3 className="font-[var(--font-jakarta)] font-semibold">{x}</h3>
-                {x.includes('Sample') ? <Pill className="border-blue/50 text-blue">Sample build</Pill> : null}
+                <h3 className="font-[var(--font-jakarta)] font-semibold">{item.title}</h3>
+                {item.sample ? <Pill className="border-blue/50 text-blue">Sample build</Pill> : null}
               </div>
-              <p className="mt-2 text-sm text-text1">Outcome focused delivery for a cleaner operation.</p>
+              <p className="mt-2 text-sm text-text1">{item.outcome}</p>
               <a href="/work" className="mt-3 inline-flex items-center gap-2 text-sm text-blue">
                 View work <ArrowRight className="h-4 w-4" />
               </a>
