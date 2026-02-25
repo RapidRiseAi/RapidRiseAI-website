@@ -98,13 +98,13 @@ export function SolutionTemplate({ data }: { data: SolutionPageData }) {
         </ul>
       </Section>
 
-      <Section title="Related work">
+      <Section title="Browse products and pricing">
         <div className="grid gap-3 md:grid-cols-2">
-          <Card>
-            <Link href="/products/pricing" className="text-sm font-semibold text-text0 hover:text-blue">
+          <Link href="/products/pricing" className="block">
+            <Card className="text-sm font-semibold text-text0 transition-colors hover:text-blue">
               Browse products and pricing
-            </Link>
-          </Card>
+            </Card>
+          </Link>
         </div>
       </Section>
 
