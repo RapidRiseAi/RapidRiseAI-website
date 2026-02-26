@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, MessageCircle, X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { Menu, X } from 'lucide-react';
+import { useState } from 'react';
 import { Container } from './ui/container';
 import { Button } from './ui/button';
 import { siteContent } from '@/content/siteContent';
@@ -61,57 +61,4 @@ export function Footer() {
 export function CookieBanner() {
   if (!CONFIG.analyticsEnabled) return null;
   return <div className="fixed inset-x-4 bottom-4 z-40 rounded-card border border-stroke bg-bg1 p-4 text-sm text-text1">This site uses cookies for analytics.</div>;
-}
-
-type BotpressApi = {
-  open?: () => void;
-  toggle?: () => void;
-  webchat?: {
-    open?: () => void;
-    show?: () => void;
-    hide?: () => void;
-  };
-};
-
-declare global {
-  interface Window {
-    botpress?: BotpressApi;
-  }
-}
-
-export function BotpressLauncher() {
-  useEffect(() => {
-    window.botpress?.webchat?.hide?.();
-  }, []);
-
-  const openBotpress = () => {
-    if (window.botpress?.webchat?.open) {
-      window.botpress.webchat.open();
-      return;
-    }
-
-    if (window.botpress?.open) {
-      window.botpress.open();
-      return;
-    }
-
-    if (window.botpress?.webchat?.show) {
-      window.botpress.webchat.show();
-      return;
-    }
-
-    window.botpress?.toggle?.();
-  };
-
-  return (
-    <button
-      type="button"
-      aria-label="Open chat"
-      onClick={openBotpress}
-      className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2 rounded-full border border-stroke bg-bg1 px-4 py-3 text-sm font-medium text-text0 shadow-lg transition hover:bg-bg2"
-    >
-      <MessageCircle className="h-4 w-4" />
-      <span>Chat</span>
-    </button>
-  );
 }
