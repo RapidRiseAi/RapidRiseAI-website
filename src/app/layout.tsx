@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import '@/styles/globals.css';
 import Script from 'next/script';
-import { CookieBanner, Footer, Header } from '@/components/site-chrome';
-import { BotpressLauncherVisibility } from '@/components/botpress-launcher-visibility';
+import { BotpressLauncher, CookieBanner, Footer, Header } from '@/components/site-chrome';
 import { siteContent } from '@/content/siteContent';
 
 const inter = localFont({
@@ -51,9 +50,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main>{children}</main>
         <Script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js" />
         <Script src="https://files.bpcontent.cloud/2024/12/25/17/20241225175107-YFWHYV0L.js" defer />
-        <BotpressLauncherVisibility />
         <Footer />
         <CookieBanner />
+        <BotpressLauncher />
       </body>
     </html>
   );

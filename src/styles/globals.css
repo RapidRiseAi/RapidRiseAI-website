@@ -59,3 +59,9 @@ main, header, footer { position: relative; z-index: 1; }
 .bpChatContainer {
   z-index: 45 !important;
 }
+
+#fab-root,
+iframe[title="Botpress Webchat Launcher"],
+iframe[title="Botpress Launcher"] {
+  display: none !important;
+}
