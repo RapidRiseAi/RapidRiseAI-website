@@ -55,11 +55,12 @@ main, header, footer { position: relative; z-index: 1; }
   }
 }
 
-
-.bpChatContainer {
-  z-index: 65 !important;
-}
-
-.bpWebchat {
-  z-index: 65 !important;
+/* Botpress hosts are mounted at the end of <body>; keep them above site chrome without overriding internal widget styles. */
+body > #fab-root,
+body > #webchat,
+body > .bpChatContainer {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 60;
 }
