@@ -21,10 +21,14 @@ const solutionLinks = [
 
 type BotpressApi = {
   on?: (eventName: string, listener: () => void) => void;
+  off?: (eventName: string, listener: () => void) => void;
   webchat?: {
+    open?: () => void;
     close?: () => void;
   };
+  open?: () => void;
   close?: () => void;
+  toggle?: () => void;
 };
 
 declare global {
@@ -80,8 +84,8 @@ export function CookieBanner() {
 function closeBotpressIfOpen() {
   const botpress = window.botpress;
 
-  botpress?.webchat?.close?.();
   botpress?.close?.();
+  botpress?.webchat?.close?.();
 }
 
 export function BotpressLauncher() {
@@ -89,18 +93,21 @@ export function BotpressLauncher() {
     let didSetDefaultClosed = false;
 
     const setDefaultClosed = () => {
-      if (didSetDefaultClosed) {
-        return;
-      }
+      if (didSetDefaultClosed) return;
 
       closeBotpressIfOpen();
       didSetDefaultClosed = true;
     };
 
+    const readyEvents = ['ready', 'webchat:ready', 'webchat:initialized'];
+    readyEvents.forEach((eventName) => window.botpress?.on?.(eventName, setDefaultClosed));
+
+    // Handle the case where Botpress is already ready by the time this effect runs.
     setDefaultClosed();
 
-    window.botpress?.on?.('webchat:ready', setDefaultClosed);
-    window.botpress?.on?.('webchat:initialized', setDefaultClosed);
+    return () => {
+      readyEvents.forEach((eventName) => window.botpress?.off?.(eventName, setDefaultClosed));
+    };
   }, []);
 
   return null;
