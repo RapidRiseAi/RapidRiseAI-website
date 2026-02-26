@@ -62,64 +62,11 @@ main, header, footer { position: relative; z-index: 1; }
   z-index: 45 !important;
 }
 
-#bp-web-widget-container :is(button, [role="button"]),
-#bp-web-widget :is(button, [role="button"]),
-[data-botpress-webchat] :is(button, [role="button"]) {
-  border-radius: 9999px !important;
-}
-
 #bp-web-widget-container :is(.bpFab, [class*="fab" i], [class*="launcher" i]),
 #bp-web-widget :is(.bpFab, [class*="fab" i], [class*="launcher" i]),
 [data-botpress-webchat] :is(.bpFab, [class*="fab" i], [class*="launcher" i]) {
-  position: fixed !important;
-  right: max(24px, env(safe-area-inset-right)) !important;
-  bottom: max(24px, env(safe-area-inset-bottom)) !important;
-  min-height: 48px !important;
-  min-width: 112px !important;
-  padding: 0 16px !important;
-  border: 1px solid var(--stroke) !important;
-  background: linear-gradient(180deg, var(--bg-1), var(--bg-2)) !important;
-  color: var(--text-0) !important;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35) !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 8px !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: none !important;
-}
-
-#bp-web-widget-container :is(.bpFabLabel, [class*="label" i]),
-#bp-web-widget :is(.bpFabLabel, [class*="label" i]),
-[data-botpress-webchat] :is(.bpFabLabel, [class*="label" i]) {
-  opacity: 1 !important;
-  max-width: none !important;
-  width: auto !important;
-  visibility: visible !important;
-  font-family: var(--font-inter), sans-serif !important;
-  font-size: 14px !important;
-  font-weight: 500 !important;
-}
-
-#bp-web-widget-container :is(.bpFabLabel, [class*="label" i])::after,
-#bp-web-widget :is(.bpFabLabel, [class*="label" i])::after,
-[data-botpress-webchat] :is(.bpFabLabel, [class*="label" i])::after {
-  content: '' !important;
-}
-
-
-#bp-web-widget-container :is(.bpFabLabel, [class*="label" i]):empty::before,
-#bp-web-widget :is(.bpFabLabel, [class*="label" i]):empty::before,
-[data-botpress-webchat] :is(.bpFabLabel, [class*="label" i]):empty::before {
-  content: 'Chat' !important;
-}
-
-@media (max-width: 768px) {
-  #bp-web-widget-container :is(.bpFab, [class*="fab" i], [class*="launcher" i]),
-  #bp-web-widget :is(.bpFab, [class*="fab" i], [class*="launcher" i]),
-  [data-botpress-webchat] :is(.bpFab, [class*="fab" i], [class*="launcher" i]) {
-    right: max(24px, env(safe-area-inset-right)) !important;
-    bottom: max(24px, env(safe-area-inset-bottom)) !important;
-  }
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
