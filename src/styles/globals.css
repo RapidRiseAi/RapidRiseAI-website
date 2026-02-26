@@ -65,8 +65,8 @@ main, header, footer { position: relative; z-index: 1; }
 #bp-web-widget-container :is(.bpFab, [class*="fab" i], [class*="launcher" i]),
 #bp-web-widget :is(.bpFab, [class*="fab" i], [class*="launcher" i]),
 [data-botpress-webchat] :is(.bpFab, [class*="fab" i], [class*="launcher" i]) {
-  display: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
 }
