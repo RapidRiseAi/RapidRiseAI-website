@@ -54,13 +54,3 @@ main, header, footer { position: relative; z-index: 1; }
     background: color-mix(in srgb, var(--bg-1) 80%, transparent);
   }
 }
-
-/* Keep only the launcher host above the site chrome; avoid repositioning Botpress panel containers. */
-body .bpChatContainer > #fab-root {
-  position: fixed;
-  inset: auto 16px 16px auto;
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
-  z-index: 60;
-}
