@@ -22,9 +22,11 @@ const solutionLinks = [
 type BotpressApi = {
   on?: (eventName: string, listener: () => void) => void;
   off?: (eventName: string, listener: () => void) => void;
+  isOpen?: boolean | (() => boolean);
   webchat?: {
     open?: () => void;
     close?: () => void;
+    isOpen?: boolean | (() => boolean);
   };
   open?: () => void;
   close?: () => void;
@@ -81,11 +83,46 @@ export function CookieBanner() {
   return <div className="fixed inset-x-4 bottom-4 z-40 rounded-card border border-stroke bg-bg1 p-4 text-sm text-text1">This site uses cookies for analytics.</div>;
 }
 
-function closeBotpressIfOpen() {
-  const botpress = window.botpress;
+function resolveOpenState(value?: boolean | (() => boolean)) {
+  if (typeof value === 'function') {
+    return value();
+  }
 
-  botpress?.close?.();
-  botpress?.webchat?.close?.();
+  return value;
+}
+
+function isVisibleElement(element: HTMLElement | null) {
+  if (!element) return false;
+
+  const styles = window.getComputedStyle(element);
+  const rect = element.getBoundingClientRect();
+
+  return styles.display !== 'none'
+    && styles.visibility !== 'hidden'
+    && styles.opacity !== '0'
+    && rect.width > 0
+    && rect.height > 0;
+}
+
+function isBotpressPanelOpen() {
+  const botpress = window.botpress;
+  const openFromApi = resolveOpenState(botpress?.isOpen) ?? resolveOpenState(botpress?.webchat?.isOpen);
+
+  if (typeof openFromApi === 'boolean') {
+    return openFromApi;
+  }
+
+  const webchatHost = document.querySelector<HTMLElement>('#webchat');
+  const panelInShadow = webchatHost?.shadowRoot?.querySelector<HTMLElement>('.bpWebchat, [data-state="open"], [aria-hidden="false"]') ?? null;
+
+  return isVisibleElement(panelInShadow);
+}
+
+function closeBotpressIfOpen() {
+  if (!isBotpressPanelOpen()) return;
+
+  window.botpress?.webchat?.close?.();
+  window.botpress?.close?.();
 }
 
 export function BotpressLauncher() {
