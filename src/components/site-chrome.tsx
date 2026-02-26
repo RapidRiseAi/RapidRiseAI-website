@@ -83,67 +83,52 @@ export function CookieBanner() {
   return <div className="fixed inset-x-4 bottom-4 z-40 rounded-card border border-stroke bg-bg1 p-4 text-sm text-text1">This site uses cookies for analytics.</div>;
 }
 
-function resolveOpenState(value?: boolean | (() => boolean)) {
-  if (typeof value === 'function') {
-    return value();
+function enforceBotpressFabVisibility() {
+  const host = document.querySelector<HTMLElement>('#fab-root');
+  const shadowRoot = host?.shadowRoot;
+
+  if (!shadowRoot) return false;
+
+  const styleId = 'rapidrise-botpress-fab-fix';
+  if (!shadowRoot.getElementById(styleId)) {
+    const style = document.createElement('style');
+    style.id = styleId;
+    style.textContent = `
+      .bpFabContainer,
+      .bpFabIcon {
+        position: static !important;
+        inset: auto !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+    `;
+
+    shadowRoot.appendChild(style);
   }
 
-  return value;
-}
-
-function isVisibleElement(element: HTMLElement | null) {
-  if (!element) return false;
-
-  const styles = window.getComputedStyle(element);
-  const rect = element.getBoundingClientRect();
-
-  return styles.display !== 'none'
-    && styles.visibility !== 'hidden'
-    && styles.opacity !== '0'
-    && rect.width > 0
-    && rect.height > 0;
-}
-
-function isBotpressPanelOpen() {
-  const botpress = window.botpress;
-  const openFromApi = resolveOpenState(botpress?.isOpen) ?? resolveOpenState(botpress?.webchat?.isOpen);
-
-  if (typeof openFromApi === 'boolean') {
-    return openFromApi;
-  }
-
-  const webchatHost = document.querySelector<HTMLElement>('#webchat');
-  const panelInShadow = webchatHost?.shadowRoot?.querySelector<HTMLElement>('.bpWebchat, [data-state="open"], [aria-hidden="false"]') ?? null;
-
-  return isVisibleElement(panelInShadow);
-}
-
-function closeBotpressIfOpen() {
-  if (!isBotpressPanelOpen()) return;
-
-  window.botpress?.webchat?.close?.();
-  window.botpress?.close?.();
+  return true;
 }
 
 export function BotpressLauncher() {
   useEffect(() => {
-    let didSetDefaultClosed = false;
-
-    const setDefaultClosed = () => {
-      if (didSetDefaultClosed) return;
-
-      closeBotpressIfOpen();
-      didSetDefaultClosed = true;
+    const applyFix = () => {
+      enforceBotpressFabVisibility();
     };
 
-    const readyEvents = ['ready', 'webchat:ready', 'webchat:initialized'];
-    readyEvents.forEach((eventName) => window.botpress?.on?.(eventName, setDefaultClosed));
+    applyFix();
 
-    // Handle the case where Botpress is already ready by the time this effect runs.
-    setDefaultClosed();
+    const readyEvents = ['ready', 'webchat:ready', 'webchat:initialized'];
+    readyEvents.forEach((eventName) => window.botpress?.on?.(eventName, applyFix));
+
+    const interval = window.setInterval(() => {
+      if (enforceBotpressFabVisibility()) {
+        window.clearInterval(interval);
+      }
+    }, 500);
 
     return () => {
-      readyEvents.forEach((eventName) => window.botpress?.off?.(eventName, setDefaultClosed));
+      readyEvents.forEach((eventName) => window.botpress?.off?.(eventName, applyFix));
+      window.clearInterval(interval);
     };
   }, []);
 
