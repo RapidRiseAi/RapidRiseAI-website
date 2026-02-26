@@ -114,6 +114,11 @@ export function BotpressLauncher() {
   const onOpen = () => {
     const botpress = window.botpress;
 
+    if (!botpress) {
+      console.warn('[BotpressLauncher] API not ready');
+      return;
+    }
+
     if (botpress?.webchat?.open) {
       botpress.webchat.open();
       return;
@@ -129,7 +134,12 @@ export function BotpressLauncher() {
       return;
     }
 
-    botpress?.toggle?.();
+    if (botpress.toggle) {
+      botpress.toggle();
+      return;
+    }
+
+    console.warn('[BotpressLauncher] API not ready');
   };
 
   return (
