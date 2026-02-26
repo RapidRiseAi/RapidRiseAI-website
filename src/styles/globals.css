@@ -55,10 +55,8 @@ main, header, footer { position: relative; z-index: 1; }
   }
 }
 
-/* Botpress hosts are mounted at the end of <body>; keep them above site chrome without overriding internal widget styles. */
-body > #fab-root,
-body > #webchat,
-body > .bpChatContainer {
+/* Keep only the launcher host above the site chrome; avoid repositioning Botpress panel containers. */
+body > #fab-root {
   position: fixed;
   inset: auto 16px 16px auto;
   visibility: visible;
