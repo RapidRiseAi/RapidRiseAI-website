@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, MessageCircle } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { Container } from './ui/container';
 import { Button } from './ui/button';
@@ -55,14 +55,6 @@ export function Footer() {
         <div className="flex flex-wrap gap-4 text-sm text-text1">{f.links.map((l) => <Link key={l.href} href={l.href}>{l.label}</Link>)}</div>
       </Container>
     </footer>
-  );
-}
-
-export function ChatWidget() {
-  return (
-    <>
-      <Link href="/contact" className="fixed bottom-6 right-6 z-30 inline-flex items-center gap-2 rounded-full border border-stroke bg-bg1 px-4 py-2 text-sm text-text1 hover:text-text0"><MessageCircle className="h-4 w-4" />Chat</Link>
-    </>
   );
 }
 
