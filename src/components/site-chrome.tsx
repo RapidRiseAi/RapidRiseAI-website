@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Container } from './ui/container';
 import { Button } from './ui/button';
 import { siteContent } from '@/content/siteContent';
@@ -86,51 +86,80 @@ export function CookieBanner() {
 function enforceBotpressFabVisibility() {
   const host = document.querySelector<HTMLElement>('#fab-root');
   const shadowRoot = host?.shadowRoot;
+  const launcher = shadowRoot?.querySelector<HTMLElement>('.bpFabWrapper, .bpFab, #fab-root');
 
-  if (!shadowRoot) return false;
+  if (!host || !launcher) return false;
 
-  const styleId = 'rapidrise-botpress-fab-fix';
-  if (!shadowRoot.getElementById(styleId)) {
-    const style = document.createElement('style');
-    style.id = styleId;
-    style.textContent = `
-      .bpFabContainer,
-      .bpFabIcon {
-        position: static !important;
-        inset: auto !important;
-        width: 100% !important;
-        height: 100% !important;
-      }
-    `;
+  const hostStyle = window.getComputedStyle(host);
+  const launcherStyle = window.getComputedStyle(launcher);
+  const rect = launcher.getBoundingClientRect();
 
-    shadowRoot.appendChild(style);
-  }
+  const hasGeometry = rect.width >= 36 && rect.height >= 36;
+  const styleVisible = launcherStyle.visibility !== 'hidden' && launcherStyle.display !== 'none' && launcherStyle.opacity !== '0';
+  const hostVisible = hostStyle.visibility !== 'hidden' && hostStyle.display !== 'none';
 
-  return true;
+  return hasGeometry && styleVisible && hostVisible;
 }
 
 export function BotpressLauncher() {
+  const [showFallback, setShowFallback] = useState(false);
+  const readyEvents = useMemo(() => ['ready', 'webchat:ready', 'webchat:initialized'], []);
+
   useEffect(() => {
-    const applyFix = () => {
-      enforceBotpressFabVisibility();
+    const syncFallbackVisibility = () => {
+      setShowFallback(!enforceBotpressFabVisibility());
     };
 
-    applyFix();
+    const interval = window.setInterval(syncFallbackVisibility, 1000);
+    syncFallbackVisibility();
 
-    const readyEvents = ['ready', 'webchat:ready', 'webchat:initialized'];
-    readyEvents.forEach((eventName) => window.botpress?.on?.(eventName, applyFix));
+    readyEvents.forEach((eventName) => window.botpress?.on?.(eventName, syncFallbackVisibility));
 
-    const interval = window.setInterval(() => {
-      if (enforceBotpressFabVisibility()) {
-        window.clearInterval(interval);
-      }
-    }, 500);
+    const observer = new MutationObserver(syncFallbackVisibility);
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['style', 'class'],
+    });
+
+    window.addEventListener('resize', syncFallbackVisibility);
+
+    const onVisibilityChange = () => {
+      if (!document.hidden) syncFallbackVisibility();
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
 
     return () => {
-      readyEvents.forEach((eventName) => window.botpress?.off?.(eventName, applyFix));
+      readyEvents.forEach((eventName) => window.botpress?.off?.(eventName, syncFallbackVisibility));
       window.clearInterval(interval);
+      window.removeEventListener('resize', syncFallbackVisibility);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      observer.disconnect();
     };
-  }, []);
+  }, [readyEvents]);
 
-  return null;
+  const openBotpress = () => {
+    const chatApi = window.botpress?.webchat;
+    chatApi?.open?.();
+    if (!chatApi?.open) {
+      window.botpress?.open?.();
+    }
+    if (!chatApi?.open && !window.botpress?.open) {
+      window.botpress?.toggle?.();
+    }
+  };
+
+  if (!showFallback) return null;
+
+  return (
+    <button
+      type="button"
+      onClick={openBotpress}
+      aria-label="Open chat"
+      className="fixed bottom-4 right-4 z-[70] inline-flex items-center gap-2 rounded-full border border-white/20 bg-blue px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue/30 transition hover:bg-[#1f6ff2]"
+    >
+      Chat with us
+    </button>
+  );
 }
