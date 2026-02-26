@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, MessageCircle, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Container } from './ui/container';
 import { Button } from './ui/button';
@@ -23,14 +23,8 @@ type BotpressApi = {
   on?: (eventName: string, listener: () => void) => void;
   webchat?: {
     close?: () => void;
-    hide?: () => void;
-    open?: () => void;
-    show?: () => void;
   };
   close?: () => void;
-  hide?: () => void;
-  open?: () => void;
-  toggle?: () => void;
 };
 
 declare global {
@@ -88,8 +82,6 @@ function closeBotpressIfOpen() {
 
   botpress?.webchat?.close?.();
   botpress?.close?.();
-  botpress?.webchat?.hide?.();
-  botpress?.hide?.();
 }
 
 export function BotpressLauncher() {
@@ -111,45 +103,5 @@ export function BotpressLauncher() {
     window.botpress?.on?.('webchat:initialized', setDefaultClosed);
   }, []);
 
-  const onOpen = () => {
-    const botpress = window.botpress;
-
-    if (!botpress) {
-      console.warn('[BotpressLauncher] API not ready');
-      return;
-    }
-
-    if (botpress?.webchat?.open) {
-      botpress.webchat.open();
-      return;
-    }
-
-    if (botpress?.open) {
-      botpress.open();
-      return;
-    }
-
-    if (botpress?.webchat?.show) {
-      botpress.webchat.show();
-      return;
-    }
-
-    if (botpress.toggle) {
-      botpress.toggle();
-      return;
-    }
-
-    console.warn('[BotpressLauncher] API not ready');
-  };
-
-  return (
-    <button
-      type="button"
-      onClick={onOpen}
-      aria-label="Open chat"
-      className="fixed bottom-4 right-4 z-[60] inline-flex h-12 w-12 items-center justify-center rounded-full border border-stroke bg-bg1 text-text0 shadow transition hover:text-blue"
-    >
-      <MessageCircle className="h-5 w-5" />
-    </button>
-  );
+  return null;
 }
