@@ -47,7 +47,7 @@ export function Header() {
       <Container className="flex h-16 items-center justify-between gap-3">
         <Link href="/" className="inline-flex items-center gap-[10px] font-[var(--font-jakarta)] text-sm font-semibold tracking-[0.18em]">
           <img src="/brand/rapid-rise-ai-logo.png" alt="Rapid Rise AI" className="h-[44px] w-auto" />
-          <span>RAPID RISE AI</span>
+          <span className="brand-wordmark">RAPID RISE AI</span>
         </Link>
         <nav className="hidden items-center gap-2 md:flex">
           {siteContent.nav.items.map((item) => <Link key={item.href} href={item.href} className={cn('rounded-full px-3 py-2 text-sm transition', pathname === item.href || pathname.startsWith(`${item.href}/`) ? 'bg-blue/15 text-blue' : 'text-text1 hover:text-text0')}>{item.label}</Link>)}

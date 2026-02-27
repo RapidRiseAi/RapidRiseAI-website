@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import '@/styles/globals.css';
 import Script from 'next/script';
 import { BotpressLauncher, CookieBanner, Footer, Header } from '@/components/site-chrome';
+import { MobileDetector } from '@/components/mobile-detector';
 import { siteContent } from '@/content/siteContent';
 
 const inter = localFont({
@@ -42,10 +43,21 @@ export const metadata: Metadata = {
   },
 };
 
+const mobileDetectionScript = `
+(function () {
+  var mobileUaRegex = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i;
+  var isMobile = window.matchMedia('(max-width: 900px)').matches || mobileUaRegex.test(window.navigator.userAgent) || (window.navigator.maxTouchPoints > 0 && window.innerWidth <= 1024);
+  document.body.classList.toggle('mobile-view', isMobile);
+  document.body.dataset.device = isMobile ? 'mobile' : 'desktop';
+})();
+`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${jakarta.variable}`}>
-      <body className="font-[var(--font-inter)] antialiased">
+      <body className="font-[var(--font-inter)] antialiased" data-device="desktop">
+        <Script id="mobile-detection" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: mobileDetectionScript }} />
+        <MobileDetector />
         <Header />
         <main>{children}</main>
         <Script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js" />
