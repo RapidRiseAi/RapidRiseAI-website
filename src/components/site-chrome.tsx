@@ -104,13 +104,41 @@ function enforceBotpressFabVisibility() {
 export function BotpressLauncher() {
   const [showFallback, setShowFallback] = useState(false);
   const readyEvents = useMemo(() => ['ready', 'webchat:ready', 'webchat:initialized'], []);
+  const fallbackGracePeriodMs = 6000;
+  const visibilityPollMs = 500;
+  const requiredStableSamples = 2;
 
   useEffect(() => {
+    const bootStartedAt = Date.now();
+    let lastCandidate = false;
+    let stableSamples = 0;
+
     const syncFallbackVisibility = () => {
-      setShowFallback(!enforceBotpressFabVisibility());
+      const nativeVisible = enforceBotpressFabVisibility();
+
+      if (nativeVisible) {
+        lastCandidate = false;
+        stableSamples = 0;
+        setShowFallback(false);
+        return;
+      }
+
+      const afterGracePeriod = Date.now() - bootStartedAt >= fallbackGracePeriodMs;
+      const shouldShowFallback = afterGracePeriod && !nativeVisible;
+
+      if (shouldShowFallback !== lastCandidate) {
+        lastCandidate = shouldShowFallback;
+        stableSamples = 1;
+        return;
+      }
+
+      stableSamples += 1;
+      if (stableSamples >= requiredStableSamples) {
+        setShowFallback(shouldShowFallback);
+      }
     };
 
-    const interval = window.setInterval(syncFallbackVisibility, 1000);
+    const interval = window.setInterval(syncFallbackVisibility, visibilityPollMs);
     syncFallbackVisibility();
 
     readyEvents.forEach((eventName) => window.botpress?.on?.(eventName, syncFallbackVisibility));
@@ -137,7 +165,7 @@ export function BotpressLauncher() {
       document.removeEventListener('visibilitychange', onVisibilityChange);
       observer.disconnect();
     };
-  }, [readyEvents]);
+  }, [readyEvents, fallbackGracePeriodMs, requiredStableSamples, visibilityPollMs]);
 
   const openBotpress = () => {
     const chatApi = window.botpress?.webchat;
