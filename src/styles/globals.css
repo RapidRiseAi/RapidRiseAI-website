@@ -41,6 +41,32 @@ body::before {
 
 main, header, footer { position: relative; z-index: 1; }
 
+body.mobile-view {
+  overflow-x: hidden;
+}
+
+body.mobile-view .hero-padding {
+  min-height: calc(100svh - 64px);
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+body.mobile-view h1 {
+  text-wrap: balance;
+}
+
+body.mobile-view .brand-wordmark {
+  display: none;
+}
+
+body.mobile-view section {
+  scroll-margin-top: 72px;
+}
+
+body.mobile-view .card-surface {
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+}
+
 @layer components {
   .section-padding { @apply py-10 md:py-14; }
   .hero-padding { @apply flex min-h-[100svh] items-center py-16 md:py-24; }
