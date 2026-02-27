@@ -45,10 +45,25 @@ export const metadata: Metadata = {
 
 const mobileDetectionScript = `
 (function () {
-  var mobileUaRegex = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i;
-  var isMobile = window.matchMedia('(max-width: 900px)').matches || mobileUaRegex.test(window.navigator.userAgent) || (window.navigator.maxTouchPoints > 0 && window.innerWidth <= 1024);
-  document.body.classList.toggle('mobile-view', isMobile);
-  document.body.dataset.device = isMobile ? 'mobile' : 'desktop';
+  function applyDeviceMode() {
+    if (!document.body) return;
+
+    var mobileUaRegex = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i;
+    var isMobile =
+      window.matchMedia('(max-width: 900px)').matches ||
+      mobileUaRegex.test(window.navigator.userAgent) ||
+      (window.navigator.maxTouchPoints > 0 && window.innerWidth <= 1024);
+
+    document.body.classList.toggle('mobile-view', isMobile);
+    document.body.dataset.device = isMobile ? 'mobile' : 'desktop';
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyDeviceMode, { once: true });
+    return;
+  }
+
+  applyDeviceMode();
 })();
 `;
 
