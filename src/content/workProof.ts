@@ -109,17 +109,6 @@ export const workProofProjects: WorkProofProject[] = [
       realImages: PETGUARDIAN_QUOTE_IMAGES,
     }),
   },
-  {
-    id: 'hotel-faq-bot',
-    title: 'Hotel FAQ chatbot that can handle bookings',
-    type: 'demo',
-    builtForLabel: 'Demo',
-    tags: ['Support', 'Bookings', 'Handoff'],
-    problem: 'Guests need fast answers and booking help without waiting for staff.',
-    build: 'A website FAQ bot that answers questions, captures booking intent, and hands off with context.',
-    outcome: 'Faster responses and fewer repetitive questions for the team.',
-    images: getProjectImages({ projectName: 'Hotel FAQ chatbot demo' }),
-  },
 ];
 
 export function getWorkProofTypeLabel(type: WorkProofType) {
