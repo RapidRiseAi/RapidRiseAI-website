@@ -1,11 +1,12 @@
 import Image from 'next/image';
-import { ArrowRight, CircleAlert, CircleCheckBig, Sparkles, Workflow } from 'lucide-react';
+import { ArrowRight, CircleAlert, CircleCheckBig, Workflow } from 'lucide-react';
 import { Button } from './ui/button';
 import { Container } from './ui/container';
 import { FAQAccordion } from './ui/faq-accordion';
 import { Section } from './ui/section';
 import { Card } from './ui/card';
 import { Pill } from './ui/pill';
+import { MobileShowMoreList } from './ui/mobile-show-more';
 
 export function Hero({
   h1,
@@ -17,6 +18,7 @@ export function Hero({
   imageWidth = 800,
   imageHeight = 600,
   imagePriority = true,
+  compactMobile = false,
 }: {
   h1: string;
   sub: string;
@@ -27,18 +29,30 @@ export function Hero({
   imageWidth?: number;
   imageHeight?: number;
   imagePriority?: boolean;
+  compactMobile?: boolean;
 }) {
   return (
     <section className="hero-padding border-b border-stroke">
-      <Container className="grid items-center gap-8 lg:grid-cols-2">
+      <Container className={`grid items-center gap-8 lg:grid-cols-2 ${compactMobile ? 'max-md:gap-4 max-md:pt-1' : ''}`}>
         <div>
-          <h1 className="max-w-3xl font-[var(--font-jakarta)] text-4xl font-bold tracking-tight md:text-6xl">{h1}</h1>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-text1 md:text-lg">{sub}</p>
-          <div className="mt-8 flex flex-wrap gap-3"><Button href="/quote" arrow>Request a Quote</Button>{cta2 ? <Button href={cta2 === 'View Work' ? '/work' : cta2 === 'View Education' ? '/education' : '/contact'} variant="secondary">{cta2}</Button> : null}</div>
-          <div className="mt-5 flex flex-wrap gap-2"><Pill>Response within 24 hours</Pill><Pill>No spam</Pill><Pill>No pressure</Pill></div>
+          <h1 className={`max-w-3xl font-[var(--font-jakarta)] text-4xl font-bold tracking-tight md:text-6xl ${compactMobile ? 'max-md:text-[2rem] max-md:leading-[1.05]' : ''}`}>{h1}</h1>
+          <p className={`mt-4 max-w-2xl text-base leading-7 text-text1 md:text-lg ${compactMobile ? 'max-md:mt-3 max-md:text-sm max-md:leading-6' : ''}`}>{sub}</p>
+          <div className={`mt-8 flex flex-wrap gap-3 ${compactMobile ? 'max-md:mt-5 max-md:grid max-md:grid-cols-1 max-md:gap-2 min-[430px]:max-md:flex' : ''}`}>
+            <Button href="/quote" arrow className={compactMobile ? 'max-md:min-h-12 max-md:w-full max-md:whitespace-nowrap min-[430px]:max-md:w-auto' : ''}>Request a Quote</Button>
+            {cta2 ? <Button href={cta2 === 'View Work' ? '/work' : cta2 === 'View Education' ? '/education' : '/contact'} variant="secondary" className={compactMobile ? 'max-md:min-h-12 max-md:w-full max-md:whitespace-nowrap min-[430px]:max-md:w-auto' : ''}>{cta2}</Button> : null}
+          </div>
+          <div className={`relative mt-5 ${compactMobile ? 'max-md:mt-4' : ''}`}>
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-bg0 to-transparent max-md:block md:hidden" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-bg0 to-transparent max-md:block md:hidden" />
+            <div className="flex gap-2 max-md:overflow-x-auto max-md:whitespace-nowrap max-md:pb-1 md:flex-wrap">
+              <Pill className="max-md:shrink-0">Response within 24 hours</Pill>
+              <Pill className="max-md:shrink-0">No spam</Pill>
+              <Pill className="max-md:shrink-0">No pressure</Pill>
+            </div>
+          </div>
         </div>
-        <Card className="overflow-hidden border-blue/30 p-2">
-          <Image src={visual} alt={alt} width={imageWidth} height={imageHeight} className={imageClassName} priority={imagePriority} />
+        <Card className={`overflow-hidden border-blue/30 p-2 ${compactMobile ? 'max-md:-mt-1 max-md:p-1.5' : ''}`}>
+          <Image src={visual} alt={alt} width={imageWidth} height={imageHeight} className={`${imageClassName} ${compactMobile ? 'max-md:max-h-[34svh]' : ''}`} priority={imagePriority} />
         </Card>
       </Container>
     </section>
@@ -46,13 +60,13 @@ export function Hero({
 }
 
 export function ManualVsSystems() {
-  const bad = ['Enquiries go cold while you are busy','Follow-ups get delayed or forgotten','Admin eats time that should go to revenue','Mistakes happen when data is copied by hand','Nothing is tracked properly, so nothing improves','The team relies on memory, not systems'];
-  const good = ['Faster response times','Less admin and fewer handoffs','Fewer mistakes and less rework','Better tracking and visibility','Cleaner operations across teams and tools','A workflow that works even when staff are offline'];
+  const bad = ['Enquiries go cold while you are busy', 'Follow-ups get delayed or forgotten', 'Admin eats time that should go to revenue', 'Mistakes happen when data is copied by hand', 'Nothing is tracked properly, so nothing improves', 'The team relies on memory, not systems'];
+  const good = ['Faster response times', 'Less admin and fewer handoffs', 'Fewer mistakes and less rework', 'Better tracking and visibility', 'Cleaner operations across teams and tools', 'A workflow that works even when staff are offline'];
   return (
     <Section label="Impact" title="Manual workflows cost more than they show.">
       <div className="grid gap-4 lg:grid-cols-2">
-        <Card className="border-danger/50"><p className="mb-4 flex items-center gap-2 text-sm font-semibold text-danger"><CircleAlert className="h-4 w-4" />What it costs you when it stays manual</p><div className="grid gap-3 sm:grid-cols-2">{bad.map((x)=><div key={x} className="rounded-xl border border-danger/30 bg-danger/5 p-3 text-sm text-text1">{x}</div>)}</div></Card>
-        <Card className="border-success/50"><p className="mb-4 flex items-center gap-2 text-sm font-semibold text-success"><CircleCheckBig className="h-4 w-4" />What you get with proper systems</p><div className="grid gap-3 sm:grid-cols-2">{good.map((x)=><div key={x} className="rounded-xl border border-success/30 bg-success/5 p-3 text-sm text-text1">{x}</div>)}</div></Card>
+        <Card className="border-danger/50"><p className="mb-4 flex items-center gap-2 text-sm font-semibold text-danger"><CircleAlert className="h-4 w-4" />What it costs you when it stays manual</p><div className="grid gap-3 sm:grid-cols-2">{bad.map((x) => <div key={x} className="rounded-xl border border-danger/30 bg-danger/5 p-3 text-sm text-text1">{x}</div>)}</div></Card>
+        <Card className="border-success/50"><p className="mb-4 flex items-center gap-2 text-sm font-semibold text-success"><CircleCheckBig className="h-4 w-4" />What you get with proper systems</p><div className="grid gap-3 sm:grid-cols-2">{good.map((x) => <div key={x} className="rounded-xl border border-success/30 bg-success/5 p-3 text-sm text-text1">{x}</div>)}</div></Card>
       </div>
     </Section>
   );
@@ -107,17 +121,7 @@ export function ProofStrip() {
 
   return (
     <Section label="Capabilities" title="Built for real operations">
-      <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-        {capabilities.map((item) => (
-          <div
-            key={item}
-            className="flex min-h-9 items-center gap-2 rounded-[14px] border border-stroke/80 bg-[color:color-mix(in_srgb,var(--bg-2)_76%,transparent)] px-3 py-2 text-[13px] leading-[1.3] text-text1 shadow-[0_8px_20px_rgba(0,0,0,0.2)]"
-          >
-            <Sparkles className="h-3.5 w-3.5 shrink-0 text-blue" />
-            <span>{item}</span>
-          </div>
-        ))}
-      </div>
+      <MobileShowMoreList items={capabilities} />
     </Section>
   );
 }

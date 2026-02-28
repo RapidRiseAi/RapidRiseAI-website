@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import '@/styles/globals.css';
 import Script from 'next/script';
-import { BotpressLauncher, CookieBanner, Footer, Header } from '@/components/site-chrome';
+import { BotpressLauncher, CookieBanner, Footer, Header, MobileStickyCtaBar } from '@/components/site-chrome';
 import { MobileDetector } from '@/components/mobile-detector';
 import { siteContent } from '@/content/siteContent';
 
@@ -79,6 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Script src="https://files.bpcontent.cloud/2024/12/25/17/20241225175107-YFWHYV0L.js" defer />
         <Footer />
         <CookieBanner />
+        <MobileStickyCtaBar />
         <BotpressLauncher />
       </body>
     </html>
