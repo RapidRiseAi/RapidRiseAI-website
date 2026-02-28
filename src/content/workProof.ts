@@ -14,6 +14,41 @@ export type WorkProofProject = {
 
 const PLACEHOLDER_IMAGE = '/images/work/to-be-replaced.jpg';
 
+const WORKSHOP_CLIENT_PORTAL_IMAGES = [
+  {
+    src: '/images/work/workshop-client-portal/workshop-client-portal-01.png',
+    alt: 'Workshop client portal dashboard overview',
+  },
+  {
+    src: '/images/work/workshop-client-portal/workshop-client-portal-02.png',
+    alt: 'Workshop client portal job status board',
+  },
+  {
+    src: '/images/work/workshop-client-portal/workshop-client-portal-03.png',
+    alt: 'Workshop client portal customer profile and vehicle details',
+  },
+  {
+    src: '/images/work/workshop-client-portal/workshop-client-portal-04.png',
+    alt: 'Workshop client portal booking and scheduling view',
+  },
+  {
+    src: '/images/work/workshop-client-portal/workshop-client-portal-05.png',
+    alt: 'Workshop client portal service request form',
+  },
+  {
+    src: '/images/work/workshop-client-portal/workshop-client-portal-06.png',
+    alt: 'Workshop client portal workflow and approval steps',
+  },
+  {
+    src: '/images/work/workshop-client-portal/workshop-client-portal-07.png',
+    alt: 'Workshop client portal invoicing and payment summary',
+  },
+  {
+    src: '/images/work/workshop-client-portal/workshop-client-portal-08.png',
+    alt: 'Workshop client portal mobile-responsive layout',
+  },
+];
+
 function createPlaceholderSlides(projectName: string) {
   return Array.from({ length: 5 }, (_, index) => ({
     src: PLACEHOLDER_IMAGE,
@@ -29,11 +64,7 @@ function getProjectImages(params: { projectName: string; realImages?: Array<{ sr
   return createPlaceholderSlides(params.projectName);
 }
 
-// TODO: Replace placeholder slides with real image lists when assets are added.
-// Use these filename prefixes for consistency:
-// - tj-service-repairs- (jpg/png)
-// - petguardian-quote- (jpg/png)
-// - hotel-faq-bot- (jpg/png)
+// TODO: Replace placeholder slides with real image lists for the remaining projects.
 export const workProofProjects: WorkProofProject[] = [
   {
     id: 'tj-service-repairs',
@@ -44,7 +75,10 @@ export const workProofProjects: WorkProofProject[] = [
     problem: 'Operations were tracked manually and status was hard to see at a glance.',
     build: 'A management system with a client dashboard and structured tracking.',
     outcome: 'Cleaner tracking and better visibility across jobs and updates.',
-    images: getProjectImages({ projectName: 'TJ Service & Repairs system' }),
+    images: getProjectImages({
+      projectName: 'TJ Service & Repairs system',
+      realImages: WORKSHOP_CLIENT_PORTAL_IMAGES,
+    }),
   },
   {
     id: 'petguardian-quote',
