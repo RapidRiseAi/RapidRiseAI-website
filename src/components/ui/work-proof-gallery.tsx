@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 type GalleryImage = {
   src: string;
@@ -17,6 +18,7 @@ type WorkProofGalleryProps = {
 export function WorkProofGallery({ images, projectTitle }: WorkProofGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -25,6 +27,10 @@ export function WorkProofGallery({ images, projectTitle }: WorkProofGalleryProps
 
   const goPrev = () => setActiveIndex((current) => (current - 1 + totalSlides) % totalSlides);
   const goNext = () => setActiveIndex((current) => (current + 1) % totalSlides);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!isModalOpen) return;
@@ -115,9 +121,10 @@ export function WorkProofGallery({ images, projectTitle }: WorkProofGalleryProps
         </div>
       </div>
 
-      {isModalOpen ? (
+      {isMounted && isModalOpen
+        ? createPortal(
         <div
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-4"
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/90 p-4"
           role="dialog"
           aria-modal="true"
           aria-label={`${projectTitle} gallery`}
@@ -167,8 +174,10 @@ export function WorkProofGallery({ images, projectTitle }: WorkProofGalleryProps
 
             <div className="mt-4 flex items-center justify-center gap-2">{renderDots('modal')}</div>
           </div>
-        </div>
-      ) : null}
+        </div>,
+        document.body,
+      )
+        : null}
     </>
   );
 }
