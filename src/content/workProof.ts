@@ -49,6 +49,21 @@ const WORKSHOP_CLIENT_PORTAL_IMAGES = [
   },
 ];
 
+const PETGUARDIAN_QUOTE_IMAGES = [
+  {
+    src: '/images/work/petguardian-quote/petguardian-quote-01.png',
+    alt: 'PetGuardian car quote calculator form and estimated quote summary',
+  },
+  {
+    src: '/images/work/petguardian-quote/petguardian-quote-02.png',
+    alt: 'PetGuardian quote workflow showing customer details and follow-up status',
+  },
+  {
+    src: '/images/work/petguardian-quote/petguardian-quote-03.png',
+    alt: 'PetGuardian quote calculator confirmation and captured request details',
+  },
+];
+
 function createPlaceholderSlides(projectName: string) {
   return Array.from({ length: 5 }, (_, index) => ({
     src: PLACEHOLDER_IMAGE,
@@ -89,7 +104,10 @@ export const workProofProjects: WorkProofProject[] = [
     problem: 'Quote requests needed a structured intake and consistent follow-up.',
     build: 'A simple quote request flow that captures details and tracks status.',
     outcome: 'Faster response and cleaner tracking from request to close.',
-    images: getProjectImages({ projectName: 'PetGuardian quote system' }),
+    images: getProjectImages({
+      projectName: 'PetGuardian quote system',
+      realImages: PETGUARDIAN_QUOTE_IMAGES,
+    }),
   },
   {
     id: 'hotel-faq-bot',
