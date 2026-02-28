@@ -95,10 +95,11 @@ function enforceBotpressFabVisibility() {
   const rect = launcher.getBoundingClientRect();
 
   const hasGeometry = rect.width >= 36 && rect.height >= 36;
+  const intersectsViewport = rect.bottom > 0 && rect.right > 0 && rect.top < window.innerHeight && rect.left < window.innerWidth;
   const styleVisible = launcherStyle.visibility !== 'hidden' && launcherStyle.display !== 'none' && launcherStyle.opacity !== '0';
   const hostVisible = hostStyle.visibility !== 'hidden' && hostStyle.display !== 'none';
 
-  return hasGeometry && styleVisible && hostVisible;
+  return hasGeometry && intersectsViewport && styleVisible && hostVisible;
 }
 
 export function BotpressLauncher() {
@@ -176,6 +177,11 @@ export function BotpressLauncher() {
     if (!chatApi?.open && !window.botpress?.open) {
       window.botpress?.toggle?.();
     }
+
+    const nativeLauncher = document
+      .querySelector<HTMLElement>('#fab-root')
+      ?.shadowRoot?.querySelector<HTMLElement>('button, .bpFab, .bpFabWrapper');
+    nativeLauncher?.click();
   };
 
   if (!showFallback) return null;
