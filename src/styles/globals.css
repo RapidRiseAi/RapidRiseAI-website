@@ -43,12 +43,13 @@ main, header, footer { position: relative; z-index: 1; }
 
 body.mobile-view {
   overflow-x: hidden;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 6.5rem);
 }
 
 body.mobile-view .hero-padding {
-  min-height: calc(100svh - 64px);
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  min-height: calc(100svh - 56px);
+  padding-top: 1rem;
+  padding-bottom: 1.25rem;
 }
 
 body.mobile-view h1 {
@@ -60,15 +61,40 @@ body.mobile-view .brand-wordmark {
 }
 
 body.mobile-view section {
-  scroll-margin-top: 72px;
+  scroll-margin-top: 64px;
 }
 
 body.mobile-view .card-surface {
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
+}
+
+@media (max-width: 767px) {
+  body {
+    background:
+      radial-gradient(700px 380px at 80% -24%, rgba(45, 124, 255, 0.16), transparent 62%),
+      radial-gradient(560px 300px at 10% -12%, rgba(45, 124, 255, 0.08), transparent 66%),
+      var(--bg-0);
+  }
+
+  body::before {
+    opacity: 0.04;
+  }
+
+  #fab-root,
+  .bpFabWrapper,
+  .bpFab {
+    display: none !important;
+    pointer-events: none !important;
+  }
+
+  iframe[src*='botpress'],
+  iframe[title*='botpress' i] {
+    z-index: 95 !important;
+  }
 }
 
 @layer components {
-  .section-padding { @apply py-10 md:py-14; }
+  .section-padding { @apply py-10 md:py-14 max-md:py-8; }
   .hero-padding { @apply flex min-h-[100svh] items-center py-16 md:py-24; }
   .card-surface {
     @apply rounded-card border shadow-lg;

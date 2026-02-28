@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container } from './ui/container';
 import { Button } from './ui/button';
 import { siteContent } from '@/content/siteContent';
@@ -33,9 +33,16 @@ type BotpressApi = {
   toggle?: () => void;
 };
 
+type BotpressWebChatController = {
+  sendEvent?: (event: { type: string }) => void;
+  on?: (eventName: string, listener: () => void) => void;
+  off?: (eventName: string, listener: () => void) => void;
+};
+
 declare global {
   interface Window {
     botpress?: BotpressApi;
+    botpressWebChat?: BotpressWebChatController;
   }
 }
 
@@ -44,17 +51,17 @@ export function Header() {
   const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-0 z-50 border-b border-stroke bg-bg0/80 backdrop-blur-xl">
-      <Container className="flex h-16 items-center justify-between gap-3">
-        <Link href="/" className="inline-flex items-center gap-[10px] font-[var(--font-jakarta)] text-sm font-semibold tracking-[0.18em]">
-          <img src="/brand/rapid-rise-ai-logo.png" alt="Rapid Rise AI" className="h-[44px] w-auto" />
+      <Container className="flex h-16 items-center justify-between gap-3 max-md:h-14 max-md:gap-2">
+        <Link href="/" className="inline-flex items-center gap-[10px] font-[var(--font-jakarta)] text-sm font-semibold tracking-[0.18em] max-md:gap-2">
+          <img src="/brand/rapid-rise-ai-logo.png" alt="Rapid Rise AI" className="h-[44px] w-auto max-md:h-9" />
           <span className="brand-wordmark">RAPID RISE AI</span>
         </Link>
         <nav className="hidden items-center gap-2 md:flex">
           {siteContent.nav.items.map((item) => <Link key={item.href} href={item.href} className={cn('rounded-full px-3 py-2 text-sm transition', pathname === item.href || pathname.startsWith(`${item.href}/`) ? 'bg-blue/15 text-blue' : 'text-text1 hover:text-text0')}>{item.label}</Link>)}
         </nav>
-        <div className="flex items-center gap-2">
-          <Button href="/quote" className="px-4 py-2">Request a Quote</Button>
-          <button className="rounded-full border border-stroke p-2 md:hidden" onClick={() => setOpen(true)} aria-label="Open menu"><Menu className="h-4 w-4" /></button>
+        <div className="flex items-center gap-2 max-md:gap-1.5">
+          <Button href="/quote" className="px-4 py-2 max-md:px-3 max-md:py-1.5 max-md:text-sm">Request a Quote</Button>
+          <button className="rounded-full border border-stroke p-2 md:hidden max-md:p-1.5" onClick={() => setOpen(true)} aria-label="Open menu"><Menu className="h-4 w-4 max-md:h-3.5 max-md:w-3.5" /></button>
         </div>
       </Container>
       {open ? <div className="fixed inset-0 z-50 bg-black/70 md:hidden" onClick={() => setOpen(false)}><aside className="absolute right-0 top-0 h-full w-[88%] max-w-sm overflow-y-auto border-l border-stroke bg-bg0 p-5" onClick={(e) => e.stopPropagation()}><div className="mb-4 flex items-center justify-between"><p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue">Menu</p><button onClick={() => setOpen(false)} aria-label="Close menu"><X className="h-5 w-5" /></button></div><p className="mb-3 text-sm text-text2">Solutions</p><div className="space-y-2">{solutionLinks.map((link) => <Link className="block rounded-lg border border-stroke px-3 py-2 text-sm" key={link.href} href={link.href} onClick={() => setOpen(false)}>{link.label}</Link>)}</div><div className="mt-5 space-y-1">{siteContent.nav.items.map((item) => <Link className="block rounded-lg px-3 py-2 text-sm text-text1 hover:bg-white/5" key={item.href} href={item.href} onClick={() => setOpen(false)}>{item.label}</Link>)}<Link className="block rounded-lg px-3 py-2 text-sm text-text1 hover:bg-white/5" href="/book" onClick={() => setOpen(false)}>Book</Link></div></aside></div> : null}
@@ -83,117 +90,79 @@ export function CookieBanner() {
   return <div className="fixed inset-x-4 bottom-4 z-40 rounded-card border border-stroke bg-bg1 p-4 text-sm text-text1">This site uses cookies for analytics.</div>;
 }
 
-function enforceBotpressFabVisibility() {
-  const host = document.querySelector<HTMLElement>('#fab-root');
-  const shadowRoot = host?.shadowRoot;
-  const launcher = shadowRoot?.querySelector<HTMLElement>('.bpFabWrapper, .bpFab, #fab-root');
-
-  if (!host || !launcher) return false;
-
-  const hostStyle = window.getComputedStyle(host);
-  const launcherStyle = window.getComputedStyle(launcher);
-  const rect = launcher.getBoundingClientRect();
-
-  const hasGeometry = rect.width >= 36 && rect.height >= 36;
-  const intersectsViewport = rect.bottom > 0 && rect.right > 0 && rect.top < window.innerHeight && rect.left < window.innerWidth;
-  const styleVisible = launcherStyle.visibility !== 'hidden' && launcherStyle.display !== 'none' && launcherStyle.opacity !== '0';
-  const hostVisible = hostStyle.visibility !== 'hidden' && hostStyle.display !== 'none';
-
-  return hasGeometry && intersectsViewport && styleVisible && hostVisible;
-}
-
 export function BotpressLauncher() {
-  const [showFallback, setShowFallback] = useState(false);
-  const readyEvents = useMemo(() => ['ready', 'webchat:ready', 'webchat:initialized'], []);
-  const fallbackGracePeriodMs = 6000;
-  const visibilityPollMs = 500;
-  const requiredStableSamples = 2;
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpening, setIsOpening] = useState(false);
+  const fallbackShareUrl = CONFIG.botpressShareUrl || CONFIG.botpressEmbedUrl;
 
   useEffect(() => {
-    const bootStartedAt = Date.now();
-    let lastCandidate = false;
-    let stableSamples = 0;
-
-    const syncFallbackVisibility = () => {
-      const nativeVisible = enforceBotpressFabVisibility();
-
-      if (nativeVisible) {
-        lastCandidate = false;
-        stableSamples = 0;
-        setShowFallback(false);
-        return;
-      }
-
-      const afterGracePeriod = Date.now() - bootStartedAt >= fallbackGracePeriodMs;
-      const shouldShowFallback = afterGracePeriod && !nativeVisible;
-
-      if (shouldShowFallback !== lastCandidate) {
-        lastCandidate = shouldShowFallback;
-        stableSamples = 1;
-        return;
-      }
-
-      stableSamples += 1;
-      if (stableSamples >= requiredStableSamples) {
-        setShowFallback(shouldShowFallback);
-      }
-    };
-
-    const interval = window.setInterval(syncFallbackVisibility, visibilityPollMs);
-    syncFallbackVisibility();
-
-    readyEvents.forEach((eventName) => window.botpress?.on?.(eventName, syncFallbackVisibility));
-
-    const observer = new MutationObserver(syncFallbackVisibility);
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-      attributeFilter: ['style', 'class'],
-    });
-
-    window.addEventListener('resize', syncFallbackVisibility);
-
-    const onVisibilityChange = () => {
-      if (!document.hidden) syncFallbackVisibility();
-    };
-    document.addEventListener('visibilitychange', onVisibilityChange);
+    const onOpened = () => setIsOpen(true);
+    const onClosed = () => setIsOpen(false);
+    window.botpressWebChat?.on?.('UI.OPENED', onOpened);
+    window.botpressWebChat?.on?.('UI.CLOSED', onClosed);
+    window.botpress?.on?.('webchat:opened', onOpened);
+    window.botpress?.on?.('webchat:closed', onClosed);
 
     return () => {
-      readyEvents.forEach((eventName) => window.botpress?.off?.(eventName, syncFallbackVisibility));
-      window.clearInterval(interval);
-      window.removeEventListener('resize', syncFallbackVisibility);
-      document.removeEventListener('visibilitychange', onVisibilityChange);
-      observer.disconnect();
+      window.botpressWebChat?.off?.('UI.OPENED', onOpened);
+      window.botpressWebChat?.off?.('UI.CLOSED', onClosed);
+      window.botpress?.off?.('webchat:opened', onOpened);
+      window.botpress?.off?.('webchat:closed', onClosed);
     };
-  }, [readyEvents, fallbackGracePeriodMs, requiredStableSamples, visibilityPollMs]);
+  }, []);
 
-  const openBotpress = () => {
-    const chatApi = window.botpress?.webchat;
-    chatApi?.open?.();
-    if (!chatApi?.open) {
-      window.botpress?.open?.();
+  const openWithRetry = async () => {
+    setIsOpening(true);
+    const started = Date.now();
+    while (Date.now() - started <= 3000) {
+      if (window.botpressWebChat?.sendEvent) {
+        window.botpressWebChat.sendEvent({ type: 'show' });
+        setIsOpen(true);
+        setIsOpening(false);
+        return;
+      }
+      await new Promise((resolve) => window.setTimeout(resolve, 200));
     }
-    if (!chatApi?.open && !window.botpress?.open) {
-      window.botpress?.toggle?.();
+    if (fallbackShareUrl) {
+      window.open(fallbackShareUrl, '_blank', 'noopener,noreferrer');
     }
-
-    const nativeLauncher = document
-      .querySelector<HTMLElement>('#fab-root')
-      ?.shadowRoot?.querySelector<HTMLElement>('button, .bpFab, .bpFabWrapper');
-    nativeLauncher?.click();
+    setIsOpening(false);
   };
 
-  if (!showFallback) return null;
+  const toggleBotpress = () => {
+    if (isOpen && window.botpressWebChat?.sendEvent) {
+      window.botpressWebChat.sendEvent({ type: 'hide' });
+      setIsOpen(false);
+      return;
+    }
+    void openWithRetry();
+  };
 
   return (
     <button
       type="button"
-      onClick={openBotpress}
+      onClick={toggleBotpress}
       aria-label="Open chat"
-      className="fixed bottom-4 right-4 z-[70] inline-flex items-center gap-2 rounded-full border border-white/20 bg-blue px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue/30 transition hover:bg-[#1f6ff2]"
+      className="fixed bottom-[calc(env(safe-area-inset-bottom)+5.75rem)] right-4 z-[90] inline-flex min-h-12 items-center gap-2 rounded-full border border-white/20 bg-blue px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue/30 transition hover:bg-[#1f6ff2] md:hidden"
     >
-      Chat with us
+      {isOpening ? 'Opening chat...' : isOpen ? 'Close chat' : 'Chat with us'}
     </button>
+  );
+}
+
+export function MobileStickyCtaBar() {
+  return (
+    <div className="fixed inset-x-0 bottom-0 z-[80] border-t border-stroke bg-bg0/95 px-4 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-3 backdrop-blur-xl md:hidden">
+      <Container className="px-0">
+        <div className="space-y-2">
+          <Button href="/quote" className="w-full justify-center">
+            Request a Quote
+          </Button>
+          <Link href="/work" className="block text-center text-sm font-medium text-text1 underline-offset-4 transition hover:text-text0 hover:underline">
+            View Work
+          </Link>
+        </div>
+      </Container>
+    </div>
   );
 }
