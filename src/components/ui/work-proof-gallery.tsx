@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type GalleryImage = {
   src: string;
@@ -56,19 +56,16 @@ export function WorkProofGallery({ images, projectTitle }: WorkProofGalleryProps
     };
   }, [isModalOpen]);
 
-  const renderedDots = useMemo(
-    () =>
-      images.map((image, index) => (
-        <button
-          key={`${image.alt}-${index}`}
-          type="button"
-          className={`h-2.5 w-2.5 rounded-full transition ${index === activeIndex ? 'bg-blue' : 'bg-white/35 hover:bg-white/60'}`}
-          onClick={() => setActiveIndex(index)}
-          aria-label={`Go to slide ${index + 1}`}
-        />
-      )),
-    [activeIndex, images],
-  );
+  const renderDots = (location: 'inline' | 'modal') =>
+    images.map((image, index) => (
+      <button
+        key={`${location}-${image.alt}-${index}`}
+        type="button"
+        className={`h-2.5 w-2.5 rounded-full transition ${index === activeIndex ? 'bg-blue' : 'bg-white/35 hover:bg-white/60'}`}
+        onClick={() => setActiveIndex(index)}
+        aria-label={`Go to slide ${index + 1}`}
+      />
+    ));
 
   return (
     <>
@@ -106,7 +103,7 @@ export function WorkProofGallery({ images, projectTitle }: WorkProofGalleryProps
         </div>
 
         <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2">{renderedDots}</div>
+          <div className="flex items-center gap-2">{renderDots('inline')}</div>
           <button
             ref={triggerRef}
             type="button"
@@ -124,9 +121,13 @@ export function WorkProofGallery({ images, projectTitle }: WorkProofGalleryProps
           role="dialog"
           aria-modal="true"
           aria-label={`${projectTitle} gallery`}
-          onClick={() => setIsModalOpen(false)}
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              setIsModalOpen(false);
+            }
+          }}
         >
-          <div className="relative w-full max-w-6xl" onClick={(event) => event.stopPropagation()}>
+          <div className="relative w-full max-w-6xl" onMouseDown={(event) => event.stopPropagation()}>
             <button
               ref={closeRef}
               type="button"
@@ -164,7 +165,7 @@ export function WorkProofGallery({ images, projectTitle }: WorkProofGalleryProps
               </button>
             </div>
 
-            <div className="mt-4 flex items-center justify-center gap-2">{renderedDots}</div>
+            <div className="mt-4 flex items-center justify-center gap-2">{renderDots('modal')}</div>
           </div>
         </div>
       ) : null}
