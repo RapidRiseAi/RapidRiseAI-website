@@ -164,6 +164,7 @@ export function CookieBanner() {
 export function BotpressLauncher() {
   const [isOpening, setIsOpening] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [stickyCtaVisible, setStickyCtaVisible] = useState(false);
   const fallbackShareUrl = CONFIG.botpressShareUrl || CONFIG.botpressEmbedUrl;
 
   useEffect(() => {
@@ -184,6 +185,19 @@ export function BotpressLauncher() {
     window.addEventListener('mobile-menu-state', handleMenuEvent);
     return () => {
       window.removeEventListener('mobile-menu-state', handleMenuEvent);
+    };
+  }, []);
+
+
+  useEffect(() => {
+    const handleStickyCtaEvent = (event: Event) => {
+      const customEvent = event as CustomEvent<{ visible: boolean }>;
+      setStickyCtaVisible(Boolean(customEvent.detail?.visible));
+    };
+
+    window.addEventListener('mobile-sticky-cta-visibility', handleStickyCtaEvent);
+    return () => {
+      window.removeEventListener('mobile-sticky-cta-visibility', handleStickyCtaEvent);
     };
   }, []);
 
@@ -211,7 +225,7 @@ export function BotpressLauncher() {
       aria-label="Open chat"
       className={cn(
         'fixed right-4 z-[125] inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-blue text-white shadow-lg shadow-blue/25 transition hover:bg-[#1f6ff2] md:hidden',
-        menuOpen ? 'pointer-events-none opacity-0' : 'opacity-100',
+        menuOpen || stickyCtaVisible ? 'pointer-events-none opacity-0' : 'opacity-100',
       )}
       style={{ bottom: 'calc(var(--mobile-cta-bar-height, 0px) + env(safe-area-inset-bottom) + 1rem)' }}
     >
@@ -240,7 +254,9 @@ export function MobileStickyCtaBar() {
   }, []);
 
   useEffect(() => {
-    setShow(pastHero && !menuOpen);
+    const nextVisible = pastHero && !menuOpen;
+    setShow(nextVisible);
+    window.dispatchEvent(new CustomEvent('mobile-sticky-cta-visibility', { detail: { visible: nextVisible } }));
   }, [menuOpen, pastHero]);
 
   useEffect(() => {
@@ -277,6 +293,7 @@ export function MobileStickyCtaBar() {
     return () => {
       observer.disconnect();
       resizeObserver?.disconnect();
+      window.dispatchEvent(new CustomEvent('mobile-sticky-cta-visibility', { detail: { visible: false } }));
     };
   }, [pathname]);
 
@@ -284,7 +301,7 @@ export function MobileStickyCtaBar() {
     <div
       id="mobile-sticky-cta-bar"
       className={cn(
-        'fixed inset-x-0 bottom-0 z-[110] border-t border-stroke bg-bg0/95 px-4 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-3 backdrop-blur-xl transition duration-200 md:hidden',
+        'fixed inset-x-0 bottom-0 z-[110] border-t border-stroke bg-bg0/93 px-4 pb-[calc(env(safe-area-inset-bottom)+0.65rem)] pt-2.5 backdrop-blur-xl transition duration-200 md:hidden',
         show ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-full opacity-0',
       )}
     >
@@ -293,7 +310,7 @@ export function MobileStickyCtaBar() {
           <Button href="/quote" className="w-full justify-center">
             Request a Quote
           </Button>
-          <Link href="/work" className="block text-center text-sm font-medium text-text1 underline-offset-4 transition hover:text-text0 hover:underline">
+          <Link href="/work" className="block py-1 text-center text-sm font-medium text-text1 underline-offset-4 transition hover:text-text0 hover:underline">
             View Work
           </Link>
         </div>

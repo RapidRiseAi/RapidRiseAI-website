@@ -65,12 +65,21 @@ body.mobile-view section {
 }
 
 body.mobile-view .card-surface {
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.2);
 }
 
 body.mobile-view .section-padding {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+}
+
+body.mobile-view .mobile-stack-tight {
+  gap: 0.75rem;
+}
+
+body.mobile-view .mobile-copy {
+  font-size: 0.93rem;
+  line-height: 1.45;
 }
 
 body.mobile-view #mobile-sticky-cta-bar {
@@ -110,12 +119,12 @@ body.mobile-view #mobile-sticky-cta-bar {
 }
 
 @layer components {
-  .section-padding { @apply py-10 md:py-14 max-md:py-7; }
+  .section-padding { @apply py-10 md:py-14 max-md:py-6; }
   .hero-padding { @apply flex min-h-[100svh] items-center py-16 md:py-24; }
   .card-surface {
     @apply rounded-card border shadow-lg;
     background: linear-gradient(180deg, color-mix(in srgb, var(--bg-2) 72%, transparent), color-mix(in srgb, var(--bg-1) 78%, transparent));
-    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
   }
   .chip {
     @apply inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium;

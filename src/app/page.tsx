@@ -54,17 +54,17 @@ export default function HomePage() {
       <Hero id="home-hero" h1={siteContent.home.hero.h1} sub={siteContent.home.hero.sub} cta2="View Work" visual="/images/hero/rapid-rise-ai-business-automation-client-portal-hero.jpg" alt="Client portal dashboard with integrations" compactMobile />
 
       <div className="md:hidden">
-        <Section className="pt-4" label="Trusted by operators" title="Built to perform under pressure" intro="Premium systems engineered for fast-moving teams.">
-          <div className="grid grid-cols-3 gap-2">
-            <Card className="p-3 text-center">
+        <Section className="pt-3" label="Trusted by operators" title="Built to perform under pressure" intro="Premium systems engineered for fast-moving teams.">
+          <div className="grid grid-cols-3 gap-2.5">
+            <Card className="p-3 text-center max-md:min-h-[116px]">
               <p className="text-xl font-semibold text-text0">24h</p>
               <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-text2">Reply SLA</p>
             </Card>
-            <Card className="p-3 text-center">
+            <Card className="p-3 text-center max-md:min-h-[116px]">
               <p className="text-xl font-semibold text-text0">2 Weeks</p>
               <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-text2">Quick Wins</p>
             </Card>
-            <Card className="p-3 text-center">
+            <Card className="p-3 text-center max-md:min-h-[116px]">
               <p className="text-xl font-semibold text-text0">100%</p>
               <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-text2">Handover-ready</p>
             </Card>
@@ -74,13 +74,13 @@ export default function HomePage() {
         <Section label="Transformation" title="From messy workflow to premium execution">
           <MobileSnapCarousel>
             {transformationStories.map((story, index) => (
-              <Card key={story.problem} className="min-h-[220px] p-5">
+              <Card key={story.problem} className="min-h-[196px] p-4">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-danger/90">Before</p>
-                <p className="mt-2 text-sm leading-6 text-text1">{story.problem}</p>
-                <div className="my-4 h-px w-full bg-stroke" />
+                <p className="mt-2 mobile-copy text-text1">{story.problem}</p>
+                <div className="my-3 h-px w-full bg-stroke" />
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-success">After</p>
-                <p className="mt-2 text-sm leading-6 text-text0">{story.outcome}</p>
-                <p className="mt-4 inline-flex rounded-full border border-blue/40 bg-blue/10 px-2 py-1 text-[11px] uppercase tracking-[0.14em] text-blue">Scenario {index + 1}</p>
+                <p className="mt-2 mobile-copy text-text0">{story.outcome}</p>
+                <p className="mt-3 inline-flex rounded-full border border-blue/35 bg-blue/10 px-2 py-1 text-[10px] uppercase tracking-[0.14em] text-blue">Scenario {index + 1}</p>
               </Card>
             ))}
           </MobileSnapCarousel>
@@ -89,17 +89,17 @@ export default function HomePage() {
         <Section label="Flagship systems" title="Start with the highest ROI layer">
           <MobileSnapCarousel>
             {flagshipSystems.map((system) => (
-              <Card key={system.title} className="min-h-[220px] p-5">
+              <Card key={system.title} className="min-h-[196px] p-4">
                 <Sparkles className="h-5 w-5 text-blue" />
-                <h3 className="mt-4 font-[var(--font-jakarta)] text-xl font-semibold leading-tight">{system.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-text1">{system.description}</p>
-                <Link href={system.href} className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-blue">
+                <h3 className="mt-3 font-[var(--font-jakarta)] text-[1.55rem] font-semibold leading-[1.15]">{system.title}</h3>
+                <p className="mt-2.5 mobile-copy text-text1">{system.description}</p>
+                <Link href={system.href} className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-blue">
                   Explore system <ArrowRight className="h-4 w-4" />
                 </Link>
               </Card>
             ))}
           </MobileSnapCarousel>
-          <div className="mt-4 px-4">
+          <div className="mt-3 px-4">
             <Button href="/solutions" variant="secondary" className="w-full">
               View all solutions
             </Button>
@@ -109,7 +109,7 @@ export default function HomePage() {
         <Section label="Proof" title="Swipe recent work">
           <MobileSnapCarousel>
             {workProofProjects.slice(0, 4).map((project) => (
-              <Card key={project.id} className="space-y-4 p-4">
+              <Card key={project.id} className="space-y-3 p-4">
                 <Image
                   src={project.images[0]?.src ?? '/images/work/to-be-replaced.jpg'}
                   alt={project.images[0]?.alt ?? `${project.title} preview`}
@@ -118,23 +118,23 @@ export default function HomePage() {
                   className="aspect-video w-full rounded-xl border border-stroke object-cover object-center"
                   loading="lazy"
                 />
-                <div className="flex items-start justify-between gap-3">
+                <div className="flex items-start justify-between gap-2.5">
                   <h3 className="font-[var(--font-jakarta)] text-base font-semibold leading-tight">{project.title}</h3>
                   <Pill className="border-blue/50 text-blue">{getWorkProofTypeLabel(project.type)}</Pill>
                 </div>
-                <p className="text-sm text-text1">{project.builtForLabel}</p>
+                <p className="mobile-copy text-text1">{project.builtForLabel}</p>
               </Card>
             ))}
           </MobileSnapCarousel>
-          <div className="mt-4 px-4">
-            <Button href="/work" className="w-full" arrow>
+          <div className="mt-3 px-4">
+            <Button href="/work" variant="secondary" className="w-full">
               View all proof
             </Button>
           </div>
         </Section>
 
         <Section label="Delivery" title="How your system gets shipped">
-          <div className="space-y-3 px-4">
+          <div className="space-y-3 px-4 mobile-stack-tight">
             {[
               'Diagnose leaks and map your workflow in detail.',
               'Build and connect the stack with clean QA and checks.',
@@ -142,7 +142,7 @@ export default function HomePage() {
             ].map((step, idx) => (
               <Card key={step} className="flex items-center gap-3 p-4">
                 <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-blue/60 bg-blue/15 text-sm font-semibold text-blue">{idx + 1}</div>
-                <p className="text-sm text-text1">{step}</p>
+                <p className="mobile-copy text-text1">{step}</p>
               </Card>
             ))}
           </div>
@@ -167,10 +167,10 @@ export default function HomePage() {
                 bullets: ['Ongoing optimisations', 'Performance monitoring', 'Strategic roadmap support'],
               },
             ].map((pack) => (
-              <Card key={pack.title} className="min-h-[220px] p-5">
+              <Card key={pack.title} className="min-h-[196px] p-4">
                 <p className="text-xs uppercase tracking-[0.18em] text-blue">{pack.subtitle}</p>
-                <h3 className="mt-2 font-[var(--font-jakarta)] text-xl font-semibold">{pack.title}</h3>
-                <ul className="mt-4 space-y-2 text-sm text-text1">
+                <h3 className="mt-2 font-[var(--font-jakarta)] text-[1.55rem] font-semibold">{pack.title}</h3>
+                <ul className="mt-3 space-y-2 mobile-copy text-text1">
                   {pack.bullets.map((bullet) => (
                     <li key={bullet} className="flex items-start gap-2">
                       <Check className="mt-0.5 h-4 w-4 shrink-0 text-blue" />
@@ -198,10 +198,10 @@ export default function HomePage() {
 
         <Section className="pt-2">
           <div className="px-4">
-            <Card className="border-blue/40 p-6">
+            <Card className="border-blue/35 p-5">
               <p className="text-xs uppercase tracking-[0.18em] text-blue">Ready to scale?</p>
-              <h2 className="mt-2 font-[var(--font-jakarta)] text-2xl font-semibold">Stop the leaks. Build the system.</h2>
-              <p className="mt-3 text-sm text-text1">Premium execution, clear communication, and ownership from day one.</p>
+              <h2 className="mt-2 font-[var(--font-jakarta)] text-[2rem] font-semibold leading-[1.08]">Stop the leaks. Build the system.</h2>
+              <p className="mt-3 mobile-copy text-text1">Premium execution, clear communication, and ownership from day one.</p>
               <div className="mt-5 grid gap-2">
                 <Button href="/quote" arrow>
                   Request a Quote
@@ -241,7 +241,7 @@ export default function HomePage() {
                   className="aspect-video w-full rounded-xl border border-stroke object-cover object-center"
                   loading="lazy"
                 />
-                <div className="flex items-start justify-between gap-3">
+                <div className="flex items-start justify-between gap-2.5">
                   <h3 className="font-[var(--font-jakarta)] text-lg font-semibold">{project.title}</h3>
                   <Pill className="border-blue/50 text-blue">{getWorkProofTypeLabel(project.type)}</Pill>
                 </div>

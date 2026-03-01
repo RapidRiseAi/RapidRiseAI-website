@@ -37,19 +37,19 @@ export function Hero({
     <section id={id} className="hero-padding border-b border-stroke">
       <Container className={`grid items-center gap-8 max-md:gap-5 lg:grid-cols-2 ${compactMobile ? 'max-md:gap-4 max-md:pt-1' : ''}`}>
         <div>
-          <h1 className={`max-w-3xl font-[var(--font-jakarta)] text-4xl font-bold tracking-tight md:text-6xl ${compactMobile ? 'max-md:text-[36px] max-md:leading-tight' : ''}`}>{h1}</h1>
-          <p className={`mt-4 max-w-2xl text-base leading-7 text-text1 md:text-lg ${compactMobile ? 'max-md:mt-3 max-md:text-[15px] max-md:leading-6' : ''}`}>{sub}</p>
-          <div className={`mt-8 flex flex-wrap gap-3 max-md:mt-5 ${compactMobile ? 'max-md:grid max-md:grid-cols-1 max-md:gap-2 min-[430px]:max-md:flex' : ''}`}>
+          <h1 className={`max-w-3xl font-[var(--font-jakarta)] text-4xl font-bold tracking-tight md:text-6xl ${compactMobile ? 'max-md:text-[2.8rem] max-md:leading-[1.06]' : ''}`}>{h1}</h1>
+          <p className={`mt-4 max-w-2xl text-base leading-7 text-text1 md:text-lg ${compactMobile ? 'max-md:mt-3 max-md:text-[0.96rem] max-md:leading-[1.55]' : ''}`}>{sub}</p>
+          <div className={`mt-8 flex flex-wrap gap-3 max-md:mt-4 ${compactMobile ? 'max-md:grid max-md:grid-cols-1 max-md:gap-2.5 min-[430px]:max-md:flex' : ''}`}>
             <Button href="/quote" arrow className={compactMobile ? 'max-md:h-11 max-md:w-full max-md:px-5 max-md:text-sm max-md:whitespace-nowrap min-[430px]:max-md:w-auto' : ''}>Request a Quote</Button>
             {cta2 ? <Button href={cta2 === 'View Work' ? '/work' : cta2 === 'View Education' ? '/education' : '/contact'} variant="secondary" className={compactMobile ? 'max-md:h-11 max-md:w-full max-md:px-5 max-md:text-sm max-md:whitespace-nowrap min-[430px]:max-md:w-auto' : ''}>{cta2}</Button> : null}
           </div>
-          <div className={`relative mt-5 ${compactMobile ? 'max-md:mt-4' : ''}`}>
-            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-bg0 to-transparent max-md:block md:hidden" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-bg0 to-transparent max-md:block md:hidden" />
+          <div className={`relative mt-5 ${compactMobile ? 'max-md:mt-3.5' : ''}`}>
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-4 bg-gradient-to-r from-bg0/65 to-transparent max-md:block md:hidden" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-4 bg-gradient-to-l from-bg0/65 to-transparent max-md:block md:hidden" />
             <div className="flex gap-2 max-md:overflow-x-auto max-md:whitespace-nowrap max-md:pb-1 max-md:[scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:flex-wrap">
-              <Pill className="max-md:shrink-0">Response within 24 hours</Pill>
-              <Pill className="max-md:shrink-0">No spam</Pill>
-              <Pill className="max-md:shrink-0">No pressure</Pill>
+              <Pill className="max-md:shrink-0 max-md:px-2.5 max-md:py-1 max-md:text-[11px]">Response within 24 hours</Pill>
+              <Pill className="max-md:shrink-0 max-md:px-2.5 max-md:py-1 max-md:text-[11px]">No spam</Pill>
+              <Pill className="max-md:shrink-0 max-md:px-2.5 max-md:py-1 max-md:text-[11px]">No pressure</Pill>
             </div>
           </div>
         </div>
