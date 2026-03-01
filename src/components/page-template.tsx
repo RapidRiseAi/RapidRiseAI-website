@@ -19,6 +19,7 @@ export function Hero({
   imageHeight = 600,
   imagePriority = true,
   compactMobile = false,
+  id,
 }: {
   h1: string;
   sub: string;
@@ -30,21 +31,22 @@ export function Hero({
   imageHeight?: number;
   imagePriority?: boolean;
   compactMobile?: boolean;
+  id?: string;
 }) {
   return (
-    <section className="hero-padding border-b border-stroke">
+    <section id={id} className="hero-padding border-b border-stroke">
       <Container className={`grid items-center gap-8 max-md:gap-5 lg:grid-cols-2 ${compactMobile ? 'max-md:gap-4 max-md:pt-1' : ''}`}>
         <div>
-          <h1 className={`max-w-3xl font-[var(--font-jakarta)] text-4xl font-bold tracking-tight md:text-6xl ${compactMobile ? 'max-md:text-[2rem] max-md:leading-[1.05]' : ''}`}>{h1}</h1>
-          <p className={`mt-4 max-w-2xl text-base leading-7 text-text1 md:text-lg ${compactMobile ? 'max-md:mt-3 max-md:text-sm max-md:leading-6' : ''}`}>{sub}</p>
+          <h1 className={`max-w-3xl font-[var(--font-jakarta)] text-4xl font-bold tracking-tight md:text-6xl ${compactMobile ? 'max-md:text-[36px] max-md:leading-tight' : ''}`}>{h1}</h1>
+          <p className={`mt-4 max-w-2xl text-base leading-7 text-text1 md:text-lg ${compactMobile ? 'max-md:mt-3 max-md:text-[15px] max-md:leading-6' : ''}`}>{sub}</p>
           <div className={`mt-8 flex flex-wrap gap-3 max-md:mt-5 ${compactMobile ? 'max-md:grid max-md:grid-cols-1 max-md:gap-2 min-[430px]:max-md:flex' : ''}`}>
-            <Button href="/quote" arrow className={compactMobile ? 'max-md:min-h-12 max-md:w-full max-md:whitespace-nowrap min-[430px]:max-md:w-auto' : ''}>Request a Quote</Button>
-            {cta2 ? <Button href={cta2 === 'View Work' ? '/work' : cta2 === 'View Education' ? '/education' : '/contact'} variant="secondary" className={compactMobile ? 'max-md:min-h-12 max-md:w-full max-md:whitespace-nowrap min-[430px]:max-md:w-auto' : ''}>{cta2}</Button> : null}
+            <Button href="/quote" arrow className={compactMobile ? 'max-md:h-11 max-md:w-full max-md:px-5 max-md:text-sm max-md:whitespace-nowrap min-[430px]:max-md:w-auto' : ''}>Request a Quote</Button>
+            {cta2 ? <Button href={cta2 === 'View Work' ? '/work' : cta2 === 'View Education' ? '/education' : '/contact'} variant="secondary" className={compactMobile ? 'max-md:h-11 max-md:w-full max-md:px-5 max-md:text-sm max-md:whitespace-nowrap min-[430px]:max-md:w-auto' : ''}>{cta2}</Button> : null}
           </div>
           <div className={`relative mt-5 ${compactMobile ? 'max-md:mt-4' : ''}`}>
             <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-bg0 to-transparent max-md:block md:hidden" />
             <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-bg0 to-transparent max-md:block md:hidden" />
-            <div className="flex gap-2 max-md:overflow-x-auto max-md:whitespace-nowrap max-md:pb-1 md:flex-wrap">
+            <div className="flex gap-2 max-md:overflow-x-auto max-md:whitespace-nowrap max-md:pb-1 max-md:[scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:flex-wrap">
               <Pill className="max-md:shrink-0">Response within 24 hours</Pill>
               <Pill className="max-md:shrink-0">No spam</Pill>
               <Pill className="max-md:shrink-0">No pressure</Pill>
@@ -52,7 +54,7 @@ export function Hero({
           </div>
         </div>
         <Card className={`overflow-hidden border-blue/30 p-2 ${compactMobile ? 'max-md:-mt-1 max-md:p-1.5' : ''}`}>
-          <Image src={visual} alt={alt} width={imageWidth} height={imageHeight} className={`${imageClassName} ${compactMobile ? 'max-md:max-h-[34svh]' : ''}`} priority={imagePriority} />
+          <Image src={visual} alt={alt} width={imageWidth} height={imageHeight} className={`${imageClassName} ${compactMobile ? 'max-md:max-h-[220px] max-md:object-contain' : ''}`} priority={imagePriority} />
         </Card>
       </Container>
     </section>
@@ -65,8 +67,8 @@ export function ManualVsSystems() {
   return (
     <Section label="Impact" title="Manual workflows cost more than they show.">
       <div className="grid gap-4 lg:grid-cols-2">
-        <Card className="border-danger/50"><p className="mb-4 flex items-center gap-2 text-sm font-semibold text-danger"><CircleAlert className="h-4 w-4" />What it costs you when it stays manual</p><div className="grid gap-3 sm:grid-cols-2">{bad.map((x) => <div key={x} className="rounded-xl border border-danger/30 bg-danger/5 p-3 text-sm text-text1">{x}</div>)}</div></Card>
-        <Card className="border-success/50"><p className="mb-4 flex items-center gap-2 text-sm font-semibold text-success"><CircleCheckBig className="h-4 w-4" />What you get with proper systems</p><div className="grid gap-3 sm:grid-cols-2">{good.map((x) => <div key={x} className="rounded-xl border border-success/30 bg-success/5 p-3 text-sm text-text1">{x}</div>)}</div></Card>
+        <Card className="border-danger/50"><p className="mb-4 flex items-center gap-2 text-sm font-semibold text-danger"><CircleAlert className="h-4 w-4" />What it costs you when it stays manual</p><div className="grid gap-2 max-md:grid-cols-2 sm:grid-cols-2">{bad.map((x) => <div key={x} className="rounded-xl border border-danger/30 bg-danger/5 p-3 text-sm text-text1 max-md:p-2.5 max-md:text-[13px] max-md:leading-5">{x}</div>)}</div></Card>
+        <Card className="border-success/50"><p className="mb-4 flex items-center gap-2 text-sm font-semibold text-success"><CircleCheckBig className="h-4 w-4" />What you get with proper systems</p><div className="grid gap-2 max-md:grid-cols-2 sm:grid-cols-2">{good.map((x) => <div key={x} className="rounded-xl border border-success/30 bg-success/5 p-3 text-sm text-text1 max-md:p-2.5 max-md:text-[13px] max-md:leading-5">{x}</div>)}</div></Card>
       </div>
     </Section>
   );
