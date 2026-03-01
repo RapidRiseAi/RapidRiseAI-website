@@ -111,7 +111,7 @@ export default function HomePage() {
               <p className="mt-3 text-sm text-text1">Response within 24 hours. No spam. No pressure.</p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <Button href="/quote" arrow>
+              <Button href="/quote" arrow className="max-md:hidden">
                 Request a Quote
               </Button>
               <Button href="/work" variant="secondary">

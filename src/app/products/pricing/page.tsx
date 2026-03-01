@@ -205,7 +205,7 @@ export default function ProductsPricingPage() {
             </Card>
           ))}
         </div>
-        <Button href="/quote" className="mt-6" arrow>
+        <Button href="/quote" className="mt-6 max-md:hidden" arrow>
           Request a Quote
         </Button>
       </Section>
@@ -236,7 +236,7 @@ export default function ProductsPricingPage() {
         </div>
         <p className="mt-6 text-sm text-text1">You will always get a simplest viable option. No bloated scope.</p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <Button href="/quote" arrow>
+          <Button href="/quote" arrow className="max-md:hidden">
             Request a Quote
           </Button>
           <Button href="/book" variant="secondary">
@@ -275,7 +275,7 @@ export default function ProductsPricingPage() {
             </ul>
           </Card>
         </div>
-        <Button href="/quote" className="mt-6" arrow>
+        <Button href="/quote" className="mt-6 max-md:hidden" arrow>
           Request a Quote
         </Button>
       </Section>
@@ -291,7 +291,7 @@ export default function ProductsPricingPage() {
             <p className="mt-3 text-text1">We will recommend the simplest path and price it clearly.</p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Button href="/quote" arrow>
+            <Button href="/quote" arrow className="max-md:hidden">
               Request a Quote
             </Button>
             <Button href="/work" variant="secondary">

@@ -73,7 +73,7 @@ export default function WorkPage() {
         <div className="card-surface p-8">
           <h2 className="font-[var(--font-jakarta)] text-2xl font-semibold">Want a system like this?</h2>
           <p className="mt-3 text-text1">Tell us what is currently manual and what keeps slipping through.</p>
-          <Button href="/quote" className="mt-5" arrow>
+          <Button href="/quote" className="mt-5 max-md:hidden" arrow>
             Request a Quote
           </Button>
         </div>
