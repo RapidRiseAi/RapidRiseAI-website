@@ -47,9 +47,9 @@ body.mobile-view {
 }
 
 body.mobile-view .hero-padding {
-  min-height: calc(100svh - 48px);
-  padding-top: 0.75rem;
-  padding-bottom: 1rem;
+  min-height: calc(100svh - 56px);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 body.mobile-view h1 {
@@ -95,7 +95,7 @@ body.mobile-view .card-surface {
 
   iframe[src*='botpress'],
   iframe[title*='botpress' i] {
-    z-index: 115 !important;
+    z-index: 130 !important;
   }
 }
 

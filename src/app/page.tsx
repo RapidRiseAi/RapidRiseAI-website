@@ -16,7 +16,7 @@ import { workItems } from '@/content/workItems';
 export default function HomePage() {
   return (
     <>
-      <Hero h1={siteContent.home.hero.h1} sub={siteContent.home.hero.sub} cta2="View Work" visual="/images/hero/rapid-rise-ai-business-automation-client-portal-hero.jpg" alt="Client portal dashboard with integrations" compactMobile />
+      <Hero id="home-hero" h1={siteContent.home.hero.h1} sub={siteContent.home.hero.sub} cta2="View Work" visual="/images/hero/rapid-rise-ai-business-automation-client-portal-hero.jpg" alt="Client portal dashboard with integrations" compactMobile />
       <ProofStrip />
       <Section label="Services" title="What we build" intro="Pick what you need now. Expand later.">
         <FeatureGrid
