@@ -43,13 +43,13 @@ main, header, footer { position: relative; z-index: 1; }
 
 body.mobile-view {
   overflow-x: hidden;
-  padding-bottom: calc(env(safe-area-inset-bottom) + 6.5rem);
+  padding-bottom: calc(var(--mobile-cta-bar-height, 0px) + env(safe-area-inset-bottom));
 }
 
 body.mobile-view .hero-padding {
-  min-height: calc(100svh - 56px);
-  padding-top: 1rem;
-  padding-bottom: 1.25rem;
+  min-height: calc(100svh - 48px);
+  padding-top: 0.75rem;
+  padding-bottom: 1rem;
 }
 
 body.mobile-view h1 {
@@ -65,36 +65,42 @@ body.mobile-view section {
 }
 
 body.mobile-view .card-surface {
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 767px) {
   body {
     background:
-      radial-gradient(700px 380px at 80% -24%, rgba(45, 124, 255, 0.16), transparent 62%),
-      radial-gradient(560px 300px at 10% -12%, rgba(45, 124, 255, 0.08), transparent 66%),
+      radial-gradient(700px 380px at 80% -24%, rgba(45, 124, 255, 0.1), transparent 64%),
+      radial-gradient(560px 300px at 10% -12%, rgba(45, 124, 255, 0.05), transparent 68%),
       var(--bg-0);
   }
 
   body::before {
-    opacity: 0.04;
+    opacity: 0.02;
+  }
+
+  :root {
+    --blue-glow: rgba(45, 124, 255, 0.22);
   }
 
   #fab-root,
   .bpFabWrapper,
-  .bpFab {
+  .bpFab,
+  [class*='bpFab'],
+  [id*='bp-fab'] {
     display: none !important;
     pointer-events: none !important;
   }
 
   iframe[src*='botpress'],
   iframe[title*='botpress' i] {
-    z-index: 95 !important;
+    z-index: 115 !important;
   }
 }
 
 @layer components {
-  .section-padding { @apply py-10 md:py-14 max-md:py-8; }
+  .section-padding { @apply py-10 md:py-14 max-md:py-7; }
   .hero-padding { @apply flex min-h-[100svh] items-center py-16 md:py-24; }
   .card-surface {
     @apply rounded-card border shadow-lg;

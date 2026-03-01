@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { Menu, MessageCircle, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Container } from './ui/container';
 import { Button } from './ui/button';
@@ -51,16 +51,16 @@ export function Header() {
   const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-0 z-50 border-b border-stroke bg-bg0/80 backdrop-blur-xl">
-      <Container className="flex h-16 items-center justify-between gap-3 max-md:h-14 max-md:gap-2">
+      <Container className="flex h-16 items-center justify-between gap-3 max-md:h-12 max-md:gap-2">
         <Link href="/" className="inline-flex items-center gap-[10px] font-[var(--font-jakarta)] text-sm font-semibold tracking-[0.18em] max-md:gap-2">
-          <img src="/brand/rapid-rise-ai-logo.png" alt="Rapid Rise AI" className="h-[44px] w-auto max-md:h-9" />
+          <img src="/brand/rapid-rise-ai-logo.png" alt="Rapid Rise AI" className="h-[44px] w-auto max-md:h-8" />
           <span className="brand-wordmark">RAPID RISE AI</span>
         </Link>
         <nav className="hidden items-center gap-2 md:flex">
           {siteContent.nav.items.map((item) => <Link key={item.href} href={item.href} className={cn('rounded-full px-3 py-2 text-sm transition', pathname === item.href || pathname.startsWith(`${item.href}/`) ? 'bg-blue/15 text-blue' : 'text-text1 hover:text-text0')}>{item.label}</Link>)}
         </nav>
         <div className="flex items-center gap-2 max-md:gap-1.5">
-          <Button href="/quote" className="px-4 py-2 max-md:px-3 max-md:py-1.5 max-md:text-sm">Request a Quote</Button>
+          <Button href="/quote" className="px-4 py-2 max-md:px-2.5 max-md:py-1.5 max-md:text-xs">Request a Quote</Button>
           <button className="rounded-full border border-stroke p-2 md:hidden max-md:p-1.5" onClick={() => setOpen(true)} aria-label="Open menu"><Menu className="h-4 w-4 max-md:h-3.5 max-md:w-3.5" /></button>
         </div>
       </Container>
@@ -91,23 +91,14 @@ export function CookieBanner() {
 }
 
 export function BotpressLauncher() {
-  const [isOpen, setIsOpen] = useState(false);
   const [isOpening, setIsOpening] = useState(false);
   const fallbackShareUrl = CONFIG.botpressShareUrl || CONFIG.botpressEmbedUrl;
 
   useEffect(() => {
-    const onOpened = () => setIsOpen(true);
-    const onClosed = () => setIsOpen(false);
-    window.botpressWebChat?.on?.('UI.OPENED', onOpened);
-    window.botpressWebChat?.on?.('UI.CLOSED', onClosed);
-    window.botpress?.on?.('webchat:opened', onOpened);
-    window.botpress?.on?.('webchat:closed', onClosed);
+    window.botpressWebChat?.sendEvent?.({ type: 'hide' });
 
     return () => {
-      window.botpressWebChat?.off?.('UI.OPENED', onOpened);
-      window.botpressWebChat?.off?.('UI.CLOSED', onClosed);
-      window.botpress?.off?.('webchat:opened', onOpened);
-      window.botpress?.off?.('webchat:closed', onClosed);
+      window.botpressWebChat?.sendEvent?.({ type: 'hide' });
     };
   }, []);
 
@@ -117,7 +108,6 @@ export function BotpressLauncher() {
     while (Date.now() - started <= 3000) {
       if (window.botpressWebChat?.sendEvent) {
         window.botpressWebChat.sendEvent({ type: 'show' });
-        setIsOpen(true);
         setIsOpening(false);
         return;
       }
@@ -129,30 +119,68 @@ export function BotpressLauncher() {
     setIsOpening(false);
   };
 
-  const toggleBotpress = () => {
-    if (isOpen && window.botpressWebChat?.sendEvent) {
-      window.botpressWebChat.sendEvent({ type: 'hide' });
-      setIsOpen(false);
-      return;
-    }
-    void openWithRetry();
-  };
-
   return (
     <button
       type="button"
-      onClick={toggleBotpress}
+      onClick={() => void openWithRetry()}
       aria-label="Open chat"
-      className="fixed bottom-[calc(env(safe-area-inset-bottom)+5.75rem)] right-4 z-[90] inline-flex min-h-12 items-center gap-2 rounded-full border border-white/20 bg-blue px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue/30 transition hover:bg-[#1f6ff2] md:hidden"
+      className="fixed right-4 z-[120] inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-blue text-white shadow-lg shadow-blue/25 transition hover:bg-[#1f6ff2] md:hidden"
+      style={{ bottom: 'calc(var(--mobile-cta-bar-height, 0px) + env(safe-area-inset-bottom) + 1rem)' }}
     >
-      {isOpening ? 'Opening chat...' : isOpen ? 'Close chat' : 'Chat with us'}
+      {isOpening ? <span className="text-xs">...</span> : <MessageCircle className="h-5 w-5" />}
     </button>
   );
 }
 
 export function MobileStickyCtaBar() {
+  const pathname = usePathname();
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    if (window.innerWidth >= 768) return;
+
+    setShow(false);
+
+    const hero = document.querySelector('main section.hero-padding');
+    const bar = document.getElementById('mobile-sticky-cta-bar');
+    const setBarHeight = () => {
+      if (!bar) return;
+      document.documentElement.style.setProperty('--mobile-cta-bar-height', `${bar.offsetHeight}px`);
+    };
+
+    setBarHeight();
+    const resizeObserver = bar ? new ResizeObserver(setBarHeight) : null;
+    if (bar && resizeObserver) resizeObserver.observe(bar);
+
+    if (!hero) {
+      setShow(true);
+      return () => {
+        resizeObserver?.disconnect();
+      };
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShow(!entry.isIntersecting);
+      },
+      { threshold: 0.15 },
+    );
+
+    observer.observe(hero);
+    return () => {
+      observer.disconnect();
+      resizeObserver?.disconnect();
+    };
+  }, [pathname]);
+
   return (
-    <div className="fixed inset-x-0 bottom-0 z-[80] border-t border-stroke bg-bg0/95 px-4 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-3 backdrop-blur-xl md:hidden">
+    <div
+      id="mobile-sticky-cta-bar"
+      className={cn(
+        'fixed inset-x-0 bottom-0 z-[110] border-t border-stroke bg-bg0/95 px-4 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-3 backdrop-blur-xl transition duration-200 md:hidden',
+        show ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-full opacity-0',
+      )}
+    >
       <Container className="px-0">
         <div className="space-y-2">
           <Button href="/quote" className="w-full justify-center">

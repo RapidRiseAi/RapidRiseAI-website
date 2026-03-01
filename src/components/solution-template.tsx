@@ -119,7 +119,7 @@ export function SolutionTemplate({ data }: { data: SolutionPageData }) {
             <p className="mt-2 text-sm text-text1">{data.finalCta.subhead}</p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Button href="/quote" arrow>
+            <Button href="/quote" arrow className="max-md:hidden">
               {data.finalCta.primary}
             </Button>
             <Button href="/work" variant="secondary">

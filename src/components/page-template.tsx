@@ -33,11 +33,11 @@ export function Hero({
 }) {
   return (
     <section className="hero-padding border-b border-stroke">
-      <Container className={`grid items-center gap-8 lg:grid-cols-2 ${compactMobile ? 'max-md:gap-4 max-md:pt-1' : ''}`}>
+      <Container className={`grid items-center gap-8 max-md:gap-5 lg:grid-cols-2 ${compactMobile ? 'max-md:gap-4 max-md:pt-1' : ''}`}>
         <div>
           <h1 className={`max-w-3xl font-[var(--font-jakarta)] text-4xl font-bold tracking-tight md:text-6xl ${compactMobile ? 'max-md:text-[2rem] max-md:leading-[1.05]' : ''}`}>{h1}</h1>
           <p className={`mt-4 max-w-2xl text-base leading-7 text-text1 md:text-lg ${compactMobile ? 'max-md:mt-3 max-md:text-sm max-md:leading-6' : ''}`}>{sub}</p>
-          <div className={`mt-8 flex flex-wrap gap-3 ${compactMobile ? 'max-md:mt-5 max-md:grid max-md:grid-cols-1 max-md:gap-2 min-[430px]:max-md:flex' : ''}`}>
+          <div className={`mt-8 flex flex-wrap gap-3 max-md:mt-5 ${compactMobile ? 'max-md:grid max-md:grid-cols-1 max-md:gap-2 min-[430px]:max-md:flex' : ''}`}>
             <Button href="/quote" arrow className={compactMobile ? 'max-md:min-h-12 max-md:w-full max-md:whitespace-nowrap min-[430px]:max-md:w-auto' : ''}>Request a Quote</Button>
             {cta2 ? <Button href={cta2 === 'View Work' ? '/work' : cta2 === 'View Education' ? '/education' : '/contact'} variant="secondary" className={compactMobile ? 'max-md:min-h-12 max-md:w-full max-md:whitespace-nowrap min-[430px]:max-md:w-auto' : ''}>{cta2}</Button> : null}
           </div>
@@ -92,10 +92,10 @@ export function SolutionTemplate({ content, image }: { content: any; image: stri
             {content.delivery?.length ? <div><p className="mb-3 text-sm font-semibold text-blue">Delivery options</p><div className="grid gap-3 md:grid-cols-2">{content.delivery.map((x: string) => <Card key={x} className="text-sm text-text1">{x}</Card>)}</div></div> : null}
             {content.faq?.length ? <div><p className="mb-3 text-sm font-semibold text-blue">FAQ</p><FAQAccordion items={content.faq} /></div> : null}
           </div>
-          <Card className="h-fit lg:sticky lg:top-24"><p className="text-sm text-text1">Response within 24 hours</p><h3 className="mt-2 font-[var(--font-jakarta)] text-2xl font-semibold">{content.cta}</h3><p className="mt-3 text-sm text-text1">Clean scope. No pressure.</p><Button href="/quote" className="mt-5 w-full" arrow>Request a Quote</Button></Card>
+          <Card className="h-fit lg:sticky lg:top-24"><p className="text-sm text-text1">Response within 24 hours</p><h3 className="mt-2 font-[var(--font-jakarta)] text-2xl font-semibold">{content.cta}</h3><p className="mt-3 text-sm text-text1">Clean scope. No pressure.</p><Button href="/quote" className="mt-5 hidden w-full max-md:hidden md:inline-flex" arrow>Request a Quote</Button></Card>
         </div>
       </Section>
-      <Section className="pt-0"><Card className="flex flex-wrap items-center justify-between gap-4"><div><p className="text-sm text-text1">Ready to scope this workflow?</p><h3 className="font-[var(--font-jakarta)] text-2xl font-semibold">{content.cta}</h3></div><Button href="/quote" arrow>Request a Quote</Button></Card></Section>
+      <Section className="pt-0 max-md:hidden"><Card className="flex flex-wrap items-center justify-between gap-4"><div><p className="text-sm text-text1">Ready to scope this workflow?</p><h3 className="font-[var(--font-jakarta)] text-2xl font-semibold">{content.cta}</h3></div><Button href="/quote" arrow>Request a Quote</Button></Card></Section>
     </>
   );
 }
