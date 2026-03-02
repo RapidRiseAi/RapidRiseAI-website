@@ -1,6 +1,5 @@
 {
   "name": "rapid-rise-ai-website",
-  "main": "worker.ts",
   "compatibility_date": "2026-02-17",
   "assets": {
     "directory": "./out"
