@@ -97,6 +97,7 @@ body.mobile-view #mobile-sticky-cta-bar {
 
   iframe[src*='botpress'],
   iframe[title*='botpress' i] {
+    bottom: calc(var(--mobile-cta-bar-height, 0px) + env(safe-area-inset-bottom) + 28px) !important;
     z-index: 130 !important;
   }
 }
