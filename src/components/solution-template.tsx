@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -7,33 +6,12 @@ import { FAQAccordion } from '@/components/ui/faq-accordion';
 import { Section } from '@/components/ui/section';
 import { MobileSnapCarousel } from '@/components/ui/mobile-snap-carousel';
 import type { SolutionPageData } from '@/content/solutionPages';
+import { Hero } from '@/components/page-template';
 
 export function SolutionTemplate({ data }: { data: SolutionPageData }) {
   return (
     <>
-      <section className="hero-padding border-b border-stroke">
-        <Container className="grid items-center gap-5 lg:grid-cols-2">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue">{data.eyebrow}</p>
-            <h1 className="mt-3 max-w-3xl font-[var(--font-jakarta)] text-4xl font-bold tracking-tight max-[640px]:text-[clamp(36px,9vw,44px)] max-[640px]:leading-[1.05] md:text-6xl">{data.h1}</h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-text1 md:text-lg">{data.subhead}</p>
-            <div className="mt-6 flex flex-wrap gap-3 max-[640px]:mt-4">
-              <Button href="/quote" arrow className="max-[640px]:h-12 max-[640px]:flex-1">
-                Request a Quote
-              </Button>
-              <Button href="/work" variant="secondary" className="max-[640px]:h-12 max-[640px]:flex-1">
-                View Work
-              </Button>
-            </div>
-            <p className="mt-3 text-sm text-text1">Response within 24 hours. No spam. No pressure. Clear handover.</p>
-          </div>
-          <Card className="overflow-hidden border-blue/30 p-2">
-            <div className="relative aspect-video w-full">
-              <Image src={data.heroImage} alt={data.heroAlt} fill className="object-cover object-center" priority sizes="(min-width: 1024px) 50vw, 100vw" />
-            </div>
-          </Card>
-        </Container>
-      </section>
+      <Hero compactMobile h1={data.h1} sub={data.subhead} cta2="View Work" visual={data.heroImage} alt={data.heroAlt} />
 
       <Section title="Problems">
         <MobileSnapCarousel desktopClassName="md:grid-cols-2" itemClassName="w-[90%] md:w-auto">
