@@ -46,12 +46,6 @@ body.mobile-view {
   padding-bottom: calc(var(--mobile-cta-bar-height, 0px) + env(safe-area-inset-bottom));
 }
 
-body.mobile-view .hero-padding {
-  min-height: auto;
-  padding-top: 0.35rem;
-  padding-bottom: 0.35rem;
-}
-
 body.mobile-view h1 {
   text-wrap: balance;
 }
@@ -66,11 +60,6 @@ body.mobile-view section {
 
 body.mobile-view .card-surface {
   box-shadow: 0 5px 14px rgba(0, 0, 0, 0.2);
-}
-
-body.mobile-view .section-padding {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
 }
 
 body.mobile-view .mobile-stack-tight {
@@ -115,6 +104,81 @@ body.mobile-view #mobile-sticky-cta-bar {
   iframe[src*='botpress'],
   iframe[title*='botpress' i] {
     z-index: 130 !important;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --mobile-h1-size: clamp(36px, 9vw, 44px);
+    --mobile-h2-size: clamp(26px, 6.5vw, 32px);
+    --mobile-body-size: clamp(15px, 3.8vw, 16px);
+    --mobile-small-size: clamp(12px, 3.2vw, 13px);
+    --mobile-section-pad: 40px;
+    --mobile-card-pad: 15px;
+    --mobile-card-radius: 16px;
+    --mobile-chip-pad-y: 6px;
+    --mobile-chip-pad-x: 10px;
+    --mobile-button-primary-h: 48px;
+    --mobile-button-secondary-h: 44px;
+  }
+
+  body.mobile-view .hero-padding {
+    min-height: auto;
+    padding-top: 0.2rem;
+    padding-bottom: 0.45rem;
+  }
+
+  body.mobile-view .section-padding {
+    padding-top: var(--mobile-section-pad);
+    padding-bottom: var(--mobile-section-pad);
+  }
+
+  body.mobile-view .mobile-home h2 {
+    font-size: var(--mobile-h2-size);
+    line-height: 1.12;
+  }
+
+  body.mobile-view .mobile-home p,
+  body.mobile-view .mobile-home li {
+    font-size: var(--mobile-body-size);
+    line-height: 1.5;
+  }
+
+  body.mobile-view .mobile-home .mobile-copy {
+    font-size: var(--mobile-body-size);
+    line-height: 1.5;
+  }
+
+  body.mobile-view .mobile-home .card-surface {
+    padding: var(--mobile-card-pad);
+    border-radius: var(--mobile-card-radius);
+  }
+
+  body.mobile-view .mobile-home .chip,
+  body.mobile-view .mobile-home [class*='rounded-full'][class*='uppercase'] {
+    font-size: var(--mobile-small-size);
+    padding: var(--mobile-chip-pad-y) var(--mobile-chip-pad-x);
+  }
+
+  body.mobile-view .mobile-home .micro-label {
+    hyphens: none;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: keep-all;
+    font-size: var(--mobile-small-size);
+    letter-spacing: 0.12em;
+  }
+
+  body.mobile-view .mobile-home .repeated-mobile-cta {
+    display: none;
+  }
+
+  body.mobile-view .mobile-home .mobile-final-cta a:first-child {
+    min-height: var(--mobile-button-primary-h);
+  }
+
+  body.mobile-view .mobile-home .mobile-final-cta a:last-child {
+    min-height: var(--mobile-button-secondary-h);
   }
 }
 
