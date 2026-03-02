@@ -69,7 +69,7 @@ export function MobileSnapCarousel({
       {isMobile && showPagination && items.length > 1 ? (
         <div className="mt-2.5 flex items-center justify-center gap-1.5 md:hidden" aria-hidden>
           {items.map((_, index) => (
-            <span key={index} className={cn('h-1.5 rounded-full transition-all', activeIndex === index ? 'w-5 bg-blue/90' : 'w-1.5 bg-white/30')} />
+            <span key={index} className={cn('h-1.5 rounded-full transition-all', activeIndex === index ? 'w-5 bg-blue' : 'w-1.5 bg-white/30')} />
           ))}
         </div>
       ) : null}
