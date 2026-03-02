@@ -12,6 +12,8 @@ export function Hero({
   h1,
   sub,
   cta2,
+  cta2Href,
+  trustCopy = 'Response within 24 hours · No spam · Clear handover',
   visual = '/images/hero/hero-visual.svg',
   mobileVisual,
   desktopVisual,
@@ -28,6 +30,8 @@ export function Hero({
   h1: string;
   sub: string;
   cta2?: string;
+  cta2Href?: string;
+  trustCopy?: string;
   visual?: string;
   mobileVisual?: string;
   desktopVisual?: string;
@@ -41,6 +45,8 @@ export function Hero({
   compactMobile?: boolean;
   id?: string;
 }) {
+  const resolvedCta2Href = cta2Href ?? (cta2 === 'View Work' ? '/work' : cta2 === 'View Education' ? '/education' : cta2 === 'Contact' ? '/contact' : '/contact');
+
   return (
     <section id={id} className="hero-padding border-b border-stroke">
       <Container className={`grid items-center gap-8 max-md:gap-5 lg:grid-cols-2 ${compactMobile ? 'max-md:gap-4 max-md:pt-1' : ''}`}>
@@ -50,11 +56,11 @@ export function Hero({
           <p className={`mt-4 max-w-2xl text-base leading-7 text-text1 md:text-lg ${compactMobile ? 'max-[640px]:mt-2.5 max-[640px]:text-[15px] max-[640px]:leading-[1.5]' : ''}`}>{sub}</p>
           <div id="hero-cta-anchor" className={`mt-8 flex flex-wrap gap-3 max-md:mt-4 ${compactMobile ? 'max-[640px]:mt-4 max-[640px]:flex max-[640px]:gap-[10px]' : ''}`}>
             <Button href="/quote" arrow className={compactMobile ? 'max-[640px]:h-12 max-[640px]:flex-1 max-[640px]:rounded-[15px] max-[640px]:px-4 max-[640px]:text-[15px] max-[640px]:whitespace-nowrap' : ''}>Request a Quote</Button>
-            {cta2 ? <Button href={cta2 === 'View Work' ? '/work' : cta2 === 'View Education' ? '/education' : '/contact'} variant="secondary" className={compactMobile ? 'max-[640px]:h-12 max-[640px]:flex-1 max-[640px]:rounded-[15px] max-[640px]:border-white/30 max-[640px]:bg-transparent max-[640px]:px-4 max-[640px]:text-[15px] max-[640px]:text-text0' : ''}>{cta2}</Button> : null}
+            {cta2 ? <Button href={resolvedCta2Href} variant="secondary" className={compactMobile ? 'max-[640px]:h-12 max-[640px]:flex-1 max-[640px]:rounded-[15px] max-[640px]:border-white/30 max-[640px]:bg-transparent max-[640px]:px-4 max-[640px]:text-[15px] max-[640px]:text-text0' : ''}>{cta2}</Button> : null}
           </div>
           <div className={`relative mt-5 ${compactMobile ? 'max-[640px]:mt-3' : ''}`}>
             {compactMobile ? (
-              <p className="text-[12px] text-text2">Response within 24 hours · No spam · Clear handover</p>
+              <p className="text-[12px] text-text2">{trustCopy}</p>
             ) : (
               <div className="flex gap-2 max-md:overflow-x-auto max-md:whitespace-nowrap max-md:pb-1 max-md:[scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:flex-wrap">
                 <Pill>Response within 24 hours</Pill>

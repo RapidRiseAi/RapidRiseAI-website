@@ -185,6 +185,11 @@ body.mobile-view #mobile-sticky-cta-bar {
     text-wrap: balance;
   }
 
+  body.mobile-view .section-padding h3 {
+    text-wrap: balance;
+    line-height: 1.2;
+  }
+
   body.mobile-view .card-surface {
     border-radius: var(--mobile-card-radius);
   }
@@ -193,6 +198,10 @@ body.mobile-view #mobile-sticky-cta-bar {
   body.mobile-view .card-surface li {
     font-size: var(--mobile-body-size);
     line-height: 1.5;
+  }
+
+  body.mobile-view .card-surface {
+    border-color: color-mix(in srgb, var(--blue) 14%, var(--stroke));
   }
 
   body.mobile-view a[class*='inline-flex'],

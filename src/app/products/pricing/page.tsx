@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
-import { Container } from '@/components/ui/container';
 import { Section } from '@/components/ui/section';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { FAQAccordion } from '@/components/ui/faq-accordion';
+import { Hero } from '@/components/page-template';
+import { MobileSnapCarousel } from '@/components/ui/mobile-snap-carousel';
 
 export const metadata: Metadata = {
   title: 'Products and Pricing | Rapid Rise AI',
@@ -38,46 +38,21 @@ const faqItems = [
 export default function ProductsPricingPage() {
   return (
     <>
-      <section className="hero-padding border-b border-stroke">
-        <Container className="grid items-center gap-8 lg:grid-cols-2">
-          <div>
-            <h1 className="max-w-3xl font-[var(--font-jakarta)] text-4xl font-bold tracking-tight md:text-6xl">
-              Products and pricing that fit real operations.
-            </h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-text1 md:text-lg">
-              Choose a fixed-price system for a fast win. For complex builds, we quote after a short workflow review.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button href="/quote" arrow>
-                Request a Quote
-              </Button>
-              <Button href="/work" variant="secondary">
-                View Work
-              </Button>
-            </div>
-            <p className="mt-5 text-sm text-text1">Response within 24 hours. No spam. No pressure. Clear handover.</p>
-            <p className="mt-2 text-sm text-text2">
-              AI features can be added later if they improve speed or quality. Optional.
-            </p>
-          </div>
-          <Card className="overflow-hidden border-blue/30 p-2">
-            <Image
-              src="/images/hero/rapid-rise-ai-pricing-packages-quick-wins-core-system-scale.jpg"
-              alt="Service packages: Quick Wins, Core System, Scale and Support"
-              width={1200}
-              height={900}
-              className="h-full w-full rounded-xl object-cover"
-              priority
-            />
-          </Card>
-        </Container>
-      </section>
+      <Hero
+        compactMobile
+        h1="Products and pricing that fit real operations."
+        sub="Choose a fixed-price system for a fast win. For complex builds, we quote after a short workflow review."
+        cta2="View Work"
+        visual="/images/hero/rapid-rise-ai-pricing-packages-quick-wins-core-system-scale.jpg"
+        alt="Service packages: Quick Wins, Core System, Scale and Support"
+        trustCopy="Response within 24 hours · No spam · Clear handover"
+      />
 
       <Section title="Fixed-price products or custom quoted builds.">
         <p className="max-w-3xl text-base leading-7 text-text1">
           Some work is repeatable and can be priced upfront. Some work depends on your tools, volume, and rules. We do both.
         </p>
-        <div className="mt-6 grid gap-4 md:grid-cols-2">
+        <MobileSnapCarousel className="mt-6" desktopClassName="md:grid-cols-2" itemClassName="w-[90%] md:w-auto">
           <Card>
             <h3 className="font-[var(--font-jakarta)] text-2xl font-semibold">Fixed-price products</h3>
             <p className="mt-3 text-text1">Clear scope. Clear timeline. Clear price.</p>
@@ -92,12 +67,12 @@ export default function ProductsPricingPage() {
               How quoting works
             </Button>
           </Card>
-        </div>
+        </MobileSnapCarousel>
       </Section>
 
       <Section title="Fixed-price products" intro="These are packaged systems with defined scope. If you need more, we extend it with add-ons or a custom quote.">
         <div id="fixed-price-products" />
-        <div className="grid gap-4 md:grid-cols-2">
+        <MobileSnapCarousel desktopClassName="md:grid-cols-2" itemClassName="w-[90%] md:w-auto">
           {[
             {
               title: 'Lead Follow-Up System',
@@ -185,14 +160,14 @@ export default function ProductsPricingPage() {
               </Button>
             </Card>
           ))}
-        </div>
+        </MobileSnapCarousel>
         <p className="mt-6 text-sm text-text1">
           Third-party subscriptions, messaging fees, and hosting are billed separately where applicable.
         </p>
       </Section>
 
       <Section title="Add-ons" intro="Use these to extend a fixed product without a full rebuild.">
-        <div className="grid gap-4 md:grid-cols-2">
+        <MobileSnapCarousel desktopClassName="md:grid-cols-2" itemClassName="w-[90%] md:w-auto">
           {[
             { name: 'Extra integration connection', price: 'R700 each' },
             { name: 'Extra workflow step or approval rule', price: 'R500 each' },
@@ -204,7 +179,7 @@ export default function ProductsPricingPage() {
               <p className="mt-3 text-text1">{addon.price}</p>
             </Card>
           ))}
-        </div>
+        </MobileSnapCarousel>
         <Button href="/quote" className="mt-6" arrow>
           Request a Quote
         </Button>
@@ -220,7 +195,7 @@ export default function ProductsPricingPage() {
           <li>• Migration and restructuring of large datasets</li>
         </ul>
         <h3 className="font-[var(--font-jakarta)] text-2xl font-semibold">How quoting works</h3>
-        <div className="mt-4 grid gap-4 md:grid-cols-3">
+        <MobileSnapCarousel className="mt-4" desktopClassName="md:grid-cols-3" itemClassName="w-[90%] md:w-auto">
           <Card>
             <p className="font-semibold">Step 1: Diagnose</p>
             <p className="mt-2 text-sm text-text1">We map your current workflow, the bottlenecks, and the outcome you want.</p>
@@ -233,10 +208,10 @@ export default function ProductsPricingPage() {
             <p className="font-semibold">Step 3: Launch + handover</p>
             <p className="mt-2 text-sm text-text1">Your team gets documentation, short training, and ownership of the system.</p>
           </Card>
-        </div>
+        </MobileSnapCarousel>
         <p className="mt-6 text-sm text-text1">You will always get a simplest viable option. No bloated scope.</p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <Button href="/quote" arrow className="max-md:hidden">
+          <Button href="/quote" arrow>
             Request a Quote
           </Button>
           <Button href="/book" variant="secondary">
@@ -246,7 +221,7 @@ export default function ProductsPricingPage() {
       </Section>
 
       <Section title="Scale and Support" intro="For ongoing changes, monitoring, and improvements.">
-        <div className="grid gap-4 md:grid-cols-3">
+        <MobileSnapCarousel desktopClassName="md:grid-cols-3" itemClassName="w-[90%] md:w-auto">
           <Card>
             <h3 className="font-[var(--font-jakarta)] text-2xl font-semibold">Essential Support</h3>
             <p className="mt-2 text-blue">R2,000 / month</p>
@@ -274,7 +249,7 @@ export default function ProductsPricingPage() {
               <li>• Best for multi-team operations</li>
             </ul>
           </Card>
-        </div>
+        </MobileSnapCarousel>
         <Button href="/quote" className="mt-6" arrow>
           Request a Quote
         </Button>
@@ -291,7 +266,7 @@ export default function ProductsPricingPage() {
             <p className="mt-3 text-text1">We will recommend the simplest path and price it clearly.</p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Button href="/quote" arrow className="max-md:hidden">
+            <Button href="/quote" arrow>
               Request a Quote
             </Button>
             <Button href="/work" variant="secondary">
