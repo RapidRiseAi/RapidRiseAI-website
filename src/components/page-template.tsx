@@ -17,6 +17,7 @@ export function Hero({
   desktopVisual,
   alt = '',
   imageClassName = 'h-full w-full rounded-xl object-cover',
+  mobileImageClassName = 'h-[clamp(220px,36vh,320px)] w-full object-cover object-center max-[640px]:h-[clamp(220px,36vh,320px)]',
   imageWidth = 800,
   imageHeight = 600,
   imagePriority = true,
@@ -34,6 +35,7 @@ export function Hero({
   imageWidth?: number;
   imageHeight?: number;
   imagePriority?: boolean;
+  mobileImageClassName?: string;
   compactMobile?: boolean;
   id?: string;
 }) {
@@ -66,7 +68,7 @@ export function Hero({
               <picture>
                 <source media="(max-width: 640px)" srcSet={mobileVisual ?? visual} />
                 <source media="(min-width: 641px)" srcSet={desktopVisual ?? visual} />
-                <img src={desktopVisual ?? visual} alt={alt} className="h-[clamp(220px,36vh,320px)] w-full object-cover object-center max-[640px]:h-[clamp(220px,36vh,320px)]" />
+                <img src={desktopVisual ?? visual} alt={alt} className={mobileImageClassName} />
               </picture>
             ) : (
               <Image src={visual} alt={alt} width={imageWidth} height={imageHeight} className={imageClassName} priority={imagePriority} />
