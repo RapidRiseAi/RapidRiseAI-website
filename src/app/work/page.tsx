@@ -12,6 +12,7 @@ export default function WorkPage() {
   return (
     <>
       <Hero
+        compactMobile
         h1="Systems we build"
         sub="Clean workflows, reliable tracking, faster operations."
         visual="/images/hero/rapid-rise-ai-work-hero-intake-to-handover-timeline.jpg"
@@ -73,7 +74,7 @@ export default function WorkPage() {
         <div className="card-surface p-8">
           <h2 className="font-[var(--font-jakarta)] text-2xl font-semibold">Want a system like this?</h2>
           <p className="mt-3 text-text1">Tell us what is currently manual and what keeps slipping through.</p>
-          <Button href="/quote" className="mt-5 max-md:hidden" arrow>
+          <Button href="/quote" className="mt-5" arrow>
             Request a Quote
           </Button>
         </div>

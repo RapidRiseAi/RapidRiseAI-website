@@ -7,6 +7,7 @@ export default function SolutionsPage() {
   return (
     <>
       <Hero
+        compactMobile
         h1="Choose your outcome."
         sub="We build systems that reduce admin, speed up response, and make operations easier to run."
         cta2="View Work"
@@ -55,7 +56,7 @@ export default function SolutionsPage() {
           <p className="mt-3 max-w-2xl text-text1">
             Tell us what is currently manual and what keeps slipping through. We will recommend the cleanest next step.
           </p>
-          <Button href="/quote" className="mt-5 max-md:hidden" arrow>
+          <Button href="/quote" className="mt-5" arrow>
             Request a Quote
           </Button>
         </div>

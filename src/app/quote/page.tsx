@@ -7,6 +7,7 @@ export default function QuotePage() {
   return (
     <>
       <Hero
+        compactMobile
         h1="Request a Quote"
         sub="Tell us what is manual, what keeps slipping through, and what outcome you want. We will scope the cleanest next step."
         visual="/images/hero/rapid-rise-ai-request-a-quote-hero.jpg"

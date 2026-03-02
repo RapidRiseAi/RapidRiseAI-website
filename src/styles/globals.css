@@ -180,6 +180,25 @@ body.mobile-view #mobile-sticky-cta-bar {
   body.mobile-view .mobile-home .mobile-final-cta a:last-child {
     min-height: var(--mobile-button-secondary-h);
   }
+
+  body.mobile-view .section-padding h2 {
+    text-wrap: balance;
+  }
+
+  body.mobile-view .card-surface {
+    border-radius: var(--mobile-card-radius);
+  }
+
+  body.mobile-view .card-surface p,
+  body.mobile-view .card-surface li {
+    font-size: var(--mobile-body-size);
+    line-height: 1.5;
+  }
+
+  body.mobile-view a[class*='inline-flex'],
+  body.mobile-view button {
+    min-height: 44px;
+  }
 }
 
 
