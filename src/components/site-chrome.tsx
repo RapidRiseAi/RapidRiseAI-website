@@ -95,7 +95,7 @@ export function Header() {
           {siteContent.nav.items.map((item) => <Link key={item.href} href={item.href} className={cn('rounded-full px-3 py-2 text-sm transition', pathname === item.href || pathname.startsWith(`${item.href}/`) ? 'bg-blue/15 text-blue' : 'text-text1 hover:text-text0')}>{item.label}</Link>)}
         </nav>
         <div className="flex items-center gap-2 max-md:gap-1.5">
-          <Button href="/quote" className="px-4 py-2 max-md:h-9 max-md:px-3.5 max-md:py-1 max-md:text-[13px]">Request a Quote</Button>
+          <Button href="/quote" className="px-4 py-2 max-md:hidden">Request a Quote</Button>
           <button className="rounded-full border border-stroke p-2 md:hidden max-md:flex max-md:h-11 max-md:w-11 max-md:items-center max-md:justify-center max-md:p-0" onClick={() => setOpen(true)} aria-label="Open menu"><Menu className="h-4 w-4 max-md:h-4 max-md:w-4" /></button>
         </div>
       </Container>
@@ -165,6 +165,7 @@ export function BotpressLauncher() {
   const [isOpening, setIsOpening] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [stickyCtaVisible, setStickyCtaVisible] = useState(false);
+  const [pastHero, setPastHero] = useState(true);
   const fallbackShareUrl = CONFIG.botpressShareUrl || CONFIG.botpressEmbedUrl;
 
   useEffect(() => {
@@ -188,7 +189,6 @@ export function BotpressLauncher() {
     };
   }, []);
 
-
   useEffect(() => {
     const handleStickyCtaEvent = (event: Event) => {
       const customEvent = event as CustomEvent<{ visible: boolean }>;
@@ -198,6 +198,32 @@ export function BotpressLauncher() {
     window.addEventListener('mobile-sticky-cta-visibility', handleStickyCtaEvent);
     return () => {
       window.removeEventListener('mobile-sticky-cta-visibility', handleStickyCtaEvent);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (window.innerWidth > 640) {
+      setPastHero(true);
+      return;
+    }
+
+    const hero = document.getElementById('home-hero') ?? document.querySelector('main section.hero-padding');
+    if (!hero) {
+      setPastHero(true);
+      return;
+    }
+
+    setPastHero(false);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setPastHero(!entry.isIntersecting);
+      },
+      { threshold: 0.15 },
+    );
+
+    observer.observe(hero);
+    return () => {
+      observer.disconnect();
     };
   }, []);
 
@@ -225,9 +251,9 @@ export function BotpressLauncher() {
       aria-label="Open chat"
       className={cn(
         'fixed right-4 z-[125] inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-blue text-white shadow-lg shadow-blue/25 transition hover:bg-[#1f6ff2] md:hidden',
-        menuOpen || stickyCtaVisible ? 'pointer-events-none opacity-0' : 'opacity-100',
+        menuOpen || stickyCtaVisible || !pastHero ? 'pointer-events-none opacity-0' : 'opacity-100',
       )}
-      style={{ bottom: 'calc(var(--mobile-cta-bar-height, 0px) + env(safe-area-inset-bottom) + 1rem)' }}
+      style={{ bottom: 'calc(var(--mobile-cta-bar-height, 0px) + env(safe-area-inset-bottom) + 1.4rem)' }}
     >
       {isOpening ? <span className="text-xs">...</span> : <MessageCircle className="h-5 w-5" />}
     </button>
