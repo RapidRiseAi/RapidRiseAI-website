@@ -40,7 +40,7 @@ export function LeadForm({ type, selectedProduct = '' }: { type: 'quote' | 'cont
       const params = new URLSearchParams(window.location.search);
       const utm = getUtmPayload(params);
       const body = { path: type, source_page: pathname, ...utm, request_types: requestTypes, ...Object.fromEntries(formData.entries()), turnstileToken: 'client-token-placeholder' };
-      const res = await fetch(CONFIG.appsScriptBaseUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      const res = await fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
       if (!res.ok) throw new Error('bad');
       setStatus('success');
     } catch { setStatus('error'); }
