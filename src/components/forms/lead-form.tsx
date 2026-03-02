@@ -8,7 +8,6 @@ import { Toast } from '@/components/ui/toast';
 import { CONFIG } from '@/lib/config';
 import { getUtmPayload } from '@/lib/utils';
 import { isEmail, isWhatsapp, required } from '@/lib/validation';
-import { TurnstileWidget } from './turnstile-widget';
 
 export function LeadForm({ type, selectedProduct = '' }: { type: 'quote' | 'contact' | 'booking'; selectedProduct?: string }) {
   const [status, setStatus] = useState<'idle'|'loading'|'success'|'error'>('idle');
@@ -62,7 +61,6 @@ export function LeadForm({ type, selectedProduct = '' }: { type: 'quote' | 'cont
     {type === 'quote' ? <SelectField name="timeline" label="Timeline" options={['ASAP','2 to 4 weeks','1 to 2 months','Flexible']} error={errors.timeline} /> : null}
     {type === 'quote' ? <SelectField name="budget" label="Budget optional" options={['Under R10k','R10k to R25k','R25k to R60k','R60k+']} /> : null}
     {type === 'quote' ? <CheckboxField name="consent" label="I agree to be contacted about this request." error={errors.consent} /> : null}
-    <TurnstileWidget />
     <button className="rounded-button bg-blue px-6 py-3 font-semibold text-white transition hover:shadow-glow" type="submit">{status === 'loading' ? 'Submitting…' : type === 'contact' ? 'Send message' : type === 'booking' ? 'Request a time' : 'Submit request'}</button>
     {status === 'success' ? <div className="rounded-button border border-blue/40 bg-blue/10 p-4 text-sm"><p className="mb-3">Next steps are ready.</p><div className="flex flex-wrap gap-3"><Button href="/work" variant="secondary">View Work</Button><Button href="/book" variant="secondary">Book a Call</Button></div></div> : null}
   </form>;
