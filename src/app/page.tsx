@@ -58,7 +58,8 @@ export default function HomePage() {
         cta2="View Work"
         visual="/images/hero/rapid-rise-ai-business-automation-client-portal-hero.jpg"
         alt="Rapid Rise AI team working on system delivery"
-        mobileImageClassName="h-[clamp(220px,36vh,320px)] w-full object-cover object-center max-[640px]:h-[clamp(240px,38vh,340px)] max-[640px]:object-[58%_32%]"
+        mobileImageClassName="h-[clamp(220px,36vh,320px)] w-full object-cover object-center max-[640px]:h-full max-[640px]:w-full max-[640px]:object-contain max-[640px]:object-center"
+        mobileImageFrameClassName="max-[640px]:aspect-[4/3] max-[640px]:rounded-[18px] max-[640px]:bg-[#070c18]"
         compactMobile
       />
 
