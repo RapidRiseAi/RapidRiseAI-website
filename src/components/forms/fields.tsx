@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 
-const base = 'w-full rounded-button border bg-bg1/80 px-4 py-3 text-sm text-text0 outline-none transition focus:border-blue focus:shadow-glow';
+const base = 'w-full rounded-button border bg-white px-4 py-3 text-sm text-black placeholder:text-gray-500 outline-none transition focus:border-blue focus:shadow-glow';
 
 export function TextField(props: React.InputHTMLAttributes<HTMLInputElement> & { label: string; error?: string; helper?: string }) {
   const { label, error, className, helper, ...rest } = props;
