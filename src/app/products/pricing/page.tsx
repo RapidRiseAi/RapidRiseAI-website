@@ -205,7 +205,7 @@ export default function ProductsPricingPage() {
             </Card>
           ))}
         </div>
-        <Button href="/quote" className="mt-6 max-md:hidden" arrow>
+        <Button href="/quote" className="mt-6" arrow>
           Request a Quote
         </Button>
       </Section>
@@ -275,7 +275,7 @@ export default function ProductsPricingPage() {
             </ul>
           </Card>
         </div>
-        <Button href="/quote" className="mt-6 max-md:hidden" arrow>
+        <Button href="/quote" className="mt-6" arrow>
           Request a Quote
         </Button>
       </Section>
