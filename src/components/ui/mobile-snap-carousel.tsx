@@ -8,7 +8,8 @@ export function MobileSnapCarousel({
   className,
   itemClassName,
   showPagination = true,
-}: React.PropsWithChildren<{ className?: string; itemClassName?: string; showPagination?: boolean }>) {
+  desktopClassName,
+}: React.PropsWithChildren<{ className?: string; itemClassName?: string; showPagination?: boolean; desktopClassName?: string }>) {
   const items = useMemo(() => (Array.isArray(children) ? children : [children]), [children]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
@@ -57,7 +58,7 @@ export function MobileSnapCarousel({
     <div className={cn('relative -mx-4 md:mx-0', className)}>
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-4 bg-gradient-to-r from-bg0/70 to-transparent md:hidden" />
       <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-4 bg-gradient-to-l from-bg0/70 to-transparent md:hidden" />
-      <div ref={viewportRef} className="flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-2 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:px-0">
+      <div ref={viewportRef} className={cn('flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-2 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:px-0', desktopClassName)}>
         <div aria-hidden className="w-[5%] shrink-0 md:hidden" />
         {items.map((item, index) => (
           <div key={index} data-carousel-item="true" data-carousel-index={index} className={cn('w-[85%] shrink-0 snap-center md:w-auto md:shrink md:snap-none', itemClassName)}>

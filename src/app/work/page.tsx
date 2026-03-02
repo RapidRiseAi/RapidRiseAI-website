@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Pill } from '@/components/ui/pill';
 import { WorkProofGallery } from '@/components/ui/work-proof-gallery';
+import { MobileSnapCarousel } from '@/components/ui/mobile-snap-carousel';
 import { getWorkProofTypeLabel, workProofProjects } from '@/content/workProof';
 import { workItems } from '@/content/workItems';
 
@@ -12,6 +13,7 @@ export default function WorkPage() {
   return (
     <>
       <Hero
+        compactMobile
         h1="Systems we build"
         sub="Clean workflows, reliable tracking, faster operations."
         visual="/images/hero/rapid-rise-ai-work-hero-intake-to-handover-timeline.jpg"
@@ -24,7 +26,7 @@ export default function WorkPage() {
 
       <div id="proof">
         <Section label="PROOF" title="Proof of work" intro="Real builds, documented and delivered.">
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <MobileSnapCarousel desktopClassName="md:grid-cols-2 xl:grid-cols-3" itemClassName="w-[90%] md:w-auto">
           {workProofProjects.map((project) => (
             <Card key={project.id} className="space-y-4 p-4">
               <div className="flex items-start justify-between gap-3">
@@ -57,7 +59,7 @@ export default function WorkPage() {
               </div>
             </Card>
           ))}
-        </div>
+        </MobileSnapCarousel>
       </Section>
       </div>
 
@@ -73,7 +75,7 @@ export default function WorkPage() {
         <div className="card-surface p-8">
           <h2 className="font-[var(--font-jakarta)] text-2xl font-semibold">Want a system like this?</h2>
           <p className="mt-3 text-text1">Tell us what is currently manual and what keeps slipping through.</p>
-          <Button href="/quote" className="mt-5 max-md:hidden" arrow>
+          <Button href="/quote" className="mt-5" arrow>
             Request a Quote
           </Button>
         </div>
