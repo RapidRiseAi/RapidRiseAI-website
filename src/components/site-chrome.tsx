@@ -168,6 +168,31 @@ export function BotpressLauncher() {
   const [pastHero, setPastHero] = useState(true);
   const fallbackShareUrl = CONFIG.botpressShareUrl || CONFIG.botpressEmbedUrl;
 
+  const openBotpressWidget = () => {
+    const botpress = window.botpress;
+    const webchat = window.botpressWebChat;
+
+    webchat?.sendEvent?.({ type: 'show' });
+    webchat?.sendEvent?.({ type: 'open' });
+
+    if (typeof botpress?.webchat?.open === 'function') {
+      botpress.webchat.open();
+      return true;
+    }
+
+    if (typeof botpress?.open === 'function') {
+      botpress.open();
+      return true;
+    }
+
+    if (typeof botpress?.toggle === 'function') {
+      botpress.toggle();
+      return true;
+    }
+
+    return Boolean(webchat?.sendEvent);
+  };
+
   useEffect(() => {
     window.botpressWebChat?.sendEvent?.({ type: 'hide' });
 
@@ -231,8 +256,7 @@ export function BotpressLauncher() {
     setIsOpening(true);
     const started = Date.now();
     while (Date.now() - started <= 3000) {
-      if (window.botpressWebChat?.sendEvent) {
-        window.botpressWebChat.sendEvent({ type: 'show' });
+      if (openBotpressWidget()) {
         setIsOpening(false);
         return;
       }
