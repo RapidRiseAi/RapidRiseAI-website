@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, MessageCircle, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Container } from './ui/container';
 import { Button } from './ui/button';
@@ -18,33 +18,6 @@ const solutionLinks = [
   { label: 'Websites that Convert', href: '/solutions/websites' },
   { label: 'Training and Enablement', href: '/solutions/training' },
 ];
-
-type BotpressApi = {
-  on?: (eventName: string, listener: () => void) => void;
-  off?: (eventName: string, listener: () => void) => void;
-  isOpen?: boolean | (() => boolean);
-  webchat?: {
-    open?: () => void;
-    close?: () => void;
-    isOpen?: boolean | (() => boolean);
-  };
-  open?: () => void;
-  close?: () => void;
-  toggle?: () => void;
-};
-
-type BotpressWebChatController = {
-  sendEvent?: (event: { type: string }) => void;
-  on?: (eventName: string, listener: () => void) => void;
-  off?: (eventName: string, listener: () => void) => void;
-};
-
-declare global {
-  interface Window {
-    botpress?: BotpressApi;
-    botpressWebChat?: BotpressWebChatController;
-  }
-}
 
 export function Header() {
   const pathname = usePathname();
@@ -162,102 +135,7 @@ export function CookieBanner() {
 }
 
 export function BotpressLauncher() {
-  const [isOpening, setIsOpening] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [stickyCtaVisible, setStickyCtaVisible] = useState(false);
-  const [pastHero, setPastHero] = useState(true);
-  const fallbackShareUrl = CONFIG.botpressShareUrl || CONFIG.botpressEmbedUrl;
-
-  useEffect(() => {
-    window.botpressWebChat?.sendEvent?.({ type: 'hide' });
-
-    return () => {
-      window.botpressWebChat?.sendEvent?.({ type: 'hide' });
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleMenuEvent = (event: Event) => {
-      const customEvent = event as CustomEvent<{ open: boolean }>;
-      setMenuOpen(Boolean(customEvent.detail?.open));
-    };
-
-    setMenuOpen(document.body.dataset.mobileMenuOpen === 'true');
-    window.addEventListener('mobile-menu-state', handleMenuEvent);
-    return () => {
-      window.removeEventListener('mobile-menu-state', handleMenuEvent);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleStickyCtaEvent = (event: Event) => {
-      const customEvent = event as CustomEvent<{ visible: boolean }>;
-      setStickyCtaVisible(Boolean(customEvent.detail?.visible));
-    };
-
-    window.addEventListener('mobile-sticky-cta-visibility', handleStickyCtaEvent);
-    return () => {
-      window.removeEventListener('mobile-sticky-cta-visibility', handleStickyCtaEvent);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (window.innerWidth > 640) {
-      setPastHero(true);
-      return;
-    }
-
-    const hero = document.getElementById('home-hero') ?? document.querySelector('main section.hero-padding');
-    if (!hero) {
-      setPastHero(true);
-      return;
-    }
-
-    setPastHero(false);
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setPastHero(!entry.isIntersecting);
-      },
-      { threshold: 0.15 },
-    );
-
-    observer.observe(hero);
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
-  const openWithRetry = async () => {
-    setIsOpening(true);
-    const started = Date.now();
-    while (Date.now() - started <= 3000) {
-      if (window.botpressWebChat?.sendEvent) {
-        window.botpressWebChat.sendEvent({ type: 'show' });
-        setIsOpening(false);
-        return;
-      }
-      await new Promise((resolve) => window.setTimeout(resolve, 200));
-    }
-    if (fallbackShareUrl) {
-      window.open(fallbackShareUrl, '_blank', 'noopener,noreferrer');
-    }
-    setIsOpening(false);
-  };
-
-  return (
-    <button
-      type="button"
-      onClick={() => void openWithRetry()}
-      aria-label="Open chat"
-      className={cn(
-        'fixed right-4 z-[125] inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-blue text-white shadow-lg shadow-blue/25 transition hover:bg-[#1f6ff2] md:hidden',
-        menuOpen || stickyCtaVisible || !pastHero ? 'pointer-events-none opacity-0' : 'opacity-100',
-      )}
-      style={{ bottom: 'calc(var(--mobile-cta-bar-height, 0px) + env(safe-area-inset-bottom) + 1.4rem)' }}
-    >
-      {isOpening ? <span className="text-xs">...</span> : <MessageCircle className="h-5 w-5" />}
-    </button>
-  );
+  return null;
 }
 
 export function MobileStickyCtaBar() {
