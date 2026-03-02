@@ -51,10 +51,7 @@ body.mobile-view h1 {
 }
 
 body.mobile-view .brand-wordmark {
-  display: inline;
-  font-size: 0.64rem;
-  letter-spacing: 0.14em;
-  white-space: nowrap;
+  display: none;
 }
 
 body.mobile-view section {
