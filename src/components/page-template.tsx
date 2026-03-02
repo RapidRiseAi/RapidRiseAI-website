@@ -18,6 +18,7 @@ export function Hero({
   alt = '',
   imageClassName = 'h-full w-full rounded-xl object-cover',
   mobileImageClassName = 'h-[clamp(220px,36vh,320px)] w-full object-cover object-center max-[640px]:h-[clamp(220px,36vh,320px)]',
+  mobileImageFrameClassName = 'max-[640px]:aspect-[16/11] max-[640px]:rounded-[18px] max-[640px]:bg-surface-2',
   imageWidth = 800,
   imageHeight = 600,
   imagePriority = true,
@@ -36,6 +37,7 @@ export function Hero({
   imageHeight?: number;
   imagePriority?: boolean;
   mobileImageClassName?: string;
+  mobileImageFrameClassName?: string;
   compactMobile?: boolean;
   id?: string;
 }) {
@@ -62,8 +64,8 @@ export function Hero({
             )}
           </div>
         </div>
-        <Card className={`premium-hero-glow overflow-hidden border-blue/30 p-2 ${compactMobile ? 'max-[640px]:order-1 max-[640px]:-mx-4 max-[640px]:rounded-none max-[640px]:border-0 max-[640px]:p-0 max-[640px]:shadow-none' : ''}`}>
-          <div className="relative">
+        <Card className={`premium-hero-glow overflow-hidden border-blue/30 p-2 ${compactMobile ? 'max-[640px]:order-1' : ''}`}>
+          <div className={`relative ${compactMobile ? mobileImageFrameClassName : ''}`}>
             {compactMobile ? (
               <picture>
                 <source media="(max-width: 640px)" srcSet={mobileVisual ?? visual} />
