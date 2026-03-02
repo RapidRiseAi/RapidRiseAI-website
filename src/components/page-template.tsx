@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { ArrowRight, CircleAlert, CircleCheckBig, Workflow } from 'lucide-react';
 import { Button } from './ui/button';
 import { Container } from './ui/container';
@@ -14,6 +13,8 @@ export function Hero({
   sub,
   cta2,
   visual = '/images/hero/hero-visual.svg',
+  mobileVisual,
+  desktopVisual,
   alt = '',
   imageClassName = 'h-full w-full rounded-xl object-cover',
   imageWidth = 800,
@@ -26,6 +27,8 @@ export function Hero({
   sub: string;
   cta2?: string;
   visual?: string;
+  mobileVisual?: string;
+  desktopVisual?: string;
   alt?: string;
   imageClassName?: string;
   imageWidth?: number;
@@ -37,31 +40,39 @@ export function Hero({
   return (
     <section id={id} className="hero-padding border-b border-stroke">
       <Container className={`grid items-center gap-8 max-md:gap-5 lg:grid-cols-2 ${compactMobile ? 'max-md:gap-4 max-md:pt-1' : ''}`}>
-        <div>
+        <div className={compactMobile ? 'max-[640px]:order-2' : ''}>
           {compactMobile ? <p className="mb-2 hidden text-[12px] font-semibold uppercase tracking-[0.2em] text-blue max-[640px]:block">Business Systems</p> : null}
           <h1 className={`max-w-3xl font-[var(--font-jakarta)] text-4xl font-bold tracking-tight md:text-6xl ${compactMobile ? 'max-[640px]:text-[clamp(36px,9vw,44px)] max-[640px]:leading-[1.05] max-[640px]:tracking-[-0.02em]' : ''}`}>{h1}</h1>
           <p className={`mt-4 max-w-2xl text-base leading-7 text-text1 md:text-lg ${compactMobile ? 'max-[640px]:mt-2.5 max-[640px]:text-[15px] max-[640px]:leading-[1.5]' : ''}`}>{sub}</p>
-          <div id="hero-cta-anchor" className={`mt-8 flex flex-wrap gap-3 max-md:mt-4 ${compactMobile ? 'max-[640px]:mt-3 max-[640px]:grid max-[640px]:grid-cols-1 max-[640px]:gap-2 min-[430px]:max-[640px]:flex' : ''}`}>
-            <Button href="/quote" arrow className={compactMobile ? 'max-[640px]:h-12 max-[640px]:w-full max-[640px]:px-4 max-[640px]:text-sm max-[640px]:whitespace-nowrap min-[430px]:max-[640px]:w-auto' : ''}>Request a Quote</Button>
-            {cta2 ? <Button href={cta2 === 'View Work' ? '/work' : cta2 === 'View Education' ? '/education' : '/contact'} variant="secondary" className={compactMobile ? 'max-[640px]:hidden' : ''}>{cta2}</Button> : null}
+          <div id="hero-cta-anchor" className={`mt-8 flex flex-wrap gap-3 max-md:mt-4 ${compactMobile ? 'max-[640px]:mt-4 max-[640px]:flex max-[640px]:gap-[10px]' : ''}`}>
+            <Button href="/quote" arrow className={compactMobile ? 'max-[640px]:h-12 max-[640px]:flex-1 max-[640px]:rounded-[15px] max-[640px]:px-4 max-[640px]:text-[15px] max-[640px]:whitespace-nowrap' : ''}>Request a Quote</Button>
+            {cta2 ? <Button href={cta2 === 'View Work' ? '/work' : cta2 === 'View Education' ? '/education' : '/contact'} variant="secondary" className={compactMobile ? 'max-[640px]:h-12 max-[640px]:flex-1 max-[640px]:rounded-[15px] max-[640px]:border-white/30 max-[640px]:bg-transparent max-[640px]:px-4 max-[640px]:text-[15px] max-[640px]:text-text0' : ''}>{cta2}</Button> : null}
           </div>
-          {compactMobile && cta2 ? (
-            <Link href={cta2 === 'View Work' ? '/work' : cta2 === 'View Education' ? '/education' : '/contact'} className="mt-1 hidden text-sm font-medium text-text1 underline-offset-4 transition hover:text-text0 hover:underline max-[640px]:inline-flex">
-              {cta2}
-            </Link>
-          ) : null}
           <div className={`relative mt-5 ${compactMobile ? 'max-[640px]:mt-3' : ''}`}>
-            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-4 bg-gradient-to-r from-bg0/65 to-transparent max-md:block md:hidden" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-4 bg-gradient-to-l from-bg0/65 to-transparent max-md:block md:hidden" />
-            <div className="flex gap-2 max-md:overflow-x-auto max-md:whitespace-nowrap max-md:pb-1 max-md:[scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:flex-wrap">
-              <Pill className="max-[640px]:shrink-0 max-[640px]:rounded-full max-[640px]:border-white/20 max-[640px]:bg-bg1/55 max-[640px]:px-[10px] max-[640px]:py-[6px] max-[640px]:text-[12px]">Response within 24 hours</Pill>
-              <Pill className="max-[640px]:shrink-0 max-[640px]:rounded-full max-[640px]:border-white/20 max-[640px]:bg-bg1/55 max-[640px]:px-[10px] max-[640px]:py-[6px] max-[640px]:text-[12px]">No spam</Pill>
-              <Pill className="hidden">No pressure</Pill>
-            </div>
+            {compactMobile ? (
+              <p className="text-[12px] text-text2">Response within 24 hours · No spam · Clear handover</p>
+            ) : (
+              <div className="flex gap-2 max-md:overflow-x-auto max-md:whitespace-nowrap max-md:pb-1 max-md:[scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:flex-wrap">
+                <Pill>Response within 24 hours</Pill>
+                <Pill>No spam</Pill>
+                <Pill className="hidden">No pressure</Pill>
+              </div>
+            )}
           </div>
         </div>
-        <Card className={`premium-hero-glow overflow-hidden border-blue/30 p-2 ${compactMobile ? 'max-[640px]:-mt-0.5 max-[640px]:border-white/20 max-[640px]:p-1 max-[640px]:shadow-none' : ''}`}>
-          <Image src={visual} alt={alt} width={imageWidth} height={imageHeight} className={`${imageClassName} ${compactMobile ? 'max-[640px]:aspect-video max-[640px]:max-h-[168px] max-[640px]:w-full max-[640px]:object-cover max-[640px]:object-center' : ''}`} priority={imagePriority} />
+        <Card className={`premium-hero-glow overflow-hidden border-blue/30 p-2 ${compactMobile ? 'max-[640px]:order-1 max-[640px]:-mx-4 max-[640px]:rounded-none max-[640px]:border-0 max-[640px]:p-0 max-[640px]:shadow-none' : ''}`}>
+          <div className="relative">
+            {compactMobile ? (
+              <picture>
+                <source media="(max-width: 640px)" srcSet={mobileVisual ?? visual} />
+                <source media="(min-width: 641px)" srcSet={desktopVisual ?? visual} />
+                <img src={desktopVisual ?? visual} alt={alt} className="h-[clamp(220px,36vh,320px)] w-full object-cover object-center max-[640px]:h-[clamp(220px,36vh,320px)]" />
+              </picture>
+            ) : (
+              <Image src={visual} alt={alt} width={imageWidth} height={imageHeight} className={imageClassName} priority={imagePriority} />
+            )}
+            {compactMobile ? <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/65 to-transparent" /> : null}
+          </div>
         </Card>
       </Container>
     </section>

@@ -51,7 +51,7 @@ const flagshipSystems = [
 export default function HomePage() {
   return (
     <>
-      <Hero id="home-hero" h1={siteContent.home.hero.h1} sub={siteContent.home.hero.sub} cta2="View Work" visual="/images/hero/rapid-rise-ai-business-automation-client-portal-hero.jpg" alt="Client portal dashboard with integrations" compactMobile />
+      <Hero id="home-hero" h1={siteContent.home.hero.h1} sub={siteContent.home.hero.sub} cta2="View Work" visual="/images/hero/rapid-rise-ai-business-automation-client-portal-hero.jpg" alt="Rapid Rise AI team working on system delivery" compactMobile />
 
       <div className="mobile-home md:hidden">
         <Section className="pt-3" label="Trusted by operators" title="Built to perform under pressure" intro="Premium systems engineered for fast moving teams.">
