@@ -86,17 +86,17 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-stroke bg-bg0/80 backdrop-blur-xl">
-      <Container className="flex h-16 items-center justify-between gap-3 max-md:h-12 max-md:gap-2">
-        <Link href="/" className="inline-flex items-center gap-[10px] font-[var(--font-jakarta)] text-sm font-semibold tracking-[0.18em] max-md:gap-2">
-          <img src="/brand/rapid-rise-ai-logo.png" alt="Rapid Rise AI" className="h-[44px] w-auto max-md:h-8" />
+      <Container className="flex h-16 items-center justify-between gap-3 max-md:h-[58px] max-md:gap-2">
+        <Link href="/" className="inline-flex items-center gap-[10px] font-[var(--font-jakarta)] text-sm font-semibold tracking-[0.18em] max-md:gap-1.5">
+          <img src="/brand/rapid-rise-ai-logo.png" alt="Rapid Rise AI" className="h-[44px] w-auto max-md:h-7" />
           <span className="brand-wordmark">RAPID RISE AI</span>
         </Link>
         <nav className="hidden items-center gap-2 md:flex">
           {siteContent.nav.items.map((item) => <Link key={item.href} href={item.href} className={cn('rounded-full px-3 py-2 text-sm transition', pathname === item.href || pathname.startsWith(`${item.href}/`) ? 'bg-blue/15 text-blue' : 'text-text1 hover:text-text0')}>{item.label}</Link>)}
         </nav>
         <div className="flex items-center gap-2 max-md:gap-1.5">
-          <Button href="/quote" className="px-4 py-2 max-md:px-2.5 max-md:py-1.5 max-md:text-xs">Request a Quote</Button>
-          <button className="rounded-full border border-stroke p-2 md:hidden max-md:p-1.5" onClick={() => setOpen(true)} aria-label="Open menu"><Menu className="h-4 w-4 max-md:h-3.5 max-md:w-3.5" /></button>
+          <Button href="/quote" className="px-4 py-2 max-md:h-9 max-md:px-3.5 max-md:py-1 max-md:text-[13px]">Request a Quote</Button>
+          <button className="rounded-full border border-stroke p-2 md:hidden max-md:flex max-md:h-11 max-md:w-11 max-md:items-center max-md:justify-center max-md:p-0" onClick={() => setOpen(true)} aria-label="Open menu"><Menu className="h-4 w-4 max-md:h-4 max-md:w-4" /></button>
         </div>
       </Container>
       {open ? (
@@ -239,6 +239,7 @@ export function MobileStickyCtaBar() {
   const [show, setShow] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [pastHero, setPastHero] = useState(false);
+  const [nearFooter, setNearFooter] = useState(false);
 
   useEffect(() => {
     const handleMenuEvent = (event: Event) => {
@@ -254,10 +255,10 @@ export function MobileStickyCtaBar() {
   }, []);
 
   useEffect(() => {
-    const nextVisible = pastHero && !menuOpen;
+    const nextVisible = pastHero && !menuOpen && !nearFooter;
     setShow(nextVisible);
     window.dispatchEvent(new CustomEvent('mobile-sticky-cta-visibility', { detail: { visible: nextVisible } }));
-  }, [menuOpen, pastHero]);
+  }, [menuOpen, nearFooter, pastHero]);
 
   useEffect(() => {
     if (window.innerWidth >= 768) return;
@@ -265,6 +266,7 @@ export function MobileStickyCtaBar() {
     setPastHero(false);
 
     const hero = document.getElementById('home-hero') ?? document.querySelector('main section.hero-padding');
+    const footer = document.querySelector('footer');
     const bar = document.getElementById('mobile-sticky-cta-bar');
     const setBarHeight = () => {
       if (!bar) return;
@@ -277,21 +279,37 @@ export function MobileStickyCtaBar() {
 
     if (!hero) {
       setPastHero(true);
-      return () => {
-        resizeObserver?.disconnect();
-      };
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setPastHero(!entry.isIntersecting);
-      },
-      { threshold: 0.15 },
-    );
+    const heroObserver = hero
+      ? new IntersectionObserver(
+          ([entry]) => {
+            setPastHero(!entry.isIntersecting);
+          },
+          { threshold: 0.15 },
+        )
+      : null;
 
-    observer.observe(hero);
+    if (hero && heroObserver) {
+      heroObserver.observe(hero);
+    }
+
+    const footerObserver = footer
+      ? new IntersectionObserver(
+          ([entry]) => {
+            setNearFooter(entry.isIntersecting);
+          },
+          { threshold: 0.08 },
+        )
+      : null;
+
+    if (footer && footerObserver) {
+      footerObserver.observe(footer);
+    }
+
     return () => {
-      observer.disconnect();
+      heroObserver?.disconnect();
+      footerObserver?.disconnect();
       resizeObserver?.disconnect();
       window.dispatchEvent(new CustomEvent('mobile-sticky-cta-visibility', { detail: { visible: false } }));
     };
@@ -301,16 +319,16 @@ export function MobileStickyCtaBar() {
     <div
       id="mobile-sticky-cta-bar"
       className={cn(
-        'fixed inset-x-0 bottom-0 z-[110] border-t border-stroke bg-bg0/93 px-4 pb-[calc(env(safe-area-inset-bottom)+0.65rem)] pt-2.5 backdrop-blur-xl transition duration-200 md:hidden',
+        'fixed inset-x-0 bottom-0 z-[110] border-t border-stroke bg-bg0/85 px-4 pb-[calc(env(safe-area-inset-bottom)+0.45rem)] pt-2 backdrop-blur-xl transition duration-200 md:hidden',
         show ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-full opacity-0',
       )}
     >
       <Container className="px-0">
-        <div className="space-y-2">
-          <Button href="/quote" className="w-full justify-center">
+        <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-bg1/65 px-3 py-2">
+          <Button href="/quote" className="h-12 flex-1 justify-center px-4 text-sm">
             Request a Quote
           </Button>
-          <Link href="/work" className="block py-1 text-center text-sm font-medium text-text1 underline-offset-4 transition hover:text-text0 hover:underline">
+          <Link href="/work" className="inline-flex min-h-11 items-center justify-center py-1 text-sm font-medium text-text1 underline-offset-4 transition hover:text-text0 hover:underline">
             View Work
           </Link>
         </div>
