@@ -135,6 +135,51 @@ export function CookieBanner() {
 }
 
 export function BotpressLauncher() {
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    let stickyVisible = false;
+
+    const applyBotpressOffset = () => {
+      const host = document.querySelector<HTMLElement>('#fab-root');
+      const shadow = host?.shadowRoot;
+      const fabWrapper = shadow?.querySelector<HTMLElement>('.bpFabWrapper');
+      const messagePreview = shadow?.querySelector<HTMLElement>('#message-preview-root');
+
+      if (!fabWrapper) return;
+
+      if (window.innerWidth >= 768 || !stickyVisible) {
+        fabWrapper.style.removeProperty('bottom');
+        messagePreview?.style.removeProperty('bottom');
+        return;
+      }
+
+      const barHeight = getComputedStyle(document.documentElement)
+        .getPropertyValue('--mobile-cta-bar-height')
+        .trim() || '0px';
+      const launcherBottom = `calc(${barHeight} + env(safe-area-inset-bottom) + 16px)`;
+
+      fabWrapper.style.setProperty('bottom', launcherBottom, 'important');
+      messagePreview?.style.setProperty('bottom', `calc(${launcherBottom} + 76px)`, 'important');
+    };
+
+    const handleCtaVisibility = (event: Event) => {
+      const customEvent = event as CustomEvent<{ visible: boolean }>;
+      stickyVisible = Boolean(customEvent.detail?.visible);
+      applyBotpressOffset();
+    };
+
+    window.addEventListener('mobile-sticky-cta-visibility', handleCtaVisibility);
+
+    const intervalId = window.setInterval(applyBotpressOffset, 500);
+    applyBotpressOffset();
+
+    return () => {
+      window.removeEventListener('mobile-sticky-cta-visibility', handleCtaVisibility);
+      window.clearInterval(intervalId);
+    };
+  }, []);
+
   return null;
 }
 
