@@ -21,6 +21,7 @@ export function Hero({
   imageClassName = 'aspect-video w-full rounded-xl object-cover object-center md:object-contain',
   mobileImageClassName = 'h-full w-full object-cover object-center md:object-contain',
   mobileImageFrameClassName = 'aspect-video rounded-[18px] bg-surface-2',
+  desktopImageFrameClassName = 'aspect-video',
   imageWidth = 1600,
   imageHeight = 900,
   imagePriority = true,
@@ -42,6 +43,7 @@ export function Hero({
   imagePriority?: boolean;
   mobileImageClassName?: string;
   mobileImageFrameClassName?: string;
+  desktopImageFrameClassName?: string;
   compactMobile?: boolean;
   id?: string;
 }) {
@@ -71,7 +73,7 @@ export function Hero({
           </div>
         </div>
         <Card className={`premium-hero-glow overflow-hidden border-blue/30 p-2 ${compactMobile ? 'max-[640px]:order-1' : ''}`}>
-          <div className={`relative ${compactMobile ? mobileImageFrameClassName : ''}`}>
+          <div className={`relative ${compactMobile ? mobileImageFrameClassName : desktopImageFrameClassName}`}>
             {compactMobile ? (
               <picture>
                 <source media="(max-width: 640px)" srcSet={mobileVisual ?? visual} />
