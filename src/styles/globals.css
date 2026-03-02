@@ -182,6 +182,45 @@ body.mobile-view #mobile-sticky-cta-bar {
   }
 }
 
+
+@keyframes premium-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes premium-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.premium-float {
+  animation: premium-float 3.5s ease-in-out infinite;
+}
+
+.premium-reveal {
+  animation: premium-reveal 0.55s ease-out both;
+}
+
+.premium-hero-glow {
+  box-shadow:
+    0 14px 32px rgba(0, 0, 0, 0.32),
+    0 0 0 1px color-mix(in srgb, var(--blue) 32%, transparent),
+    0 0 24px color-mix(in srgb, var(--blue) 28%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .premium-float,
+  .premium-reveal {
+    animation: none;
+  }
+}
+
 @layer components {
   .section-padding { @apply py-10 md:py-14 max-md:py-6; }
   .hero-padding { @apply flex min-h-[100svh] items-center py-16 md:py-24; }

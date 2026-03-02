@@ -55,26 +55,26 @@ export default function HomePage() {
 
       <div className="mobile-home md:hidden">
         <Section className="pt-3" label="Trusted by operators" title="Built to perform under pressure" intro="Premium systems engineered for fast moving teams.">
-          <div className="grid grid-cols-3 gap-2.5">
-            <Card className="p-3 text-center max-[640px]:min-h-[90px]">
+          <div className="grid grid-cols-2 gap-2.5">
+            <Card className="premium-reveal p-3 text-center max-[640px]:min-h-[90px]">
               <p className="text-xl font-semibold text-text0">24h</p>
               <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-text2">Reply SLA</p>
             </Card>
-            <Card className="p-3 text-center max-[640px]:min-h-[90px]">
+            <Card className="premium-reveal p-3 text-center max-[640px]:min-h-[90px]">
               <p className="text-xl font-semibold text-text0">2 Weeks</p>
               <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-text2">Quick Wins</p>
             </Card>
-            <Card className="p-3 text-center max-[640px]:min-h-[90px]">
+            <Card className="premium-reveal col-span-2 p-3 text-center max-[640px]:min-h-[90px]">
               <p className="text-xl font-semibold text-text0">100%</p>
-              <p className="micro-label mt-1 text-[11px] uppercase tracking-[0.16em] text-text2">Handover ready</p>
+              <p className="mt-1 text-[11px] uppercase tracking-[0.12em] text-text2">Handover ready</p>
             </Card>
           </div>
         </Section>
 
         <Section label="Transformation" title="From messy workflow to premium execution">
-          <MobileSnapCarousel>
+          <MobileSnapCarousel itemClassName="w-[92%]">
             {transformationStories.map((story, index) => (
-              <Card key={story.problem} className="min-h-[196px] p-4 max-[640px]:min-h-[172px] max-[640px]:p-3.5">
+              <Card key={story.problem} className="premium-reveal min-h-[196px] overflow-hidden p-4 max-[640px]:min-h-[172px] max-[640px]:p-3.5">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-danger/90">Before</p>
                 <p className="mt-2 mobile-copy text-text1">{story.problem}</p>
                 <div className="my-3 h-px w-full bg-stroke" />
@@ -89,8 +89,8 @@ export default function HomePage() {
         <Section label="Flagship systems" title="Start with the highest ROI layer">
           <MobileSnapCarousel>
             {flagshipSystems.map((system) => (
-              <Card key={system.title} className="min-h-[196px] p-4 max-[640px]:min-h-[174px] max-[640px]:p-3.5">
-                <Sparkles className="h-5 w-5 text-blue" />
+              <Card key={system.title} className="premium-reveal min-h-[196px] p-4 max-[640px]:min-h-[174px] max-[640px]:p-3.5">
+                <Sparkles className="premium-float h-5 w-5 text-blue" />
                 <h3 className="mt-3 font-[var(--font-jakarta)] text-[1.55rem] font-semibold leading-[1.15] max-[640px]:text-[1.35rem]">{system.title}</h3>
                 <p className="mt-2.5 mobile-copy text-text1">{system.description}</p>
                 <Link href={system.href} className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-blue">

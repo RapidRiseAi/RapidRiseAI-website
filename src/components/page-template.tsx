@@ -41,7 +41,7 @@ export function Hero({
           <p className={`mt-4 max-w-2xl text-base leading-7 text-text1 md:text-lg ${compactMobile ? 'max-[640px]:mt-2.5 max-[640px]:text-[15px] max-[640px]:leading-[1.5]' : ''}`}>{sub}</p>
           <div id="hero-cta-anchor" className={`mt-8 flex flex-wrap gap-3 max-md:mt-4 ${compactMobile ? 'max-[640px]:mt-3 max-[640px]:grid max-[640px]:grid-cols-1 max-[640px]:gap-2 min-[430px]:max-[640px]:flex' : ''}`}>
             <Button href="/quote" arrow className={compactMobile ? 'max-[640px]:h-12 max-[640px]:w-full max-[640px]:px-4 max-[640px]:text-sm max-[640px]:whitespace-nowrap min-[430px]:max-[640px]:w-auto' : ''}>Request a Quote</Button>
-            {cta2 ? <Button href={cta2 === 'View Work' ? '/work' : cta2 === 'View Education' ? '/education' : '/contact'} variant="secondary" className={compactMobile ? 'max-[640px]:h-12 max-[640px]:w-full max-[640px]:px-4 max-[640px]:text-sm max-[640px]:whitespace-nowrap min-[430px]:max-[640px]:w-auto' : ''}>{cta2}</Button> : null}
+            {cta2 ? <Button href={cta2 === 'View Work' ? '/work' : cta2 === 'View Education' ? '/education' : '/contact'} variant="secondary" className={compactMobile ? 'max-[640px]:hidden min-[430px]:max-[640px]:inline-flex max-[640px]:h-12 max-[640px]:w-full max-[640px]:px-4 max-[640px]:text-sm max-[640px]:whitespace-nowrap min-[430px]:max-[640px]:w-auto' : ''}>{cta2}</Button> : null}
           </div>
           <div className={`relative mt-5 ${compactMobile ? 'max-[640px]:mt-3' : ''}`}>
             <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-4 bg-gradient-to-r from-bg0/65 to-transparent max-md:block md:hidden" />
@@ -49,11 +49,11 @@ export function Hero({
             <div className="flex gap-2 max-md:overflow-x-auto max-md:whitespace-nowrap max-md:pb-1 max-md:[scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:flex-wrap">
               <Pill className="max-[640px]:shrink-0 max-[640px]:px-2.5 max-[640px]:py-1 max-[640px]:text-[12px]">Response within 24 hours</Pill>
               <Pill className="max-[640px]:shrink-0 max-[640px]:px-2.5 max-[640px]:py-1 max-[640px]:text-[12px]">No spam</Pill>
-              <Pill className="max-[640px]:shrink-0 max-[640px]:px-2.5 max-[640px]:py-1 max-[640px]:text-[12px]">No pressure</Pill>
+              <Pill className="max-[640px]:hidden max-[640px]:shrink-0 max-[640px]:px-2.5 max-[640px]:py-1 max-[640px]:text-[12px] min-[430px]:max-[640px]:inline-flex">No pressure</Pill>
             </div>
           </div>
         </div>
-        <Card className={`overflow-hidden border-blue/30 p-2 ${compactMobile ? 'max-[640px]:-mt-1 max-[640px]:p-1.5' : ''}`}>
+        <Card className={`premium-hero-glow overflow-hidden border-blue/30 p-2 ${compactMobile ? 'max-[640px]:-mt-1 max-[640px]:p-1.5' : ''}`}>
           <Image src={visual} alt={alt} width={imageWidth} height={imageHeight} className={`${imageClassName} ${compactMobile ? 'max-[640px]:max-h-[208px] max-[640px]:object-contain' : ''}`} priority={imagePriority} />
         </Card>
       </Container>
