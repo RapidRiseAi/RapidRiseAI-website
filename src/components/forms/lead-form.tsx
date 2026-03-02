@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { CheckboxField, SelectField, TextArea, TextField } from './fields';
@@ -46,7 +46,12 @@ export function LeadForm({ type, selectedProduct = '' }: { type: 'quote' | 'cont
     } catch { setStatus('error'); }
   }
 
-  return <form action={submit} className="space-y-5">
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    await submit(new FormData(event.currentTarget));
+  }
+
+  return <form onSubmit={handleSubmit} className="space-y-5">
     {type === 'quote' && productSelection ? <input type="hidden" name="selected_product" value={productSelection} /> : null}
     {status === 'success' ? <Toast message={type === 'quote' ? 'Request received. Thanks. We will review it and respond within 24 hours.' : type === 'contact' ? 'Message received. Thanks. We will reply within 24 hours.' : 'Request received. We will confirm a time within 24 hours.'} /> : null}
     {status === 'error' ? <Toast message="Something went wrong. Please try again." type="error" /> : null}
