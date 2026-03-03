@@ -36,6 +36,8 @@ This repository uses `next build` static export (`output: 'export'`) and serves 
 
 To keep `/api/lead` working in production in this repo, deploy the Wrangler Worker (`worker.ts`) with static assets (`out/`).
 
+`wrangler.jsonc` includes `keep_vars: true` so `wrangler deploy` does not wipe variables managed in the Cloudflare dashboard.
+
 ## Cloudflare Pages setup (important)
 When deploying on Cloudflare Pages, set the lead form env vars in the Pages project:
 
@@ -49,6 +51,8 @@ When deploying on Cloudflare Pages, set the lead form env vars in the Pages proj
 
 ### Which screen to use in Cloudflare?
 Use the variables screen attached to the **Pages project runtime/build environment** (`Workers & Pages` project settings). Do not rely on unrelated account-level variable screens.
+
+If Cloudflare UI shows “Update your wrangler config file with these changes…”, treat it as advisory in this setup. Continue managing vars in **Workers & Pages → Settings → Variables and Secrets**.
 
 ## Apps Script deployment
 1. Follow `/apps-script/README.md`.
@@ -84,6 +88,7 @@ Use the variables screen attached to the **Pages project runtime/build environme
 - In **Workers & Pages → your project → Settings → Variables and Secrets**, set runtime vars for each environment (Preview + Production):
   - `APPS_SCRIPT_BASE_URL` (recommended) or fallback keys `SCRIPT_EXEC_URL` / `NEXT_PUBLIC_APPS_SCRIPT_BASE_URL`
   - `NEXT_PUBLIC_TURNSTILE_SITE_KEY`
+- Keep vars managed in Cloudflare dashboard (not in `wrangler.jsonc`), and keep `keep_vars: true` enabled for Wrangler deploys.
 - Redeploy after variable updates.
 - Open `https://<your-domain>/api/lead` and confirm diagnostic JSON returns `ok: true` and a configured Apps Script source.
 
