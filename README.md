@@ -26,7 +26,7 @@ INTERNAL_NOTIFICATION_EMAIL=
 The `/quote`, `/book`, and `/contact` forms submit to the **same-origin API route** `/api/lead`.
 
 1. Browser posts JSON to `/api/lead`.
-2. `/api/lead` forwards server-side to `NEXT_PUBLIC_APPS_SCRIPT_BASE_URL`.
+2. `/api/lead` forwards server-side using Worker fallback order: `APPS_SCRIPT_BASE_URL` → `SCRIPT_EXEC_URL` → `NEXT_PUBLIC_APPS_SCRIPT_BASE_URL`.
 3. Apps Script validates Turnstile and writes to Sheets.
 
 This avoids browser-to-Apps-Script CORS errors because the browser only talks to your own domain.
@@ -59,10 +59,10 @@ Use the variables screen attached to the **Pages project runtime/build environme
    - `INTERNAL_NOTIFICATION_EMAIL` (optional)
 
 ## Verifying successful submissions
-1. Open production site `/contact` (or `/quote`, `/book`).
+1. Open production `/contact`, `/quote`, **and `/book`** and submit each form once.
 2. Complete the Turnstile challenge and submit.
-3. Confirm a 200 response from `/api/lead` in browser network panel.
-4. Optional quick diagnostic: open `/api/lead` in the browser. It should return JSON with `hasAppsScriptUrl`, selected `source`, and configured env keys.
+3. Confirm a 200 response from `POST /api/lead` in browser network panel for each path (`contact`, `quote`, `booking`).
+4. Open `/api/lead` in the browser. Expected `GET` JSON includes `ok: true`, `hasAppsScriptUrl`, `hasValidAppsScriptUrl`, selected `source`, and `configuredKeys`.
 5. Confirm the corresponding Apps Script sheet tab receives a new row.
 6. If enabled, confirm internal notification email arrives.
 
@@ -78,6 +78,14 @@ Use the variables screen attached to the **Pages project runtime/build environme
 - **Apps Script URL format**: use the deployed Web App `/exec` URL, not the editor URL.
 - **See exact worker error**: inspect `POST /api/lead` response body in Network tab (it now includes a `detail` message for upstream fetch failures).
 - **400 from Apps Script**: required fields missing or Turnstile verification failed server-side.
+- **`/book` fails but `/contact` or `/quote` works**: inspect `POST /api/lead` request body and confirm `path: "booking"`, `turnstileToken`, and booking-required fields (`full_name`, `email`, `whatsapp`) are present.
+
+## Deploy checklist (Cloudflare)
+- In **Workers & Pages → your project → Settings → Variables and Secrets**, set runtime vars for each environment (Preview + Production):
+  - `APPS_SCRIPT_BASE_URL` (recommended) or fallback keys `SCRIPT_EXEC_URL` / `NEXT_PUBLIC_APPS_SCRIPT_BASE_URL`
+  - `NEXT_PUBLIC_TURNSTILE_SITE_KEY`
+- Redeploy after variable updates.
+- Open `https://<your-domain>/api/lead` and confirm diagnostic JSON returns `ok: true` and a configured Apps Script source.
 
 ## Acceptance checklist
 - [ ] All routes exist, no broken links

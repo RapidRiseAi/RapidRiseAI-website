@@ -29,7 +29,23 @@ function getAppsScriptConfig(env: Env) {
 async function handleLeadRequest(request: Request, env: Env): Promise<Response> {
   if (request.method === 'GET') {
     const config = getAppsScriptConfig(env);
-    return Response.json({ ok: true, hasAppsScriptUrl: Boolean(config.url), source: config.source, configuredKeys: config.configuredKeys }, { status: 200 });
+    const hasValidAppsScriptUrl = (() => {
+      if (!config.url) return false;
+      try {
+        new URL(config.url);
+        return true;
+      } catch {
+        return false;
+      }
+    })();
+
+    return Response.json({
+      ok: true,
+      hasAppsScriptUrl: Boolean(config.url),
+      hasValidAppsScriptUrl,
+      source: config.source,
+      configuredKeys: config.configuredKeys,
+    }, { status: 200 });
   }
 
   if (request.method !== 'POST') {
@@ -73,7 +89,21 @@ async function handleLeadRequest(request: Request, env: Env): Promise<Response> 
       }
     }
 
-    return Response.json(responseBody, { status: upstreamResponse.status });
+    if (!upstreamResponse.ok) {
+      const fallbackDetail = typeof responseBody === 'object' && responseBody !== null && 'detail' in responseBody
+        ? String((responseBody as { detail?: string }).detail || '')
+        : responseText.slice(0, 300) || `Upstream returned status ${upstreamResponse.status}.`;
+
+      return Response.json({
+        ok: false,
+        error: 'Upstream Apps Script request failed.',
+        detail: fallbackDetail,
+        upstreamStatus: upstreamResponse.status,
+        source: config.source,
+      }, { status: upstreamResponse.status });
+    }
+
+    return Response.json(responseBody, { status: 200 });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown fetch error';
     return Response.json({ ok: false, error: 'Unable to reach Apps Script endpoint.', detail: message, source: config.source }, { status: 500 });
