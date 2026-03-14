@@ -17,7 +17,7 @@ export const siteContent = {
   trust: ['Response within 24 hours.', 'No spam. No pressure.', 'Clear scope, clean delivery.', 'Built around real workflows, not hype.'],
   footer: {
     company: 'Rapid Rise AI (Pty) Ltd', tagline: 'Business automation and software systems', email: 'team@rapidriseai.com', phone: '+27 64 903 1234', cipc: '2024/727338/07', vat: 'Not VAT registered',
-    links: [{ label: 'Privacy Policy', href: '/privacy' }, { label: 'Terms', href: '/terms' }, { label: 'Cookie Policy', href: '/cookies' }],
+    links: [{ label: 'Privacy Policy', href: '/privacy' }, { label: 'Terms', href: '/terms' }, { label: 'Cookie Policy', href: '/cookies' }, { label: 'Refund Policy', href: '/refund-policy' }],
   },
   home: {
     seo: { title: 'Rapid Rise AI | Business Automation and Software Systems', description: 'Manual work is draining your business. We build automation and software systems that cut admin, speed up responses, and stop things slipping through the cracks.' },
