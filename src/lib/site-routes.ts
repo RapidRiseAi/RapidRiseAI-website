@@ -19,4 +19,5 @@ export const staticRoutes = [
   '/privacy',
   '/terms',
   '/cookies',
+  '/refund-policy',
 ];
