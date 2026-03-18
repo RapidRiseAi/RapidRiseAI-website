@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { Hero } from '@/components/page-template';
 import { Section } from '@/components/ui/section';
 import { WorkGrid } from '@/components/ui/work-grid';
@@ -7,6 +8,14 @@ import { Pill } from '@/components/ui/pill';
 import { WorkProofGallery } from '@/components/ui/work-proof-gallery';
 import { getWorkProofTypeLabel, workProofProjects } from '@/content/workProof';
 import { workItems } from '@/content/workItems';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata: Metadata = buildMetadata({
+  title: 'Work | Rapid Rise AI',
+  description: 'View Rapid Rise AI work examples across lead capture, workflow automation, web apps, websites, and training systems.',
+  path: '/work',
+});
+
 
 export default function WorkPage() {
   return (

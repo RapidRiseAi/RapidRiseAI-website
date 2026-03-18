@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Check, Sparkles } from 'lucide-react';
@@ -14,6 +15,14 @@ import { Pill } from '@/components/ui/pill';
 import { MobileSnapCarousel } from '@/components/ui/mobile-snap-carousel';
 import { getWorkProofTypeLabel, workProofProjects } from '@/content/workProof';
 import { workItems } from '@/content/workItems';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata: Metadata = buildMetadata({
+  title: 'Rapid Rise AI | AI Automation and Education',
+  description: 'AI automations, chatbots, and AI education for businesses and professionals.',
+  path: '/',
+});
+
 
 const transformationStories = [
   {

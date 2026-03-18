@@ -1,7 +1,16 @@
+import type { Metadata } from 'next';
 import { Hero } from '@/components/page-template';
 import { Section } from '@/components/ui/section';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata: Metadata = buildMetadata({
+  title: 'AI for Work Training | Rapid Rise AI',
+  description: 'AI for Work training to help teams use assistants and modern workflows safely in real business tasks.',
+  path: '/education/ai-for-work',
+});
+
 
 export default function AifwPage(){return <><Hero h1="Get more done with better workflows." sub="Training focused on real tasks: communication, admin, writing, planning, and process improvement. Assistants are used where they actually help." cta2="Contact" visual="/images/hero/rapid-rise-ai-education-ai-for-work-hero.jpg" alt="AI for Work keynote style training slide" imagePriority />
 <Section title="What you learn"><div className="grid gap-4 md:grid-cols-2">{['Clear instructions and better inputs','Consistent output and templates','Faster admin and communication','Safe usage and common mistakes','How to think in workflows, not random prompts'].map((x)=><Card key={x}>{x}</Card>)}</div></Section>
