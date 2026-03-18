@@ -5,12 +5,13 @@ import { Button } from '@/components/ui/button';
 import { FAQAccordion } from '@/components/ui/faq-accordion';
 import { Hero } from '@/components/page-template';
 import { MobileSnapCarousel } from '@/components/ui/mobile-snap-carousel';
+import { buildMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Products and Pricing | Rapid Rise AI',
-  description:
-    'Choose a fixed-price system to remove manual work fast, or request a quote for custom builds and integrations. Response within 24 hours.',
-};
+  description: 'Choose a fixed-price system to remove manual work fast, or request a quote for custom builds and integrations. Response within 24 hours.',
+  path: '/products/pricing',
+});
 
 const faqItems = [
   {

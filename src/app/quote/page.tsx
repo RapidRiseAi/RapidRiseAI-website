@@ -1,7 +1,16 @@
+import type { Metadata } from 'next';
 import { Hero } from '@/components/page-template';
 import { Section } from '@/components/ui/section';
 import { LeadForm } from '@/components/forms/lead-form';
 import { FormPageLayout } from '@/components/forms/form-layout';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata: Metadata = buildMetadata({
+  title: 'Request a Quote | Rapid Rise AI',
+  description: 'Request a quote for AI automations, chatbots, web apps, and workflow systems tailored to your business.',
+  path: '/quote',
+});
+
 
 export default function QuotePage() {
   return (

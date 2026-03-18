@@ -1,7 +1,16 @@
+import type { Metadata } from 'next';
 import { Hero } from '@/components/page-template';
 import { Section } from '@/components/ui/section';
 import { FeatureGrid } from '@/components/ui/feature-grid';
 import { Button } from '@/components/ui/button';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata: Metadata = buildMetadata({
+  title: 'Solutions | Rapid Rise AI',
+  description: 'Explore Rapid Rise AI solutions for lead capture, workflow automation, workspace systems, web apps, websites, and team training.',
+  path: '/solutions',
+});
+
 
 export default function SolutionsPage() {
   return (

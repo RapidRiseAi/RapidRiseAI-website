@@ -4,7 +4,7 @@ import '@/styles/globals.css';
 import Script from 'next/script';
 import { BotpressLauncher, CookieBanner, Footer, Header, MobileStickyCtaBar } from '@/components/site-chrome';
 import { MobileDetector } from '@/components/mobile-detector';
-import { siteContent } from '@/content/siteContent';
+import { buildMetadata, SITE_URL } from '@/lib/seo';
 
 const inter = localFont({
   src: '../..//node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2',
@@ -21,26 +21,8 @@ const jakarta = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://rapidriseai.com'),
-  title: siteContent.home.seo.title,
-  description: siteContent.home.seo.description,
-  openGraph: {
-    title: siteContent.home.seo.title,
-    description: siteContent.home.seo.description,
-    images: ['/images/brand/og-image.svg'],
-  },
-  icons: {
-    icon: [
-      { url: '/favicons/favicon-16x16.png', type: 'image/png', sizes: '16x16' },
-      { url: '/favicons/favicon-24x24.png', type: 'image/png', sizes: '24x24' },
-      { url: '/favicons/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
-      { url: '/favicons/favicon-48x48.png', type: 'image/png', sizes: '48x48' },
-      { url: '/favicons/favicon-64x64.png', type: 'image/png', sizes: '64x64' },
-      { url: '/favicons/favicon-128x128.png', type: 'image/png', sizes: '128x128' },
-      { url: '/favicons/favicon-256x256.png', type: 'image/png', sizes: '256x256' },
-    ],
-    apple: [{ url: '/favicons/apple-touch-icon-180x180.png', sizes: '180x180', type: 'image/png' }],
-  },
+  metadataBase: new URL(SITE_URL),
+  ...buildMetadata({ path: '/' }),
 };
 
 const mobileDetectionScript = `

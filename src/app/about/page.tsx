@@ -1,7 +1,16 @@
+import type { Metadata } from 'next';
 import { Hero } from '@/components/page-template';
 import { Section } from '@/components/ui/section';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata: Metadata = buildMetadata({
+  title: 'About | Rapid Rise AI',
+  description: 'Learn how Rapid Rise AI builds practical automation systems, internal tools, and workflows that make operations easier to run.',
+  path: '/about',
+});
+
 
 export default function AboutPage(){return <><Hero h1="We build systems that make work easier to run." sub="Less chaos. Better tracking. Faster response." visual="/images/hero/rapid-rise-ai-about-build-philosophy-systems.jpg" alt="System build blueprint and handover pack" compactMobile />
 <Section label="About" title="Why we exist" intro="Most businesses do not have a work problem. They have a system problem. Manual processes create delays, mistakes, and missed opportunities. We build clean workflows and tools so your team can execute faster and with less effort." />
