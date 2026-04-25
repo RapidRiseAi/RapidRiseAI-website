@@ -311,8 +311,7 @@ export function CommandCenterHero() {
             </motion.p>
             <motion.h1 initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.05 }} className="mt-4 max-w-[13ch] text-[clamp(50px,5.5vw,78px)] font-[var(--font-jakarta)] font-semibold leading-[0.98] tracking-[-0.03em] text-white">
               Manual work is costing you
-              <span className="bg-gradient-to-r from-cyan-300 via-sky-300 to-blue-300 bg-clip-text text-transparent"> leads, time,</span>
-              <span className="text-cyan-300"> and control.</span>
+              <span className="text-cyan-300"> leads, time, and control.</span>
             </motion.h1>
             <motion.p initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mt-6 max-w-[54ch] text-[1.1rem] leading-8 text-text-secondary">
               We build automation systems, dashboards, portals, and workflow tools that help businesses respond faster, track work clearly, and operate with less chaos.
