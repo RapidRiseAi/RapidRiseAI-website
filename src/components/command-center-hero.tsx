@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Activity, ArrowRight, CheckCircle2, CircleDot } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 const metrics = [
@@ -50,9 +50,18 @@ const chartSeries = [
 
 function pointsToPath(values: number[]) {
   const step = 240 / (values.length - 1);
-  return values
-    .map((v, i) => `${i === 0 ? 'M' : 'L'} ${Math.round(i * step)} ${52 - v}`)
-    .join(' ');
+  const points = values.map((v, i) => ({ x: Math.round(i * step), y: 72 - v }));
+  if (points.length < 2) return '';
+
+  let path = `M ${points[0].x} ${points[0].y}`;
+  for (let i = 1; i < points.length - 1; i += 1) {
+    const xc = (points[i].x + points[i + 1].x) / 2;
+    const yc = (points[i].y + points[i + 1].y) / 2;
+    path += ` Q ${points[i].x} ${points[i].y} ${xc} ${yc}`;
+  }
+  const last = points[points.length - 1];
+  path += ` T ${last.x} ${last.y}`;
+  return path;
 }
 
 function StatusPill({ children, className }: React.PropsWithChildren<{ className?: string }>) {
@@ -114,7 +123,7 @@ function AnimatedChart({ reduceMotion }: { reduceMotion: boolean }) {
   const secondaryPath = pointsToPath(series.secondary);
 
   return (
-    <svg viewBox="0 0 240 52" className="mt-2 h-12 w-full" aria-hidden>
+    <svg viewBox="0 0 240 72" className="mt-2 h-20 w-full" aria-hidden>
       <motion.path
         key={`p-${seriesIndex}`}
         d={primaryPath}
@@ -150,20 +159,40 @@ function AnimatedChart({ reduceMotion }: { reduceMotion: boolean }) {
   );
 }
 
-function FloatingSystemCard({ text, index, reduceMotion }: { text: string; index: number; reduceMotion: boolean }) {
-  const drift = useMemo(() => [0, -2 - (index % 3), 0], [index]);
+function EventCyclePanel({ reduceMotion }: { reduceMotion: boolean }) {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    const id = window.setInterval(() => {
+      setIndex((prev) => (prev + 1) % floatingEvents.length);
+    }, 2800);
+    return () => window.clearInterval(id);
+  }, [reduceMotion]);
+
+  const active = floatingEvents[index];
+  const next = floatingEvents[(index + 1) % floatingEvents.length];
 
   return (
-    <motion.div
-      initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-      animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      transition={{ delay: 0.45 + index * 0.05 }}
-      className="rounded-xl border border-border-subtle bg-surface-primary/85 px-3 py-2 text-xs text-text-secondary"
-    >
-      <motion.div animate={reduceMotion ? undefined : { y: drift }} transition={{ duration: 5 + index * 0.35, repeat: Infinity, ease: 'easeInOut' }}>
-        <span className="inline-flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-accent-success" /> {text}</span>
+    <div className="grid gap-2 sm:grid-cols-2">
+      <motion.div
+        key={active}
+        initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+        animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+        className="rounded-xl border border-border-subtle bg-surface-primary/75 p-3"
+      >
+        <p className="text-[10px] uppercase tracking-[0.14em] text-text-muted">Live event</p>
+        <p className="mt-2 inline-flex items-center gap-2 text-sm text-text-secondary">
+          <CheckCircle2 className="h-4 w-4 text-accent-success" /> {active}
+        </p>
       </motion.div>
-    </motion.div>
+      <div className="rounded-xl border border-border-subtle bg-background-secondary/55 p-3">
+        <p className="text-[10px] uppercase tracking-[0.14em] text-text-muted">Next in queue</p>
+        <p className="mt-2 inline-flex items-center gap-2 text-sm text-text-secondary">
+          <CircleDot className="h-4 w-4 text-accent-primary" /> {next}
+        </p>
+      </div>
+    </div>
   );
 }
 
@@ -211,7 +240,7 @@ export function CommandCenterHero() {
       <div className="pointer-events-none absolute left-[56%] top-1/2 h-[420px] w-[420px] -translate-y-1/2 rounded-full bg-glow-blue blur-[120px]" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(90deg,transparent,rgba(103,217,255,0.14),transparent)]" />
 
-      <div className="relative mx-auto grid min-h-[calc(100svh-74px)] w-full max-w-[1520px] items-center gap-7 px-5 md:px-8 xl:px-10 lg:grid-cols-[0.45fr_0.55fr]">
+      <div className="relative mx-auto grid min-h-[calc(100svh-74px)] w-full max-w-[1700px] items-center gap-8 px-6 md:px-9 xl:px-12 lg:grid-cols-[0.43fr_0.57fr]">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 14 }}
           animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
@@ -245,17 +274,11 @@ export function CommandCenterHero() {
         </motion.div>
 
         <div className="order-2 relative">
-          <div className="hidden gap-3 xl:grid xl:grid-cols-[200px_minmax(0,1fr)_200px] xl:items-center">
-            <div className="space-y-2">
-              {floatingEvents.slice(0, 3).map((event, index) => (
-                <FloatingSystemCard key={event} text={event} index={index} reduceMotion={Boolean(reduceMotion)} />
-              ))}
-            </div>
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
             animate={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
             transition={{ delay: 0.25 }}
-            className="relative z-[2] rounded-[24px] border border-border-blue/45 bg-surface-primary/85 p-4 shadow-[0_0_0_1px_rgba(45,124,255,0.36),0_0_36px_rgba(45,124,255,0.22)]"
+            className="relative z-[2] rounded-[24px] border border-border-blue/45 bg-surface-primary/85 p-5 shadow-[0_0_0_1px_rgba(45,124,255,0.36),0_0_36px_rgba(45,124,255,0.22)]"
           >
             <div className="flex items-start justify-between gap-2">
               <div>
@@ -296,17 +319,8 @@ export function CommandCenterHero() {
 
             <MotionConnector reduceMotion={Boolean(reduceMotion)} />
           </motion.div>
-            <div className="space-y-2">
-              {floatingEvents.slice(3).map((event, index) => (
-                <FloatingSystemCard key={event} text={event} index={index + 3} reduceMotion={Boolean(reduceMotion)} />
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-3 grid gap-2 sm:grid-cols-2 xl:hidden">
-            {floatingEvents.map((event, index) => (
-              <FloatingSystemCard key={event} text={event} index={index} reduceMotion={Boolean(reduceMotion)} />
-            ))}
+          <div className="mt-3">
+            <EventCyclePanel reduceMotion={Boolean(reduceMotion)} />
           </div>
         </div>
       </div>
