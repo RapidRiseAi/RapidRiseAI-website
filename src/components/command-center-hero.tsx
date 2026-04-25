@@ -332,7 +332,7 @@ function ResponseTimeChart({ reduceMotion }: { reduceMotion: boolean }) {
         <CountUp end={18} suffix=" min" reduceMotion={reduceMotion} />
       </p>
       <p className="mt-1 text-sm text-emerald-300">72% improvement</p>
-      <svg viewBox="0 0 360 170" className="mt-2 h-52 w-full" role="img" aria-label="Response time trend from Monday to Sunday decreasing from 3 hours to point 2 hours">
+      <svg viewBox="0 0 360 170" className="mt-2 h-44 w-full sm:h-52" role="img" aria-label="Response time trend from Monday to Sunday decreasing from 3 hours to point 2 hours">
         {[0, 1, 2, 3].map((row) => (
           <line key={row} x1="24" y1={30 + row * 39} x2="336" y2={30 + row * 39} stroke="rgba(255,255,255,0.07)" />
         ))}
@@ -630,7 +630,7 @@ function ImpactMetrics({ reduceMotion }: { reduceMotion: boolean }) {
   return (
     <div className="mt-12 rounded-2xl border border-border-subtle bg-background-secondary/45 p-4 lg:mt-14">
       <p className="mb-3 text-system-eyebrow text-text-muted">Impact snapshot</p>
-      <div className="grid grid-cols-1 gap-3 [@media(min-width:390px)]:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-3 [@media(min-width:390px)]:grid-cols-2 md:grid-cols-2 xl:grid-cols-4">
         {impactMetrics.map((metric, index) => (
           <ImpactMetricCard key={metric.label} metric={metric} index={index} reduceMotion={reduceMotion} />
         ))}
@@ -641,7 +641,7 @@ function ImpactMetrics({ reduceMotion }: { reduceMotion: boolean }) {
 
 function MobileHeroDashboard({ reduceMotion }: { reduceMotion: boolean }) {
   return (
-    <div className="mt-8 space-y-4 lg:hidden">
+    <div className="mt-8 min-w-0 space-y-4 xl:hidden">
       <MobileCommandHeader reduceMotion={reduceMotion} />
       <WorkflowOverview reduceMotion={reduceMotion} />
       <ResponseTimeChart reduceMotion={reduceMotion} />
@@ -658,7 +658,7 @@ function DesktopHeroDashboard({ reduceMotion }: { reduceMotion: boolean }) {
       initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }}
       animate={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
       transition={{ delay: 0.12 }}
-      className="relative mt-2 hidden w-full max-w-[930px] rounded-[30px] border border-border-blue/60 bg-surface-primary/80 p-6 shadow-[0_0_0_1px_rgba(45,124,255,0.4),0_0_30px_rgba(45,124,255,0.2)] backdrop-blur-xl lg:block xl:ml-auto xl:p-6 2xl:p-7"
+      className="relative mt-2 hidden w-full max-w-[930px] rounded-[30px] border border-border-blue/60 bg-surface-primary/80 p-6 shadow-[0_0_0_1px_rgba(45,124,255,0.4),0_0_30px_rgba(45,124,255,0.2)] backdrop-blur-xl xl:block xl:ml-auto xl:p-6 2xl:p-7"
     >
       <div className="pointer-events-none absolute inset-0 rounded-[30px] border border-white/10" />
       <div className="pointer-events-none absolute left-10 right-10 top-0 h-10 rounded-full bg-gradient-to-b from-white/8 to-transparent" />
@@ -799,13 +799,13 @@ export function CommandCenterHero() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="home-hero" className="hero-padding relative overflow-x-clip overflow-y-visible pb-10 pt-8 lg:pt-14">
+    <section id="home-hero" className="hero-padding relative overflow-x-clip overflow-y-visible pb-24 pt-8 md:pb-16 xl:pb-10 xl:pt-14">
       <div className="pointer-events-none absolute inset-0 bg-background-primary" />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.045)_1px,transparent_1px)] bg-[size:46px_46px]" />
       <div className="pointer-events-none absolute bottom-0 right-0 h-40 w-[50%] bg-[radial-gradient(ellipse_at_bottom_right,rgba(45,124,255,0.35),transparent_65%)]" />
 
       <div className="relative mx-auto w-full max-w-[1520px] px-4 min-[370px]:px-5 md:px-10 xl:px-14 2xl:px-16">
-        <div className="grid items-center gap-12 lg:grid-cols-[minmax(520px,0.9fr)_minmax(820px,1.25fr)] lg:gap-14 xl:grid-cols-[minmax(560px,0.9fr)_minmax(860px,1.3fr)] xl:gap-16 2xl:gap-20">
+        <div className="grid items-center gap-12 xl:grid-cols-[minmax(560px,0.9fr)_minmax(860px,1.3fr)] xl:gap-16 2xl:gap-20">
           <div className="min-w-0 xl:min-w-[400px]">
             <motion.p initial={reduceMotion ? false : { opacity: 0, y: 8 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} className="text-system-eyebrow text-accent-secondary">
               RAPID RISE AI COMMAND CENTER
@@ -823,8 +823,8 @@ export function CommandCenterHero() {
               We build automation systems, dashboards, portals, and workflow tools that help businesses respond faster, track work clearly, and operate with less chaos.
             </motion.p>
 
-            <motion.div initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.16 }} className="mt-8 flex flex-col gap-3 [@media(min-width:390px)]:flex-row">
-              <Link href="/quote" className="group system-btn system-btn-primary w-full justify-center px-7 py-4 text-base [@media(min-width:390px)]:w-auto">
+            <motion.div initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.16 }} className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link href="/quote" className="group system-btn system-btn-primary w-full justify-center px-7 py-4 text-base sm:w-auto">
                 Request a Quote
                 <motion.span
                   animate={
@@ -840,7 +840,7 @@ export function CommandCenterHero() {
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden />
                 </motion.span>
               </Link>
-              <Link href="/work" className="group system-btn system-btn-secondary w-full justify-center px-7 py-4 text-base [@media(min-width:390px)]:w-auto">
+              <Link href="/work" className="group system-btn system-btn-secondary w-full justify-center px-7 py-4 text-base sm:w-auto">
                 View Work
               </Link>
             </motion.div>
