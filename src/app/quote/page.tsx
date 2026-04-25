@@ -7,24 +7,23 @@ import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Request a Quote | Rapid Rise AI',
-  description: 'Request a quote for AI automations, chatbots, web apps, and workflow systems tailored to your business.',
+  description: 'System Diagnostic Intake. Tell us what is manual, delayed, or hard to track and we will scope the cleanest next step.',
   path: '/quote',
 });
-
 
 export default function QuotePage() {
   return (
     <>
       <Hero
         compactMobile
-        h1="Request a Quote"
-        sub="Tell us what is manual, what keeps slipping through, and what outcome you want. We will scope the cleanest next step."
+        h1="Show us the leak. We will scope the system."
+        sub="Tell us what is manual, delayed, or hard to track. We will recommend the cleanest next step."
         cta2="View Work"
         visual="/images/hero/rapid-rise-ai-request-a-quote-hero.jpg"
-        alt="Request a quote hero image"
+        alt="System diagnostic intake panel"
       />
       <Section>
-        <FormPageLayout title="Request a Quote">
+        <FormPageLayout title="System Diagnostic Intake">
           <LeadForm type="quote" />
         </FormPageLayout>
       </Section>

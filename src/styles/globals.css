@@ -3,18 +3,33 @@
 @tailwind utilities;
 
 :root {
-  --bg-0: #05070d;
-  --bg-1: #0a1020;
-  --bg-2: #0d1630;
-  --stroke: rgba(255, 255, 255, 0.12);
-  --text-0: #f5f7ff;
-  --text-1: rgba(245, 247, 255, 0.74);
+  --background-primary: #05070d;
+  --background-secondary: #0a1020;
+  --surface-primary: #0d1630;
+  --surface-secondary: #121a2f;
+  --border-subtle: rgba(255, 255, 255, 0.12);
+  --border-blue: rgba(45, 124, 255, 0.44);
+  --text-primary: #f5f7ff;
+  --text-secondary: rgba(245, 247, 255, 0.74);
+  --accent-primary: #2d7cff;
+  --accent-secondary: #67e8f9;
+  --accent-danger: #f59e0b;
+  --accent-success: #22c55e;
+  --glow-blue: rgba(45, 124, 255, 0.35);
+  --glow-cyan: rgba(103, 232, 249, 0.26);
+
+  --bg-0: var(--background-primary);
+  --bg-1: var(--background-secondary);
+  --bg-2: var(--surface-primary);
+  --stroke: var(--border-subtle);
+  --text-0: var(--text-primary);
+  --text-1: var(--text-secondary);
   --text-2: rgba(245, 247, 255, 0.52);
-  --blue: #2d7cff;
+  --blue: var(--accent-primary);
   --blue-soft: rgba(45, 124, 255, 0.18);
-  --blue-glow: rgba(45, 124, 255, 0.35);
-  --success: #22c55e;
-  --danger: #ef4444;
+  --blue-glow: var(--glow-blue);
+  --success: var(--accent-success);
+  --danger: var(--accent-danger);
 }
 
 * { border-color: var(--stroke); }

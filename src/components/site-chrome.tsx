@@ -64,9 +64,12 @@ export function Header() {
           <img src="/brand/rapid-rise-ai-logo.png" alt="Rapid Rise AI" className="h-[44px] w-auto max-md:h-7" />
           <span className="brand-wordmark">RAPID RISE AI</span>
         </Link>
-        <nav className="hidden items-center gap-2 md:flex">
-          {siteContent.nav.items.map((item) => <Link key={item.href} href={item.href} className={cn('rounded-full px-3 py-2 text-sm transition', pathname === item.href || pathname.startsWith(`${item.href}/`) ? 'bg-blue/15 text-blue' : 'text-text1 hover:text-text0')}>{item.label}</Link>)}
-        </nav>
+        <div className="hidden items-center gap-3 md:flex">
+          <nav className="hidden items-center gap-2 md:flex">
+            {siteContent.nav.items.map((item) => <Link key={item.href} href={item.href} className={cn('rounded-full px-3 py-2 text-sm transition', pathname === item.href || pathname.startsWith(`${item.href}/`) ? 'bg-blue/15 text-blue' : 'text-text1 hover:text-text0')}>{item.label}</Link>)}
+          </nav>
+          <span className="chip border-blue/40 text-blue">Systems open</span>
+        </div>
         <div className="flex items-center gap-2 max-md:gap-1.5">
           <Button href="/quote" className="px-4 py-2 max-md:hidden">Request a Quote</Button>
           <button className="rounded-full border border-stroke p-2 md:hidden max-md:flex max-md:h-11 max-md:w-11 max-md:items-center max-md:justify-center max-md:p-0" onClick={() => setOpen(true)} aria-label="Open menu"><Menu className="h-4 w-4 max-md:h-4 max-md:w-4" /></button>
@@ -97,11 +100,17 @@ export function Header() {
               ))}
             </div>
             <div className="mt-5 space-y-1">
-              {siteContent.nav.items.map((item) => (
+              {siteContent.nav.items.map((item) => {
+                const mobileLabel = item.href === '/' ? 'Command Center' : item.href === '/solutions' ? 'System Library' : item.href === '/work' ? 'Proof Gallery' : item.href === '/products/pricing' ? 'Build Options' : item.href === '/education' ? 'Training Layer' : item.href === '/about' ? 'Operating Philosophy' : item.href === '/contact' ? 'Message' : item.label;
+                return (
                 <Link className="block rounded-lg px-3 py-2 text-sm text-text1 hover:bg-white/5" key={item.href} href={item.href} onClick={() => setOpen(false)}>
-                  {item.label}
+                  {mobileLabel}
                 </Link>
-              ))}
+                );
+              })}
+              <Link className="block rounded-lg px-3 py-2 text-sm text-text1 hover:bg-white/5" href="/quote" onClick={() => setOpen(false)}>
+                Start Build
+              </Link>
               <Link className="block rounded-lg px-3 py-2 text-sm text-text1 hover:bg-white/5" href="/book" onClick={() => setOpen(false)}>
                 Book
               </Link>

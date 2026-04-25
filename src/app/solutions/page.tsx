@@ -1,74 +1,42 @@
 import type { Metadata } from 'next';
 import { Hero } from '@/components/page-template';
 import { Section } from '@/components/ui/section';
-import { FeatureGrid } from '@/components/ui/feature-grid';
+import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { buildMetadata } from '@/lib/seo';
+import { SolutionsDiagnostic } from '@/components/solutions-diagnostic';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Solutions | Rapid Rise AI',
-  description: 'Explore Rapid Rise AI solutions for lead capture, workflow automation, workspace systems, web apps, websites, and team training.',
+  description: 'Visual system library for lead capture, automation, Google Workspace, web apps, websites, and training.',
   path: '/solutions',
 });
-
 
 export default function SolutionsPage() {
   return (
     <>
       <Hero
         compactMobile
-        h1="Choose your outcome."
-        sub="We build systems that reduce admin, speed up response, and make operations easier to run."
+        h1="Choose the system layer your business needs next."
+        sub="Start with the leak that costs the most time, money, or control."
         cta2="View Work"
         visual="/images/hero/rapid-rise-ai-workflow-automation-integrations-hero.jpg"
-        alt="Workflow automation integrations diagram"
+        alt="System layer selector interface"
       />
-      <Section label="Solutions" title="What do you want to improve?">
-        <FeatureGrid
-          items={[
-            {
-              title: 'Lead capture and follow up',
-              description: 'Capture enquiries, route them, and keep follow-ups reliable.',
-              href: '/solutions/lead-capture',
-            },
-            {
-              title: 'Workflow automation and integrations',
-              description: 'Connect tools, remove handoffs, and keep data in sync.',
-              href: '/solutions/workflow-automation',
-            },
-            {
-              title: 'Smart workspace systems and automations',
-              description: 'Organise files, docs, and calendars with practical rules.',
-              href: '/solutions/google-workspace',
-            },
-            {
-              title: 'Web apps and internal tools',
-              description: 'Build internal dashboards, approvals, and portals.',
-              href: '/solutions/web-apps',
-            },
-            {
-              title: 'Websites that convert',
-              description: 'Improve CTA flow and enquiry capture across key pages.',
-              href: '/solutions/websites',
-            },
-            {
-              title: 'Training and enablement',
-              description: 'Equip teams with SOPs, templates, and handover.',
-              href: '/solutions/training',
-            },
-          ]}
-        />
+
+      <Section label="Diagnostic" title="What is leaking now?">
+        <SolutionsDiagnostic />
       </Section>
+
       <Section>
-        <div className="card-surface p-8">
-          <h3 className="font-[var(--font-jakarta)] text-2xl font-semibold">Not sure what you need?</h3>
-          <p className="mt-3 max-w-2xl text-text1">
-            Tell us what is currently manual and what keeps slipping through. We will recommend the cleanest next step.
-          </p>
-          <Button href="/quote" className="mt-5" arrow>
-            Request a Quote
-          </Button>
-        </div>
+        <Card className="border-blue/40 p-6 text-center">
+          <h2 className="font-[var(--font-jakarta)] text-3xl font-semibold">Need a custom recommendation?</h2>
+          <p className="mt-3 text-text1">Tell us where work is stuck and we will map the cleanest next build.</p>
+          <div className="mt-5 flex flex-wrap justify-center gap-3">
+            <Button href="/quote" arrow>Get a System Recommendation</Button>
+            <Button href="/work" variant="secondary">View Work</Button>
+          </div>
+        </Card>
       </Section>
     </>
   );
