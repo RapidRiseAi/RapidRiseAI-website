@@ -16,6 +16,11 @@ import { MobileSnapCarousel } from '@/components/ui/mobile-snap-carousel';
 import { getWorkProofTypeLabel, workProofProjects } from '@/content/workProof';
 import { workItems } from '@/content/workItems';
 import { buildMetadata } from '@/lib/seo';
+import { AnimatedGridBackground, NoiseTextureOverlay, RadialGlow, SystemLinePattern } from '@/components/system/backgrounds';
+import { BentoGrid, Container as SystemContainer, SectionHeader, SectionShell, SplitLayout, VisualPanel } from '@/components/system/layout';
+import { FeatureCard, MetricCard, VisualCard } from '@/components/system/cards';
+import { DrawLine, MotionConnector, PulseDot, RevealOnScroll } from '@/components/system/motion';
+import { systemIcons } from '@/components/system/icons';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Rapid Rise AI | AI Automation and Education',
@@ -71,6 +76,58 @@ export default function HomePage() {
         mobileImageFrameClassName="aspect-video max-[640px]:rounded-[18px] max-[640px]:bg-[#070c18]"
         compactMobile
       />
+      <SectionShell className="overflow-hidden border-b border-border-subtle">
+        <SystemLinePattern />
+        <RadialGlow />
+        <AnimatedGridBackground />
+        <NoiseTextureOverlay />
+        <SystemContainer className="relative">
+          <RevealOnScroll>
+            <SplitLayout
+              left={(
+                <SectionHeader
+                  eyebrow="Business system command center"
+                  title="Watch manual work become a connected operating layer"
+                  description="Rapid Rise AI builds lead capture, routing, automation, portals, and dashboard systems that keep teams in control."
+                />
+              )}
+              right={(
+                <VisualPanel className="space-y-4">
+                  <div className="flex items-center justify-between text-system-micro text-text-muted">
+                    <span className="inline-flex items-center gap-2"><PulseDot /> Live status</span>
+                    <span>Updated now</span>
+                  </div>
+                  <DrawLine />
+                  <div className="grid gap-3 sm:grid-cols-3">
+                    <MetricCard label="Response time" value="< 60 sec" trend="Auto acknowledgements live" />
+                    <MetricCard label="Pipeline visibility" value="100%" trend="Every lead tracked" />
+                    <MetricCard label="Manual admin" value="-42%" trend="Automation active" />
+                  </div>
+                </VisualPanel>
+              )}
+            />
+          </RevealOnScroll>
+          <MotionConnector className="my-3 md:my-5" />
+          <BentoGrid>
+            <FeatureCard className="lg:col-span-4" icon={<systemIcons.leadCapture className="h-5 w-5" />} title="Lead Capture" description="Forms, qualification logic, and automatic routing into your preferred stack." />
+            <FeatureCard className="lg:col-span-4" icon={<systemIcons.automation className="h-5 w-5" />} title="Workflow Automation" description="Inbox tasks, updates, reminders, and handovers move without manual chasing." />
+            <FeatureCard className="lg:col-span-4" icon={<systemIcons.dashboard className="h-5 w-5" />} title="Executive Dashboards" description="Live boards show risk, blockers, response times, and next actions in one view." />
+            <VisualCard className="lg:col-span-7">
+              <p className="text-system-micro text-accent-secondary">System flow</p>
+              <h3 className="mt-2 text-system-h3">Capture → Qualify → Route → Deliver → Report</h3>
+              <p className="mt-2 text-system-body text-text-secondary">Each module shares context so your team and clients always see accurate status without asking for updates.</p>
+            </VisualCard>
+            <VisualCard className="lg:col-span-5">
+              <p className="text-system-micro text-accent-primary">Built for South African teams</p>
+              <ul className="mt-3 space-y-2 text-system-body text-text-secondary">
+                <li className="flex items-start gap-2"><PulseDot className="mt-1 h-2 w-2" /> Clean handover documentation</li>
+                <li className="flex items-start gap-2"><PulseDot className="mt-1 h-2 w-2" /> Team training and adoption support</li>
+                <li className="flex items-start gap-2"><PulseDot className="mt-1 h-2 w-2" /> Practical systems aligned to daily operations</li>
+              </ul>
+            </VisualCard>
+          </BentoGrid>
+        </SystemContainer>
+      </SectionShell>
 
       <div className="mobile-home md:hidden">
         <Section className="pt-3" label="Trusted by operators" title="Built to perform under pressure" intro="Premium systems engineered for fast moving teams.">
