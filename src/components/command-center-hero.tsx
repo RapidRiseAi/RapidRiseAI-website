@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
   Activity,
   ArrowRight,
@@ -769,12 +769,9 @@ function ImpactMetricCard({
   reduceMotion: boolean;
 }) {
   const Icon = metric.icon;
-  const ref = useRef<HTMLDivElement | null>(null);
-  const inView = useInView(ref, { once: true, margin: '-10% 0px -10% 0px' });
 
   return (
     <motion.div
-      ref={ref}
       initial={reduceMotion ? false : { opacity: 0, y: 8 }}
       whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-10% 0px -10% 0px' }}
@@ -792,12 +789,7 @@ function ImpactMetricCard({
       </span>
       <ImpactMicroVisual type={metric.visual} reduceMotion={reduceMotion} />
       </div>
-      <p className="mt-2 text-[2.55rem] font-semibold leading-none">
-        {metric.value === '+320 hrs' ? <CountUp end={320} prefix="+" suffix=" hrs" reduceMotion={reduceMotion} start={inView} /> : null}
-        {metric.value === '3.4x' ? <CountUp end={3.4} decimals={1} suffix="x" reduceMotion={reduceMotion} start={inView} /> : null}
-        {metric.value === '+58%' ? <CountUp end={58} prefix="+" suffix="%" reduceMotion={reduceMotion} start={inView} /> : null}
-        {metric.value === '100%' ? <CountUp end={100} suffix="%" reduceMotion={reduceMotion} start={inView} /> : null}
-      </p>
+      <p className="mt-2 text-[2.55rem] font-semibold leading-none">{metric.value}</p>
       <p className="mt-1 text-sm text-text-secondary">{metric.label}</p>
     </motion.div>
   );
@@ -812,7 +804,7 @@ export function CommandCenterHero() {
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.045)_1px,transparent_1px)] bg-[size:46px_46px]" />
       <div className="pointer-events-none absolute bottom-0 right-0 h-40 w-[50%] bg-[radial-gradient(ellipse_at_bottom_right,rgba(45,124,255,0.35),transparent_65%)]" />
 
-      <div className="relative mx-auto w-full max-w-[1520px] px-6 md:px-10 xl:px-14 2xl:px-16">
+      <div className="relative mx-auto w-full max-w-[1520px] px-4 min-[370px]:px-5 md:px-10 xl:px-14 2xl:px-16">
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(520px,0.9fr)_minmax(820px,1.25fr)] lg:gap-14 xl:grid-cols-[minmax(560px,0.9fr)_minmax(860px,1.3fr)] xl:gap-16 2xl:gap-20">
           <div className="min-w-0 xl:min-w-[400px]">
             <motion.p initial={reduceMotion ? false : { opacity: 0, y: 8 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} className="text-system-eyebrow text-accent-secondary">
@@ -822,7 +814,7 @@ export function CommandCenterHero() {
               initial={reduceMotion ? false : { opacity: 0, y: 12 }}
               animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
               transition={{ delay: 0.05 }}
-              className="mt-3 max-w-[620px] text-[clamp(3.05rem,7vw,4.25rem)] font-[var(--font-jakarta)] font-semibold leading-[0.98] tracking-[-0.028em] text-white md:text-[clamp(3.45rem,5.2vw,4.95rem)] 2xl:text-[clamp(4rem,5vw,5.4rem)]"
+              className="mt-3 max-w-full text-[clamp(3rem,11.5vw,4.25rem)] font-[var(--font-jakarta)] font-semibold leading-[0.98] tracking-[-0.04em] text-white md:max-w-[620px] md:text-[clamp(3.45rem,5.2vw,4.95rem)] 2xl:text-[clamp(4rem,5vw,5.4rem)]"
             >
               Manual work is costing you
               <span className="bg-gradient-to-r from-[#67e8f9] via-[#38bdf8] to-[#1d4ed8] bg-clip-text text-transparent"> leads, time, and control.</span>
