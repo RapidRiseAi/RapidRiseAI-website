@@ -261,7 +261,9 @@ function WorkflowNode({
             <BadgeCheck className="h-3.5 w-3.5 text-emerald-300" />
           </span>
         )}
-        <Icon className={cn('mx-auto h-5 w-5', step.final ? 'text-emerald-300' : 'text-accent-primary')} aria-hidden />
+        <span className={cn('mx-auto inline-flex h-8 w-8 items-center justify-center rounded-full border', step.final ? 'border-emerald-300/30 bg-emerald-500/10' : isInput ? 'border-cyan-300/30 bg-cyan-500/10' : 'border-blue-300/25 bg-blue-500/10')}>
+          <Icon className={cn('h-[18px] w-[18px]', step.final ? 'text-emerald-300' : 'text-accent-primary')} aria-hidden />
+        </span>
       </div>
       <p className="mt-2 text-sm font-medium text-text-primary">{step.label}</p>
       <p className={cn('mt-1 text-xs', step.final ? 'text-emerald-300' : 'text-text-secondary')}>{step.status}</p>
@@ -272,7 +274,6 @@ function WorkflowNode({
 function WorkflowOverview({ reduceMotion }: { reduceMotion: boolean }) {
   const phase = useLoopPhase(8000, !reduceMotion, 120);
   const activeIndex = reduceMotion ? -1 : Math.floor((phase / 8000) * workflowSteps.length);
-  const travelProgress = reduceMotion ? 0 : phase / 8000;
   const activeStage = activeIndex <= 0 ? 0 : activeIndex <= 2 ? 1 : activeIndex <= 4 ? 2 : 3;
 
   return (
@@ -284,14 +285,7 @@ function WorkflowOverview({ reduceMotion }: { reduceMotion: boolean }) {
 
       <div className="relative mt-4 overflow-x-auto pb-1 md:overflow-visible">
         <div className="relative flex min-w-[820px] items-center gap-3 sm:gap-4 md:min-w-0 md:grid md:grid-cols-6 md:gap-3">
-          <div className="pointer-events-none absolute left-8 right-8 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-blue-500/75 via-cyan-300/70 to-emerald-400/70" />
-          <span className="pointer-events-none absolute left-6 top-1/2 z-[2] h-2 w-2 -translate-y-1/2 rounded-full border border-cyan-200/75 bg-cyan-300/70 shadow-[0_0_12px_rgba(56,189,248,0.45)]" />
-          {!reduceMotion ? (
-            <motion.div
-              className="pointer-events-none absolute top-1/2 z-[1] h-1 w-8 -translate-y-1/2 rounded-full bg-cyan-300/90 shadow-[0_0_14px_rgba(56,189,248,0.8)]"
-              style={{ left: `calc(32px + ${travelProgress * 100}% * (100% - 74px) / 100)` }}
-            />
-          ) : null}
+          <div className="pointer-events-none absolute left-8 right-8 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-blue-500/70 via-cyan-300/55 to-emerald-400/60" />
           {workflowSteps.map((step, index) => (
             <div key={step.label} className="relative z-[2] flex-1 md:flex-none">
               <WorkflowNode step={step} index={index} reduceMotion={reduceMotion} isActive={index === activeIndex} />
@@ -316,7 +310,8 @@ function ResponseTimeChart({ reduceMotion }: { reduceMotion: boolean }) {
   const points = responseHours.map((h, i) => ({ x: 24 + i * 52, y: 148 - (h / 3) * 118 }));
 
   return (
-    <div className="rounded-2xl border border-border-subtle bg-background-secondary/35 p-4">
+    <div className="relative rounded-2xl border border-border-subtle bg-background-secondary/35 p-4">
+      <div className="pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r from-cyan-300/0 via-cyan-300/45 to-cyan-300/0" />
       <p className="text-system-eyebrow text-text-muted">First Response Time</p>
       <p className="mt-1 text-sm text-text-secondary">Last 7 days</p>
       <p className="mt-2 text-4xl font-semibold">
@@ -543,8 +538,10 @@ function ConnectedTools({ reduceMotion }: { reduceMotion: boolean }) {
     { label: 'Support', icon: MessageSquare },
     { label: 'Workflows', icon: Workflow },
   ] as const;
-  const rowA = [...tickerTools, ...tickerTools];
-  const rowB = [...tickerTools.slice(4), ...tickerTools.slice(0, 4), ...tickerTools.slice(4), ...tickerTools.slice(0, 4)];
+  const rowTop = tickerTools.slice(0, 6);
+  const rowBottom = tickerTools.slice(6);
+  const rowA = [...rowTop, ...rowTop, ...rowTop];
+  const rowB = [...rowBottom, ...rowBottom, ...rowBottom];
 
   return (
     <div className="rounded-2xl border border-border-subtle bg-background-secondary/35 p-4">
@@ -556,12 +553,12 @@ function ConnectedTools({ reduceMotion }: { reduceMotion: boolean }) {
         <motion.div
           className="flex w-max gap-2"
           animate={reduceMotion ? undefined : { x: ['0%', '-50%'] }}
-          transition={{ duration: 28, ease: 'linear', repeat: Infinity }}
+          transition={{ duration: 34, ease: 'linear', repeat: Infinity }}
         >
           {rowA.map((tool, index) => {
             const Icon = tool.icon;
             return (
-              <span key={`a-${tool.label}-${index}`} className="inline-flex items-center gap-1.5 rounded-full border border-border-subtle bg-background-primary/75 px-3 py-1.5 text-xs text-text-secondary transition hover:border-cyan-300/55 hover:text-cyan-100 hover:shadow-[0_0_12px_rgba(56,189,248,0.18)]">
+              <span key={`a-${tool.label}-${index}`} className="inline-flex min-w-[118px] items-center justify-center gap-1.5 rounded-full border border-border-subtle bg-background-primary/78 px-4 py-2 text-xs text-text-secondary transition hover:border-cyan-300/55 hover:text-cyan-100 hover:shadow-[0_0_12px_rgba(56,189,248,0.18)]">
                 <Icon className="h-3.5 w-3.5" aria-hidden />
                 {tool.label}
               </span>
@@ -571,12 +568,12 @@ function ConnectedTools({ reduceMotion }: { reduceMotion: boolean }) {
         <motion.div
           className="mt-2 flex w-max gap-2"
           animate={reduceMotion ? undefined : { x: ['-50%', '0%'] }}
-          transition={{ duration: 32, ease: 'linear', repeat: Infinity }}
+          transition={{ duration: 38, ease: 'linear', repeat: Infinity }}
         >
           {rowB.map((tool, index) => {
             const Icon = tool.icon;
             return (
-              <span key={`b-${tool.label}-${index}`} className="inline-flex items-center gap-1.5 rounded-full border border-border-subtle bg-background-primary/70 px-3 py-1.5 text-xs text-text-secondary transition hover:border-cyan-300/55 hover:text-cyan-100 hover:shadow-[0_0_12px_rgba(56,189,248,0.18)]">
+              <span key={`b-${tool.label}-${index}`} className="inline-flex min-w-[118px] items-center justify-center gap-1.5 rounded-full border border-border-subtle bg-background-primary/72 px-4 py-2 text-xs text-text-secondary transition hover:border-cyan-300/55 hover:text-cyan-100 hover:shadow-[0_0_12px_rgba(56,189,248,0.18)]">
                 <Icon className="h-3.5 w-3.5" aria-hidden />
                 {tool.label}
               </span>
@@ -585,7 +582,7 @@ function ConnectedTools({ reduceMotion }: { reduceMotion: boolean }) {
         </motion.div>
       </div>
       <div className="mt-3 flex flex-wrap gap-2 sm:hidden">
-        {tickerTools.slice(0, 8).map((tool) => {
+        {tickerTools.slice(0, 10).map((tool) => {
           const Icon = tool.icon;
           return (
             <span key={tool.label} className="inline-flex items-center gap-1.5 rounded-full border border-border-subtle bg-background-primary/70 px-3 py-1.5 text-sm text-text-secondary">
@@ -780,7 +777,7 @@ export function CommandCenterHero() {
                     initial={reduceMotion ? false : { opacity: 0, y: 8 }}
                     animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 + index * 0.04 }}
-                    className="rounded-xl border border-border-subtle bg-surface-primary/80 px-3.5 py-2.5 shadow-[0_8px_18px_rgba(3,10,25,0.25)]"
+                    className="rounded-xl border border-border-subtle bg-surface-primary/80 px-3.5 py-2.5 shadow-[0_8px_18px_rgba(3,10,25,0.25)] backdrop-blur-[2px]"
                   >
                     <p className="inline-flex items-center gap-2.5 text-sm text-text-secondary">
                       <Icon className={cn('h-[18px] w-[18px]', pill.accent)} aria-hidden /> {pill.label}
