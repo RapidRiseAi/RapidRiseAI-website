@@ -626,11 +626,24 @@ function ConnectedTools({ reduceMotion }: { reduceMotion: boolean }) {
   );
 }
 
-function ImpactMetrics({ reduceMotion }: { reduceMotion: boolean }) {
+function MobileImpactSnapshot({ reduceMotion }: { reduceMotion: boolean }) {
   return (
-    <div className="mt-12 rounded-2xl border border-border-subtle bg-background-secondary/45 p-4 lg:mt-14">
+    <div className="mt-12 rounded-2xl border border-border-subtle bg-background-secondary/45 p-4 lg:mt-14 xl:hidden">
       <p className="mb-3 text-system-eyebrow text-text-muted">Impact snapshot</p>
-      <div className="grid grid-cols-1 gap-3 [@media(min-width:390px)]:grid-cols-2 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-3 [@media(min-width:390px)]:grid-cols-2 md:grid-cols-2">
+        {impactMetrics.map((metric, index) => (
+          <ImpactMetricCard key={metric.label} metric={metric} index={index} reduceMotion={reduceMotion} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function DesktopImpactSnapshot({ reduceMotion }: { reduceMotion: boolean }) {
+  return (
+    <div className="mt-12 hidden rounded-2xl border border-border-subtle bg-background-secondary/45 p-4 lg:mt-14 xl:block">
+      <p className="mb-3 text-system-eyebrow text-text-muted">Impact snapshot</p>
+      <div className="grid grid-cols-4 gap-3">
         {impactMetrics.map((metric, index) => (
           <ImpactMetricCard key={metric.label} metric={metric} index={index} reduceMotion={reduceMotion} />
         ))}
@@ -871,7 +884,8 @@ export function CommandCenterHero() {
           <DesktopHeroDashboard reduceMotion={Boolean(reduceMotion)} />
         </div>
 
-        <ImpactMetrics reduceMotion={Boolean(reduceMotion)} />
+        <MobileImpactSnapshot reduceMotion={Boolean(reduceMotion)} />
+        <DesktopImpactSnapshot reduceMotion={Boolean(reduceMotion)} />
       </div>
     </section>
   );
