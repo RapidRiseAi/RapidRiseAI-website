@@ -196,40 +196,6 @@ function EventCyclePanel({ reduceMotion }: { reduceMotion: boolean }) {
   );
 }
 
-function MotionConnector({ reduceMotion }: { reduceMotion: boolean }) {
-  return (
-    <svg viewBox="0 0 440 280" className="pointer-events-none absolute inset-0 z-[1] h-full w-full opacity-85" aria-hidden>
-      {[
-        'M40 62 C150 62, 160 110, 220 112',
-        'M35 210 C140 200, 155 164, 220 156',
-        'M400 84 C300 84, 290 120, 220 126',
-        'M398 226 C300 220, 282 170, 220 164',
-      ].map((d, idx) => (
-        <g key={d}>
-          <motion.path
-            d={d}
-            fill="none"
-            stroke="rgba(103,217,255,0.45)"
-            strokeWidth="1.4"
-            initial={reduceMotion ? false : { pathLength: 0, opacity: 0.2 }}
-            animate={reduceMotion ? undefined : { pathLength: 1, opacity: 1 }}
-            transition={{ delay: 0.72 + idx * 0.08, duration: 0.55 }}
-          />
-          {!reduceMotion ? (
-            <motion.circle
-              r="2.4"
-              fill="rgba(45,124,255,0.95)"
-              animate={{ offsetDistance: ['0%', '100%'] }}
-              transition={{ duration: 3.8 + idx * 0.4, repeat: Infinity, ease: 'linear', delay: idx * 0.22 }}
-              style={{ offsetPath: `path('${d}')` as any }}
-            />
-          ) : null}
-        </g>
-      ))}
-    </svg>
-  );
-}
-
 export function CommandCenterHero() {
   const reduceMotion = useReducedMotion();
 
@@ -316,8 +282,6 @@ export function CommandCenterHero() {
                 </div>
               </div>
             </div>
-
-            <MotionConnector reduceMotion={Boolean(reduceMotion)} />
           </motion.div>
           <div className="mt-3">
             <EventCyclePanel reduceMotion={Boolean(reduceMotion)} />
