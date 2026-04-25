@@ -83,7 +83,7 @@ function WorkflowOverview({ reduceMotion }: { reduceMotion: boolean }) {
     <div className="rounded-2xl border border-border-subtle bg-background-secondary/35 p-4">
       <p className="text-system-eyebrow text-text-muted">Workflow Overview</p>
       <div className="relative mt-4 overflow-x-auto pb-2">
-        <svg viewBox="0 0 920 128" className="absolute left-0 top-4 h-16 w-[920px]" aria-hidden>
+        <svg viewBox="0 0 920 128" className="absolute left-0 top-4 h-16 min-w-[780px] w-full" aria-hidden>
           <motion.path
             d={workflowLinePath()}
             fill="none"
@@ -104,7 +104,7 @@ function WorkflowOverview({ reduceMotion }: { reduceMotion: boolean }) {
             />
           ) : null}
         </svg>
-        <div className="relative z-10 flex min-w-[920px] items-start justify-between gap-3">
+        <div className="relative z-10 flex min-w-[780px] items-start justify-between gap-2">
           {workflowSteps.map((step, index) => {
             const Icon = step.icon;
             return (
@@ -113,7 +113,7 @@ function WorkflowOverview({ reduceMotion }: { reduceMotion: boolean }) {
                 initial={reduceMotion ? false : { opacity: 0, y: 8 }}
                 animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
                 transition={{ delay: 0.08 * index }}
-                className="w-[140px]"
+                className="w-[120px]"
               >
                 <div className="relative rounded-2xl border border-border-subtle bg-surface-primary/70 p-3 text-center transition hover:-translate-y-0.5 hover:border-border-blue">
                   {step.count ? <span className="absolute -right-2 -top-2 rounded-full border border-border-blue bg-background-primary px-2 text-xs font-semibold text-accent-primary">{step.count}</span> : <span className="absolute -right-2 -top-2 rounded-full border border-emerald-400/70 bg-emerald-500/15 p-1"><BadgeCheck className="h-3.5 w-3.5 text-emerald-300" /></span>}
@@ -242,23 +242,23 @@ export function CommandCenterHero() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="home-hero" className="hero-padding relative overflow-hidden pb-10">
+    <section id="home-hero" className="hero-padding relative overflow-hidden pb-10 pt-8 lg:pt-14">
       <div className="pointer-events-none absolute inset-0 bg-background-primary" />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.045)_1px,transparent_1px)] bg-[size:46px_46px]" />
       <div className="pointer-events-none absolute right-[10%] top-[24%] h-[520px] w-[520px] rounded-full bg-glow-blue blur-[140px]" />
       <div className="pointer-events-none absolute bottom-0 right-0 h-40 w-[50%] bg-[radial-gradient(ellipse_at_bottom_right,rgba(45,124,255,0.35),transparent_65%)]" />
 
-      <div className="relative mx-auto w-full max-w-[1500px] px-6 md:px-10">
-        <div className="grid items-start gap-8 lg:grid-cols-[0.4fr_0.6fr]">
+      <div className="relative mx-auto w-full max-w-[1520px] px-6 md:px-10">
+        <div className="grid items-start gap-10 lg:grid-cols-[0.43fr_0.57fr]">
           <div>
             <motion.p initial={reduceMotion ? false : { opacity: 0, y: 8 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} className="text-system-eyebrow text-accent-secondary">
               RAPID RISE AI COMMAND CENTER
             </motion.p>
-            <motion.h1 initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.05 }} className="mt-4 text-[clamp(42px,7vw,80px)] font-[var(--font-jakarta)] font-semibold leading-[0.98] tracking-[-0.03em] text-white">
+            <motion.h1 initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.05 }} className="mt-4 max-w-[17ch] text-[clamp(46px,5.8vw,78px)] font-[var(--font-jakarta)] font-semibold leading-[0.98] tracking-[-0.03em] text-white">
               Manual work is costing you
               <span className="bg-gradient-to-r from-cyan-300 via-blue-400 to-blue-600 bg-clip-text text-transparent"> leads, time, and control.</span>
             </motion.h1>
-            <motion.p initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mt-5 max-w-xl text-[1.12rem] leading-8 text-text-secondary">
+            <motion.p initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mt-6 max-w-[54ch] text-[1.1rem] leading-8 text-text-secondary">
               We build automation systems, dashboards, portals, and workflow tools that help businesses respond faster, track work clearly, and operate with less chaos.
             </motion.p>
 
@@ -290,7 +290,7 @@ export function CommandCenterHero() {
             <p className="mt-8 text-sm text-text-secondary">Trusted by South African businesses that need clearer systems.</p>
           </div>
 
-          <motion.div initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }} animate={reduceMotion ? undefined : { opacity: 1, scale: 1 }} transition={{ delay: 0.12 }} className="rounded-[30px] border border-border-blue/60 bg-surface-primary/80 p-5 shadow-[0_0_0_1px_rgba(45,124,255,0.4),0_0_38px_rgba(45,124,255,0.24)] backdrop-blur-xl">
+          <motion.div initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }} animate={reduceMotion ? undefined : { opacity: 1, scale: 1 }} transition={{ delay: 0.12 }} className="mt-2 rounded-[30px] border border-border-blue/60 bg-surface-primary/80 p-5 shadow-[0_0_0_1px_rgba(45,124,255,0.4),0_0_38px_rgba(45,124,255,0.24)] backdrop-blur-xl">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <p className="text-[2rem] font-semibold leading-none tracking-tight">OPERATIONS COMMAND <span className="ml-2 text-base text-emerald-300">● Live system</span></p>
