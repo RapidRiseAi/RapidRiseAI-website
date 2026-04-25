@@ -33,6 +33,28 @@ const activityFeed = [
   'Ready • Next action queued',
 ];
 
+const chartSeries = [
+  {
+    primary: [18, 22, 20, 30, 28, 36, 34, 42, 40, 48],
+    secondary: [14, 17, 16, 21, 25, 29, 33, 37, 35, 41],
+  },
+  {
+    primary: [16, 18, 24, 22, 30, 33, 31, 40, 44, 46],
+    secondary: [11, 13, 17, 19, 23, 27, 30, 33, 37, 39],
+  },
+  {
+    primary: [20, 24, 26, 25, 34, 32, 38, 43, 41, 49],
+    secondary: [12, 16, 18, 22, 20, 26, 31, 34, 36, 38],
+  },
+];
+
+function pointsToPath(values: number[]) {
+  const step = 240 / (values.length - 1);
+  return values
+    .map((v, i) => `${i === 0 ? 'M' : 'L'} ${Math.round(i * step)} ${52 - v}`)
+    .join(' ');
+}
+
 function StatusPill({ children, className }: React.PropsWithChildren<{ className?: string }>) {
   return (
     <span className={cn('inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface-secondary/70 px-3 py-1.5 text-[11px] uppercase tracking-[0.16em] text-text2', className)}>
@@ -73,6 +95,58 @@ function ActivityFeed({ reduceMotion }: { reduceMotion: boolean }) {
         {activityFeed[active]}
       </motion.p>
     </div>
+  );
+}
+
+function AnimatedChart({ reduceMotion }: { reduceMotion: boolean }) {
+  const [seriesIndex, setSeriesIndex] = useState(0);
+  const series = chartSeries[seriesIndex];
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    const id = window.setInterval(() => {
+      setSeriesIndex((prev) => (prev + 1) % chartSeries.length);
+    }, 4200);
+    return () => window.clearInterval(id);
+  }, [reduceMotion]);
+
+  const primaryPath = pointsToPath(series.primary);
+  const secondaryPath = pointsToPath(series.secondary);
+
+  return (
+    <svg viewBox="0 0 240 52" className="mt-2 h-12 w-full" aria-hidden>
+      <motion.path
+        key={`p-${seriesIndex}`}
+        d={primaryPath}
+        fill="none"
+        stroke="rgba(103,217,255,0.9)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        initial={reduceMotion ? false : { pathLength: 0.2, opacity: 0.45 }}
+        animate={reduceMotion ? undefined : { pathLength: 1, opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      />
+      <motion.path
+        key={`s-${seriesIndex}`}
+        d={secondaryPath}
+        fill="none"
+        stroke="rgba(45,124,255,0.7)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        initial={reduceMotion ? false : { pathLength: 0.2, opacity: 0.35 }}
+        animate={reduceMotion ? undefined : { pathLength: 1, opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.08 }}
+      />
+      {!reduceMotion ? (
+        <motion.circle
+          r="2.4"
+          fill="rgba(103,217,255,0.95)"
+          animate={{ offsetDistance: ['0%', '100%'] }}
+          transition={{ duration: 3.8, repeat: Infinity, ease: 'linear' }}
+          style={{ offsetPath: `path('${primaryPath}')` as any }}
+        />
+      ) : null}
+    </svg>
   );
 }
 
@@ -131,13 +205,13 @@ export function CommandCenterHero() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="home-hero" className="hero-padding relative overflow-hidden border-b border-border-subtle">
+    <section id="home-hero" className="hero-padding relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0 bg-background-primary" />
       <motion.div initial={reduceMotion ? false : { opacity: 0 }} animate={reduceMotion ? undefined : { opacity: 1 }} className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:38px_38px] [mask-image:radial-gradient(circle_at_center,black,transparent_80%)]" />
       <div className="pointer-events-none absolute left-[56%] top-1/2 h-[420px] w-[420px] -translate-y-1/2 rounded-full bg-glow-blue blur-[120px]" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(90deg,transparent,rgba(103,217,255,0.22),transparent)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(90deg,transparent,rgba(103,217,255,0.14),transparent)]" />
 
-      <div className="relative mx-auto grid w-full max-w-content items-center gap-7 px-4 md:px-8 lg:grid-cols-[0.45fr_0.55fr]">
+      <div className="relative mx-auto grid min-h-[calc(100svh-74px)] w-full max-w-[1520px] items-center gap-7 px-5 md:px-8 xl:px-10 lg:grid-cols-[0.45fr_0.55fr]">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 14 }}
           animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
@@ -170,7 +244,13 @@ export function CommandCenterHero() {
           </div>
         </motion.div>
 
-        <div className="order-2 relative xl:px-16">
+        <div className="order-2 relative">
+          <div className="hidden gap-3 xl:grid xl:grid-cols-[200px_minmax(0,1fr)_200px] xl:items-center">
+            <div className="space-y-2">
+              {floatingEvents.slice(0, 3).map((event, index) => (
+                <FloatingSystemCard key={event} text={event} index={index} reduceMotion={Boolean(reduceMotion)} />
+              ))}
+            </div>
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
             animate={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
@@ -193,10 +273,7 @@ export function CommandCenterHero() {
 
             <div className="mt-3 rounded-xl border border-border-subtle bg-background-secondary/55 p-3">
               <p className="text-[10px] uppercase tracking-[0.14em] text-text-muted">Mini activity graph</p>
-              <svg viewBox="0 0 240 52" className="mt-2 h-12 w-full" aria-hidden>
-                <polyline points="0,36 32,32 64,34 96,22 128,26 160,18 192,20 224,10 240,14" fill="none" stroke="rgba(103,217,255,0.82)" strokeWidth="2" />
-                <polyline points="0,44 32,40 64,43 96,36 128,38 160,28 192,30 224,22 240,24" fill="none" stroke="rgba(45,124,255,0.62)" strokeWidth="2" />
-              </svg>
+              <AnimatedChart reduceMotion={Boolean(reduceMotion)} />
             </div>
 
             <div className="mt-3 grid grid-cols-3 gap-2">
@@ -219,17 +296,11 @@ export function CommandCenterHero() {
 
             <MotionConnector reduceMotion={Boolean(reduceMotion)} />
           </motion.div>
-
-          <div className="pointer-events-none absolute -left-16 top-10 hidden w-[200px] space-y-2 xl:block">
-            {floatingEvents.slice(0, 3).map((event, index) => (
-              <FloatingSystemCard key={event} text={event} index={index} reduceMotion={Boolean(reduceMotion)} />
-            ))}
-          </div>
-
-          <div className="pointer-events-none absolute -right-16 bottom-10 hidden w-[200px] space-y-2 xl:block">
-            {floatingEvents.slice(3).map((event, index) => (
-              <FloatingSystemCard key={event} text={event} index={index + 3} reduceMotion={Boolean(reduceMotion)} />
-            ))}
+            <div className="space-y-2">
+              {floatingEvents.slice(3).map((event, index) => (
+                <FloatingSystemCard key={event} text={event} index={index + 3} reduceMotion={Boolean(reduceMotion)} />
+              ))}
+            </div>
           </div>
 
           <div className="mt-3 grid gap-2 sm:grid-cols-2 xl:hidden">
