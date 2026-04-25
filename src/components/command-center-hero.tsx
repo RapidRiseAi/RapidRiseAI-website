@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import {
   Activity,
   ArrowRight,
@@ -288,9 +288,6 @@ function WorkflowOverview({ reduceMotion }: { reduceMotion: boolean }) {
 function ResponseTimeChart({ reduceMotion }: { reduceMotion: boolean }) {
   const path = useMemo(() => chartPath(responseHours), []);
   const points = responseHours.map((h, i) => ({ x: 24 + i * 52, y: 148 - (h / 3) * 118 }));
-  const chartPhase = useLoopPhase(6800, !reduceMotion, 100);
-  const shimmerX = (chartPhase / 6800) * 360;
-  const movingPoint = points[Math.floor((chartPhase / 6800) * (points.length - 1))];
 
   return (
     <div className="rounded-2xl border border-border-subtle bg-background-secondary/35 p-4">
@@ -314,11 +311,9 @@ function ResponseTimeChart({ reduceMotion }: { reduceMotion: boolean }) {
           strokeWidth="3.4"
           strokeLinecap="round"
           initial={reduceMotion ? false : { pathLength: 0 }}
-          animate={reduceMotion ? undefined : { pathLength: 1 }}
-          transition={{ duration: 1.1, ease: 'easeOut' }}
+          animate={reduceMotion ? undefined : { pathLength: 1, opacity: [0.86, 1, 0.86] }}
+          transition={{ pathLength: { duration: 1.1, ease: 'easeOut' }, opacity: { duration: 4.2, repeat: Infinity, ease: 'easeInOut' } }}
         />
-
-        {!reduceMotion ? <rect x={shimmerX - 26} y="18" width="52" height="132" fill="url(#rr-chart-shimmer)" opacity="0.35" /> : null}
 
         {points.map((point, i) => (
           <g key={dayLabels[i]}>
@@ -329,23 +324,12 @@ function ResponseTimeChart({ reduceMotion }: { reduceMotion: boolean }) {
 
         {!reduceMotion ? (
           <motion.circle
-            cx={movingPoint.x}
-            cy={movingPoint.y}
-            r="4.3"
-            fill="rgba(147,197,253,0.95)"
-            animate={{ opacity: [0.35, 1, 0.35] }}
-            transition={{ duration: 1.1, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        ) : null}
-
-        {!reduceMotion ? (
-          <motion.circle
             cx={points[points.length - 1].x}
             cy={points[points.length - 1].y}
             r="7.5"
             fill="rgba(56,189,248,0.24)"
             animate={{ scale: [1, 1.4, 1], opacity: [0.2, 0.55, 0.2] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
           />
         ) : null}
 
@@ -359,13 +343,8 @@ function ResponseTimeChart({ reduceMotion }: { reduceMotion: boolean }) {
             <stop offset="100%" stopColor="#2563eb" />
           </linearGradient>
           <linearGradient id="rr-chart-fill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="rgba(56,189,248,0.38)" />
+            <stop offset="0%" stopColor="rgba(56,189,248,0.25)" />
             <stop offset="100%" stopColor="rgba(56,189,248,0)" />
-          </linearGradient>
-          <linearGradient id="rr-chart-shimmer" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="rgba(255,255,255,0)" />
-            <stop offset="50%" stopColor="rgba(125,211,252,0.95)" />
-            <stop offset="100%" stopColor="rgba(255,255,255,0)" />
           </linearGradient>
         </defs>
 
@@ -392,54 +371,71 @@ function ResponseTimeChart({ reduceMotion }: { reduceMotion: boolean }) {
 }
 
 function ActivityFeed({ reduceMotion }: { reduceMotion: boolean }) {
-  const [events, setEvents] = useState(activityFeedPool.slice(0, 5));
+  const [rows, setRows] = useState(activityFeedPool.slice(0, 5));
+  const [highlightedRow, setHighlightedRow] = useState(0);
   const cursorRef = useRef(5);
+  const rowRef = useRef(0);
 
   useEffect(() => {
     if (reduceMotion) {
-      setEvents(activityFeedPool.slice(0, 5));
+      setRows(activityFeedPool.slice(0, 5));
       cursorRef.current = 5;
+      rowRef.current = 0;
+      setHighlightedRow(-1);
       return;
     }
-    const interval = window.setInterval(() => {
-      setEvents((prev) => {
-        const next = activityFeedPool[cursorRef.current % activityFeedPool.length];
-        cursorRef.current += 1;
-        return [next, ...prev].slice(0, 5);
-      });
-    }, 5000);
 
-    return () => window.clearInterval(interval);
+    let timeoutId: number | undefined;
+    const interval = window.setInterval(() => {
+      rowRef.current = (rowRef.current + 1) % 5;
+      const targetRow = rowRef.current;
+      setRows((prev) => {
+        const next = [...prev];
+        next[targetRow] = activityFeedPool[cursorRef.current % activityFeedPool.length];
+        cursorRef.current += 1;
+        return next;
+      });
+      setHighlightedRow(targetRow);
+      timeoutId = window.setTimeout(() => setHighlightedRow(-1), 900);
+    }, 5600);
+
+    return () => {
+      window.clearInterval(interval);
+      if (timeoutId) window.clearTimeout(timeoutId);
+    };
   }, [reduceMotion]);
 
   return (
     <div className="rounded-2xl border border-border-subtle bg-background-secondary/35 p-4">
       <p className="text-system-eyebrow text-text-muted">Activity Feed</p>
-      <div className="mt-3 space-y-2">
-        <AnimatePresence initial={false}>
-          {events.slice(0, 5).map((event, index) => {
-            const Icon = event.icon;
-            return (
-              <motion.div
-                key={`${event.text}-${index}`}
-                layout
-                initial={reduceMotion ? false : { opacity: 0, y: -8 }}
-                animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-                exit={reduceMotion ? undefined : { opacity: 0, y: 8 }}
-                transition={{ duration: 0.42, ease: 'easeOut' }}
-                className={cn('flex items-center justify-between gap-3 rounded-xl border border-white/5 px-3 py-2', index === 0 && !reduceMotion && 'bg-blue-500/10')}
-              >
-                <div className="flex items-center gap-2.5">
-                  <span className={cn('inline-flex h-8 w-8 items-center justify-center rounded-full bg-background-primary/80', event.accent)}>
-                    <Icon className="h-4 w-4" aria-hidden />
-                  </span>
-                  <p className="text-sm text-text-primary">{event.text}</p>
-                </div>
-                <p className="text-xs text-text-muted">{event.time}</p>
-              </motion.div>
-            );
-          })}
-        </AnimatePresence>
+      <div className="mt-3 grid gap-2">
+        {rows.map((event, index) => {
+          const Icon = event.icon;
+          return (
+            <motion.div
+              key={`feed-row-${index}`}
+              animate={
+                reduceMotion
+                  ? undefined
+                  : { opacity: highlightedRow === index ? [0.72, 1] : 1, y: highlightedRow === index ? [2, 0] : 0 }
+              }
+              transition={{ duration: 0.38, ease: 'easeOut' }}
+              className={cn(
+                'flex min-h-[50px] items-center justify-between gap-3 rounded-xl border border-white/5 px-3 py-2',
+                highlightedRow === index && !reduceMotion && 'bg-blue-500/10',
+                index > 3 && 'hidden sm:flex'
+              )}
+            >
+              <div className="flex items-center gap-2.5">
+                <span className={cn('inline-flex h-8 w-8 items-center justify-center rounded-full bg-background-primary/80', event.accent)}>
+                  <Icon className="h-4 w-4" aria-hidden />
+                </span>
+                <p className="text-sm text-text-primary">{event.text}</p>
+              </div>
+              <p className="text-xs text-text-muted">{event.time}</p>
+            </motion.div>
+          );
+        })}
       </div>
     </div>
   );
@@ -507,8 +503,8 @@ function TodayOverviewCards({ reduceMotion }: { reduceMotion: boolean }) {
 }
 
 function ConnectedTools({ reduceMotion }: { reduceMotion: boolean }) {
-  const phase = useLoopPhase(8000, !reduceMotion, 100);
-  const slot = 8000 / connectedTools.length;
+  const phase = useLoopPhase(11000, !reduceMotion, 120);
+  const slot = 11000 / connectedTools.length;
 
   return (
     <div className="rounded-2xl border border-border-subtle bg-background-secondary/35 p-4">
@@ -537,7 +533,7 @@ function ConnectedTools({ reduceMotion }: { reduceMotion: boolean }) {
 
 function ImpactMetrics({ reduceMotion }: { reduceMotion: boolean }) {
   return (
-    <div className="mt-8 rounded-2xl border border-border-subtle bg-background-secondary/45 p-4">
+    <div className="mt-12 rounded-2xl border border-border-subtle bg-background-secondary/45 p-4 lg:mt-14">
       <p className="mb-3 text-system-eyebrow text-text-muted">Impact snapshot</p>
       <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         {impactMetrics.map((metric, index) => (
@@ -568,7 +564,7 @@ function ImpactMetricCard({
       whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-10% 0px -10% 0px' }}
       transition={{ delay: 0.08 * index }}
-      className="rounded-xl border border-border-subtle bg-background-primary/60 p-3 transition hover:-translate-y-0.5 hover:border-cyan-300/45 hover:shadow-[0_0_20px_rgba(56,189,248,0.18)]"
+      className="flex min-h-[146px] flex-col rounded-xl border border-border-subtle bg-background-primary/60 p-3 transition hover:-translate-y-0.5 hover:border-cyan-300/45 hover:shadow-[0_0_20px_rgba(56,189,248,0.18)]"
     >
       <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-white/10 bg-background-secondary/70">
         <Icon className={cn('h-5 w-5', metric.accent)} aria-hidden />
@@ -593,9 +589,9 @@ export function CommandCenterHero() {
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.045)_1px,transparent_1px)] bg-[size:46px_46px]" />
       <div className="pointer-events-none absolute bottom-0 right-0 h-40 w-[50%] bg-[radial-gradient(ellipse_at_bottom_right,rgba(45,124,255,0.35),transparent_65%)]" />
 
-      <div className="relative mx-auto w-full max-w-[1520px] px-6 md:px-10">
-        <div className="grid items-start gap-12 xl:grid-cols-[0.43fr_0.57fr]">
-          <div>
+      <div className="relative mx-auto w-full max-w-[1520px] px-6 md:px-10 xl:px-14 2xl:px-16">
+        <div className="grid items-center gap-12 lg:gap-14 xl:gap-16 2xl:gap-20 xl:grid-cols-[minmax(400px,0.92fr)_minmax(620px,1.08fr)] 2xl:grid-cols-[minmax(420px,0.88fr)_minmax(720px,1.32fr)]">
+          <div className="min-w-0 xl:min-w-[400px]">
             <motion.p initial={reduceMotion ? false : { opacity: 0, y: 8 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} className="text-system-eyebrow text-accent-secondary">
               RAPID RISE AI COMMAND CENTER
             </motion.p>
@@ -603,12 +599,12 @@ export function CommandCenterHero() {
               initial={reduceMotion ? false : { opacity: 0, y: 12 }}
               animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
               transition={{ delay: 0.05 }}
-              className="mt-4 max-w-[13ch] text-[clamp(50px,5.5vw,78px)] font-[var(--font-jakarta)] font-semibold leading-[0.98] tracking-[-0.03em] text-white"
+              className="mt-4 max-w-[620px] text-[clamp(3.2rem,4.4vw,5.25rem)] font-[var(--font-jakarta)] font-semibold leading-[0.98] tracking-[-0.028em] text-white md:text-[clamp(3.4rem,4.8vw,5.5rem)] 2xl:text-[clamp(4rem,5vw,6rem)]"
             >
               Manual work is costing you
-              <span className="text-cyan-300"> leads, time, and control.</span>
+              <span className="bg-gradient-to-r from-cyan-300 via-sky-300 to-blue-300 bg-clip-text text-transparent"> leads, time, and control.</span>
             </motion.h1>
-            <motion.p initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mt-6 max-w-[54ch] text-[1.1rem] leading-8 text-text-secondary">
+            <motion.p initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mt-6 max-w-[520px] text-[1.1rem] leading-8 text-text-secondary">
               We build automation systems, dashboards, portals, and workflow tools that help businesses respond faster, track work clearly, and operate with less chaos.
             </motion.p>
 
@@ -620,10 +616,10 @@ export function CommandCenterHero() {
                     reduceMotion
                       ? undefined
                       : {
-                          x: [0, 0, 0, 4, 0],
+                          x: [0, 0, 0, 2, 0],
                         }
                   }
-                  transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }}
+                  transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
                   className="inline-flex"
                 >
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden />
@@ -660,13 +656,13 @@ export function CommandCenterHero() {
             initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }}
             animate={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
             transition={{ delay: 0.12 }}
-            className="relative mt-2 rounded-[30px] border border-border-blue/60 bg-surface-primary/80 p-5 shadow-[0_0_0_1px_rgba(45,124,255,0.4),0_0_38px_rgba(45,124,255,0.24)] backdrop-blur-xl"
+            className="relative mt-2 w-full max-w-[930px] rounded-[30px] border border-border-blue/60 bg-surface-primary/80 p-6 shadow-[0_0_0_1px_rgba(45,124,255,0.4),0_0_30px_rgba(45,124,255,0.2)] backdrop-blur-xl xl:ml-auto xl:p-6 2xl:p-7"
           >
             {!reduceMotion ? (
               <motion.div
                 className="pointer-events-none absolute inset-3 rounded-[24px] bg-[radial-gradient(ellipse_at_center,rgba(56,189,248,0.2),rgba(2,6,23,0))]"
-                animate={{ opacity: [0.18, 0.34, 0.18], scale: [0.99, 1.02, 0.99] }}
-                transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+                animate={{ opacity: [0.14, 0.24, 0.14], scale: [0.995, 1.015, 0.995] }}
+                transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
               />
             ) : null}
 
@@ -682,7 +678,7 @@ export function CommandCenterHero() {
             <div className="relative mt-4 space-y-4">
               <WorkflowOverview reduceMotion={Boolean(reduceMotion)} />
 
-              <div className="grid gap-4 xl:grid-cols-[1.05fr_1fr_0.78fr]">
+              <div className="grid gap-4 xl:grid-cols-[1.15fr_1fr_0.75fr]">
                 <ResponseTimeChart reduceMotion={Boolean(reduceMotion)} />
                 <ActivityFeed reduceMotion={Boolean(reduceMotion)} />
                 <TodayOverviewCards reduceMotion={Boolean(reduceMotion)} />
