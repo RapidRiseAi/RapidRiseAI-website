@@ -100,11 +100,11 @@ const connectedTools = [
 
 // Demo marketing metrics. Replace with verified values when approved.
 const impactMetrics = [
-  { value: '+320 hrs', label: 'Admin time saved each month', icon: Clock3, accent: 'text-slate-300' },
-  { value: '3.4x', label: 'Faster response time on average', icon: ArrowRight, accent: 'text-accent-success' },
-  { value: '+58%', label: 'More leads followed up', icon: Users, accent: 'text-violet-300' },
-  { value: '100%', label: 'Visibility across your operations', icon: ShieldCheck, accent: 'text-accent-primary' },
-];
+  { value: '+320 hrs', label: 'Admin time saved each month', icon: Clock3, accent: 'text-slate-300', tag: 'Time', visual: 'ring' },
+  { value: '3.4x', label: 'Faster response time on average', icon: ArrowRight, accent: 'text-accent-success', tag: 'Speed', visual: 'trend' },
+  { value: '+58%', label: 'More leads followed up', icon: Users, accent: 'text-violet-300', tag: 'Follow-up', visual: 'bars' },
+  { value: '100%', label: 'Visibility across your operations', icon: ShieldCheck, accent: 'text-accent-primary', tag: 'Visibility', visual: 'shield' },
+] as const;
 
 function useLoopPhase(durationMs: number, enabled: boolean, tickMs = 120) {
   const [phase, setPhase] = useState(0);
@@ -227,6 +227,7 @@ function WorkflowNode({
   isActive: boolean;
 }) {
   const Icon = step.icon;
+  const isInput = step.label === 'New Enquiry';
   return (
     <motion.div
       initial={reduceMotion ? false : { opacity: 0, y: 8 }}
@@ -236,6 +237,8 @@ function WorkflowNode({
         'relative min-w-[128px] rounded-2xl border bg-surface-primary/80 px-3 py-3 text-center shadow-[0_10px_26px_rgba(5,14,40,0.26)] transition md:min-w-0',
         step.final
           ? 'border-emerald-300/35 shadow-[0_10px_26px_rgba(5,40,30,0.26)]'
+          : isInput
+          ? 'border-cyan-300/35 shadow-[0_10px_26px_rgba(5,24,40,0.28)]'
           : 'border-border-subtle',
         isActive && !reduceMotion && (step.final ? 'ring-1 ring-emerald-300/45' : 'ring-1 ring-accent-primary/40')
       )}
@@ -270,6 +273,7 @@ function WorkflowOverview({ reduceMotion }: { reduceMotion: boolean }) {
   const phase = useLoopPhase(8000, !reduceMotion, 120);
   const activeIndex = reduceMotion ? -1 : Math.floor((phase / 8000) * workflowSteps.length);
   const travelProgress = reduceMotion ? 0 : phase / 8000;
+  const activeStage = activeIndex <= 0 ? 0 : activeIndex <= 2 ? 1 : activeIndex <= 4 ? 2 : 3;
 
   return (
     <div className="rounded-2xl border border-border-subtle bg-background-secondary/35 p-4 sm:p-5">
@@ -293,6 +297,14 @@ function WorkflowOverview({ reduceMotion }: { reduceMotion: boolean }) {
             </div>
           ))}
         </div>
+      </div>
+      <div className="mt-3 hidden items-center gap-2 md:flex">
+        {['Capture', 'Route', 'Action', 'Visibility'].map((stage, index) => (
+          <div key={stage} className="flex flex-1 items-center gap-2">
+            <span className={cn('h-1 flex-1 rounded-full border border-white/10', activeStage >= index && !reduceMotion ? 'bg-cyan-300/70' : 'bg-background-primary/80')} />
+            <span className="text-[10px] uppercase tracking-[0.12em] text-text-muted">{stage}</span>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -524,23 +536,58 @@ function TodayOverviewCards({ reduceMotion }: { reduceMotion: boolean }) {
 function ConnectedTools({ reduceMotion }: { reduceMotion: boolean }) {
   const phase = useLoopPhase(12000, !reduceMotion, 120);
   const slot = 12000 / connectedTools.length;
+  const orbitProgress = phase / 12000;
+  const cx = 50;
+  const cy = 50;
+  const rx = 38;
+  const ry = 26;
+  const pulseX = cx + rx * Math.cos(orbitProgress * Math.PI * 2 - Math.PI / 2);
+  const pulseY = cy + ry * Math.sin(orbitProgress * Math.PI * 2 - Math.PI / 2);
 
   return (
     <div className="rounded-2xl border border-border-subtle bg-background-secondary/35 p-4">
-      <p className="text-system-eyebrow text-text-muted">Connected Tools</p>
-      <div className="mt-3 flex flex-wrap gap-2">
+      <p className="text-system-eyebrow text-text-muted">Connected stack</p>
+      <p className="mt-1 text-xs text-text-secondary">Works with the tools you already use.</p>
+      <div className="relative mt-3 hidden h-44 overflow-hidden rounded-xl border border-white/10 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.08),transparent_60%)] sm:block">
+        <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full">
+          <ellipse cx={cx} cy={cy} rx={rx} ry={ry} fill="none" stroke="rgba(56,189,248,0.25)" strokeWidth="0.6" />
+          <ellipse cx={cx} cy={cy} rx={rx - 6} ry={ry - 4} fill="none" stroke="rgba(56,189,248,0.12)" strokeWidth="0.4" />
+          {!reduceMotion ? <circle cx={pulseX} cy={pulseY} r="1.5" fill="rgba(103,232,249,0.95)" /> : null}
+        </svg>
+        <div className="absolute left-1/2 top-1/2 z-[2] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/45 bg-background-primary/85 px-4 py-2 text-xs font-medium tracking-[0.08em] text-cyan-100 shadow-[0_0_16px_rgba(56,189,248,0.22)]">
+          Rapid Rise System
+        </div>
+
         {connectedTools.map((tool, index) => {
+          const theta = (Math.PI * 2 * index) / connectedTools.length - Math.PI / 2;
+          const x = cx + rx * Math.cos(theta);
+          const y = cy + ry * Math.sin(theta);
           const timeInSlot = phase % slot;
-          const isActive = !reduceMotion && Math.floor(phase / slot) === index && timeInSlot < 450;
+          const isActive = !reduceMotion && Math.floor(phase / slot) === index && timeInSlot < 480;
           const Icon = tool.icon;
           return (
-            <span
+            <div
               key={tool.label}
               className={cn(
-                'inline-flex items-center gap-2 rounded-full border border-border-subtle bg-background-primary/70 px-3 py-1.5 text-sm text-text-secondary transition hover:border-cyan-300/50 hover:shadow-[0_0_12px_rgba(56,189,248,0.2)]',
+                'absolute z-[3] -translate-x-1/2 -translate-y-1/2 rounded-full border border-border-subtle bg-background-primary/85 px-3 py-1 text-xs text-text-secondary transition',
                 isActive && 'border-cyan-300/70 text-cyan-100 shadow-[0_0_14px_rgba(56,189,248,0.35)]'
               )}
+              style={{ left: `${x}%`, top: `${y}%` }}
             >
+              <span className="inline-flex items-center gap-1.5">
+                <Icon className="h-3 w-3" aria-hidden />
+                {tool.label}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="mt-3 flex flex-wrap gap-2 sm:hidden">
+        {connectedTools.map((tool) => {
+          const Icon = tool.icon;
+          return (
+            <span key={tool.label} className="inline-flex items-center gap-1.5 rounded-full border border-border-subtle bg-background-primary/70 px-3 py-1.5 text-sm text-text-secondary">
               <Icon className="h-3.5 w-3.5" aria-hidden />
               {tool.label}
             </span>
@@ -561,6 +608,71 @@ function ImpactMetrics({ reduceMotion }: { reduceMotion: boolean }) {
         ))}
       </div>
     </div>
+  );
+}
+
+function ImpactMicroVisual({
+  type,
+  reduceMotion,
+}: {
+  type: 'ring' | 'trend' | 'bars' | 'shield';
+  reduceMotion: boolean;
+}) {
+  if (type === 'ring') {
+    return (
+      <svg viewBox="0 0 30 30" className="h-7 w-7" aria-hidden>
+        <circle cx="15" cy="15" r="10.5" stroke="rgba(125,211,252,0.28)" strokeWidth="2" fill="none" />
+        <motion.circle
+          cx="15"
+          cy="15"
+          r="10.5"
+          stroke="rgba(56,189,248,0.95)"
+          strokeWidth="2"
+          fill="none"
+          strokeDasharray="48 18"
+          animate={reduceMotion ? undefined : { rotate: 360 }}
+          transition={{ duration: 12, ease: 'linear', repeat: Infinity }}
+          style={{ transformOrigin: '15px 15px' }}
+        />
+      </svg>
+    );
+  }
+
+  if (type === 'trend') {
+    return (
+      <svg viewBox="0 0 30 30" className="h-7 w-7" aria-hidden>
+        <path d="M4 21 L12 16 L18 18 L26 10" stroke="rgba(74,222,128,0.9)" strokeWidth="2" fill="none" />
+        {!reduceMotion ? <motion.circle cx="26" cy="10" r="2" fill="rgba(74,222,128,0.95)" animate={{ opacity: [0.35, 1, 0.35] }} transition={{ duration: 12, repeat: Infinity }} /> : null}
+      </svg>
+    );
+  }
+
+  if (type === 'bars') {
+    return (
+      <svg viewBox="0 0 30 30" className="h-7 w-7" aria-hidden>
+        {[8, 13, 18].map((h, i) => (
+          <motion.rect
+            key={h}
+            x={6 + i * 7}
+            y={24 - h}
+            width="4"
+            height={h}
+            rx="1"
+            fill="rgba(167,139,250,0.9)"
+            animate={reduceMotion ? undefined : { opacity: [0.6, 1, 0.6] }}
+            transition={{ duration: 12, delay: i * 0.2, repeat: Infinity }}
+          />
+        ))}
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 30 30" className="h-7 w-7" aria-hidden>
+      <circle cx="15" cy="15" r="10.5" stroke="rgba(96,165,250,0.28)" strokeWidth="2" fill="none" />
+      <path d="M15 6 L22 9 V14 C22 18 19 21 15 24 C11 21 8 18 8 14 V9 Z" fill="rgba(59,130,246,0.4)" />
+      {!reduceMotion ? <motion.circle cx="15" cy="15" r="12" stroke="rgba(96,165,250,0.65)" strokeWidth="1" fill="none" animate={{ opacity: [0.15, 0.55, 0.15] }} transition={{ duration: 12, repeat: Infinity }} /> : null}
+    </svg>
   );
 }
 
@@ -587,9 +699,16 @@ function ImpactMetricCard({
       className="relative flex min-h-[146px] flex-col rounded-xl border border-border-subtle bg-background-primary/60 p-3 transition hover:-translate-y-0.5 hover:border-cyan-300/45 hover:shadow-[0_0_20px_rgba(56,189,248,0.18)]"
     >
       <span className="pointer-events-none absolute inset-x-3 top-0 h-px bg-gradient-to-r from-cyan-300/0 via-cyan-300/60 to-cyan-300/0" />
-      <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-white/10 bg-background-secondary/70">
+      <span className="inline-flex w-fit items-center gap-1 rounded-full border border-white/10 bg-background-secondary/70 px-2 py-0.5 text-[10px] uppercase tracking-[0.12em] text-text-muted">
+        {metric.tag}
+      </span>
+      <div className="mt-2 flex items-center justify-between">
+      <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-md border border-white/10 bg-background-secondary/70">
+        <span className="pointer-events-none absolute inset-0 rounded-md bg-[radial-gradient(circle,rgba(56,189,248,0.2),transparent_70%)]" />
         <Icon className={cn('h-5.5 w-5.5', metric.accent)} aria-hidden />
       </span>
+      <ImpactMicroVisual type={metric.visual} reduceMotion={reduceMotion} />
+      </div>
       <p className="mt-2 text-[2.55rem] font-semibold leading-none">
         {metric.value === '+320 hrs' ? <CountUp end={320} prefix="+" suffix=" hrs" reduceMotion={reduceMotion} start={inView} /> : null}
         {metric.value === '3.4x' ? <CountUp end={3.4} decimals={1} suffix="x" reduceMotion={reduceMotion} start={inView} /> : null}
