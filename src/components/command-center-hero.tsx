@@ -220,7 +220,7 @@ function WorkflowNode({
       animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
       transition={{ delay: 0.06 * index }}
       className={cn(
-        'relative min-w-[132px] rounded-2xl border bg-surface-primary/80 px-3 py-3 text-center shadow-[0_10px_26px_rgba(5,14,40,0.26)] transition',
+        'relative min-w-[128px] rounded-2xl border bg-surface-primary/80 px-3 py-3 text-center shadow-[0_10px_26px_rgba(5,14,40,0.26)] transition md:min-w-0',
         step.final
           ? 'border-emerald-300/35 shadow-[0_10px_26px_rgba(5,40,30,0.26)]'
           : 'border-border-subtle',
@@ -265,8 +265,8 @@ function WorkflowOverview({ reduceMotion }: { reduceMotion: boolean }) {
         <p className="text-xs text-cyan-200/80">Live workflow: captured, assigned, followed up, tracked</p>
       </div>
 
-      <div className="relative mt-4 overflow-x-auto pb-1">
-        <div className="relative flex min-w-[840px] items-center gap-3 sm:gap-4">
+      <div className="relative mt-4 overflow-x-auto pb-1 md:overflow-visible">
+        <div className="relative flex min-w-[820px] items-center gap-3 sm:gap-4 md:min-w-0 md:grid md:grid-cols-6 md:gap-3">
           <div className="pointer-events-none absolute left-8 right-8 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-blue-500/50 via-blue-400/45 to-emerald-400/50" />
           {!reduceMotion ? (
             <motion.div
@@ -275,7 +275,7 @@ function WorkflowOverview({ reduceMotion }: { reduceMotion: boolean }) {
             />
           ) : null}
           {workflowSteps.map((step, index) => (
-            <div key={step.label} className="relative z-[2] flex-1">
+            <div key={step.label} className="relative z-[2] flex-1 md:flex-none">
               <WorkflowNode step={step} index={index} reduceMotion={reduceMotion} isActive={index === activeIndex} />
             </div>
           ))}
@@ -602,7 +602,7 @@ export function CommandCenterHero() {
               className="mt-4 max-w-[620px] text-[clamp(3.2rem,4.4vw,5.25rem)] font-[var(--font-jakarta)] font-semibold leading-[0.98] tracking-[-0.028em] text-white md:text-[clamp(3.4rem,4.8vw,5.5rem)] 2xl:text-[clamp(4rem,5vw,6rem)]"
             >
               Manual work is costing you
-              <span className="bg-gradient-to-r from-cyan-300 via-sky-300 to-blue-300 bg-clip-text text-transparent"> leads, time, and control.</span>
+              <span className="bg-gradient-to-r from-[#67e8f9] via-[#38bdf8] to-[#1d4ed8] bg-clip-text text-transparent"> leads, time, and control.</span>
             </motion.h1>
             <motion.p initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mt-6 max-w-[520px] text-[1.1rem] leading-8 text-text-secondary">
               We build automation systems, dashboards, portals, and workflow tools that help businesses respond faster, track work clearly, and operate with less chaos.
