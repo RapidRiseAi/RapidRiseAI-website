@@ -7,10 +7,27 @@ import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Contact | Rapid Rise AI',
-  description: 'Contact Rapid Rise AI to discuss automation, web apps, websites, and AI systems for your business.',
+  description: 'Send a message for partnerships, questions, or quick enquiries. Use Request a Quote for scoped builds.',
   path: '/contact',
 });
 
-
-export default function ContactPage(){return <><Hero h1="Contact" sub="Prefer a quote request? Use the Request a Quote form for faster scoping." cta2="View Work" visual="/images/hero/rapid-rise-ai-contact-request-a-quote.jpg" alt="Request a quote contact module" compactMobile />
-<Section><FormPageLayout title="Send a message"><LeadForm type="contact" /></FormPageLayout></Section></>}
+export default function ContactPage() {
+  return (
+    <>
+      <Hero
+        h1="Send the message. We will map the next step."
+        sub="For general questions, partnerships, or quick enquiries. Use Request a Quote for build scoping."
+        cta2="Request a Quote"
+        cta2Href="/quote"
+        visual="/images/hero/rapid-rise-ai-contact-request-a-quote.jpg"
+        alt="Contact and trust details"
+        compactMobile
+      />
+      <Section>
+        <FormPageLayout title="Contact Rapid Rise AI">
+          <LeadForm type="contact" />
+        </FormPageLayout>
+      </Section>
+    </>
+  );
+}

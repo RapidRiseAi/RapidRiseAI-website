@@ -2,10 +2,10 @@ import type { Metadata } from 'next';
 
 export const SITE_NAME = 'Rapid Rise AI';
 export const SITE_URL = 'https://www.rapidriseai.com';
-export const DEFAULT_TITLE = 'Rapid Rise AI | AI Automation and Education';
-export const DEFAULT_DESCRIPTION = 'AI automations, chatbots, and AI education for businesses and professionals.';
+export const DEFAULT_TITLE = 'Rapid Rise AI | Business Automation and Software Systems';
+export const DEFAULT_DESCRIPTION = 'Rapid Rise AI builds practical automation systems, dashboards, internal tools, portals, quote flows, and team enablement for South African businesses.';
 export const DEFAULT_OG_TYPE = 'website' as const;
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/images/og-image.jpg`;
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image-placeholder.svg`;
 
 const normalizePath = (path: string) => {
   if (!path || path === '/') return '/';
@@ -41,11 +41,7 @@ export const buildMetadata = ({
       url,
       type,
       siteName: SITE_NAME,
-      images: [
-        {
-          url: DEFAULT_OG_IMAGE,
-        },
-      ],
+      images: [{ url: DEFAULT_OG_IMAGE }],
     },
     twitter: {
       card: 'summary_large_image',
