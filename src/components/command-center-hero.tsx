@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import {
   Activity,
   ArrowRight,
@@ -19,7 +19,7 @@ import {
   Workflow,
   Zap,
 } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 const trustPills = [
@@ -71,6 +71,7 @@ function CountUp({
   prefix = '',
   suffix = '',
   reduceMotion = false,
+  start = true,
 }: {
   end: number;
   duration?: number;
@@ -78,10 +79,15 @@ function CountUp({
   prefix?: string;
   suffix?: string;
   reduceMotion?: boolean;
+  start?: boolean;
 }) {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
+    if (!start) {
+      setValue(0);
+      return;
+    }
     if (reduceMotion) {
       setValue(end);
       return;
@@ -96,7 +102,7 @@ function CountUp({
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [end, duration, reduceMotion]);
+  }, [end, duration, reduceMotion, start]);
 
   return <>{prefix}{value.toFixed(decimals)}{suffix}</>;
 }
@@ -253,6 +259,40 @@ function ConnectedTools() {
   );
 }
 
+function ImpactMetricCard({
+  metric,
+  index,
+  reduceMotion,
+}: {
+  metric: (typeof impactMetrics)[number];
+  index: number;
+  reduceMotion: boolean;
+}) {
+  const Icon = metric.icon;
+  const ref = useRef<HTMLDivElement | null>(null);
+  const inView = useInView(ref, { once: true, margin: '-10% 0px -10% 0px' });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-10% 0px -10% 0px' }}
+      transition={{ delay: 0.08 * index }}
+      className="rounded-xl border border-border-subtle bg-background-primary/60 p-3"
+    >
+      <Icon className={cn('h-6 w-6', metric.accent)} aria-hidden />
+      <p className="mt-2 text-4xl font-semibold">
+        {metric.value === '+320 hrs' ? <CountUp end={320} prefix="+" suffix=" hrs" reduceMotion={Boolean(reduceMotion)} start={inView} /> : null}
+        {metric.value === '3.4x' ? <CountUp end={3.4} decimals={1} suffix="x" reduceMotion={Boolean(reduceMotion)} start={inView} /> : null}
+        {metric.value === '+58%' ? <CountUp end={58} prefix="+" suffix="%" reduceMotion={Boolean(reduceMotion)} start={inView} /> : null}
+        {metric.value === '100%' ? <CountUp end={100} suffix="%" reduceMotion={Boolean(reduceMotion)} start={inView} /> : null}
+      </p>
+      <p className="mt-1 text-sm text-text-secondary">{metric.label}</p>
+    </motion.div>
+  );
+}
+
 export function CommandCenterHero() {
   const reduceMotion = useReducedMotion();
 
@@ -271,7 +311,7 @@ export function CommandCenterHero() {
             </motion.p>
             <motion.h1 initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.05 }} className="mt-4 max-w-[13ch] text-[clamp(50px,5.5vw,78px)] font-[var(--font-jakarta)] font-semibold leading-[0.98] tracking-[-0.03em] text-white">
               Manual work is costing you
-              <span className="bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-400 bg-clip-text text-transparent"> leads, time, and control.</span>
+              <span className="bg-gradient-to-r from-cyan-300 via-sky-300 to-blue-300 bg-clip-text text-transparent"> leads, time, and control.</span>
             </motion.h1>
             <motion.p initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mt-6 max-w-[54ch] text-[1.1rem] leading-8 text-text-secondary">
               We build automation systems, dashboards, portals, and workflow tools that help businesses respond faster, track work clearly, and operate with less chaos.
@@ -329,21 +369,7 @@ export function CommandCenterHero() {
 
         {/* Demo marketing metrics. Replace with verified values when approved. */}
         <div className="mt-8 grid gap-3 rounded-2xl border border-border-subtle bg-background-secondary/45 p-4 md:grid-cols-2 xl:grid-cols-4">
-          {impactMetrics.map((metric, index) => {
-            const Icon = metric.icon;
-            return (
-              <motion.div key={metric.label} initial={reduceMotion ? false : { opacity: 0, y: 8 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.22 + index * 0.06 }} className="rounded-xl border border-border-subtle bg-background-primary/60 p-3">
-                <Icon className={cn('h-6 w-6', metric.accent)} aria-hidden />
-                <p className="mt-2 text-4xl font-semibold">
-                  {metric.value === '+320 hrs' ? <CountUp end={320} prefix="+" suffix=" hrs" reduceMotion={Boolean(reduceMotion)} /> : null}
-                  {metric.value === '3.4x' ? <CountUp end={3.4} decimals={1} suffix="x" reduceMotion={Boolean(reduceMotion)} /> : null}
-                  {metric.value === '+58%' ? <CountUp end={58} prefix="+" suffix="%" reduceMotion={Boolean(reduceMotion)} /> : null}
-                  {metric.value === '100%' ? <CountUp end={100} suffix="%" reduceMotion={Boolean(reduceMotion)} /> : null}
-                </p>
-                <p className="mt-1 text-sm text-text-secondary">{metric.label}</p>
-              </motion.div>
-            );
-          })}
+          {impactMetrics.map((metric, index) => <ImpactMetricCard key={metric.label} metric={metric} index={index} reduceMotion={Boolean(reduceMotion)} />)}
         </div>
       </div>
     </section>
