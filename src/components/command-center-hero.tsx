@@ -540,8 +540,8 @@ function ConnectedTools({ reduceMotion }: { reduceMotion: boolean }) {
   ] as const;
   const rowTop = tickerTools.slice(0, 6);
   const rowBottom = tickerTools.slice(6);
-  const rowA = [...rowTop, ...rowTop, ...rowTop];
-  const rowB = [...rowBottom, ...rowBottom, ...rowBottom];
+  const rowA = [...rowTop, ...rowTop];
+  const rowB = [...rowBottom, ...rowBottom];
 
   return (
     <div className="rounded-2xl border border-border-subtle bg-background-secondary/35 p-4">
