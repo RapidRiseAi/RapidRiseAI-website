@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Check, Sparkles } from 'lucide-react';
-import { siteContent } from '@/content/siteContent';
-import { Hero, ManualVsSystems, ProofStrip } from '@/components/page-template';
+import { ManualVsSystems, ProofStrip } from '@/components/page-template';
 import { Section } from '@/components/ui/section';
 import { FeatureGrid } from '@/components/ui/feature-grid';
 import { Steps } from '@/components/ui/steps';
@@ -21,6 +20,7 @@ import { BentoGrid, Container as SystemContainer, SectionHeader, SectionShell, S
 import { FeatureCard, MetricCard, VisualCard } from '@/components/system/cards';
 import { DrawLine, MotionConnector, PulseDot, RevealOnScroll } from '@/components/system/motion';
 import { systemIcons } from '@/components/system/icons';
+import { CommandCenterHero } from '@/components/command-center-hero';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Rapid Rise AI | AI Automation and Education',
@@ -65,17 +65,7 @@ const flagshipSystems = [
 export default function HomePage() {
   return (
     <>
-      <Hero
-        id="home-hero"
-        h1={siteContent.home.hero.h1}
-        sub={siteContent.home.hero.sub}
-        cta2="View Work"
-        visual="/images/hero/rapid-rise-ai-business-automation-client-portal-hero.jpg"
-        alt="Rapid Rise AI team working on system delivery"
-        mobileImageClassName="h-full w-full object-contain object-center md:object-contain"
-        mobileImageFrameClassName="aspect-video max-[640px]:rounded-[18px] max-[640px]:bg-[#070c18]"
-        compactMobile
-      />
+      <CommandCenterHero />
       <SectionShell className="overflow-hidden border-b border-border-subtle">
         <SystemLinePattern />
         <RadialGlow />
