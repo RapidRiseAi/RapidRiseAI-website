@@ -74,57 +74,30 @@ function chartPath(hours: number[]) {
   }, '');
 }
 
-function workflowLinePath() {
-  return 'M 90 64 L 860 64';
-}
-
 function WorkflowOverview({ reduceMotion }: { reduceMotion: boolean }) {
   return (
     <div className="rounded-2xl border border-border-subtle bg-background-secondary/35 p-4">
       <p className="text-system-eyebrow text-text-muted">Workflow Overview</p>
-      <div className="relative mt-4 overflow-x-auto pb-2">
-        <svg viewBox="0 0 920 128" className="absolute left-0 top-4 h-16 min-w-[780px] w-full" aria-hidden>
-          <motion.path
-            d={workflowLinePath()}
-            fill="none"
-            stroke="rgba(45,124,255,0.8)"
-            strokeWidth="3"
-            strokeLinecap="round"
-            initial={reduceMotion ? false : { pathLength: 0 }}
-            animate={reduceMotion ? undefined : { pathLength: 1 }}
-            transition={{ duration: 0.9 }}
-          />
-          {!reduceMotion ? (
-            <motion.circle
-              r="6"
-              fill="rgba(103,217,255,1)"
-              animate={{ offsetDistance: ['0%', '100%'] }}
-              transition={{ duration: 4.4, repeat: Infinity, ease: 'linear' }}
-              style={{ offsetPath: `path('${workflowLinePath()}')` as any }}
-            />
-          ) : null}
-        </svg>
-        <div className="relative z-10 flex min-w-[780px] items-start justify-between gap-2">
-          {workflowSteps.map((step, index) => {
-            const Icon = step.icon;
-            return (
-              <motion.div
-                key={step.label}
-                initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-                animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-                transition={{ delay: 0.08 * index }}
-                className="w-[120px]"
-              >
-                <div className="relative rounded-2xl border border-border-subtle bg-surface-primary/70 p-3 text-center transition hover:-translate-y-0.5 hover:border-border-blue">
-                  {step.count ? <span className="absolute -right-2 -top-2 rounded-full border border-border-blue bg-background-primary px-2 text-xs font-semibold text-accent-primary">{step.count}</span> : <span className="absolute -right-2 -top-2 rounded-full border border-emerald-400/70 bg-emerald-500/15 p-1"><BadgeCheck className="h-3.5 w-3.5 text-emerald-300" /></span>}
-                  <Icon className="mx-auto h-7 w-7 text-accent-primary" aria-hidden />
-                  <p className="mt-2 text-sm font-medium text-text-primary">{step.label}</p>
-                </div>
-                <p className={cn('mt-2 text-center text-xs', step.final ? 'text-emerald-300' : 'text-text-secondary')}>{step.status}</p>
-              </motion.div>
-            );
-          })}
-        </div>
+      <div className="mt-4 grid gap-2 sm:grid-cols-3 xl:grid-cols-6">
+        {workflowSteps.map((step, index) => {
+          const Icon = step.icon;
+          return (
+            <motion.div
+              key={step.label}
+              initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+              transition={{ delay: 0.06 * index }}
+              className="rounded-2xl border border-border-subtle bg-surface-primary/70 p-3 text-center transition hover:-translate-y-0.5 hover:border-border-blue"
+            >
+              <div className="relative">
+                {step.count ? <span className="absolute -right-1.5 -top-2 rounded-full border border-border-blue bg-background-primary px-2 text-xs font-semibold text-accent-primary">{step.count}</span> : <span className="absolute -right-1.5 -top-2 rounded-full border border-emerald-400/70 bg-emerald-500/15 p-1"><BadgeCheck className="h-3.5 w-3.5 text-emerald-300" /></span>}
+                <Icon className="mx-auto h-6 w-6 text-accent-primary" aria-hidden />
+              </div>
+              <p className="mt-2 text-sm font-medium text-text-primary">{step.label}</p>
+              <p className={cn('mt-1 text-xs', step.final ? 'text-emerald-300' : 'text-text-secondary')}>{step.status}</p>
+            </motion.div>
+          );
+        })}
       </div>
     </div>
   );
@@ -249,12 +222,12 @@ export function CommandCenterHero() {
       <div className="pointer-events-none absolute bottom-0 right-0 h-40 w-[50%] bg-[radial-gradient(ellipse_at_bottom_right,rgba(45,124,255,0.35),transparent_65%)]" />
 
       <div className="relative mx-auto w-full max-w-[1520px] px-6 md:px-10">
-        <div className="grid items-start gap-10 lg:grid-cols-[0.43fr_0.57fr]">
+        <div className="grid items-start gap-10 xl:grid-cols-[0.42fr_0.58fr]">
           <div>
             <motion.p initial={reduceMotion ? false : { opacity: 0, y: 8 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} className="text-system-eyebrow text-accent-secondary">
               RAPID RISE AI COMMAND CENTER
             </motion.p>
-            <motion.h1 initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.05 }} className="mt-4 max-w-[17ch] text-[clamp(46px,5.8vw,78px)] font-[var(--font-jakarta)] font-semibold leading-[0.98] tracking-[-0.03em] text-white">
+            <motion.h1 initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.05 }} className="mt-4 max-w-[13ch] text-[clamp(46px,5.2vw,74px)] font-[var(--font-jakarta)] font-semibold leading-[0.98] tracking-[-0.03em] text-white">
               Manual work is costing you
               <span className="bg-gradient-to-r from-cyan-300 via-blue-400 to-blue-600 bg-clip-text text-transparent"> leads, time, and control.</span>
             </motion.h1>
