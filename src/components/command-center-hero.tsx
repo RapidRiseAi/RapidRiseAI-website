@@ -11,10 +11,15 @@ import {
   CheckCircle2,
   Clock3,
   FileText,
+  Folder,
+  Globe,
   Inbox,
+  LayoutPanelLeft,
   Mail,
+  MessageCircle,
   MessageSquare,
   ShieldCheck,
+  Table2,
   TrendingUp,
   UserRound,
   Users,
@@ -83,7 +88,15 @@ const overviewCards = [
   },
 ] as const;
 
-const connectedTools = ['Website', 'Email', 'WhatsApp', 'Sheets', 'Drive', 'Calendar', 'Portal'];
+const connectedTools = [
+  { label: 'Website', icon: Globe },
+  { label: 'Email', icon: Mail },
+  { label: 'WhatsApp', icon: MessageCircle },
+  { label: 'Sheets', icon: Table2 },
+  { label: 'Drive', icon: Folder },
+  { label: 'Calendar', icon: CalendarClock },
+  { label: 'Portal', icon: LayoutPanelLeft },
+] as const;
 
 // Demo marketing metrics. Replace with verified values when approved.
 const impactMetrics = [
@@ -169,7 +182,7 @@ function chartPath(hours: number[]) {
   }, '');
 }
 
-function sparklinePath(values: readonly number[], width = 88, height = 30) {
+function sparklinePath(values: readonly number[], width = 106, height = 32) {
   const min = Math.min(...values);
   const max = Math.max(...values);
   const range = Math.max(max - min, 1);
@@ -232,7 +245,7 @@ function WorkflowNode({
           className={cn('pointer-events-none absolute inset-0 rounded-2xl', step.final ? 'bg-emerald-400/10' : 'bg-blue-400/10')}
           initial={{ opacity: 0.6 }}
           animate={{ opacity: [0.65, 0.12, 0.65] }}
-          transition={{ duration: 1.2, ease: 'easeInOut' }}
+          transition={{ duration: 0.4, ease: 'easeInOut' }}
         />
       ) : null}
       <div className="relative">
@@ -254,9 +267,9 @@ function WorkflowNode({
 }
 
 function WorkflowOverview({ reduceMotion }: { reduceMotion: boolean }) {
-  const phase = useLoopPhase(7200, !reduceMotion, 120);
-  const activeIndex = reduceMotion ? -1 : Math.floor((phase / 7200) * workflowSteps.length);
-  const travelProgress = reduceMotion ? 0 : phase / 7200;
+  const phase = useLoopPhase(8000, !reduceMotion, 120);
+  const activeIndex = reduceMotion ? -1 : Math.floor((phase / 8000) * workflowSteps.length);
+  const travelProgress = reduceMotion ? 0 : phase / 8000;
 
   return (
     <div className="rounded-2xl border border-border-subtle bg-background-secondary/35 p-4 sm:p-5">
@@ -267,7 +280,7 @@ function WorkflowOverview({ reduceMotion }: { reduceMotion: boolean }) {
 
       <div className="relative mt-4 overflow-x-auto pb-1 md:overflow-visible">
         <div className="relative flex min-w-[820px] items-center gap-3 sm:gap-4 md:min-w-0 md:grid md:grid-cols-6 md:gap-3">
-          <div className="pointer-events-none absolute left-8 right-8 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-blue-500/50 via-blue-400/45 to-emerald-400/50" />
+          <div className="pointer-events-none absolute left-8 right-8 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-blue-500/75 via-cyan-300/70 to-emerald-400/70" />
           {!reduceMotion ? (
             <motion.div
               className="pointer-events-none absolute top-1/2 z-[1] h-2.5 w-2.5 -translate-y-1/2 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(56,189,248,0.9)]"
@@ -297,7 +310,7 @@ function ResponseTimeChart({ reduceMotion }: { reduceMotion: boolean }) {
         <CountUp end={18} suffix=" min" reduceMotion={reduceMotion} />
       </p>
       <p className="mt-1 text-sm text-emerald-300">72% improvement</p>
-      <svg viewBox="0 0 360 170" className="mt-3 h-44 w-full" role="img" aria-label="Response time trend from Monday to Sunday decreasing from 3 hours to point 2 hours">
+      <svg viewBox="0 0 360 170" className="mt-2 h-52 w-full" role="img" aria-label="Response time trend from Monday to Sunday decreasing from 3 hours to point 2 hours">
         {[0, 1, 2, 3].map((row) => (
           <line key={row} x1="24" y1={30 + row * 39} x2="336" y2={30 + row * 39} stroke="rgba(255,255,255,0.07)" />
         ))}
@@ -308,7 +321,7 @@ function ResponseTimeChart({ reduceMotion }: { reduceMotion: boolean }) {
           d={path}
           fill="none"
           stroke="url(#rr-chart-gradient)"
-          strokeWidth="3.4"
+          strokeWidth="3.8"
           strokeLinecap="round"
           initial={reduceMotion ? false : { pathLength: 0 }}
           animate={reduceMotion ? undefined : { pathLength: 1, opacity: [0.86, 1, 0.86] }}
@@ -387,7 +400,7 @@ function ActivityFeed({ reduceMotion }: { reduceMotion: boolean }) {
 
     let timeoutId: number | undefined;
     const interval = window.setInterval(() => {
-      rowRef.current = (rowRef.current + 1) % 5;
+      rowRef.current = (rowRef.current + 1) % 4;
       const targetRow = rowRef.current;
       setRows((prev) => {
         const next = [...prev];
@@ -397,7 +410,7 @@ function ActivityFeed({ reduceMotion }: { reduceMotion: boolean }) {
       });
       setHighlightedRow(targetRow);
       timeoutId = window.setTimeout(() => setHighlightedRow(-1), 900);
-    }, 5600);
+    }, 6000);
 
     return () => {
       window.clearInterval(interval);
@@ -407,9 +420,12 @@ function ActivityFeed({ reduceMotion }: { reduceMotion: boolean }) {
 
   return (
     <div className="rounded-2xl border border-border-subtle bg-background-secondary/35 p-4">
-      <p className="text-system-eyebrow text-text-muted">Activity Feed</p>
+      <div className="flex items-center justify-between gap-2">
+        <p className="text-system-eyebrow text-text-muted">Activity Feed</p>
+        <p className="text-[11px] text-cyan-200/75">Live updates</p>
+      </div>
       <div className="mt-3 grid gap-2">
-        {rows.map((event, index) => {
+        {rows.slice(0, 4).map((event, index) => {
           const Icon = event.icon;
           return (
             <motion.div
@@ -421,9 +437,9 @@ function ActivityFeed({ reduceMotion }: { reduceMotion: boolean }) {
               }
               transition={{ duration: 0.38, ease: 'easeOut' }}
               className={cn(
-                'flex min-h-[50px] items-center justify-between gap-3 rounded-xl border border-white/5 px-3 py-2',
+                'flex min-h-[56px] items-center justify-between gap-4 rounded-xl border border-white/5 px-3 py-2.5',
                 highlightedRow === index && !reduceMotion && 'bg-blue-500/10',
-                index > 3 && 'hidden sm:flex'
+                index === 3 && 'hidden sm:flex',
               )}
             >
               <div className="flex items-center gap-2.5">
@@ -432,7 +448,7 @@ function ActivityFeed({ reduceMotion }: { reduceMotion: boolean }) {
                 </span>
                 <p className="text-sm text-text-primary">{event.text}</p>
               </div>
-              <p className="text-xs text-text-muted">{event.time}</p>
+              <p className="w-14 text-right text-xs text-text-muted">{event.time}</p>
             </motion.div>
           );
         })}
@@ -456,7 +472,8 @@ function OverviewSparkline({
   const marker = plotPoints[Math.min(plotPoints.length - 1, Math.floor(progress * plotPoints.length))];
 
   return (
-    <svg viewBox="0 0 88 30" className="h-8 w-[88px]" aria-hidden>
+    <svg viewBox="0 0 106 32" className="h-8 w-[106px]" aria-hidden>
+      <path d={path} fill="none" stroke={`${stroke}1f`} strokeWidth="8" strokeLinecap="round" />
       <path d={path} fill="none" stroke={`${stroke}33`} strokeWidth="4" strokeLinecap="round" />
       <motion.path
         d={path}
@@ -468,7 +485,7 @@ function OverviewSparkline({
         animate={reduceMotion ? undefined : { pathLength: 1 }}
         transition={{ duration: 0.9, ease: 'easeOut' }}
       />
-      {!reduceMotion ? <circle cx={marker.x} cy={marker.y} r="2.6" fill={stroke} opacity="0.9" /> : null}
+      {!reduceMotion ? <circle cx={marker.x} cy={marker.y} r="2.8" fill={stroke} opacity="0.9" /> : null}
     </svg>
   );
 }
@@ -481,13 +498,15 @@ function TodayOverviewCards({ reduceMotion }: { reduceMotion: boolean }) {
         {overviewCards.map((card) => {
           const Icon = card.icon;
           return (
-            <div key={card.label} className="rounded-xl border border-border-subtle bg-background-primary/75 p-3 shadow-[0_8px_24px_rgba(5,14,40,0.22)]">
+            <div key={card.label} className="min-h-[116px] rounded-xl border border-border-subtle bg-background-primary/75 p-3 shadow-[0_8px_24px_rgba(5,14,40,0.22)]">
               <div className="flex items-center justify-between gap-2">
                 <p className="inline-flex items-center gap-2 text-sm text-text-secondary">
                   <Icon className={cn('h-3.5 w-3.5', card.accent)} aria-hidden />
                   {card.label}
                 </p>
-                <OverviewSparkline points={card.points} stroke={card.stroke} reduceMotion={reduceMotion} />
+                <div className="rounded-md bg-background-secondary/50 px-1 py-0.5 shadow-[0_0_14px_rgba(56,189,248,0.12)]">
+                  <OverviewSparkline points={card.points} stroke={card.stroke} reduceMotion={reduceMotion} />
+                </div>
               </div>
               <p className="mt-1.5 text-4xl font-semibold text-text-primary">
                 {card.label === 'Avg First Response' ? <CountUp end={18} suffix=" min" reduceMotion={reduceMotion} /> : null}
@@ -503,8 +522,8 @@ function TodayOverviewCards({ reduceMotion }: { reduceMotion: boolean }) {
 }
 
 function ConnectedTools({ reduceMotion }: { reduceMotion: boolean }) {
-  const phase = useLoopPhase(11000, !reduceMotion, 120);
-  const slot = 11000 / connectedTools.length;
+  const phase = useLoopPhase(12000, !reduceMotion, 120);
+  const slot = 12000 / connectedTools.length;
 
   return (
     <div className="rounded-2xl border border-border-subtle bg-background-secondary/35 p-4">
@@ -513,16 +532,17 @@ function ConnectedTools({ reduceMotion }: { reduceMotion: boolean }) {
         {connectedTools.map((tool, index) => {
           const timeInSlot = phase % slot;
           const isActive = !reduceMotion && Math.floor(phase / slot) === index && timeInSlot < 450;
+          const Icon = tool.icon;
           return (
             <span
-              key={tool}
+              key={tool.label}
               className={cn(
-                'inline-flex items-center gap-2 rounded-full border border-border-subtle bg-background-primary/70 px-3 py-1.5 text-sm text-text-secondary transition',
+                'inline-flex items-center gap-2 rounded-full border border-border-subtle bg-background-primary/70 px-3 py-1.5 text-sm text-text-secondary transition hover:border-cyan-300/50 hover:shadow-[0_0_12px_rgba(56,189,248,0.2)]',
                 isActive && 'border-cyan-300/70 text-cyan-100 shadow-[0_0_14px_rgba(56,189,248,0.35)]'
               )}
             >
-              {tool === 'Email' ? <Mail className="h-3.5 w-3.5" aria-hidden /> : null}
-              {tool}
+              <Icon className="h-3.5 w-3.5" aria-hidden />
+              {tool.label}
             </span>
           );
         })}
@@ -564,12 +584,13 @@ function ImpactMetricCard({
       whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-10% 0px -10% 0px' }}
       transition={{ delay: 0.08 * index }}
-      className="flex min-h-[146px] flex-col rounded-xl border border-border-subtle bg-background-primary/60 p-3 transition hover:-translate-y-0.5 hover:border-cyan-300/45 hover:shadow-[0_0_20px_rgba(56,189,248,0.18)]"
+      className="relative flex min-h-[146px] flex-col rounded-xl border border-border-subtle bg-background-primary/60 p-3 transition hover:-translate-y-0.5 hover:border-cyan-300/45 hover:shadow-[0_0_20px_rgba(56,189,248,0.18)]"
     >
+      <span className="pointer-events-none absolute inset-x-3 top-0 h-px bg-gradient-to-r from-cyan-300/0 via-cyan-300/60 to-cyan-300/0" />
       <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-white/10 bg-background-secondary/70">
-        <Icon className={cn('h-5 w-5', metric.accent)} aria-hidden />
+        <Icon className={cn('h-5.5 w-5.5', metric.accent)} aria-hidden />
       </span>
-      <p className="mt-2 text-4xl font-semibold">
+      <p className="mt-2 text-[2.55rem] font-semibold leading-none">
         {metric.value === '+320 hrs' ? <CountUp end={320} prefix="+" suffix=" hrs" reduceMotion={reduceMotion} start={inView} /> : null}
         {metric.value === '3.4x' ? <CountUp end={3.4} decimals={1} suffix="x" reduceMotion={reduceMotion} start={inView} /> : null}
         {metric.value === '+58%' ? <CountUp end={58} prefix="+" suffix="%" reduceMotion={reduceMotion} start={inView} /> : null}
@@ -599,12 +620,12 @@ export function CommandCenterHero() {
               initial={reduceMotion ? false : { opacity: 0, y: 12 }}
               animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
               transition={{ delay: 0.05 }}
-              className="mt-4 max-w-[620px] text-[clamp(3.2rem,4.4vw,5.25rem)] font-[var(--font-jakarta)] font-semibold leading-[0.98] tracking-[-0.028em] text-white md:text-[clamp(3.4rem,4.8vw,5.5rem)] 2xl:text-[clamp(4rem,5vw,6rem)]"
+              className="mt-3 max-w-[620px] text-[clamp(3.05rem,7vw,4.25rem)] font-[var(--font-jakarta)] font-semibold leading-[0.98] tracking-[-0.028em] text-white md:text-[clamp(3.45rem,5.2vw,4.95rem)] 2xl:text-[clamp(4rem,5vw,5.4rem)]"
             >
               Manual work is costing you
               <span className="bg-gradient-to-r from-[#67e8f9] via-[#38bdf8] to-[#1d4ed8] bg-clip-text text-transparent"> leads, time, and control.</span>
             </motion.h1>
-            <motion.p initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mt-6 max-w-[520px] text-[1.1rem] leading-8 text-text-secondary">
+            <motion.p initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mt-7 max-w-[520px] text-[1.1rem] leading-8 text-text-secondary">
               We build automation systems, dashboards, portals, and workflow tools that help businesses respond faster, track work clearly, and operate with less chaos.
             </motion.p>
 
@@ -630,7 +651,7 @@ export function CommandCenterHero() {
               </Link>
             </motion.div>
 
-            <div className="mt-6 grid gap-2 sm:grid-cols-2">
+            <div className="mt-6 grid gap-2.5 sm:grid-cols-2">
               {trustPills.map((pill, index) => {
                 const Icon = pill.icon;
                 return (
@@ -639,17 +660,17 @@ export function CommandCenterHero() {
                     initial={reduceMotion ? false : { opacity: 0, y: 8 }}
                     animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 + index * 0.04 }}
-                    className="rounded-xl border border-border-subtle bg-surface-primary/75 px-3 py-2"
+                    className="rounded-xl border border-border-subtle bg-surface-primary/80 px-3.5 py-2.5 shadow-[0_8px_18px_rgba(3,10,25,0.25)]"
                   >
-                    <p className="inline-flex items-center gap-2 text-sm text-text-secondary">
-                      <Icon className={cn('h-4 w-4', pill.accent)} aria-hidden /> {pill.label}
+                    <p className="inline-flex items-center gap-2.5 text-sm text-text-secondary">
+                      <Icon className={cn('h-[18px] w-[18px]', pill.accent)} aria-hidden /> {pill.label}
                     </p>
                   </motion.div>
                 );
               })}
             </div>
 
-            <p className="mt-8 text-sm text-text-secondary">Trusted by South African businesses that need clearer systems.</p>
+            <p className="mt-7 max-w-[560px] text-sm text-text-secondary">Built for South African businesses that need faster response, cleaner tracking, and less manual admin.</p>
           </div>
 
           <motion.div
@@ -658,6 +679,8 @@ export function CommandCenterHero() {
             transition={{ delay: 0.12 }}
             className="relative mt-2 w-full max-w-[930px] rounded-[30px] border border-border-blue/60 bg-surface-primary/80 p-6 shadow-[0_0_0_1px_rgba(45,124,255,0.4),0_0_30px_rgba(45,124,255,0.2)] backdrop-blur-xl xl:ml-auto xl:p-6 2xl:p-7"
           >
+            <div className="pointer-events-none absolute inset-0 rounded-[30px] border border-white/10" />
+            <div className="pointer-events-none absolute left-10 right-10 top-0 h-10 rounded-full bg-gradient-to-b from-white/8 to-transparent" />
             {!reduceMotion ? (
               <motion.div
                 className="pointer-events-none absolute inset-3 rounded-[24px] bg-[radial-gradient(ellipse_at_center,rgba(56,189,248,0.2),rgba(2,6,23,0))]"
