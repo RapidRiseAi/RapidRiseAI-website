@@ -215,6 +215,20 @@ function LiveStatusPill({ reduceMotion }: { reduceMotion: boolean }) {
   );
 }
 
+function MobileCommandHeader({ reduceMotion }: { reduceMotion: boolean }) {
+  return (
+    <div className="rounded-2xl border border-border-blue/55 bg-surface-primary/80 p-4 shadow-[0_0_0_1px_rgba(45,124,255,0.35),0_0_26px_rgba(45,124,255,0.16)] backdrop-blur-xl">
+      <div className="flex items-start justify-between gap-3">
+        <p className="text-xl font-semibold tracking-tight text-text-primary">OPERATIONS COMMAND</p>
+        <p className="text-xs text-text-muted">System live</p>
+      </div>
+      <div className="mt-2">
+        <LiveStatusPill reduceMotion={reduceMotion} />
+      </div>
+    </div>
+  );
+}
+
 function WorkflowNode({
   step,
   index,
@@ -234,7 +248,7 @@ function WorkflowNode({
       animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
       transition={{ delay: 0.06 * index }}
       className={cn(
-        'relative min-w-[128px] rounded-2xl border bg-surface-primary/80 px-3 py-3 text-center shadow-[0_10px_26px_rgba(5,14,40,0.26)] transition md:min-w-0',
+        'relative min-w-[138px] snap-start rounded-2xl border bg-surface-primary/80 px-3 py-3 text-center shadow-[0_10px_26px_rgba(5,14,40,0.26)] transition md:min-w-0',
         step.final
           ? 'border-emerald-300/35 shadow-[0_10px_26px_rgba(5,40,30,0.26)]'
           : isInput
@@ -283,8 +297,8 @@ function WorkflowOverview({ reduceMotion }: { reduceMotion: boolean }) {
         <p className="text-xs text-cyan-200/80">Live workflow: captured, assigned, followed up, tracked</p>
       </div>
 
-      <div className="relative mt-4 overflow-x-auto pb-1 md:overflow-visible">
-        <div className="relative flex min-w-[820px] items-center gap-3 sm:gap-4 md:min-w-0 md:grid md:grid-cols-6 md:gap-3">
+      <div className="relative mt-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:overflow-visible">
+        <div className="relative flex min-w-[880px] snap-x snap-mandatory items-center gap-3 sm:gap-4 md:min-w-0 md:grid md:grid-cols-6 md:gap-3">
           <div className="pointer-events-none absolute left-8 right-8 top-1/2 h-px -translate-y-1/2 bg-gradient-to-r from-blue-500/70 via-cyan-300/55 to-emerald-400/60" />
           {workflowSteps.map((step, index) => (
             <div key={step.label} className="relative z-[2] flex-1 md:flex-none">
@@ -391,7 +405,7 @@ function ResponseTimeChart({ reduceMotion }: { reduceMotion: boolean }) {
   );
 }
 
-function ActivityFeed({ reduceMotion }: { reduceMotion: boolean }) {
+function ActivityFeed({ reduceMotion, mobileRows = 4 }: { reduceMotion: boolean; mobileRows?: number }) {
   const [rows, setRows] = useState(activityFeedPool.slice(0, 5));
   const [highlightedRow, setHighlightedRow] = useState(0);
   const cursorRef = useRef(5);
@@ -447,7 +461,7 @@ function ActivityFeed({ reduceMotion }: { reduceMotion: boolean }) {
               className={cn(
                 'flex min-h-[56px] items-center justify-between gap-4 rounded-xl border border-white/5 px-3 py-2.5',
                 highlightedRow === index && !reduceMotion && 'bg-blue-500/10',
-                index === 3 && 'hidden sm:flex',
+                index >= mobileRows && 'hidden sm:flex',
               )}
             >
               <div className="flex items-center gap-2.5">
@@ -547,6 +561,33 @@ function ConnectedTools({ reduceMotion }: { reduceMotion: boolean }) {
     <div className="rounded-2xl border border-border-subtle bg-background-secondary/35 p-4">
       <p className="text-system-eyebrow text-text-muted">Connected stack</p>
       <p className="mt-1 text-xs text-text-secondary">Works with the tools you already use.</p>
+      <div className="relative mt-3 overflow-hidden rounded-xl border border-white/10 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.08),transparent_70%)] py-2 sm:hidden">
+        {reduceMotion ? (
+          <div className="flex flex-wrap gap-2 px-2">
+            {tickerTools.slice(0, 10).map((tool) => {
+              const Icon = tool.icon;
+              return (
+                <span key={tool.label} className="inline-flex items-center gap-1.5 rounded-full border border-border-subtle bg-background-primary/75 px-3 py-1.5 text-xs text-text-secondary">
+                  <Icon className="h-3.5 w-3.5" aria-hidden />
+                  {tool.label}
+                </span>
+              );
+            })}
+          </div>
+        ) : (
+          <motion.div className="flex w-max gap-2 px-1" animate={{ x: ['0%', '-50%'] }} transition={{ duration: 36, ease: 'linear', repeat: Infinity }}>
+            {[...tickerTools, ...tickerTools].map((tool, index) => {
+              const Icon = tool.icon;
+              return (
+                <span key={`m-${tool.label}-${index}`} className="inline-flex items-center gap-1.5 rounded-full border border-border-subtle bg-background-primary/75 px-3 py-1.5 text-xs text-text-secondary">
+                  <Icon className="h-3.5 w-3.5" aria-hidden />
+                  {tool.label}
+                </span>
+              );
+            })}
+          </motion.div>
+        )}
+      </div>
       <div className="relative mt-3 hidden overflow-hidden rounded-xl border border-white/10 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.08),transparent_70%)] py-2 sm:block">
         <div className="pointer-events-none absolute inset-y-0 left-0 z-[2] w-16 bg-gradient-to-r from-background-primary to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-[2] w-16 bg-gradient-to-l from-background-primary to-transparent" />
@@ -581,17 +622,6 @@ function ConnectedTools({ reduceMotion }: { reduceMotion: boolean }) {
           })}
         </motion.div>
       </div>
-      <div className="mt-3 flex flex-wrap gap-2 sm:hidden">
-        {tickerTools.slice(0, 10).map((tool) => {
-          const Icon = tool.icon;
-          return (
-            <span key={tool.label} className="inline-flex items-center gap-1.5 rounded-full border border-border-subtle bg-background-primary/70 px-3 py-1.5 text-sm text-text-secondary">
-              <Icon className="h-3.5 w-3.5" aria-hidden />
-              {tool.label}
-            </span>
-          );
-        })}
-      </div>
     </div>
   );
 }
@@ -600,7 +630,7 @@ function ImpactMetrics({ reduceMotion }: { reduceMotion: boolean }) {
   return (
     <div className="mt-12 rounded-2xl border border-border-subtle bg-background-secondary/45 p-4 lg:mt-14">
       <p className="mb-3 text-system-eyebrow text-text-muted">Impact snapshot</p>
-      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-3 [@media(min-width:390px)]:grid-cols-2 md:grid-cols-2 xl:grid-cols-4">
         {impactMetrics.map((metric, index) => (
           <ImpactMetricCard key={metric.label} metric={metric} index={index} reduceMotion={reduceMotion} />
         ))}
@@ -746,8 +776,8 @@ export function CommandCenterHero() {
               We build automation systems, dashboards, portals, and workflow tools that help businesses respond faster, track work clearly, and operate with less chaos.
             </motion.p>
 
-            <motion.div initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.16 }} className="mt-8 flex flex-wrap gap-3">
-              <Link href="/quote" className="group system-btn system-btn-primary px-7 py-4 text-base">
+            <motion.div initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.16 }} className="mt-8 flex flex-col gap-3 [@media(min-width:390px)]:flex-row">
+              <Link href="/quote" className="group system-btn system-btn-primary w-full justify-center px-7 py-4 text-base [@media(min-width:390px)]:w-auto">
                 Request a Quote
                 <motion.span
                   animate={
@@ -763,12 +793,12 @@ export function CommandCenterHero() {
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden />
                 </motion.span>
               </Link>
-              <Link href="/work" className="group system-btn system-btn-secondary px-7 py-4 text-base">
+              <Link href="/work" className="group system-btn system-btn-secondary w-full justify-center px-7 py-4 text-base [@media(min-width:390px)]:w-auto">
                 View Work
               </Link>
             </motion.div>
 
-            <div className="mt-6 grid gap-2.5 sm:grid-cols-2">
+            <div className="mt-6 grid gap-2.5 [@media(min-width:390px)]:grid-cols-2">
               {trustPills.map((pill, index) => {
                 const Icon = pill.icon;
                 return (
@@ -790,11 +820,20 @@ export function CommandCenterHero() {
             <p className="mt-7 max-w-[560px] text-sm text-text-secondary">Built for South African businesses that need faster response, cleaner tracking, and less manual admin.</p>
           </div>
 
+          <div className="mt-8 space-y-4 lg:hidden">
+            <MobileCommandHeader reduceMotion={Boolean(reduceMotion)} />
+            <WorkflowOverview reduceMotion={Boolean(reduceMotion)} />
+            <ResponseTimeChart reduceMotion={Boolean(reduceMotion)} />
+            <ActivityFeed reduceMotion={Boolean(reduceMotion)} mobileRows={3} />
+            <TodayOverviewCards reduceMotion={Boolean(reduceMotion)} />
+            <ConnectedTools reduceMotion={Boolean(reduceMotion)} />
+          </div>
+
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }}
             animate={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
             transition={{ delay: 0.12 }}
-            className="relative mt-2 w-full max-w-[930px] rounded-[30px] border border-border-blue/60 bg-surface-primary/80 p-6 shadow-[0_0_0_1px_rgba(45,124,255,0.4),0_0_30px_rgba(45,124,255,0.2)] backdrop-blur-xl xl:ml-auto xl:p-6 2xl:p-7"
+            className="relative mt-2 hidden w-full max-w-[930px] rounded-[30px] border border-border-blue/60 bg-surface-primary/80 p-6 shadow-[0_0_0_1px_rgba(45,124,255,0.4),0_0_30px_rgba(45,124,255,0.2)] backdrop-blur-xl lg:block xl:ml-auto xl:p-6 2xl:p-7"
           >
             <div className="pointer-events-none absolute inset-0 rounded-[30px] border border-white/10" />
             <div className="pointer-events-none absolute left-10 right-10 top-0 h-10 rounded-full bg-gradient-to-b from-white/8 to-transparent" />
