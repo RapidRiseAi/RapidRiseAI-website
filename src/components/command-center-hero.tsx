@@ -95,7 +95,7 @@ function FloatingSystemCard({ text, index, reduceMotion }: { text: string; index
 
 function MotionConnector({ reduceMotion }: { reduceMotion: boolean }) {
   return (
-    <svg viewBox="0 0 440 280" className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden>
+    <svg viewBox="0 0 440 280" className="pointer-events-none absolute inset-0 z-[1] h-full w-full opacity-85" aria-hidden>
       {[
         'M40 62 C150 62, 160 110, 220 112',
         'M35 210 C140 200, 155 164, 220 156',
@@ -170,12 +170,12 @@ export function CommandCenterHero() {
           </div>
         </motion.div>
 
-        <div className="order-2 relative">
+        <div className="order-2 relative xl:px-16">
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
             animate={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
             transition={{ delay: 0.25 }}
-            className="relative rounded-[24px] border border-border-blue/45 bg-surface-primary/85 p-4 shadow-[0_0_0_1px_rgba(45,124,255,0.36),0_0_36px_rgba(45,124,255,0.22)]"
+            className="relative z-[2] rounded-[24px] border border-border-blue/45 bg-surface-primary/85 p-4 shadow-[0_0_0_1px_rgba(45,124,255,0.36),0_0_36px_rgba(45,124,255,0.22)]"
           >
             <div className="flex items-start justify-between gap-2">
               <div>
@@ -220,15 +220,21 @@ export function CommandCenterHero() {
             <MotionConnector reduceMotion={Boolean(reduceMotion)} />
           </motion.div>
 
-          <div className="pointer-events-none absolute -left-2 top-6 hidden w-[38%] space-y-2 md:block">
+          <div className="pointer-events-none absolute -left-16 top-10 hidden w-[200px] space-y-2 xl:block">
             {floatingEvents.slice(0, 3).map((event, index) => (
               <FloatingSystemCard key={event} text={event} index={index} reduceMotion={Boolean(reduceMotion)} />
             ))}
           </div>
 
-          <div className="pointer-events-none absolute -right-2 bottom-6 hidden w-[38%] space-y-2 md:block">
+          <div className="pointer-events-none absolute -right-16 bottom-10 hidden w-[200px] space-y-2 xl:block">
             {floatingEvents.slice(3).map((event, index) => (
               <FloatingSystemCard key={event} text={event} index={index + 3} reduceMotion={Boolean(reduceMotion)} />
+            ))}
+          </div>
+
+          <div className="mt-3 grid gap-2 sm:grid-cols-2 xl:hidden">
+            {floatingEvents.map((event, index) => (
+              <FloatingSystemCard key={event} text={event} index={index} reduceMotion={Boolean(reduceMotion)} />
             ))}
           </div>
         </div>
