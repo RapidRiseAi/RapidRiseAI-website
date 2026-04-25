@@ -19,7 +19,7 @@ import {
   Workflow,
   Zap,
 } from 'lucide-react';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 const trustPills = [
@@ -63,6 +63,43 @@ const impactMetrics = [
   { value: '+58%', label: 'More leads followed up', icon: Users, accent: 'text-violet-400' },
   { value: '100%', label: 'Visibility across your operations', icon: ShieldCheck, accent: 'text-accent-primary' },
 ];
+
+function CountUp({
+  end,
+  duration = 1200,
+  decimals = 0,
+  prefix = '',
+  suffix = '',
+  reduceMotion = false,
+}: {
+  end: number;
+  duration?: number;
+  decimals?: number;
+  prefix?: string;
+  suffix?: string;
+  reduceMotion?: boolean;
+}) {
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (reduceMotion) {
+      setValue(end);
+      return;
+    }
+    let raf = 0;
+    const startedAt = performance.now();
+    const tick = (now: number) => {
+      const progress = Math.min((now - startedAt) / duration, 1);
+      const eased = 1 - (1 - progress) ** 3;
+      setValue(end * eased);
+      if (progress < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [end, duration, reduceMotion]);
+
+  return <>{prefix}{value.toFixed(decimals)}{suffix}</>;
+}
 
 function chartPath(hours: number[]) {
   const points = hours.map((h, i) => ({ x: 24 + i * 52, y: 148 - (h / 3) * 118 }));
@@ -111,7 +148,7 @@ function ResponseTimeChart({ reduceMotion }: { reduceMotion: boolean }) {
     <div className="rounded-2xl border border-border-subtle bg-background-secondary/35 p-4">
       <p className="text-system-eyebrow text-text-muted">First Response Time</p>
       <p className="mt-1 text-sm text-text-secondary">Last 7 days</p>
-      <p className="mt-2 text-4xl font-semibold">18 min</p>
+      <p className="mt-2 text-4xl font-semibold"><CountUp end={18} suffix=" min" reduceMotion={reduceMotion} /></p>
       <p className="mt-1 text-sm text-emerald-300">72% improvement</p>
       <svg viewBox="0 0 360 170" className="mt-3 h-44 w-full" role="img" aria-label="Response time trend from Monday to Sunday decreasing from 3 hours to point 2 hours">
         {[0, 1, 2, 3].map((row) => (
@@ -177,6 +214,7 @@ function ActivityFeed({ reduceMotion }: { reduceMotion: boolean }) {
 }
 
 function TodayOverview() {
+  const reduceMotion = useReducedMotion();
   return (
     <div className="rounded-2xl border border-border-subtle bg-background-secondary/35 p-4">
       <p className="text-system-eyebrow text-text-muted">Today’s Overview</p>
@@ -185,7 +223,11 @@ function TodayOverview() {
           <div key={card.label} className="rounded-xl border border-border-subtle bg-background-primary/70 p-3">
             <p className="text-sm text-text-secondary">{card.label}</p>
             <div className="mt-2 flex items-center justify-between">
-              <p className="text-4xl font-semibold text-text-primary">{card.value}</p>
+              <p className="text-4xl font-semibold text-text-primary">
+                {card.label === 'Avg First Response' ? <CountUp end={18} suffix=" min" reduceMotion={Boolean(reduceMotion)} /> : null}
+                {card.label === 'Leads Captured' ? <CountUp end={43} reduceMotion={Boolean(reduceMotion)} /> : null}
+                {card.label === 'Quotes In Progress' ? <CountUp end={6} reduceMotion={Boolean(reduceMotion)} /> : null}
+              </p>
               <div className={cn('h-10 w-20 rounded-lg bg-gradient-to-r', card.color)} />
             </div>
           </div>
@@ -222,14 +264,14 @@ export function CommandCenterHero() {
       <div className="pointer-events-none absolute bottom-0 right-0 h-40 w-[50%] bg-[radial-gradient(ellipse_at_bottom_right,rgba(45,124,255,0.35),transparent_65%)]" />
 
       <div className="relative mx-auto w-full max-w-[1520px] px-6 md:px-10">
-        <div className="grid items-start gap-10 xl:grid-cols-[0.42fr_0.58fr]">
+        <div className="grid items-start gap-12 xl:grid-cols-[0.43fr_0.57fr]">
           <div>
             <motion.p initial={reduceMotion ? false : { opacity: 0, y: 8 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} className="text-system-eyebrow text-accent-secondary">
               RAPID RISE AI COMMAND CENTER
             </motion.p>
-            <motion.h1 initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.05 }} className="mt-4 max-w-[13ch] text-[clamp(46px,5.2vw,74px)] font-[var(--font-jakarta)] font-semibold leading-[0.98] tracking-[-0.03em] text-white">
+            <motion.h1 initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.05 }} className="mt-4 max-w-[13ch] text-[clamp(50px,5.5vw,78px)] font-[var(--font-jakarta)] font-semibold leading-[0.98] tracking-[-0.03em] text-white">
               Manual work is costing you
-              <span className="bg-gradient-to-r from-cyan-300 via-blue-400 to-blue-600 bg-clip-text text-transparent"> leads, time, and control.</span>
+              <span className="bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-400 bg-clip-text text-transparent"> leads, time, and control.</span>
             </motion.h1>
             <motion.p initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mt-6 max-w-[54ch] text-[1.1rem] leading-8 text-text-secondary">
               We build automation systems, dashboards, portals, and workflow tools that help businesses respond faster, track work clearly, and operate with less chaos.
@@ -266,7 +308,7 @@ export function CommandCenterHero() {
           <motion.div initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }} animate={reduceMotion ? undefined : { opacity: 1, scale: 1 }} transition={{ delay: 0.12 }} className="mt-2 rounded-[30px] border border-border-blue/60 bg-surface-primary/80 p-5 shadow-[0_0_0_1px_rgba(45,124,255,0.4),0_0_38px_rgba(45,124,255,0.24)] backdrop-blur-xl">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="text-[2rem] font-semibold leading-none tracking-tight">OPERATIONS COMMAND <span className="ml-2 text-base text-emerald-300">● Live system</span></p>
+                  <p className="text-[2rem] font-semibold leading-none tracking-tight">OPERATIONS COMMAND <span className="ml-2 text-base text-emerald-300">● Live system</span></p>
               </div>
               <p className="text-right text-sm text-text-muted">System live</p>
             </div>
@@ -292,7 +334,12 @@ export function CommandCenterHero() {
             return (
               <motion.div key={metric.label} initial={reduceMotion ? false : { opacity: 0, y: 8 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.22 + index * 0.06 }} className="rounded-xl border border-border-subtle bg-background-primary/60 p-3">
                 <Icon className={cn('h-6 w-6', metric.accent)} aria-hidden />
-                <p className="mt-2 text-4xl font-semibold">{metric.value}</p>
+                <p className="mt-2 text-4xl font-semibold">
+                  {metric.value === '+320 hrs' ? <CountUp end={320} prefix="+" suffix=" hrs" reduceMotion={Boolean(reduceMotion)} /> : null}
+                  {metric.value === '3.4x' ? <CountUp end={3.4} decimals={1} suffix="x" reduceMotion={Boolean(reduceMotion)} /> : null}
+                  {metric.value === '+58%' ? <CountUp end={58} prefix="+" suffix="%" reduceMotion={Boolean(reduceMotion)} /> : null}
+                  {metric.value === '100%' ? <CountUp end={100} suffix="%" reduceMotion={Boolean(reduceMotion)} /> : null}
+                </p>
                 <p className="mt-1 text-sm text-text-secondary">{metric.label}</p>
               </motion.div>
             );
