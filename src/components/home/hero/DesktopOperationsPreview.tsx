@@ -58,7 +58,9 @@ export function DesktopOperationsPreview() {
         ))}
       </div>
 
-      <div className="relative mt-9 h-[260px] overflow-hidden rounded-2xl border border-cyan-200/12 bg-[radial-gradient(circle_at_22%_80%,rgba(14,165,233,0.24),transparent_48%),radial-gradient(circle_at_52%_62%,rgba(56,189,248,0.2),transparent_44%),radial-gradient(circle_at_82%_22%,rgba(37,99,235,0.2),transparent_37%)]">
+      <div className="relative mt-9 h-[272px] overflow-hidden rounded-2xl border border-cyan-200/12 bg-[radial-gradient(circle_at_20%_78%,rgba(14,165,233,0.28),transparent_48%),radial-gradient(circle_at_52%_62%,rgba(56,189,248,0.24),transparent_44%),radial-gradient(circle_at_82%_24%,rgba(37,99,235,0.24),transparent_37%)]">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(30,64,175,0.16),transparent_65%)]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-[linear-gradient(180deg,transparent,rgba(3,12,30,0.62))]" />
         <svg viewBox="0 0 900 245" className="absolute inset-0 h-full w-full" aria-hidden>
           <defs>
             <linearGradient id="signal-line-desktop" x1="0" y1="0" x2="1" y2="0">
@@ -90,7 +92,15 @@ export function DesktopOperationsPreview() {
             transition={{ duration: 1.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
           />
           {[148, 286, 428, 596, 764, 848].map((x, i) => (
-            <circle key={x} cx={x} cy={[194, 112, 124, 138, 112, 88][i]} r="3.5" fill="rgba(219,234,254,0.9)" />
+            <motion.circle
+              key={x}
+              cx={x}
+              cy={[194, 112, 124, 138, 112, 88][i]}
+              r="3.6"
+              fill="rgba(224,242,254,0.95)"
+              animate={reduceMotion ? undefined : { opacity: [0.55, 1, 0.55] }}
+              transition={{ duration: 4.6, delay: i * 0.24, repeat: Infinity, ease: 'easeInOut' }}
+            />
           ))}
         </svg>
 
@@ -110,7 +120,7 @@ export function DesktopOperationsPreview() {
         <div className="absolute left-1/2 top-[56%] h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-100 shadow-[0_0_24px_rgba(34,211,238,0.95)]" />
       </div>
 
-      <div className="mt-7 grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-center gap-4">
+      <div className="mt-8 grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-center gap-4">
         {processSteps.map((step, index) => {
           const Icon = step.icon;
           return (
@@ -120,12 +130,12 @@ export function DesktopOperationsPreview() {
                 animate={reduceMotion ? undefined : { opacity: [0.85, 1, 0.85] }}
                 transition={{ duration: 3.8, delay: index * 0.22, repeat: Infinity, repeatDelay: 2.8 }}
               >
-                <span className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-full border border-cyan-200/22 bg-slate-950/84 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition duration-300 group-hover:border-cyan-300/50 group-hover:shadow-[0_0_20px_rgba(34,211,238,0.22)]">
-                  <Icon className={`h-7 w-7 ${step.accent} transition duration-300 group-hover:brightness-125`} />
+                <span className="mx-auto inline-flex h-[3.85rem] w-[3.85rem] items-center justify-center rounded-full border border-cyan-200/24 bg-[radial-gradient(circle,rgba(15,23,42,0.95),rgba(2,6,23,0.9))] shadow-[inset_0_1px_0_rgba(255,255,255,0.09),0_0_0_1px_rgba(56,189,248,0.07)] transition duration-300 group-hover:border-cyan-300/55 group-hover:shadow-[0_0_24px_rgba(34,211,238,0.24)]">
+                  <Icon className={`h-[1.65rem] w-[1.65rem] ${step.accent} transition duration-300 group-hover:brightness-125`} />
                 </span>
-                <p className="mt-3 text-xl text-slate-300 transition duration-300 group-hover:text-white">{step.label}</p>
+                <p className="mt-3 text-[1.9rem] text-slate-300 transition duration-300 group-hover:text-white">{step.label}</p>
               </motion.div>
-              {index < processSteps.length - 1 ? <span className="flex h-px w-12 items-center justify-center bg-gradient-to-r from-cyan-200/10 via-cyan-200/45 to-cyan-200/10 text-sm text-cyan-100/55">→</span> : null}
+              {index < processSteps.length - 1 ? <span className="flex h-px w-14 items-center justify-center bg-gradient-to-r from-cyan-200/10 via-cyan-200/55 to-cyan-200/10 text-sm text-cyan-100/65">→</span> : null}
             </div>
           );
         })}
