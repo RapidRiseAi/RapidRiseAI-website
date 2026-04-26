@@ -26,9 +26,9 @@ export const trustItems: TrustItem[] = [
 ];
 
 export const heroMetrics: HeroMetric[] = [
-  { value: '18 min', accent: 'text-cyan-300', label: 'Avg Response' },
-  { value: '43', label: 'Leads Captured' },
-  { value: '100%', label: 'Visibility' },
+  { value: '18 min', countTo: 18, suffix: ' min', accent: 'text-cyan-300', label: 'Avg Response' },
+  { value: '43', countTo: 43, label: 'Leads Captured' },
+  { value: '100%', countTo: 100, suffix: '%', label: 'Visibility' },
 ];
 
 export const processSteps: ProcessStep[] = [
@@ -39,8 +39,8 @@ export const processSteps: ProcessStep[] = [
 ];
 
 export const impactMetrics: ImpactMetric[] = [
-  { tag: 'TIME', value: '+320 hrs', label: 'Admin time saved each month', icon: Gauge, accent: 'text-blue-300' },
-  { tag: 'SPEED', value: '3.4x', label: 'Faster response time on average', icon: Zap, accent: 'text-cyan-300' },
-  { tag: 'FOLLOW-UP', value: '+58%', label: 'More leads followed up', icon: Activity, accent: 'text-violet-300' },
-  { tag: 'VISIBILITY', value: '100%', label: 'Visibility across your operations', icon: Eye, accent: 'text-indigo-300' },
+  { tag: 'TIME', value: '+320 hrs', countTo: 320, prefix: '+', suffix: ' hrs', label: 'Admin time saved each month', icon: Gauge, accent: 'text-blue-300' },
+  { tag: 'SPEED', value: '3.4x', countTo: 3.4, decimals: 1, suffix: 'x', label: 'Faster response time on average', icon: Zap, accent: 'text-cyan-300' },
+  { tag: 'FOLLOW-UP', value: '+58%', countTo: 58, prefix: '+', suffix: '%', label: 'More leads followed up', icon: Activity, accent: 'text-violet-300' },
+  { tag: 'VISIBILITY', value: '100%', countTo: 100, suffix: '%', label: 'Visibility across your operations', icon: Eye, accent: 'text-indigo-300' },
 ];
