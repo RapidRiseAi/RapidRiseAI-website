@@ -11,12 +11,12 @@ export function DesktopHero() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="relative hidden overflow-hidden border-b border-white/10 bg-[linear-gradient(114deg,#02060f_0%,#030a14_44%,#041021_100%)] pb-15 pt-14 xl:block">
+    <section className="relative hidden overflow-hidden border-b border-white/10 bg-[linear-gradient(114deg,#01040b_0%,#02070f_44%,#03101d_100%)] pb-15 pt-14 xl:block">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(2,5,12,0.98)_0%,rgba(3,8,16,0.84)_58%,transparent_100%)]" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_24%_20%,rgba(148,163,184,0.1),transparent_50%),radial-gradient(circle_at_74%_20%,rgba(51,65,85,0.12),transparent_54%)] opacity-30" />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(70,120,210,0.13)_1px,transparent_1px),linear-gradient(to_bottom,rgba(70,120,210,0.13)_1px,transparent_1px)] bg-[size:50px_50px] opacity-[0.26]" />
       <div className="pointer-events-none absolute inset-y-0 left-0 w-[57%] bg-[linear-gradient(90deg,rgba(7,17,32,0.46),rgba(7,17,32,0.2),transparent_78%)]" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-[54%] bg-[linear-gradient(270deg,rgba(12,52,130,0.2),rgba(8,28,70,0.09),transparent_76%)]" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-[54%] bg-[linear-gradient(270deg,rgba(12,52,130,0.15),rgba(8,28,70,0.06),transparent_76%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_44%,rgba(56,189,248,0.08),transparent_58%),radial-gradient(ellipse_at_78%_44%,rgba(37,99,235,0.16),transparent_54%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_52%,rgba(2,6,20,0.56)_100%)]" />
       <motion.div
@@ -82,8 +82,8 @@ export function DesktopHero() {
                     transition={{ duration: 0.35, delay: 0.22 + index * 0.04 }}
                     className="group flex items-center gap-3 px-2 py-1.5 transition duration-300 hover:-translate-y-0.5"
                   >
-                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cyan-200/20 bg-[radial-gradient(circle,rgba(15,23,42,0.96),rgba(2,6,23,0.92))] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_0_0_1px_rgba(125,211,252,0.07)] transition duration-300 group-hover:border-cyan-300/40 group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_0_16px_rgba(34,211,238,0.2)]">
-                      <Icon strokeWidth={2.05} className={`h-[1.08rem] w-[1.08rem] ${item.accent} transition duration-300 group-hover:brightness-125`} />
+                    <span className="inline-flex h-[2.7rem] w-[2.7rem] items-center justify-center rounded-full border border-cyan-200/28 bg-[radial-gradient(circle,rgba(15,23,42,0.98),rgba(2,6,23,0.94))] shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_0_0_1px_rgba(125,211,252,0.09)] transition duration-300 group-hover:border-cyan-300/44 group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_0_18px_rgba(34,211,238,0.22)]">
+                      <Icon strokeWidth={2.05} className={`h-[1.16rem] w-[1.16rem] ${item.accent} transition duration-300 group-hover:brightness-125`} />
                     </span>
                     <span className="text-[1rem] leading-tight text-slate-300">{item.label}</span>
                     {index < trustItems.length - 1 ? <span className="ml-auto h-9 w-px bg-cyan-100/14" /> : null}

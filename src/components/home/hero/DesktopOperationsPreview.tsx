@@ -179,7 +179,7 @@ export function DesktopOperationsPreview() {
         />
       </div>
 
-      <div className="mt-8 grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-center gap-4.5">
+      <div className="mt-8 grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-center gap-5">
         {processSteps.map((step, index) => {
           const Icon = step.icon;
           const accentRing = ['border-cyan-300/42', 'border-indigo-300/40', 'border-blue-300/42', 'border-violet-300/42'][index];
@@ -191,12 +191,12 @@ export function DesktopOperationsPreview() {
                 animate={reduceMotion ? undefined : { opacity: [0.85, 1, 0.85] }}
                 transition={{ duration: 3.8, delay: index * 0.22, repeat: Infinity }}
               >
-                <span className={`mx-auto inline-flex h-[3.78rem] w-[3.78rem] items-center justify-center rounded-full border ${accentRing} bg-[radial-gradient(circle,rgba(15,23,42,0.98),rgba(2,6,23,0.94))] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_0_1px_rgba(56,189,248,0.1)] transition duration-300 group-hover:border-cyan-300/58 ${accentGlow}`}>
-                  <Icon strokeWidth={2.1} className={`h-[1.58rem] w-[1.58rem] ${step.accent} transition duration-300 group-hover:brightness-125`} />
+                <span className={`mx-auto inline-flex h-[4.08rem] w-[4.08rem] items-center justify-center rounded-full border ${accentRing} bg-[radial-gradient(circle,rgba(15,23,42,0.98),rgba(2,6,23,0.95))] shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_0_0_1px_rgba(56,189,248,0.12)] transition duration-300 group-hover:border-cyan-300/60 ${accentGlow}`}>
+                  <Icon strokeWidth={2.05} className={`h-[1.72rem] w-[1.72rem] ${step.accent} transition duration-300 group-hover:brightness-125`} />
                 </span>
-                <p className="mt-2.5 text-[1.8rem] text-slate-300 transition duration-300 group-hover:text-white">{step.label}</p>
+                <p className="mt-2.5 text-[1.86rem] text-slate-200 transition duration-300 group-hover:text-white">{step.label}</p>
               </motion.div>
-              {index < processSteps.length - 1 ? <span className="flex h-px w-14 items-center justify-center bg-gradient-to-r from-cyan-200/10 via-cyan-200/56 to-cyan-200/10 text-[0.74rem] text-cyan-100/72">→</span> : null}
+              {index < processSteps.length - 1 ? <span className="flex h-px w-14 items-center justify-center bg-gradient-to-r from-cyan-200/10 via-cyan-200/62 to-cyan-200/10 text-[0.75rem] text-cyan-100/78">→</span> : null}
             </div>
           );
         })}
