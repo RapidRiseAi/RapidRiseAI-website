@@ -21,19 +21,20 @@ export function DesktopOperationsPreview() {
         const rect = event.currentTarget.getBoundingClientRect();
         setSpotlight({ x: ((event.clientX - rect.left) / rect.width) * 100, y: ((event.clientY - rect.top) / rect.height) * 100 });
       }}
-      className="relative rounded-[30px] border border-cyan-400/50 bg-slate-950/58 p-8 shadow-[0_0_0_1px_rgba(59,130,246,0.34),0_28px_98px_rgba(2,6,23,0.92),0_0_60px_rgba(14,116,255,0.3)] backdrop-blur-xl"
+      className="relative rounded-[32px] border border-cyan-400/55 bg-slate-950/58 p-9 shadow-[0_0_0_1px_rgba(59,130,246,0.38),0_32px_110px_rgba(2,6,23,0.94),0_0_72px_rgba(14,116,255,0.33)] backdrop-blur-xl"
     >
-      <div className="pointer-events-none absolute inset-0 rounded-[30px] border border-white/10" />
+      <div className="pointer-events-none absolute inset-0 rounded-[32px] border border-white/10" />
       <div
-        className="pointer-events-none absolute inset-2 rounded-[24px] opacity-70 transition duration-500"
+        className="pointer-events-none absolute inset-2 rounded-[26px] opacity-75 transition duration-500"
         style={{ background: `radial-gradient(circle at ${spotlight.x}% ${spotlight.y}%, rgba(56,189,248,0.24), rgba(2,6,23,0) 45%)` }}
       />
       <motion.div
         aria-hidden
         animate={reduceMotion ? undefined : { opacity: [0.25, 0.5, 0.25] }}
         transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut' }}
-        className="pointer-events-none absolute inset-x-16 bottom-[-26px] h-32 bg-[radial-gradient(ellipse_at_center,rgba(56,189,248,0.62),transparent_72%)]"
+        className="pointer-events-none absolute inset-x-14 bottom-[-28px] h-36 bg-[radial-gradient(ellipse_at_center,rgba(56,189,248,0.68),transparent_72%)]"
       />
+      <div className="pointer-events-none absolute left-1/2 top-[72%] h-44 w-[72%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.22),transparent_72%)] blur-2xl" />
 
       <p className="relative text-sm font-semibold tracking-[0.24em] text-white/85">OPERATIONS PREVIEW</p>
 

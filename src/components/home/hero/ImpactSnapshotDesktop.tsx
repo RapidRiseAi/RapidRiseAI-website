@@ -43,7 +43,14 @@ export function ImpactSnapshotDesktop() {
                 <p className="text-sm font-semibold tracking-[0.22em] text-white/88">{metric.tag}</p>
               </div>
               <p className="mt-5 text-[3.7rem] font-semibold leading-none tracking-[-0.045em] text-white">
-                <AnimatedCount value={metric.countTo} decimals={metric.decimals} prefix={metric.prefix} suffix={metric.suffix} duration={metric.duration} />
+                {metric.tag === 'TIME' ? (
+                  <>
+                    <AnimatedCount value={metric.countTo} prefix="+" duration={metric.duration} />
+                    <span className="ml-1.5 text-[0.62em] font-medium tracking-[-0.01em] text-cyan-100/90">hrs</span>
+                  </>
+                ) : (
+                  <AnimatedCount value={metric.countTo} decimals={metric.decimals} prefix={metric.prefix} suffix={metric.suffix} duration={metric.duration} />
+                )}
               </p>
               <p className="mt-3 text-[1.58rem] leading-tight text-slate-300">{metric.label}</p>
             </motion.article>

@@ -22,7 +22,7 @@ export function DesktopHero() {
       <div className="pointer-events-none absolute -bottom-32 right-[18%] h-72 w-96 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(56,189,248,0.25),transparent_72%)] blur-2xl" />
 
       <div className="relative mx-auto max-w-[1520px] px-8 2xl:px-12">
-        <div className="grid grid-cols-[minmax(500px,0.84fr)_minmax(760px,1.16fr)] items-start gap-14">
+        <div className="grid grid-cols-[minmax(500px,0.8fr)_minmax(790px,1.2fr)] items-start gap-14">
           <div className="min-w-0 pt-8">
             <motion.p initial={reduceMotion ? undefined : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className="text-sm font-semibold tracking-[0.24em] text-cyan-300">
               {heroCopy.eyebrow}
@@ -85,7 +85,9 @@ export function DesktopHero() {
             </div>
           </div>
 
-          <DesktopOperationsPreview />
+          <div className="-mt-2">
+            <DesktopOperationsPreview />
+          </div>
         </div>
 
         <ImpactSnapshotDesktop />
