@@ -31,7 +31,7 @@ export function ImpactSnapshotDesktop() {
                 <p className="text-sm font-semibold tracking-[0.22em] text-white/80">{metric.tag}</p>
               </div>
               <p className="mt-5 text-[3.6rem] font-semibold leading-none tracking-[-0.04em] text-white">
-                <AnimatedCount value={metric.countTo} decimals={metric.decimals} prefix={metric.prefix} suffix={metric.suffix} />
+                <AnimatedCount value={metric.countTo} decimals={metric.decimals} prefix={metric.prefix} suffix={metric.suffix} duration={metric.duration} />
               </p>
               <p className="mt-3 text-[1.75rem] leading-tight text-slate-300">{metric.label}</p>
             </motion.article>

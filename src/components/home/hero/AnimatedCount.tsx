@@ -12,7 +12,7 @@ type AnimatedCountProps = {
   className?: string;
 };
 
-export function AnimatedCount({ value, decimals = 0, prefix = '', suffix = '', duration = 1.2, className }: AnimatedCountProps) {
+export function AnimatedCount({ value, decimals = 0, prefix = '', suffix = '', duration = 2.1, className }: AnimatedCountProps) {
   const ref = useRef<HTMLSpanElement | null>(null);
   const inView = useInView(ref, { once: true, margin: '-10% 0px -10% 0px' });
   const reduceMotion = useReducedMotion();
@@ -27,7 +27,7 @@ export function AnimatedCount({ value, decimals = 0, prefix = '', suffix = '', d
 
     const controls = animate(0, value, {
       duration,
-      ease: [0.22, 1, 0.36, 1],
+      ease: [0.16, 1, 0.3, 1],
       onUpdate(latest) {
         setDisplay(latest);
       },

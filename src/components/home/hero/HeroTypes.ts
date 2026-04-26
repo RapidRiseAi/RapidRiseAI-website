@@ -5,6 +5,7 @@ export type HeroMetric = {
   countTo: number;
   decimals?: number;
   suffix?: string;
+  duration?: number;
   accent?: string;
   label: string;
 };
@@ -28,6 +29,7 @@ export type ImpactMetric = {
   decimals?: number;
   prefix?: string;
   suffix?: string;
+  duration?: number;
   label: string;
   icon: LucideIcon;
   accent: string;

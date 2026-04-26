@@ -42,7 +42,7 @@ export function DesktopOperationsPreview() {
           <div key={metric.label} className="px-4 text-center">
             <p className="text-[4.2rem] font-semibold leading-none tracking-[-0.04em] text-white">
               <span className={metric.accent ?? ''}>
-                <AnimatedCount value={metric.countTo} decimals={metric.decimals} suffix={metric.suffix} />
+                <AnimatedCount value={metric.countTo} decimals={metric.decimals} suffix={metric.suffix} duration={metric.duration} />
               </span>
             </p>
             <p className="mt-2 text-3xl font-medium text-slate-300">{metric.label}</p>
@@ -50,7 +50,7 @@ export function DesktopOperationsPreview() {
         ))}
       </div>
 
-      <div className="relative mt-9 h-[245px] overflow-hidden rounded-2xl border border-white/5 bg-[radial-gradient(circle_at_20%_80%,rgba(14,165,233,0.2),transparent_44%),radial-gradient(circle_at_80%_22%,rgba(37,99,235,0.14),transparent_34%)]">
+      <div className="relative mt-9 h-[245px] overflow-hidden rounded-2xl border border-white/5 bg-[radial-gradient(circle_at_24%_82%,rgba(14,165,233,0.13),transparent_48%),radial-gradient(circle_at_80%_22%,rgba(37,99,235,0.11),transparent_36%)]">
         <svg viewBox="0 0 900 245" className="absolute inset-0 h-full w-full" aria-hidden>
           <defs>
             <linearGradient id="signal-line-desktop" x1="0" y1="0" x2="1" y2="0">
@@ -62,29 +62,44 @@ export function DesktopOperationsPreview() {
           <motion.path
             d={signalPath}
             stroke="url(#signal-line-desktop)"
-            strokeWidth="4"
+            strokeWidth="2.4"
             fill="none"
             strokeLinecap="round"
-            className="drop-shadow-[0_0_9px_rgba(34,211,238,0.75)]"
+            className="opacity-90"
             initial={reduceMotion ? undefined : { pathLength: 0, opacity: 0.5 }}
-            animate={{ pathLength: 1, opacity: 1 }}
-            transition={{ duration: 1.2, delay: 0.45, ease: 'easeOut' }}
+            animate={reduceMotion ? undefined : { pathLength: 1, opacity: [0.88, 1, 0.9] }}
+            transition={{ pathLength: { duration: 1.8, delay: 0.45, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 7.5, repeat: Infinity, ease: 'easeInOut' } }}
+          />
+          <motion.path
+            d={signalPath}
+            stroke="rgba(56,189,248,0.23)"
+            strokeWidth="5.6"
+            fill="none"
+            strokeLinecap="round"
+            className="blur-[2px]"
+            initial={reduceMotion ? undefined : { pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 1, opacity: 0.42 }}
+            transition={{ duration: 1.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
           />
           {[148, 286, 428, 596, 764, 848].map((x, i) => (
-            <circle key={x} cx={x} cy={[194, 112, 124, 138, 112, 88][i]} r="4.5" fill="#dbeafe" className="motion-safe:animate-pulse" />
+            <circle key={x} cx={x} cy={[194, 112, 124, 138, 112, 88][i]} r="3.1" fill="rgba(219,234,254,0.7)" />
           ))}
         </svg>
 
-        {!reduceMotion ? <motion.div className="pointer-events-none absolute top-0 h-full w-24 bg-gradient-to-r from-transparent via-cyan-300/35 to-transparent blur-sm" animate={{ x: ['-30%', '120%'] }} transition={{ duration: 6.8, repeat: Infinity, repeatDelay: 1.8, ease: 'linear' }} /> : null}
+        {!reduceMotion ? <motion.div className="pointer-events-none absolute top-0 h-full w-12 bg-gradient-to-r from-transparent via-cyan-200/22 to-transparent blur-[6px]" animate={{ x: ['-12%', '105%'] }} transition={{ duration: 8.2, repeat: Infinity, repeatDelay: 5.5, ease: 'linear' }} /> : null}
 
-        <div className="absolute left-1/2 top-[56%] h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/60 bg-cyan-400/10" />
+        <div className="absolute left-1/2 top-[56%] h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/35 bg-cyan-400/10" />
         <motion.div
-          className="absolute left-1/2 top-[56%] h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/25"
-          animate={reduceMotion ? undefined : { scale: [1, 1.08, 1], opacity: [0.55, 0.16, 0.55] }}
-          transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute left-1/2 top-[56%] h-36 w-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/18"
+          animate={reduceMotion ? undefined : { scale: [1, 1.06, 1], opacity: [0.34, 0.08, 0.34] }}
+          transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut' }}
         />
-        <div className="absolute left-1/2 top-[56%] h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/14" />
-        <div className="absolute left-1/2 top-[56%] h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-200 shadow-[0_0_20px_rgba(34,211,238,0.98)]" />
+        <motion.div
+          className="absolute left-1/2 top-[56%] h-[12.5rem] w-[12.5rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/10"
+          animate={reduceMotion ? undefined : { scale: [1, 1.03, 1], opacity: [0.22, 0.06, 0.22] }}
+          transition={{ duration: 6.2, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <div className="absolute left-1/2 top-[56%] h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-200/90 shadow-[0_0_12px_rgba(34,211,238,0.6)]" />
       </div>
 
       <div className="mt-6 grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-center gap-3">

@@ -20,7 +20,7 @@ export function MobileOperationsPreview() {
         {heroMetrics.map((metric) => (
           <div key={metric.label} className="px-2">
             <p className={`text-4xl font-semibold tracking-[-0.03em] text-white ${metric.accent ?? ''}`}>
-              <AnimatedCount value={metric.countTo} decimals={metric.decimals} suffix={metric.suffix} />
+              <AnimatedCount value={metric.countTo} decimals={metric.decimals} suffix={metric.suffix} duration={metric.duration} />
             </p>
             <p className="mt-1 text-sm text-slate-300">{metric.label}</p>
           </div>
@@ -31,17 +31,23 @@ export function MobileOperationsPreview() {
         <svg viewBox="0 0 340 144" className="absolute inset-0 h-full w-full" aria-hidden>
           <motion.path
             d="M0 96 C24 96, 45 112, 64 108 C85 102, 108 96, 132 62 C148 44, 168 74, 186 78 C214 88, 238 92, 264 84 C286 75, 304 56, 340 62"
-            stroke="#0ea5e9"
-            strokeWidth="2.7"
+            stroke="url(#signal-line-mobile)"
+            strokeWidth="2.1"
             fill="none"
-            className="drop-shadow-[0_0_6px_rgba(34,211,238,0.75)]"
+            className="opacity-90"
             initial={reduceMotion ? undefined : { pathLength: 0 }}
             animate={{ pathLength: 1 }}
-            transition={{ duration: 1, delay: 0.45 }}
+            transition={{ duration: 1.7, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
           />
-          <circle cx="168" cy="74" r="5" fill="#e0f2fe" />
-          <circle cx="168" cy="74" r="18" fill="none" stroke="rgba(14,165,233,0.45)" className="motion-safe:animate-pulse" />
-          <circle cx="168" cy="74" r="30" fill="none" stroke="rgba(14,165,233,0.2)" />
+          <defs>
+            <linearGradient id="signal-line-mobile" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="rgba(56,189,248,0.8)" />
+              <stop offset="100%" stopColor="rgba(59,130,246,0.85)" />
+            </linearGradient>
+          </defs>
+          <circle cx="168" cy="74" r="4" fill="rgba(224,242,254,0.9)" />
+          <circle cx="168" cy="74" r="16" fill="none" stroke="rgba(14,165,233,0.28)" className="motion-safe:animate-pulse" />
+          <circle cx="168" cy="74" r="26" fill="none" stroke="rgba(14,165,233,0.12)" />
         </svg>
       </div>
 
