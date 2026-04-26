@@ -35,7 +35,7 @@ export function DesktopHero() {
               className="mt-5 max-w-[700px] text-[clamp(3.6rem,5.2vw,6.4rem)] font-semibold leading-[0.93] tracking-[-0.048em] text-white"
             >
               {heroCopy.headlineLead}
-              <span className="block bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-500 bg-clip-text text-transparent">{heroCopy.headlineAccent}</span>
+              <span className="block bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-400 bg-clip-text text-transparent">{heroCopy.headlineAccent}</span>
             </motion.h1>
 
             <motion.p
@@ -63,7 +63,7 @@ export function DesktopHero() {
               </Link>
             </motion.div>
 
-            <div className="mt-9 grid grid-cols-4 gap-2 border-y border-white/10 py-4">
+            <div className="mt-9 grid grid-cols-4 gap-3 border-y border-white/10 bg-white/[0.015] px-2 py-4">
               {trustItems.map((item, index) => {
                 const Icon = item.icon;
                 return (
@@ -72,12 +72,12 @@ export function DesktopHero() {
                     initial={reduceMotion ? undefined : { opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.35, delay: 0.22 + index * 0.04 }}
-                    className="group flex items-center gap-3 rounded-xl px-3 py-2 transition duration-300 hover:-translate-y-0.5 hover:bg-white/[0.03]"
+                    className="group flex items-center gap-3 px-2 py-2 transition duration-300 hover:-translate-y-0.5"
                   >
                     <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-slate-900/70 transition duration-300 group-hover:border-cyan-300/40 group-hover:shadow-[0_0_16px_rgba(34,211,238,0.2)]">
                       <Icon className={`h-5 w-5 ${item.accent} transition duration-300 group-hover:brightness-125`} />
                     </span>
-                    <span className="text-[1.1rem] leading-tight text-slate-300">{item.label}</span>
+                    <span className="text-[1.16rem] leading-tight text-slate-300">{item.label}</span>
                     {index < trustItems.length - 1 ? <span className="ml-auto h-10 w-px bg-white/15" /> : null}
                   </motion.div>
                 );

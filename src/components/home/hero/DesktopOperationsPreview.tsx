@@ -42,7 +42,14 @@ export function DesktopOperationsPreview() {
           <div key={metric.label} className="px-4 text-center">
             <p className="text-[4.35rem] font-semibold leading-none tracking-[-0.04em] text-white">
               <span className={metric.accent ?? ''}>
-                <AnimatedCount value={metric.countTo} decimals={metric.decimals} suffix={metric.suffix} duration={metric.duration} />
+                {metric.suffix === ' min' ? (
+                  <>
+                    <AnimatedCount value={metric.countTo} decimals={metric.decimals} duration={metric.duration} />
+                    <span className="ml-1.5 text-[0.62em] font-medium tracking-[-0.02em]">min</span>
+                  </>
+                ) : (
+                  <AnimatedCount value={metric.countTo} decimals={metric.decimals} suffix={metric.suffix} duration={metric.duration} />
+                )}
               </span>
             </p>
             <p className="mt-2 text-[1.85rem] font-medium text-slate-300">{metric.label}</p>
@@ -117,7 +124,7 @@ export function DesktopOperationsPreview() {
                 </span>
                 <p className="mt-3 text-xl text-slate-300 transition duration-300 group-hover:text-white">{step.label}</p>
               </motion.div>
-              {index < processSteps.length - 1 ? <span className="text-3xl text-cyan-100/55">→</span> : null}
+              {index < processSteps.length - 1 ? <span className="flex h-px w-12 items-center justify-center bg-gradient-to-r from-cyan-200/10 via-cyan-200/45 to-cyan-200/10 text-sm text-cyan-100/55">→</span> : null}
             </div>
           );
         })}

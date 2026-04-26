@@ -34,7 +34,7 @@ export function ImpactSnapshotDesktop() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-8% 0px -8% 0px' }}
               transition={{ duration: 0.4, delay: 0.05 * index }}
-              className={`group rounded-2xl border p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_14px_38px_rgba(2,6,23,0.62)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_20px_48px_rgba(2,6,23,0.7)] ${accentShell[metric.tag]}`}
+              className={`group min-h-[248px] rounded-2xl border p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_14px_38px_rgba(2,6,23,0.62)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_20px_48px_rgba(2,6,23,0.7)] ${accentShell[metric.tag]}`}
             >
               <div className="flex items-center gap-3">
                 <span className={`inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/12 bg-slate-900/88 transition duration-300 group-hover:border-cyan-300/35 ${iconAccent[metric.tag]}`}>
