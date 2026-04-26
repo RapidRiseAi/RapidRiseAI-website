@@ -11,12 +11,12 @@ export function DesktopHero() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="relative hidden overflow-hidden border-b border-white/10 bg-[linear-gradient(114deg,#01040b_0%,#02070f_44%,#03101d_100%)] pb-15 pt-14 xl:block">
+    <section className="relative hidden overflow-hidden border-b border-white/10 bg-[linear-gradient(114deg,#000308_0%,#01050b_44%,#020d18_100%)] pb-15 pt-14 xl:block">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(2,5,12,0.98)_0%,rgba(3,8,16,0.84)_58%,transparent_100%)]" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_24%_20%,rgba(148,163,184,0.1),transparent_50%),radial-gradient(circle_at_74%_20%,rgba(51,65,85,0.12),transparent_54%)] opacity-30" />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(70,120,210,0.13)_1px,transparent_1px),linear-gradient(to_bottom,rgba(70,120,210,0.13)_1px,transparent_1px)] bg-[size:50px_50px] opacity-[0.26]" />
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-[57%] bg-[linear-gradient(90deg,rgba(7,17,32,0.46),rgba(7,17,32,0.2),transparent_78%)]" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-[54%] bg-[linear-gradient(270deg,rgba(12,52,130,0.15),rgba(8,28,70,0.06),transparent_76%)]" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-[57%] bg-[linear-gradient(90deg,rgba(5,12,24,0.5),rgba(5,12,24,0.2),transparent_78%)]" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-[54%] bg-[linear-gradient(270deg,rgba(12,52,130,0.12),rgba(8,28,70,0.04),transparent_76%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_44%,rgba(56,189,248,0.08),transparent_58%),radial-gradient(ellipse_at_78%_44%,rgba(37,99,235,0.16),transparent_54%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_52%,rgba(2,6,20,0.56)_100%)]" />
       <motion.div

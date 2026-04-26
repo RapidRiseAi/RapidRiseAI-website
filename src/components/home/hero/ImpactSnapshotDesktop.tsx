@@ -7,16 +7,16 @@ import { impactMetrics } from './HeroData';
 export function ImpactSnapshotDesktop() {
   const reduceMotion = useReducedMotion();
   const accentShell: Record<string, string> = {
-    TIME: 'border-cyan-300/30 bg-[linear-gradient(160deg,rgba(7,20,40,0.97)_0%,rgba(4,10,23,0.94)_56%,rgba(8,34,58,0.74)_100%)]',
-    SPEED: 'border-teal-300/30 bg-[linear-gradient(160deg,rgba(5,24,38,0.97)_0%,rgba(3,12,24,0.94)_56%,rgba(5,47,55,0.74)_100%)]',
-    'FOLLOW-UP': 'border-violet-300/30 bg-[linear-gradient(160deg,rgba(24,14,44,0.97)_0%,rgba(14,10,31,0.94)_56%,rgba(40,21,66,0.74)_100%)]',
-    VISIBILITY: 'border-blue-300/30 bg-[linear-gradient(160deg,rgba(8,20,48,0.97)_0%,rgba(3,10,26,0.94)_56%,rgba(8,33,70,0.76)_100%)]',
+    TIME: 'border-cyan-300/34 bg-[linear-gradient(160deg,rgba(6,18,38,0.98)_0%,rgba(3,9,20,0.95)_56%,rgba(8,32,58,0.76)_100%)]',
+    SPEED: 'border-teal-300/34 bg-[linear-gradient(160deg,rgba(4,23,36,0.98)_0%,rgba(2,11,23,0.95)_56%,rgba(5,46,54,0.76)_100%)]',
+    'FOLLOW-UP': 'border-violet-300/34 bg-[linear-gradient(160deg,rgba(22,13,42,0.98)_0%,rgba(13,9,30,0.95)_56%,rgba(39,20,64,0.76)_100%)]',
+    VISIBILITY: 'border-blue-300/34 bg-[linear-gradient(160deg,rgba(7,18,46,0.98)_0%,rgba(2,9,24,0.95)_56%,rgba(8,32,69,0.78)_100%)]',
   };
   const accentAtmosphere: Record<string, string> = {
-    TIME: 'before:bg-[radial-gradient(circle_at_24%_18%,rgba(34,211,238,0.24),transparent_54%)]',
-    SPEED: 'before:bg-[radial-gradient(circle_at_26%_20%,rgba(45,212,191,0.26),transparent_55%)]',
-    'FOLLOW-UP': 'before:bg-[radial-gradient(circle_at_28%_20%,rgba(167,139,250,0.25),transparent_56%)]',
-    VISIBILITY: 'before:bg-[radial-gradient(circle_at_76%_18%,rgba(59,130,246,0.26),transparent_56%)]',
+    TIME: 'before:bg-[radial-gradient(circle_at_24%_18%,rgba(34,211,238,0.3),transparent_52%)]',
+    SPEED: 'before:bg-[radial-gradient(circle_at_26%_20%,rgba(45,212,191,0.32),transparent_53%)]',
+    'FOLLOW-UP': 'before:bg-[radial-gradient(circle_at_28%_20%,rgba(167,139,250,0.3),transparent_54%)]',
+    VISIBILITY: 'before:bg-[radial-gradient(circle_at_76%_18%,rgba(59,130,246,0.32),transparent_54%)]',
   };
   const iconAccent: Record<string, string> = {
     TIME: 'group-hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]',
@@ -40,7 +40,7 @@ export function ImpactSnapshotDesktop() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-8% 0px -8% 0px' }}
               transition={{ duration: 0.4, delay: 0.05 * index }}
-              className={`group relative min-h-[188px] overflow-hidden rounded-2xl border p-[1.05rem] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),inset_0_0_0_1px_rgba(148,163,184,0.06),0_10px_28px_rgba(2,6,23,0.58)] before:pointer-events-none before:absolute before:inset-0 before:opacity-90 before:content-[''] transition duration-300 hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),inset_0_0_0_1px_rgba(186,230,253,0.08),0_14px_40px_rgba(2,6,23,0.68)] ${accentShell[metric.tag]} ${accentAtmosphere[metric.tag]}`}
+              className={`group relative min-h-[198px] overflow-hidden rounded-2xl border p-[1.12rem] shadow-[inset_0_1px_0_rgba(255,255,255,0.13),inset_0_0_0_1px_rgba(148,163,184,0.08),0_10px_28px_rgba(2,6,23,0.58),0_0_20px_rgba(15,23,42,0.2)] before:pointer-events-none before:absolute before:inset-0 before:opacity-90 before:content-[''] after:pointer-events-none after:absolute after:inset-x-6 after:top-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-cyan-100/42 after:to-transparent after:content-[''] transition duration-300 hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),inset_0_0_0_1px_rgba(186,230,253,0.1),0_14px_40px_rgba(2,6,23,0.68)] ${accentShell[metric.tag]} ${accentAtmosphere[metric.tag]}`}
             >
               <div className="relative flex items-center gap-3">
                 <span className={`inline-flex h-10 w-10 items-center justify-center rounded-full border border-cyan-100/32 bg-[radial-gradient(circle,rgba(15,23,42,0.99),rgba(2,6,23,0.95))] shadow-[inset_0_1px_0_rgba(255,255,255,0.17),0_0_0_1px_rgba(148,163,184,0.15)] transition duration-300 group-hover:border-cyan-200/48 ${iconAccent[metric.tag]}`}>
