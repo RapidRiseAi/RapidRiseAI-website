@@ -6,14 +6,15 @@ import { AnimatedCount } from './AnimatedCount';
 import { heroMetrics, processSteps } from './HeroData';
 
 const signalPath =
-  'M0 178 C58 170, 88 192, 138 182 C194 168, 214 116, 248 100 C288 82, 310 112, 350 116 C394 120, 426 124, 474 128 C526 132, 560 112, 612 92 C654 74, 690 82, 730 78 C772 74, 816 58, 860 50 C880 46, 892 48, 900 50';
+  'M0 170 C73 162, 116 187, 179 168 C249 147, 271 97, 328 88 C386 77, 418 119, 471 124 C532 130, 577 139, 630 144 C693 157, 731 129, 783 101 C825 75, 868 82, 900 77';
 const signalNodes = [
-  { x: 132, y: 130 },
-  { x: 248, y: 68 },
-  { x: 352, y: 96 },
-  { x: 590, y: 78 },
-  { x: 730, y: 84 },
-  { x: 860, y: 58 },
+  { x: 126, y: 174 },
+  { x: 247, y: 118 },
+  { x: 328, y: 88 },
+  { x: 470, y: 124 },
+  { x: 628, y: 144 },
+  { x: 784, y: 101 },
+  { x: 884, y: 79 },
 ];
 
 export function DesktopOperationsPreview() {
@@ -73,19 +74,28 @@ export function DesktopOperationsPreview() {
           <defs>
             <linearGradient id="signal-line-desktop" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="#32DFFF" />
-              <stop offset="45%" stopColor="#62EAFF" />
+              <stop offset="45%" stopColor="#67E8FF" />
               <stop offset="100%" stopColor="#2E8CFF" />
             </linearGradient>
             <linearGradient id="signal-line-live-desktop" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="rgba(125,211,252,0)" />
-              <stop offset="38%" stopColor="rgba(186,230,253,0.92)" />
-              <stop offset="62%" stopColor="rgba(255,255,255,0.98)" />
+              <stop offset="40%" stopColor="rgba(165,243,252,0.82)" />
+              <stop offset="62%" stopColor="rgba(191,246,255,0.96)" />
               <stop offset="100%" stopColor="rgba(125,211,252,0)" />
             </linearGradient>
             <radialGradient id="signal-node-core" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="rgba(240,249,255,1)" />
-              <stop offset="100%" stopColor="rgba(186,230,253,0.88)" />
+              <stop offset="0%" stopColor="#E8FDFF" />
+              <stop offset="100%" stopColor="#AEEFFF" />
             </radialGradient>
+            <radialGradient id="signal-orb-fill" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="rgba(103,232,255,0.26)" />
+              <stop offset="52%" stopColor="rgba(46,140,255,0.1)" />
+              <stop offset="78%" stopColor="rgba(46,140,255,0.02)" />
+              <stop offset="100%" stopColor="rgba(46,140,255,0)" />
+            </radialGradient>
+            <filter id="signal-orb-glow" x="-70%" y="-70%" width="240%" height="240%">
+              <feGaussianBlur stdDeviation="9" />
+            </filter>
           </defs>
           <motion.path
             d={signalPath}
@@ -93,6 +103,7 @@ export function DesktopOperationsPreview() {
             strokeWidth="3.05"
             fill="none"
             strokeLinecap="round"
+            strokeLinejoin="round"
             className="opacity-[0.98]"
             initial={reduceMotion ? undefined : { pathLength: 0, opacity: 0.5 }}
             animate={reduceMotion ? undefined : { pathLength: 1, opacity: [0.88, 1, 0.9] }}
@@ -100,11 +111,12 @@ export function DesktopOperationsPreview() {
           />
           <motion.path
             d={signalPath}
-            stroke="rgba(56,189,248,0.34)"
-            strokeWidth="8.3"
+            stroke="rgba(56,189,248,0.32)"
+            strokeWidth="8.6"
             fill="none"
             strokeLinecap="round"
-            className="blur-[2.4px]"
+            strokeLinejoin="round"
+            className="blur-[5px]"
             initial={reduceMotion ? undefined : { pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 0.5 }}
             transition={{ duration: 1.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
@@ -116,11 +128,11 @@ export function DesktopOperationsPreview() {
               strokeWidth="9.2"
               fill="none"
               strokeLinecap="round"
-              strokeDasharray="90 1500"
-              className="blur-[1.4px]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, strokeDashoffset: [0, -1680] }}
-              transition={{ opacity: { duration: 0.35, delay: 1.55 }, strokeDashoffset: { duration: 6.05, repeat: Infinity, ease: 'linear' } }}
+              strokeLinejoin="round"
+              strokeDasharray="80 760"
+              className="blur-[1.6px]"
+              animate={{ strokeDashoffset: [760, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
             />
           ) : null}
           {!reduceMotion ? (
@@ -130,27 +142,65 @@ export function DesktopOperationsPreview() {
               strokeWidth="8.1"
               fill="none"
               strokeLinecap="round"
-              strokeDasharray="70 1520"
-              className="opacity-70 blur-[1.2px]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.72, strokeDashoffset: [0, -1680] }}
-              transition={{ opacity: { duration: 0.35, delay: 1.55 }, strokeDashoffset: { duration: 6.05, repeat: Infinity, ease: 'linear', delay: -3.02 } }}
+              strokeLinejoin="round"
+              strokeDasharray="80 760"
+              className="opacity-65 blur-[1.2px]"
+              animate={{ strokeDashoffset: [1520, 760] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
             />
           ) : null}
+          <motion.g
+            className="hero-graph-orb"
+            animate={reduceMotion ? undefined : { scale: [0.98, 1.04, 0.98], opacity: [0.84, 1, 0.84] }}
+            transition={{ duration: 4.6, repeat: Infinity, ease: 'easeInOut' }}
+            style={{ transformOrigin: '470px 124px' }}
+          >
+            <circle cx="470" cy="124" r="52" fill="rgba(69,223,255,0.3)" opacity="0.36" filter="url(#signal-orb-glow)" />
+            <circle cx="470" cy="124" r="50" fill="url(#signal-orb-fill)" stroke="rgba(103,232,255,0.36)" strokeWidth="1.05" />
+            <ellipse cx="470" cy="124" rx="41" ry="13.5" fill="none" stroke="rgba(103,232,255,0.22)" strokeWidth="0.9" />
+            <ellipse cx="470" cy="124" rx="31" ry="9.5" fill="none" stroke="rgba(103,232,255,0.2)" strokeWidth="0.85" />
+            <ellipse cx="470" cy="124" rx="21" ry="6.5" fill="none" stroke="rgba(103,232,255,0.18)" strokeWidth="0.8" />
+            <ellipse cx="470" cy="124" rx="14.5" ry="40" fill="none" stroke="rgba(103,232,255,0.2)" strokeWidth="0.9" />
+            <ellipse cx="470" cy="124" rx="26" ry="40" fill="none" stroke="rgba(103,232,255,0.14)" strokeWidth="0.85" />
+            <motion.circle
+              cx="470"
+              cy="124"
+              r="53"
+              fill="none"
+              stroke="rgba(69,223,255,0.16)"
+              strokeWidth="1"
+              animate={reduceMotion ? undefined : { scale: [0.92, 1.22], opacity: [0.22, 0] }}
+              transition={{ duration: 4.6, repeat: Infinity, ease: 'easeOut' }}
+              style={{ transformOrigin: '470px 124px' }}
+            />
+            <motion.circle
+              cx="470"
+              cy="124"
+              r="57"
+              fill="none"
+              stroke="rgba(69,223,255,0.14)"
+              strokeWidth="1"
+              animate={reduceMotion ? undefined : { scale: [0.94, 1.18], opacity: [0.16, 0] }}
+              transition={{ duration: 4.6, repeat: Infinity, ease: 'easeOut', delay: 1.4 }}
+              style={{ transformOrigin: '470px 124px' }}
+            />
+            <circle cx="470" cy="124" r="5.8" fill="#D7FBFF" />
+            <circle cx="470" cy="124" r="9.8" fill="rgba(103,232,255,0.32)" filter="url(#signal-orb-glow)" />
+          </motion.g>
           {signalNodes.map((node, i) => (
             <g key={node.x}>
               <motion.circle
                 cx={node.x}
                 cy={node.y}
-                r="6.4"
-                fill="rgba(56,189,248,0.16)"
-                animate={reduceMotion ? undefined : { opacity: [0.18, 0.34, 0.18] }}
+                r="3.8"
+                fill="rgba(56,189,248,0.24)"
+                animate={reduceMotion ? undefined : { opacity: [0.24, 0.38, 0.24] }}
                 transition={{ duration: 6.1, delay: 1.55 + i * 0.42, repeat: Infinity, ease: 'easeInOut' }}
               />
               <motion.circle
                 cx={node.x}
                 cy={node.y}
-                r="3.8"
+                r="2.9"
                 fill="url(#signal-node-core)"
                 animate={reduceMotion ? undefined : { opacity: [0.5, 0.84, 1, 0.68, 0.5], scale: [1, 1, 1.15, 1, 1] }}
                 transition={{ duration: 6.1, delay: 1.55 + i * 0.42, repeat: Infinity, ease: 'easeInOut' }}
@@ -160,35 +210,6 @@ export function DesktopOperationsPreview() {
         </svg>
 
           {!reduceMotion ? <motion.div className="pointer-events-none absolute top-0 h-full w-10 bg-gradient-to-r from-transparent via-cyan-100/32 to-transparent blur-[6px]" initial={{ opacity: 0 }} animate={{ opacity: 1, x: ['-14%', '108%'] }} transition={{ opacity: { duration: 0.35, delay: 1.55 }, x: { duration: 6.05, repeat: Infinity, ease: 'linear' } }} /> : null}
-
-        <motion.div
-          className="absolute left-1/2 top-[56%] h-[7.9rem] w-[7.9rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(169,246,255,0.28),rgba(46,140,255,0.09),transparent_72%)] shadow-[0_0_44px_rgba(56,189,248,0.42)]"
-          animate={reduceMotion ? undefined : { opacity: [0.28, 0.56, 0.28], scale: [0.96, 1.04, 0.96] }}
-          transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <div className="absolute left-1/2 top-[56%] h-[6.9rem] w-[6.9rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/52 bg-[radial-gradient(circle,rgba(103,232,255,0.22),rgba(46,140,255,0.08),transparent_70%)]" />
-        <div className="pointer-events-none absolute left-1/2 top-[56%] h-[6.7rem] w-[6.7rem] -translate-x-1/2 -translate-y-1/2 rounded-full">
-          <span className="absolute inset-[18%] rounded-full border border-cyan-200/28" />
-          <span className="absolute left-[8%] right-[8%] top-1/2 h-px -translate-y-1/2 bg-cyan-200/22" />
-          <span className="absolute left-1/2 top-[8%] bottom-[8%] w-px -translate-x-1/2 bg-cyan-200/18" />
-          <span className="absolute inset-x-[14%] top-[31%] h-px bg-cyan-200/14" />
-          <span className="absolute inset-x-[14%] bottom-[31%] h-px bg-cyan-200/14" />
-        </div>
-        <motion.div
-          className="absolute left-1/2 top-[56%] h-[9.8rem] w-[9.8rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/26"
-          animate={reduceMotion ? undefined : { scale: [1, 1.05, 1], opacity: [0.34, 0.14, 0.34] }}
-          transition={{ duration: 4.1, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute left-1/2 top-[56%] h-[12.4rem] w-[12.4rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/15"
-          animate={reduceMotion ? undefined : { scale: [1, 1.03, 1], opacity: [0.22, 0.08, 0.22] }}
-          transition={{ duration: 6.8, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute left-1/2 top-[56%] h-[0.9rem] w-[0.9rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#A9F6FF] shadow-[0_0_28px_rgba(34,211,238,0.98)]"
-          animate={reduceMotion ? undefined : { scale: [1, 1.14, 1], opacity: [0.95, 1, 0.95] }}
-          transition={{ duration: 4.1, repeat: Infinity, ease: 'easeInOut' }}
-        />
       </div>
 
       <div className="mt-8 grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-center gap-5">
