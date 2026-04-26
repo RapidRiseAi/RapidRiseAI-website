@@ -19,10 +19,10 @@ export const navItems = [
 ];
 
 export const trustItems: TrustItem[] = [
-  { label: 'Response within 24h', icon: Zap, accent: 'text-teal-200' },
-  { label: 'Clear scope', icon: ShieldCheck, accent: 'text-blue-200' },
-  { label: 'Handover ready', icon: ClipboardCheck, accent: 'text-cyan-200' },
-  { label: 'Built around your tools', icon: Activity, accent: 'text-violet-200' },
+  { label: 'Response within 24h', icon: Zap, accent: 'text-[#45F5B0]' },
+  { label: 'Clear scope', icon: ShieldCheck, accent: 'text-[#58A6FF]' },
+  { label: 'Handover ready', icon: ClipboardCheck, accent: 'text-[#45DFFF]' },
+  { label: 'Built around your tools', icon: Activity, accent: 'text-[#9A6CFF]' },
 ];
 
 export const heroMetrics: HeroMetric[] = [

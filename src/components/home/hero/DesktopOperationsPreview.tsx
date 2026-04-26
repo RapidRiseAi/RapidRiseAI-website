@@ -6,7 +6,7 @@ import { AnimatedCount } from './AnimatedCount';
 import { heroMetrics, processSteps } from './HeroData';
 
 const signalPath =
-  'M0 168 C58 160, 88 186, 138 176 C194 162, 214 110, 248 96 C288 80, 310 108, 350 110 C394 112, 426 104, 474 118 C526 132, 560 112, 612 94 C654 80, 690 86, 730 84 C772 82, 816 64, 860 58 C880 56, 892 58, 900 60';
+  'M0 178 C58 170, 88 192, 138 182 C194 168, 214 116, 248 100 C288 82, 310 112, 350 116 C394 120, 426 124, 474 128 C526 132, 560 112, 612 92 C654 74, 690 82, 730 78 C772 74, 816 58, 860 50 C880 46, 892 48, 900 50';
 const signalNodes = [
   { x: 132, y: 130 },
   { x: 248, y: 68 },
@@ -29,7 +29,7 @@ export function DesktopOperationsPreview() {
         const rect = event.currentTarget.getBoundingClientRect();
         setSpotlight({ x: ((event.clientX - rect.left) / rect.width) * 100, y: ((event.clientY - rect.top) / rect.height) * 100 });
       }}
-      className="relative rounded-[32px] border border-[rgba(94,162,255,0.32)] bg-[linear-gradient(180deg,#07101c_0%,#081320_54%,#091624_100%)] p-9 shadow-[0_0_0_1px_rgba(84,190,255,0.16),0_34px_112px_rgba(2,6,22,0.94),0_0_82px_rgba(12,61,167,0.2),inset_0_1px_0_rgba(219,234,254,0.08)] backdrop-blur-xl"
+      className="relative rounded-[32px] border border-[rgba(94,185,255,0.34)] bg-[linear-gradient(180deg,#06111e_0%,#071423_54%,#081525_100%)] p-9 shadow-[0_0_0_1px_rgba(84,190,255,0.2),0_34px_112px_rgba(2,6,22,0.95),0_0_90px_rgba(12,61,167,0.24),inset_0_1px_0_rgba(219,234,254,0.1)] backdrop-blur-xl"
     >
       <div className="pointer-events-none absolute inset-0 rounded-[32px] border border-[rgba(84,190,255,0.2)]" />
       <div className="pointer-events-none absolute inset-x-9 top-0 h-px bg-gradient-to-r from-transparent via-cyan-100/58 to-transparent" />
@@ -38,7 +38,7 @@ export function DesktopOperationsPreview() {
         className="pointer-events-none absolute inset-2 rounded-[26px] opacity-75 transition duration-500"
         style={{ background: `radial-gradient(circle at ${spotlight.x}% ${spotlight.y}%, rgba(56,189,248,0.22), rgba(2,6,23,0) 46%)` }}
       />
-      <div className="pointer-events-none absolute left-1/2 top-[calc(100%+2px)] h-12 w-[30%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(46,140,255,0.44),rgba(19,123,255,0.24)_24%,rgba(12,58,168,0.11)_45%,transparent_72%)] blur-[16px]" />
+      <div className="pointer-events-none absolute left-1/2 top-[calc(100%+3px)] h-11 w-[43%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(46,140,255,0.46)_0%,rgba(19,123,255,0.24)_24%,rgba(12,58,168,0.11)_45%,transparent_72%)] blur-[17px]" />
       <div className="pointer-events-none absolute left-1/2 top-[calc(100%-18px)] h-10 w-[13%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(69,216,255,0.2),transparent_72%)] blur-[9px]" />
       <div className="pointer-events-none absolute left-1/2 top-[74%] h-40 w-[66%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(20,112,230,0.2),transparent_72%)] blur-2xl" />
 
@@ -65,16 +65,16 @@ export function DesktopOperationsPreview() {
         ))}
       </div>
 
-      <div className="relative mt-9 h-[280px] overflow-hidden rounded-[19px] border border-cyan-200/20 bg-[linear-gradient(180deg,#050a14_0%,rgba(4,10,22,0.98)_48%,rgba(2,7,18,0.99)_100%)] shadow-[inset_0_1px_0_rgba(191,219,254,0.08)]">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_45%,rgba(38,190,255,0.18),transparent_42%),radial-gradient(circle_at_48%_50%,rgba(69,223,255,0.28),transparent_32%),radial-gradient(circle_at_78%_42%,rgba(46,140,255,0.18),transparent_36%),linear-gradient(180deg,rgba(3,7,14,0.2),rgba(1,4,10,0.55))]" />
+      <div className="relative mt-9 h-[280px] overflow-hidden rounded-[19px] border border-cyan-200/24 bg-[linear-gradient(180deg,#050a14_0%,rgba(4,10,22,0.98)_48%,rgba(2,7,18,0.99)_100%)] shadow-[inset_0_1px_0_rgba(191,219,254,0.08)]">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_45%,rgba(38,190,255,0.2),transparent_42%),radial-gradient(circle_at_48%_50%,rgba(69,223,255,0.32),transparent_32%),radial-gradient(circle_at_78%_42%,rgba(46,140,255,0.22),transparent_36%),linear-gradient(180deg,rgba(3,7,14,0.2),rgba(1,4,10,0.55))]" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_52%_56%,rgba(69,223,255,0.14),transparent_30%),radial-gradient(ellipse_at_50%_56%,rgba(46,140,255,0.12),transparent_52%)]" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-[linear-gradient(180deg,transparent,rgba(2,8,22,0.72))]" />
         <svg viewBox="0 0 900 245" className="absolute inset-0 h-full w-full" aria-hidden>
           <defs>
             <linearGradient id="signal-line-desktop" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#0ea5e9" />
-              <stop offset="45%" stopColor="#22d3ee" />
-              <stop offset="100%" stopColor="#2563eb" />
+              <stop offset="0%" stopColor="#32DFFF" />
+              <stop offset="45%" stopColor="#62EAFF" />
+              <stop offset="100%" stopColor="#2E8CFF" />
             </linearGradient>
             <linearGradient id="signal-line-live-desktop" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="rgba(125,211,252,0)" />
@@ -90,7 +90,7 @@ export function DesktopOperationsPreview() {
           <motion.path
             d={signalPath}
             stroke="url(#signal-line-desktop)"
-            strokeWidth="2.85"
+            strokeWidth="3.05"
             fill="none"
             strokeLinecap="round"
             className="opacity-[0.98]"
@@ -100,8 +100,8 @@ export function DesktopOperationsPreview() {
           />
           <motion.path
             d={signalPath}
-            stroke="rgba(56,189,248,0.3)"
-            strokeWidth="7"
+            stroke="rgba(56,189,248,0.34)"
+            strokeWidth="8.3"
             fill="none"
             strokeLinecap="round"
             className="blur-[2.4px]"
@@ -113,10 +113,10 @@ export function DesktopOperationsPreview() {
             <motion.path
               d={signalPath}
               stroke="url(#signal-line-live-desktop)"
-              strokeWidth="8.8"
+              strokeWidth="9.2"
               fill="none"
               strokeLinecap="round"
-              strokeDasharray="300 1380"
+              strokeDasharray="90 1500"
               className="blur-[1.4px]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, strokeDashoffset: [0, -1680] }}
@@ -127,10 +127,10 @@ export function DesktopOperationsPreview() {
             <motion.path
               d={signalPath}
               stroke="url(#signal-line-live-desktop)"
-              strokeWidth="7.8"
+              strokeWidth="8.1"
               fill="none"
               strokeLinecap="round"
-              strokeDasharray="240 1440"
+              strokeDasharray="70 1520"
               className="opacity-70 blur-[1.2px]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.72, strokeDashoffset: [0, -1680] }}
@@ -159,14 +159,14 @@ export function DesktopOperationsPreview() {
           ))}
         </svg>
 
-        {!reduceMotion ? <motion.div className="pointer-events-none absolute top-0 h-full w-10 bg-gradient-to-r from-transparent via-cyan-100/28 to-transparent blur-[6px]" initial={{ opacity: 0 }} animate={{ opacity: 1, x: ['-14%', '108%'] }} transition={{ opacity: { duration: 0.35, delay: 1.55 }, x: { duration: 6.05, repeat: Infinity, ease: 'linear' } }} /> : null}
+          {!reduceMotion ? <motion.div className="pointer-events-none absolute top-0 h-full w-10 bg-gradient-to-r from-transparent via-cyan-100/32 to-transparent blur-[6px]" initial={{ opacity: 0 }} animate={{ opacity: 1, x: ['-14%', '108%'] }} transition={{ opacity: { duration: 0.35, delay: 1.55 }, x: { duration: 6.05, repeat: Infinity, ease: 'linear' } }} /> : null}
 
         <motion.div
-          className="absolute left-1/2 top-[56%] h-[7.6rem] w-[7.6rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(169,246,255,0.24),rgba(46,140,255,0.08),transparent_72%)] shadow-[0_0_40px_rgba(56,189,248,0.36)]"
+          className="absolute left-1/2 top-[56%] h-[7.9rem] w-[7.9rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(169,246,255,0.28),rgba(46,140,255,0.09),transparent_72%)] shadow-[0_0_44px_rgba(56,189,248,0.42)]"
           animate={reduceMotion ? undefined : { opacity: [0.28, 0.56, 0.28], scale: [0.96, 1.04, 0.96] }}
           transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
         />
-        <div className="absolute left-1/2 top-[56%] h-[6.7rem] w-[6.7rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/48 bg-[radial-gradient(circle,rgba(103,232,255,0.2),rgba(46,140,255,0.06),transparent_70%)]" />
+        <div className="absolute left-1/2 top-[56%] h-[6.9rem] w-[6.9rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/52 bg-[radial-gradient(circle,rgba(103,232,255,0.22),rgba(46,140,255,0.08),transparent_70%)]" />
         <div className="pointer-events-none absolute left-1/2 top-[56%] h-[6.7rem] w-[6.7rem] -translate-x-1/2 -translate-y-1/2 rounded-full">
           <span className="absolute inset-[18%] rounded-full border border-cyan-200/28" />
           <span className="absolute left-[8%] right-[8%] top-1/2 h-px -translate-y-1/2 bg-cyan-200/22" />
@@ -203,12 +203,12 @@ export function DesktopOperationsPreview() {
                 animate={reduceMotion ? undefined : { opacity: [0.85, 1, 0.85] }}
                 transition={{ duration: 3.8, delay: index * 0.22, repeat: Infinity }}
               >
-                <span className={`mx-auto inline-flex h-[4.08rem] w-[4.08rem] items-center justify-center rounded-full border ${accentRing} bg-[radial-gradient(circle,rgba(15,23,42,0.98),rgba(2,6,23,0.95))] shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_0_0_1px_rgba(56,189,248,0.12)] transition duration-300 group-hover:border-cyan-300/60 ${accentGlow}`}>
-                  <Icon strokeWidth={2.05} className={`h-[1.72rem] w-[1.72rem] ${step.accent} transition duration-300 group-hover:brightness-125`} />
+                <span className={`mx-auto inline-flex h-[4.32rem] w-[4.32rem] items-center justify-center rounded-full border ${accentRing} bg-[radial-gradient(circle,rgba(15,23,42,0.98),rgba(2,6,23,0.95))] shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_0_0_1px_rgba(56,189,248,0.14)] transition duration-300 group-hover:border-cyan-300/66 ${accentGlow}`}>
+                  <Icon strokeWidth={2.15} className={`h-[1.86rem] w-[1.86rem] ${step.accent} transition duration-300 group-hover:brightness-125`} />
                 </span>
                 <p className="mt-2.5 text-[1.86rem] text-slate-200 transition duration-300 group-hover:text-white">{step.label}</p>
               </motion.div>
-              {index < processSteps.length - 1 ? <span className="flex h-px w-14 items-center justify-center bg-gradient-to-r from-cyan-200/10 via-cyan-200/62 to-cyan-200/10 text-[0.75rem] text-cyan-100/78">→</span> : null}
+              {index < processSteps.length - 1 ? <span className="flex h-px w-14 items-center justify-center bg-gradient-to-r from-cyan-200/18 via-cyan-200/70 to-cyan-200/18 text-[0.75rem] text-cyan-100/82">→</span> : null}
             </div>
           );
         })}
