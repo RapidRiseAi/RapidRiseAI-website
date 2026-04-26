@@ -7,24 +7,30 @@ import { impactMetrics } from './HeroData';
 export function ImpactSnapshotDesktop() {
   const reduceMotion = useReducedMotion();
   const accentShell: Record<string, string> = {
-    TIME: 'border-cyan-300/25 bg-[linear-gradient(165deg,rgba(8,24,45,0.94)_0%,rgba(4,10,22,0.82)_55%,rgba(6,31,54,0.7)_100%)]',
-    SPEED: 'border-sky-300/25 bg-[linear-gradient(165deg,rgba(4,22,38,0.94)_0%,rgba(2,12,25,0.82)_56%,rgba(8,45,56,0.65)_100%)]',
-    'FOLLOW-UP': 'border-violet-300/22 bg-[linear-gradient(165deg,rgba(26,14,42,0.9)_0%,rgba(13,10,30,0.82)_54%,rgba(32,22,58,0.66)_100%)]',
-    VISIBILITY: 'border-indigo-300/25 bg-[linear-gradient(165deg,rgba(7,18,46,0.94)_0%,rgba(3,9,24,0.82)_55%,rgba(10,28,62,0.66)_100%)]',
+    TIME: 'border-cyan-300/24 bg-[linear-gradient(160deg,rgba(7,20,40,0.95)_0%,rgba(4,10,23,0.92)_54%,rgba(8,34,58,0.72)_100%)]',
+    SPEED: 'border-teal-300/24 bg-[linear-gradient(160deg,rgba(5,24,38,0.95)_0%,rgba(3,12,24,0.92)_54%,rgba(5,47,55,0.72)_100%)]',
+    'FOLLOW-UP': 'border-violet-300/24 bg-[linear-gradient(160deg,rgba(24,14,44,0.95)_0%,rgba(14,10,31,0.93)_54%,rgba(40,21,66,0.72)_100%)]',
+    VISIBILITY: 'border-blue-300/25 bg-[linear-gradient(160deg,rgba(8,20,48,0.96)_0%,rgba(3,10,26,0.92)_55%,rgba(8,33,70,0.74)_100%)]',
+  };
+  const accentAtmosphere: Record<string, string> = {
+    TIME: 'before:bg-[radial-gradient(circle_at_78%_20%,rgba(34,211,238,0.2),transparent_62%)]',
+    SPEED: 'before:bg-[radial-gradient(circle_at_82%_22%,rgba(45,212,191,0.23),transparent_62%)]',
+    'FOLLOW-UP': 'before:bg-[radial-gradient(circle_at_82%_22%,rgba(167,139,250,0.22),transparent_62%)]',
+    VISIBILITY: 'before:bg-[radial-gradient(circle_at_82%_22%,rgba(59,130,246,0.24),transparent_62%)]',
   };
   const iconAccent: Record<string, string> = {
-    TIME: 'group-hover:shadow-[0_0_18px_rgba(34,211,238,0.24)]',
-    SPEED: 'group-hover:shadow-[0_0_18px_rgba(45,212,191,0.24)]',
-    'FOLLOW-UP': 'group-hover:shadow-[0_0_18px_rgba(167,139,250,0.24)]',
-    VISIBILITY: 'group-hover:shadow-[0_0_18px_rgba(96,165,250,0.24)]',
+    TIME: 'group-hover:shadow-[0_0_18px_rgba(34,211,238,0.26)]',
+    SPEED: 'group-hover:shadow-[0_0_18px_rgba(45,212,191,0.3)]',
+    'FOLLOW-UP': 'group-hover:shadow-[0_0_18px_rgba(167,139,250,0.28)]',
+    VISIBILITY: 'group-hover:shadow-[0_0_18px_rgba(96,165,250,0.3)]',
   };
 
   return (
-    <div className="mt-16">
+    <div className="mt-12">
       <motion.p initial={reduceMotion ? undefined : { opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4 }} className="mb-5 text-sm font-semibold tracking-[0.22em] text-cyan-300">
         IMPACT SNAPSHOT
       </motion.p>
-      <div className="grid grid-cols-4 gap-5">
+      <div className="grid grid-cols-4 gap-4">
         {impactMetrics.map((metric, index) => {
           const Icon = metric.icon;
           return (
@@ -34,15 +40,15 @@ export function ImpactSnapshotDesktop() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-8% 0px -8% 0px' }}
               transition={{ duration: 0.4, delay: 0.05 * index }}
-              className={`group min-h-[248px] rounded-2xl border p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_14px_38px_rgba(2,6,23,0.62)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_20px_48px_rgba(2,6,23,0.7)] ${accentShell[metric.tag]}`}
+              className={`group relative min-h-[214px] overflow-hidden rounded-2xl border p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_12px_32px_rgba(2,6,23,0.58)] before:pointer-events-none before:absolute before:inset-0 before:opacity-90 before:content-[''] transition duration-300 hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_16px_44px_rgba(2,6,23,0.68)] ${accentShell[metric.tag]} ${accentAtmosphere[metric.tag]}`}
             >
-              <div className="flex items-center gap-3">
-                <span className={`inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/12 bg-slate-900/88 transition duration-300 group-hover:border-cyan-300/35 ${iconAccent[metric.tag]}`}>
-                  <Icon className={`h-5 w-5 ${metric.accent} transition duration-300 group-hover:brightness-125`} />
+              <div className="relative flex items-center gap-3">
+                <span className={`inline-flex h-9 w-9 items-center justify-center rounded-full border border-cyan-100/24 bg-[radial-gradient(circle,rgba(15,23,42,0.98),rgba(2,6,23,0.94))] shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_0_0_1px_rgba(148,163,184,0.1)] transition duration-300 group-hover:border-cyan-200/40 ${iconAccent[metric.tag]}`}>
+                  <Icon strokeWidth={2.1} className={`h-[1rem] w-[1rem] ${metric.accent} transition duration-300 group-hover:brightness-125`} />
                 </span>
-                <p className="text-sm font-semibold tracking-[0.22em] text-white/88">{metric.tag}</p>
+                <p className="text-[0.8rem] font-semibold tracking-[0.2em] text-white/88">{metric.tag}</p>
               </div>
-              <p className="mt-5 text-[3.7rem] font-semibold leading-none tracking-[-0.045em] text-white">
+              <p className="relative mt-4 text-[3.05rem] font-semibold leading-none tracking-[-0.04em] text-white">
                 {metric.tag === 'TIME' ? (
                   <>
                     <AnimatedCount value={metric.countTo} prefix="+" duration={metric.duration} />
@@ -52,7 +58,7 @@ export function ImpactSnapshotDesktop() {
                   <AnimatedCount value={metric.countTo} decimals={metric.decimals} prefix={metric.prefix} suffix={metric.suffix} duration={metric.duration} />
                 )}
               </p>
-              <p className="mt-3 text-[1.58rem] leading-tight text-slate-300">{metric.label}</p>
+              <p className="relative mt-2.5 text-[1.3rem] leading-tight text-slate-300">{metric.label}</p>
             </motion.article>
           );
         })}

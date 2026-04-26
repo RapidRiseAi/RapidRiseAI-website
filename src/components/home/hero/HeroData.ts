@@ -19,10 +19,10 @@ export const navItems = [
 ];
 
 export const trustItems: TrustItem[] = [
-  { label: 'Response within 24h', icon: Zap, accent: 'text-emerald-300' },
-  { label: 'Clear scope', icon: ShieldCheck, accent: 'text-blue-300' },
-  { label: 'Handover ready', icon: ClipboardCheck, accent: 'text-cyan-300' },
-  { label: 'Built around your tools', icon: Activity, accent: 'text-violet-300' },
+  { label: 'Response within 24h', icon: Zap, accent: 'text-cyan-200' },
+  { label: 'Clear scope', icon: ShieldCheck, accent: 'text-blue-200' },
+  { label: 'Handover ready', icon: ClipboardCheck, accent: 'text-sky-200' },
+  { label: 'Built around your tools', icon: Activity, accent: 'text-violet-200' },
 ];
 
 export const heroMetrics: HeroMetric[] = [
@@ -32,10 +32,10 @@ export const heroMetrics: HeroMetric[] = [
 ];
 
 export const processSteps: ProcessStep[] = [
-  { label: 'Capture', icon: Download, accent: 'text-cyan-300' },
-  { label: 'Route', icon: GitBranch, accent: 'text-indigo-300' },
-  { label: 'Action', icon: Zap, accent: 'text-blue-300' },
-  { label: 'Visibility', icon: Eye, accent: 'text-violet-300' },
+  { label: 'Capture', icon: Download, accent: 'text-cyan-200' },
+  { label: 'Route', icon: GitBranch, accent: 'text-indigo-200' },
+  { label: 'Action', icon: Zap, accent: 'text-blue-200' },
+  { label: 'Visibility', icon: Eye, accent: 'text-violet-200' },
 ];
 
 export const impactMetrics: ImpactMetric[] = [
