@@ -390,6 +390,10 @@ export function MobileStickyCtaBar() {
     };
   }, [pathname]);
 
+  if (pathname === '/') {
+    return null;
+  }
+
   return (
     <div
       id="mobile-sticky-cta-bar"
