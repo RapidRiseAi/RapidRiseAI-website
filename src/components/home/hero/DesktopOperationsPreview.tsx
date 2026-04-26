@@ -8,12 +8,12 @@ import { heroMetrics, processSteps } from './HeroData';
 const signalPath =
   'M0 168 C58 160, 88 186, 138 176 C194 162, 214 110, 248 96 C288 80, 310 108, 350 110 C394 112, 426 104, 474 118 C526 132, 560 112, 612 94 C654 80, 690 86, 730 84 C772 82, 816 64, 860 58 C880 56, 892 58, 900 60';
 const signalNodes = [
-  { x: 156, y: 191 },
-  { x: 298, y: 116 },
-  { x: 438, y: 121 },
-  { x: 602, y: 138 },
-  { x: 768, y: 110 },
-  { x: 856, y: 86 },
+  { x: 132, y: 130 },
+  { x: 248, y: 68 },
+  { x: 352, y: 96 },
+  { x: 590, y: 78 },
+  { x: 730, y: 84 },
+  { x: 860, y: 58 },
 ];
 
 export function DesktopOperationsPreview() {
@@ -113,7 +113,7 @@ export function DesktopOperationsPreview() {
             <motion.path
               d={signalPath}
               stroke="url(#signal-line-live-desktop)"
-              strokeWidth="8.6"
+              strokeWidth="8.8"
               fill="none"
               strokeLinecap="round"
               strokeDasharray="300 1380"
@@ -142,7 +142,7 @@ export function DesktopOperationsPreview() {
               <motion.circle
                 cx={node.x}
                 cy={node.y}
-                r="7.2"
+                r="6.4"
                 fill="rgba(56,189,248,0.16)"
                 animate={reduceMotion ? undefined : { opacity: [0.18, 0.34, 0.18] }}
                 transition={{ duration: 6.1, delay: 1.55 + i * 0.42, repeat: Infinity, ease: 'easeInOut' }}
@@ -150,7 +150,7 @@ export function DesktopOperationsPreview() {
               <motion.circle
                 cx={node.x}
                 cy={node.y}
-                r="4"
+                r="3.8"
                 fill="url(#signal-node-core)"
                 animate={reduceMotion ? undefined : { opacity: [0.5, 0.84, 1, 0.68, 0.5], scale: [1, 1, 1.15, 1, 1] }}
                 transition={{ duration: 6.1, delay: 1.55 + i * 0.42, repeat: Infinity, ease: 'easeInOut' }}
@@ -162,7 +162,7 @@ export function DesktopOperationsPreview() {
         {!reduceMotion ? <motion.div className="pointer-events-none absolute top-0 h-full w-10 bg-gradient-to-r from-transparent via-cyan-100/28 to-transparent blur-[6px]" initial={{ opacity: 0 }} animate={{ opacity: 1, x: ['-14%', '108%'] }} transition={{ opacity: { duration: 0.35, delay: 1.55 }, x: { duration: 6.05, repeat: Infinity, ease: 'linear' } }} /> : null}
 
         <motion.div
-          className="absolute left-1/2 top-[56%] h-[7.4rem] w-[7.4rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(169,246,255,0.22),rgba(46,140,255,0.07),transparent_72%)] shadow-[0_0_38px_rgba(56,189,248,0.34)]"
+          className="absolute left-1/2 top-[56%] h-[7.6rem] w-[7.6rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(169,246,255,0.24),rgba(46,140,255,0.08),transparent_72%)] shadow-[0_0_40px_rgba(56,189,248,0.36)]"
           animate={reduceMotion ? undefined : { opacity: [0.28, 0.56, 0.28], scale: [0.96, 1.04, 0.96] }}
           transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
         />
@@ -194,8 +194,8 @@ export function DesktopOperationsPreview() {
       <div className="mt-8 grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-center gap-5">
         {processSteps.map((step, index) => {
           const Icon = step.icon;
-          const accentRing = ['border-cyan-300/42', 'border-indigo-300/40', 'border-blue-300/42', 'border-violet-300/42'][index];
-          const accentGlow = ['group-hover:shadow-[0_0_21px_rgba(34,211,238,0.24)]', 'group-hover:shadow-[0_0_21px_rgba(129,140,248,0.24)]', 'group-hover:shadow-[0_0_21px_rgba(59,130,246,0.24)]', 'group-hover:shadow-[0_0_21px_rgba(167,139,250,0.24)]'][index];
+          const accentRing = ['border-[rgba(69,223,255,0.5)]', 'border-[rgba(138,108,255,0.5)]', 'border-[rgba(88,166,255,0.52)]', 'border-[rgba(162,118,255,0.54)]'][index];
+          const accentGlow = ['group-hover:shadow-[0_0_22px_rgba(69,223,255,0.26)]', 'group-hover:shadow-[0_0_22px_rgba(138,108,255,0.26)]', 'group-hover:shadow-[0_0_22px_rgba(88,166,255,0.28)]', 'group-hover:shadow-[0_0_22px_rgba(162,118,255,0.3)]'][index];
           return (
             <div key={step.label} className="contents">
               <motion.div

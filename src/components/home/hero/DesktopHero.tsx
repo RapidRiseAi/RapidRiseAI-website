@@ -42,8 +42,8 @@ export function DesktopHero() {
             >
               <span className="block whitespace-nowrap">Manual work is</span>
               <span className="block whitespace-nowrap">costing you</span>
-              <span className="block whitespace-nowrap bg-gradient-to-r from-[#66dfff] via-[#49d6ff] to-[#2e84ff] bg-clip-text text-transparent">leads, time,</span>
-              <span className="block whitespace-nowrap bg-gradient-to-r from-[#66dfff] via-[#49d6ff] to-[#2e84ff] bg-clip-text text-transparent">and control.</span>
+              <span className="block whitespace-nowrap bg-[linear-gradient(100deg,#66E8FF_0%,#39CFFF_36%,#2E8CFF_72%,#1F63FF_100%)] bg-clip-text text-transparent">leads, time,</span>
+              <span className="block whitespace-nowrap bg-[linear-gradient(100deg,#66E8FF_0%,#39CFFF_36%,#2E8CFF_72%,#1F63FF_100%)] bg-clip-text text-transparent">and control.</span>
             </motion.h1>
 
             <motion.p
@@ -74,6 +74,7 @@ export function DesktopHero() {
             <div className="mt-8 grid grid-cols-4 gap-2.5 border-y border-white/10 bg-white/[0.015] px-2 py-3.5">
               {trustItems.map((item, index) => {
                 const Icon = item.icon;
+                const trustGlow = ['group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_0_16px_rgba(69,245,176,0.22)]', 'group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_0_16px_rgba(88,166,255,0.2)]', 'group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_0_16px_rgba(69,223,255,0.22)]', 'group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_0_16px_rgba(154,108,255,0.24)]'][index];
                 return (
                   <motion.div
                     key={item.label}
@@ -82,7 +83,7 @@ export function DesktopHero() {
                     transition={{ duration: 0.35, delay: 0.22 + index * 0.04 }}
                     className="group flex items-center gap-3 px-2 py-1.5 transition duration-300 hover:-translate-y-0.5"
                   >
-                    <span className="inline-flex h-[2.7rem] w-[2.7rem] items-center justify-center rounded-full border border-cyan-200/28 bg-[radial-gradient(circle,rgba(15,23,42,0.98),rgba(2,6,23,0.94))] shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_0_0_1px_rgba(125,211,252,0.09)] transition duration-300 group-hover:border-cyan-300/44 group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_0_18px_rgba(34,211,238,0.22)]">
+                    <span className={`inline-flex h-[2.7rem] w-[2.7rem] items-center justify-center rounded-full border border-cyan-200/28 bg-[radial-gradient(circle,rgba(15,23,42,0.98),rgba(2,6,23,0.94))] shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_0_0_1px_rgba(125,211,252,0.09)] transition duration-300 group-hover:border-cyan-300/44 ${trustGlow}`}>
                       <Icon strokeWidth={2.05} className={`h-[1.16rem] w-[1.16rem] ${item.accent} transition duration-300 group-hover:brightness-125`} />
                     </span>
                     <span className="text-[1rem] leading-tight text-slate-300">{item.label}</span>

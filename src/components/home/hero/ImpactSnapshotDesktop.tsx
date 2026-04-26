@@ -19,10 +19,10 @@ export function ImpactSnapshotDesktop() {
     VISIBILITY: 'before:bg-[radial-gradient(circle_at_76%_18%,rgba(59,130,246,0.32),transparent_54%)]',
   };
   const iconAccent: Record<string, string> = {
-    TIME: 'group-hover:shadow-[0_0_20px_rgba(34,211,238,0.3)]',
-    SPEED: 'group-hover:shadow-[0_0_20px_rgba(45,212,191,0.32)]',
-    'FOLLOW-UP': 'group-hover:shadow-[0_0_20px_rgba(167,139,250,0.3)]',
-    VISIBILITY: 'group-hover:shadow-[0_0_20px_rgba(96,165,250,0.32)]',
+    TIME: 'border-[rgba(85,207,255,0.48)] group-hover:shadow-[0_0_20px_rgba(85,207,255,0.25)]',
+    SPEED: 'border-[rgba(69,240,224,0.48)] group-hover:shadow-[0_0_20px_rgba(69,240,224,0.25)]',
+    'FOLLOW-UP': 'border-[rgba(162,118,255,0.52)] group-hover:shadow-[0_0_20px_rgba(162,118,255,0.3)]',
+    VISIBILITY: 'border-[rgba(62,140,255,0.52)] group-hover:shadow-[0_0_20px_rgba(62,140,255,0.3)]',
   };
 
   return (
@@ -43,7 +43,7 @@ export function ImpactSnapshotDesktop() {
               className={`group relative min-h-[172px] overflow-hidden rounded-2xl border p-[1.3rem] shadow-[inset_0_1px_0_rgba(255,255,255,0.13),inset_0_0_0_1px_rgba(148,163,184,0.08),0_10px_28px_rgba(2,6,23,0.58),0_0_20px_rgba(15,23,42,0.2)] before:pointer-events-none before:absolute before:inset-0 before:opacity-90 before:content-[''] after:pointer-events-none after:absolute after:inset-x-6 after:top-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-cyan-100/42 after:to-transparent after:content-[''] transition duration-300 hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),inset_0_0_0_1px_rgba(186,230,253,0.1),0_14px_40px_rgba(2,6,23,0.68)] ${accentShell[metric.tag]} ${accentAtmosphere[metric.tag]}`}
             >
               <div className="relative flex items-center gap-3">
-                <span className={`inline-flex h-11 w-11 items-center justify-center rounded-full border border-cyan-100/32 bg-[radial-gradient(circle,rgba(15,23,42,0.99),rgba(2,6,23,0.95))] shadow-[inset_0_1px_0_rgba(255,255,255,0.17),0_0_0_1px_rgba(148,163,184,0.15)] transition duration-300 group-hover:border-cyan-200/48 ${iconAccent[metric.tag]}`}>
+                <span className={`inline-flex h-11 w-11 items-center justify-center rounded-full border bg-[radial-gradient(circle,rgba(15,23,42,0.99),rgba(2,6,23,0.95))] shadow-[inset_0_1px_0_rgba(255,255,255,0.17),0_0_0_1px_rgba(148,163,184,0.15)] transition duration-300 ${iconAccent[metric.tag]}`}>
                   <Icon strokeWidth={2.05} className={`h-[1.24rem] w-[1.24rem] ${metric.accent} transition duration-300 group-hover:brightness-125`} />
                 </span>
                 <p className="text-[0.8rem] font-semibold tracking-[0.2em] text-white/88">{metric.tag}</p>

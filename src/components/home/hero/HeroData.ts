@@ -32,15 +32,15 @@ export const heroMetrics: HeroMetric[] = [
 ];
 
 export const processSteps: ProcessStep[] = [
-  { label: 'Capture', icon: Download, accent: 'text-cyan-100' },
-  { label: 'Route', icon: GitBranch, accent: 'text-indigo-200' },
-  { label: 'Action', icon: Zap, accent: 'text-blue-100' },
-  { label: 'Visibility', icon: Eye, accent: 'text-violet-200' },
+  { label: 'Capture', icon: Download, accent: 'text-[#45DFFF]' },
+  { label: 'Route', icon: GitBranch, accent: 'text-[#8A6CFF]' },
+  { label: 'Action', icon: Zap, accent: 'text-[#58A6FF]' },
+  { label: 'Visibility', icon: Eye, accent: 'text-[#A276FF]' },
 ];
 
 export const impactMetrics: ImpactMetric[] = [
-  { tag: 'TIME', value: '+320 hrs', countTo: 320, prefix: '+', suffix: ' hrs', duration: 2.9, label: 'Admin time saved each month', icon: Gauge, accent: 'text-cyan-200' },
-  { tag: 'SPEED', value: '3.4x', countTo: 3.4, decimals: 1, suffix: 'x', duration: 1.95, label: 'Faster response time on average', icon: Zap, accent: 'text-teal-200' },
-  { tag: 'FOLLOW-UP', value: '+58%', countTo: 58, prefix: '+', suffix: '%', duration: 2.2, label: 'More leads followed up', icon: Activity, accent: 'text-violet-200' },
-  { tag: 'VISIBILITY', value: '100%', countTo: 100, suffix: '%', duration: 2.4, label: 'Visibility across your operations', icon: Eye, accent: 'text-blue-200' },
+  { tag: 'TIME', value: '+320 hrs', countTo: 320, prefix: '+', suffix: ' hrs', duration: 2.9, label: 'Admin time saved each month', icon: Gauge, accent: 'text-[#55CFFF]' },
+  { tag: 'SPEED', value: '3.4x', countTo: 3.4, decimals: 1, suffix: 'x', duration: 1.95, label: 'Faster response time on average', icon: Zap, accent: 'text-[#45F0E0]' },
+  { tag: 'FOLLOW-UP', value: '+58%', countTo: 58, prefix: '+', suffix: '%', duration: 2.2, label: 'More leads followed up', icon: Activity, accent: 'text-[#A276FF]' },
+  { tag: 'VISIBILITY', value: '100%', countTo: 100, suffix: '%', duration: 2.4, label: 'Visibility across your operations', icon: Eye, accent: 'text-[#3E8CFF]' },
 ];
