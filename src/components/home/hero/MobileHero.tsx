@@ -10,7 +10,7 @@ export function MobileHero() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="home-hero" className="relative overflow-hidden border-b border-white/10 bg-[#030917] px-5 pb-9 pt-5 sm:px-6 xl:hidden">
+    <section id="home-hero" className="relative overflow-x-hidden overflow-y-hidden border-b border-white/10 bg-[#030917] px-5 pb-9 pt-5 sm:px-6 xl:hidden">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.06)_1px,transparent_1px)] bg-[size:34px_34px] opacity-30" />
       <motion.div
         aria-hidden

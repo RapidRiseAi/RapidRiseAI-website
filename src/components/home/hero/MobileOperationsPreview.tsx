@@ -24,33 +24,33 @@ export function MobileOperationsPreview() {
       initial={reduceMotion ? undefined : { opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.28 }}
-      className="mt-8 rounded-[26px] border border-cyan-400/45 bg-[linear-gradient(180deg,#071320_0%,#081524_55%,#081726_100%)] p-5 shadow-[0_18px_55px_rgba(2,6,23,0.7),0_0_26px_rgba(14,116,255,0.22)]"
+      className="mt-8 w-full max-w-full rounded-[27px] border border-cyan-400/45 bg-[linear-gradient(180deg,#071320_0%,#081524_55%,#081726_100%)] p-5 pb-6 shadow-[0_18px_55px_rgba(2,6,23,0.7),0_0_26px_rgba(14,116,255,0.22)]"
     >
       <p className="text-[12px] font-semibold tracking-[0.2em] text-white/86">OPERATIONS PREVIEW</p>
 
-      <div className="relative mt-5 grid grid-cols-3 rounded-xl border border-white/12 bg-[linear-gradient(180deg,rgba(9,19,36,0.94)_0%,rgba(6,14,28,0.86)_100%)] px-1 py-3 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
-        <span className="pointer-events-none absolute left-1/3 top-1/2 h-[60%] w-px -translate-y-1/2 bg-[linear-gradient(180deg,transparent,rgba(148,163,184,0.38),transparent)]" />
-        <span className="pointer-events-none absolute left-2/3 top-1/2 h-[60%] w-px -translate-y-1/2 bg-[linear-gradient(180deg,transparent,rgba(148,163,184,0.38),transparent)]" />
+      <div className="relative mt-5 grid min-h-[114px] grid-cols-3 items-center rounded-[16px] border border-white/12 bg-[linear-gradient(180deg,rgba(9,19,36,0.94)_0%,rgba(6,14,28,0.86)_100%)] px-2 py-3 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+        <span className="pointer-events-none absolute left-1/3 top-1/2 h-[58%] w-px -translate-y-1/2 bg-[linear-gradient(180deg,transparent,rgba(150,190,245,0.18)_18%,rgba(155,220,255,0.36)_50%,rgba(150,190,245,0.18)_82%,transparent)]" />
+        <span className="pointer-events-none absolute left-2/3 top-1/2 h-[58%] w-px -translate-y-1/2 bg-[linear-gradient(180deg,transparent,rgba(150,190,245,0.18)_18%,rgba(155,220,255,0.36)_50%,rgba(150,190,245,0.18)_82%,transparent)]" />
         {heroMetrics.map((metric) => (
-          <div key={metric.label} className="px-1.5">
-            <p className={`text-[2.05rem] font-semibold leading-none tracking-[-0.035em] text-white ${metric.accent ?? ''}`}>
+          <div key={metric.label} className="min-w-0 px-1">
+            <p className={`inline-flex items-baseline justify-center gap-1 whitespace-nowrap text-[2rem] font-semibold leading-none tracking-[-0.035em] text-white max-[359px]:text-[1.82rem] ${metric.accent ?? ''}`}>
               {metric.suffix === ' min' ? (
                 <>
                   <AnimatedCount value={metric.countTo} decimals={metric.decimals} duration={metric.duration} />
-                  <span className="ml-1 text-[0.58em] font-medium">min</span>
+                  <span className="text-[0.57em] font-medium max-[359px]:text-[0.54em]">min</span>
                 </>
               ) : (
                 <AnimatedCount value={metric.countTo} decimals={metric.decimals} suffix={metric.suffix} duration={metric.duration} />
               )}
             </p>
-            <p className="mt-1 text-[0.76rem] text-slate-300">{metric.label}</p>
+            <p className="mx-auto mt-1 max-w-[90%] text-[0.75rem] leading-[1.2] text-slate-300 max-[359px]:text-[0.69rem]">{metric.label}</p>
           </div>
         ))}
       </div>
 
-      <div className="relative mt-5 h-[184px] overflow-hidden rounded-[16px] border border-cyan-200/20 bg-[linear-gradient(180deg,#050a14_0%,rgba(4,10,22,0.98)_48%,rgba(2,7,18,0.99)_100%)]">
+      <div className="operations-graph-panel relative mt-6 flex min-h-[152px] items-center justify-center overflow-hidden rounded-[18px] border border-cyan-200/20 bg-[linear-gradient(180deg,#050a14_0%,rgba(4,10,22,0.98)_48%,rgba(2,7,18,0.99)_100%)] px-3 py-3 max-[359px]:min-h-[142px]">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_44%,rgba(38,190,255,0.18),transparent_42%),radial-gradient(circle_at_50%_50%,rgba(69,223,255,0.26),transparent_34%),radial-gradient(circle_at_80%_42%,rgba(46,140,255,0.2),transparent_36%)]" />
-        <svg viewBox="0 0 900 245" className="absolute inset-0 h-full w-full" preserveAspectRatio="none" aria-hidden>
+        <svg viewBox="0 0 900 245" className="mobile-graph-svg relative z-[1] block w-full max-w-full" preserveAspectRatio="xMidYMid meet" aria-hidden>
           <defs>
             <linearGradient id="signal-line-mobile" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="#32DFFF" />
@@ -143,19 +143,17 @@ export function MobileOperationsPreview() {
         </svg>
       </div>
 
-      <div className="mt-5 grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-center gap-1.5 text-center">
+      <div className="mt-6 grid grid-cols-4 gap-2 text-center">
         {processSteps.map((step, index) => {
           const Icon = step.icon;
           const accentRing = ['border-[rgba(69,223,255,0.42)]', 'border-[rgba(138,108,255,0.42)]', 'border-[rgba(88,166,255,0.44)]', 'border-[rgba(162,118,255,0.44)]'][index];
           return (
-            <div key={step.label} className="contents">
-              <div className="group">
-                <span className={`mx-auto inline-flex h-10 w-10 items-center justify-center rounded-full border ${accentRing} bg-[radial-gradient(circle,rgba(15,23,42,0.98),rgba(2,6,23,0.95))] transition duration-300 group-hover:border-cyan-300/52 group-hover:shadow-[0_0_12px_rgba(34,211,238,0.24)]`}>
+            <div key={step.label} className="group relative min-w-0">
+              <span className={`mx-auto inline-flex h-[42px] w-[42px] items-center justify-center rounded-full border ${accentRing} bg-[radial-gradient(circle,rgba(15,23,42,0.98),rgba(2,6,23,0.95))] transition duration-300 group-hover:border-cyan-300/52 group-hover:shadow-[0_0_12px_rgba(34,211,238,0.24)]`}>
                   <Icon className={`h-[18px] w-[18px] ${step.accent} transition duration-300 group-hover:brightness-125`} />
-                </span>
-                <p className="mt-1.5 text-[0.74rem] text-slate-300">{step.label}</p>
-              </div>
-              {index < processSteps.length - 1 ? <span className="text-[0.82rem] text-white/42">→</span> : null}
+              </span>
+              <p className="mt-1.5 text-[0.73rem] leading-[1.15] text-slate-300">{step.label}</p>
+              {index < processSteps.length - 1 ? <span className="pointer-events-none absolute -right-[9px] top-[14px] text-[0.75rem] text-white/38">→</span> : null}
             </div>
           );
         })}

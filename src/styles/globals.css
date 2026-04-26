@@ -153,6 +153,17 @@ body.mobile-view #mobile-sticky-cta-bar {
   iframe[title*='botpress' i] {
     z-index: 130 !important;
   }
+
+  .operations-graph-panel .mobile-graph-svg {
+    width: 100%;
+    height: auto;
+    max-height: 154px;
+    display: block;
+  }
+
+  .operations-graph-panel {
+    max-height: 186px;
+  }
 }
 
 @media (max-width: 640px) {
