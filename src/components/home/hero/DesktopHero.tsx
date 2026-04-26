@@ -22,7 +22,7 @@ export function DesktopHero() {
       <div className="pointer-events-none absolute -bottom-32 right-[18%] h-72 w-96 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(56,189,248,0.25),transparent_72%)] blur-2xl" />
 
       <div className="relative mx-auto max-w-[1520px] px-8 2xl:px-12">
-        <div className="grid grid-cols-[minmax(500px,0.8fr)_minmax(790px,1.2fr)] items-start gap-14">
+        <div className="grid grid-cols-[minmax(560px,0.9fr)_minmax(820px,1.1fr)] items-start gap-12">
           <div className="min-w-0 pt-8">
             <motion.p initial={reduceMotion ? undefined : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className="text-sm font-semibold tracking-[0.24em] text-cyan-300">
               {heroCopy.eyebrow}
@@ -32,22 +32,24 @@ export function DesktopHero() {
               initial={reduceMotion ? undefined : { opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.05 }}
-              className="mt-5 max-w-[700px] text-[clamp(3.6rem,5.2vw,6.4rem)] font-semibold leading-[0.93] tracking-[-0.048em] text-white"
+              className="mt-5 max-w-[760px] text-[clamp(3.35rem,4.8vw,5.8rem)] font-semibold leading-[0.94] tracking-[-0.045em] text-white"
             >
-              {heroCopy.headlineLead}
-              <span className="block bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-400 bg-clip-text text-transparent">{heroCopy.headlineAccent}</span>
+              <span className="block">Manual work is</span>
+              <span className="block">costing you</span>
+              <span className="block bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-400 bg-clip-text text-transparent">leads, time,</span>
+              <span className="block bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-400 bg-clip-text text-transparent">and control.</span>
             </motion.h1>
 
             <motion.p
               initial={reduceMotion ? undefined : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.12 }}
-              className="mt-7 max-w-[600px] text-[1.72rem] leading-[1.38] text-slate-300"
+              className="mt-6 max-w-[560px] text-[1.55rem] leading-[1.42] text-slate-300"
             >
               {heroCopy.body}
             </motion.p>
 
-            <motion.div initial={reduceMotion ? undefined : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, delay: 0.2 }} className="mt-9 flex items-center gap-4">
+            <motion.div initial={reduceMotion ? undefined : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, delay: 0.2 }} className="mt-8 flex items-center gap-4">
               <Link
                 href={heroCopy.primaryCta.href}
                 className="group inline-flex min-h-[64px] min-w-[252px] items-center justify-center gap-2 rounded-2xl border border-blue-400/55 bg-gradient-to-r from-blue-500 to-blue-600 px-8 text-[1.7rem] font-medium text-white shadow-[0_0_35px_rgba(37,99,235,0.35)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_50px_rgba(37,99,235,0.5)]"
@@ -63,7 +65,7 @@ export function DesktopHero() {
               </Link>
             </motion.div>
 
-            <div className="mt-9 grid grid-cols-4 gap-3 border-y border-white/10 bg-white/[0.015] px-2 py-4">
+            <div className="mt-8 grid grid-cols-4 gap-2 border-y border-white/10 bg-white/[0.015] px-2 py-4">
               {trustItems.map((item, index) => {
                 const Icon = item.icon;
                 return (
@@ -77,7 +79,7 @@ export function DesktopHero() {
                     <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-slate-900/70 transition duration-300 group-hover:border-cyan-300/40 group-hover:shadow-[0_0_16px_rgba(34,211,238,0.2)]">
                       <Icon className={`h-5 w-5 ${item.accent} transition duration-300 group-hover:brightness-125`} />
                     </span>
-                    <span className="text-[1.16rem] leading-tight text-slate-300">{item.label}</span>
+                    <span className="text-[1rem] leading-tight text-slate-300">{item.label}</span>
                     {index < trustItems.length - 1 ? <span className="ml-auto h-10 w-px bg-white/15" /> : null}
                   </motion.div>
                 );
