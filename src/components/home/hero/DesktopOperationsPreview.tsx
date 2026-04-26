@@ -6,7 +6,7 @@ import { AnimatedCount } from './AnimatedCount';
 import { heroMetrics, processSteps } from './HeroData';
 
 const signalPath =
-  'M0 182 C66 174, 110 210, 156 191 C206 170, 250 194, 298 116 C344 50, 388 108, 438 121 C486 134, 542 122, 602 138 C656 152, 710 145, 768 110 C812 84, 856 86, 900 94';
+  'M0 168 C58 160, 88 186, 138 176 C194 162, 214 110, 248 96 C288 80, 310 108, 350 110 C394 112, 426 104, 474 118 C526 132, 560 112, 612 94 C654 80, 690 86, 730 84 C772 82, 816 64, 860 58 C880 56, 892 58, 900 60';
 const signalNodes = [
   { x: 156, y: 191 },
   { x: 298, y: 116 },
@@ -38,8 +38,8 @@ export function DesktopOperationsPreview() {
         className="pointer-events-none absolute inset-2 rounded-[26px] opacity-75 transition duration-500"
         style={{ background: `radial-gradient(circle at ${spotlight.x}% ${spotlight.y}%, rgba(56,189,248,0.22), rgba(2,6,23,0) 46%)` }}
       />
-      <div className="pointer-events-none absolute left-1/2 top-[calc(100%+6px)] h-12 w-[32%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(69,216,255,0.32),rgba(46,130,255,0.16)_36%,transparent_68%)] blur-[14px]" />
-      <div className="pointer-events-none absolute left-1/2 top-[calc(100%-20px)] h-10 w-[14%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(69,216,255,0.22),transparent_72%)] blur-[9px]" />
+      <div className="pointer-events-none absolute left-1/2 top-[calc(100%+2px)] h-12 w-[30%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(46,140,255,0.44),rgba(19,123,255,0.24)_24%,rgba(12,58,168,0.11)_45%,transparent_72%)] blur-[16px]" />
+      <div className="pointer-events-none absolute left-1/2 top-[calc(100%-18px)] h-10 w-[13%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(69,216,255,0.2),transparent_72%)] blur-[9px]" />
       <div className="pointer-events-none absolute left-1/2 top-[74%] h-40 w-[66%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(20,112,230,0.2),transparent_72%)] blur-2xl" />
 
       <p className="relative text-sm font-semibold tracking-[0.24em] text-slate-100/88">OPERATIONS PREVIEW</p>
@@ -65,9 +65,9 @@ export function DesktopOperationsPreview() {
         ))}
       </div>
 
-      <div className="relative mt-9 h-[280px] overflow-hidden rounded-[19px] border border-cyan-200/18 bg-[linear-gradient(180deg,rgba(3,8,20,0.99)_0%,rgba(4,10,24,0.98)_48%,rgba(2,7,18,0.99)_100%)] shadow-[inset_0_1px_0_rgba(191,219,254,0.06)]">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_20%_58%,rgba(30,64,175,0.2),transparent_54%),radial-gradient(ellipse_at_52%_56%,rgba(34,211,238,0.24),transparent_46%),radial-gradient(ellipse_at_82%_26%,rgba(37,99,235,0.2),transparent_44%),linear-gradient(90deg,rgba(1,4,14,0.4),transparent_28%,transparent_72%,rgba(1,4,14,0.42))]" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_52%_56%,rgba(34,211,238,0.12),transparent_36%),radial-gradient(ellipse_at_52%_56%,rgba(59,130,246,0.1),transparent_58%)]" />
+      <div className="relative mt-9 h-[280px] overflow-hidden rounded-[19px] border border-cyan-200/20 bg-[linear-gradient(180deg,#050a14_0%,rgba(4,10,22,0.98)_48%,rgba(2,7,18,0.99)_100%)] shadow-[inset_0_1px_0_rgba(191,219,254,0.08)]">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_45%,rgba(38,190,255,0.18),transparent_42%),radial-gradient(circle_at_48%_50%,rgba(69,223,255,0.28),transparent_32%),radial-gradient(circle_at_78%_42%,rgba(46,140,255,0.18),transparent_36%),linear-gradient(180deg,rgba(3,7,14,0.2),rgba(1,4,10,0.55))]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_52%_56%,rgba(69,223,255,0.14),transparent_30%),radial-gradient(ellipse_at_50%_56%,rgba(46,140,255,0.12),transparent_52%)]" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-[linear-gradient(180deg,transparent,rgba(2,8,22,0.72))]" />
         <svg viewBox="0 0 900 245" className="absolute inset-0 h-full w-full" aria-hidden>
           <defs>
@@ -90,7 +90,7 @@ export function DesktopOperationsPreview() {
           <motion.path
             d={signalPath}
             stroke="url(#signal-line-desktop)"
-            strokeWidth="2.75"
+            strokeWidth="2.85"
             fill="none"
             strokeLinecap="round"
             className="opacity-[0.98]"
@@ -100,8 +100,8 @@ export function DesktopOperationsPreview() {
           />
           <motion.path
             d={signalPath}
-            stroke="rgba(56,189,248,0.28)"
-            strokeWidth="6.2"
+            stroke="rgba(56,189,248,0.3)"
+            strokeWidth="7"
             fill="none"
             strokeLinecap="round"
             className="blur-[2.4px]"
@@ -113,7 +113,7 @@ export function DesktopOperationsPreview() {
             <motion.path
               d={signalPath}
               stroke="url(#signal-line-live-desktop)"
-              strokeWidth="8.2"
+              strokeWidth="8.6"
               fill="none"
               strokeLinecap="round"
               strokeDasharray="300 1380"
@@ -127,7 +127,7 @@ export function DesktopOperationsPreview() {
             <motion.path
               d={signalPath}
               stroke="url(#signal-line-live-desktop)"
-              strokeWidth="7.2"
+              strokeWidth="7.8"
               fill="none"
               strokeLinecap="round"
               strokeDasharray="240 1440"
@@ -161,9 +161,21 @@ export function DesktopOperationsPreview() {
 
         {!reduceMotion ? <motion.div className="pointer-events-none absolute top-0 h-full w-10 bg-gradient-to-r from-transparent via-cyan-100/28 to-transparent blur-[6px]" initial={{ opacity: 0 }} animate={{ opacity: 1, x: ['-14%', '108%'] }} transition={{ opacity: { duration: 0.35, delay: 1.55 }, x: { duration: 6.05, repeat: Infinity, ease: 'linear' } }} /> : null}
 
-        <div className="absolute left-1/2 top-[56%] h-[7.1rem] w-[7.1rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/46 bg-cyan-400/14 shadow-[0_0_36px_rgba(56,189,248,0.32)]" />
         <motion.div
-          className="absolute left-1/2 top-[56%] h-[9.4rem] w-[9.4rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/26"
+          className="absolute left-1/2 top-[56%] h-[7.4rem] w-[7.4rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(169,246,255,0.22),rgba(46,140,255,0.07),transparent_72%)] shadow-[0_0_38px_rgba(56,189,248,0.34)]"
+          animate={reduceMotion ? undefined : { opacity: [0.28, 0.56, 0.28], scale: [0.96, 1.04, 0.96] }}
+          transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <div className="absolute left-1/2 top-[56%] h-[6.7rem] w-[6.7rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/48 bg-[radial-gradient(circle,rgba(103,232,255,0.2),rgba(46,140,255,0.06),transparent_70%)]" />
+        <div className="pointer-events-none absolute left-1/2 top-[56%] h-[6.7rem] w-[6.7rem] -translate-x-1/2 -translate-y-1/2 rounded-full">
+          <span className="absolute inset-[18%] rounded-full border border-cyan-200/28" />
+          <span className="absolute left-[8%] right-[8%] top-1/2 h-px -translate-y-1/2 bg-cyan-200/22" />
+          <span className="absolute left-1/2 top-[8%] bottom-[8%] w-px -translate-x-1/2 bg-cyan-200/18" />
+          <span className="absolute inset-x-[14%] top-[31%] h-px bg-cyan-200/14" />
+          <span className="absolute inset-x-[14%] bottom-[31%] h-px bg-cyan-200/14" />
+        </div>
+        <motion.div
+          className="absolute left-1/2 top-[56%] h-[9.8rem] w-[9.8rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/26"
           animate={reduceMotion ? undefined : { scale: [1, 1.05, 1], opacity: [0.34, 0.14, 0.34] }}
           transition={{ duration: 4.1, repeat: Infinity, ease: 'easeInOut' }}
         />
@@ -173,7 +185,7 @@ export function DesktopOperationsPreview() {
           transition={{ duration: 6.8, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
-          className="absolute left-1/2 top-[56%] h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-50 shadow-[0_0_24px_rgba(34,211,238,0.96)]"
+          className="absolute left-1/2 top-[56%] h-[0.9rem] w-[0.9rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#A9F6FF] shadow-[0_0_28px_rgba(34,211,238,0.98)]"
           animate={reduceMotion ? undefined : { scale: [1, 1.14, 1], opacity: [0.95, 1, 0.95] }}
           transition={{ duration: 4.1, repeat: Infinity, ease: 'easeInOut' }}
         />
