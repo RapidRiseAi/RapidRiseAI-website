@@ -11,15 +11,21 @@ export function DesktopHero() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="relative hidden overflow-hidden border-b border-white/10 bg-[#030916] pb-15 pt-14 xl:block">
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.07)_1px,transparent_1px)] bg-[size:48px_48px] opacity-30" />
+    <section className="relative hidden overflow-hidden border-b border-white/10 bg-[linear-gradient(115deg,#040814_0%,#06101c_44%,#071425_100%)] pb-15 pt-14 xl:block">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(2,6,14,0.94)_0%,rgba(4,9,18,0.72)_52%,transparent_100%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_25%_18%,rgba(148,163,184,0.12),transparent_52%),radial-gradient(circle_at_72%_22%,rgba(51,65,85,0.16),transparent_56%)] opacity-35" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(70,120,210,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(70,120,210,0.12)_1px,transparent_1px)] bg-[size:50px_50px] opacity-[0.22]" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-[56%] bg-[linear-gradient(90deg,rgba(8,20,38,0.38),rgba(8,20,38,0.14),transparent_78%)]" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-[52%] bg-[linear-gradient(270deg,rgba(14,60,145,0.22),rgba(10,34,80,0.08),transparent_76%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_28%_44%,rgba(56,189,248,0.1),transparent_58%),radial-gradient(ellipse_at_76%_42%,rgba(37,99,235,0.14),transparent_56%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_56%,rgba(2,6,23,0.46)_100%)]" />
       <motion.div
         aria-hidden
         animate={reduceMotion ? undefined : { opacity: [0.3, 0.45, 0.3], x: [0, 20, 0] }}
         transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
-        className="pointer-events-none absolute right-[-15%] top-[10%] h-[660px] w-[660px] rounded-full bg-[radial-gradient(circle,rgba(37,99,235,0.32),transparent_68%)]"
+        className="pointer-events-none absolute right-[-15%] top-[10%] h-[660px] w-[660px] rounded-full bg-[radial-gradient(circle,rgba(37,99,235,0.22),transparent_70%)]"
       />
-      <div className="pointer-events-none absolute -bottom-32 right-[18%] h-72 w-96 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(56,189,248,0.2),transparent_72%)] blur-2xl" />
+      <div className="pointer-events-none absolute -bottom-32 right-[18%] h-72 w-96 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(56,189,248,0.14),transparent_74%)] blur-2xl" />
 
       <div className="relative mx-auto max-w-[1520px] px-8 2xl:px-12">
         <div className="grid grid-cols-[minmax(590px,0.95fr)_minmax(790px,1.05fr)] items-start gap-9">
