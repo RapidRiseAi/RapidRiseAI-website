@@ -36,8 +36,8 @@ export function DesktopHero() {
             >
               <span className="block whitespace-nowrap">Manual work is</span>
               <span className="block whitespace-nowrap">costing you</span>
-              <span className="block whitespace-nowrap bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-400 bg-clip-text text-transparent">leads, time,</span>
-              <span className="block whitespace-nowrap bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-400 bg-clip-text text-transparent">and control.</span>
+              <span className="block whitespace-nowrap bg-gradient-to-r from-[#66dfff] via-[#49d6ff] to-[#2e84ff] bg-clip-text text-transparent">leads, time,</span>
+              <span className="block whitespace-nowrap bg-gradient-to-r from-[#66dfff] via-[#49d6ff] to-[#2e84ff] bg-clip-text text-transparent">and control.</span>
             </motion.h1>
 
             <motion.p
@@ -77,7 +77,7 @@ export function DesktopHero() {
                     className="group flex items-center gap-3 px-2 py-1.5 transition duration-300 hover:-translate-y-0.5"
                   >
                     <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cyan-200/20 bg-[radial-gradient(circle,rgba(15,23,42,0.96),rgba(2,6,23,0.92))] shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_0_0_1px_rgba(125,211,252,0.07)] transition duration-300 group-hover:border-cyan-300/40 group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_0_16px_rgba(34,211,238,0.2)]">
-                      <Icon className={`h-[1.08rem] w-[1.08rem] ${item.accent} transition duration-300 group-hover:brightness-125`} />
+                      <Icon strokeWidth={2.05} className={`h-[1.08rem] w-[1.08rem] ${item.accent} transition duration-300 group-hover:brightness-125`} />
                     </span>
                     <span className="text-[1rem] leading-tight text-slate-300">{item.label}</span>
                     {index < trustItems.length - 1 ? <span className="ml-auto h-9 w-px bg-cyan-100/14" /> : null}
