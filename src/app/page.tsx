@@ -20,7 +20,7 @@ import { BentoGrid, Container as SystemContainer, SectionHeader, SectionShell, S
 import { FeatureCard, MetricCard, VisualCard } from '@/components/system/cards';
 import { DrawLine, MotionConnector, PulseDot, RevealOnScroll } from '@/components/system/motion';
 import { systemIcons } from '@/components/system/icons';
-import { CommandCenterHero } from '@/components/command-center-hero';
+import { HomeHero } from '@/components/home/hero/HomeHero';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Rapid Rise AI | AI Automation and Education',
@@ -65,7 +65,7 @@ const flagshipSystems = [
 export default function HomePage() {
   return (
     <>
-      <CommandCenterHero />
+      <HomeHero />
       <SectionShell className="overflow-hidden border-b border-border-subtle">
         <SystemLinePattern />
         <RadialGlow />
