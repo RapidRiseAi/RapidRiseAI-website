@@ -37,7 +37,8 @@ export function DesktopOperationsPreview() {
         className="pointer-events-none absolute inset-2 rounded-[26px] opacity-75 transition duration-500"
         style={{ background: `radial-gradient(circle at ${spotlight.x}% ${spotlight.y}%, rgba(56,189,248,0.22), rgba(2,6,23,0) 46%)` }}
       />
-      <div className="pointer-events-none absolute left-1/2 top-[calc(100%+9px)] h-14 w-[42%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(69,216,255,0.34),rgba(46,140,255,0.18)_38%,transparent_72%)] blur-[18px]" />
+      <div className="pointer-events-none absolute left-1/2 top-[calc(100%+9px)] h-14 w-[39%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(69,216,255,0.34),rgba(46,140,255,0.18)_36%,transparent_70%)] blur-[16px]" />
+      <div className="pointer-events-none absolute left-1/2 top-[calc(100%-22px)] h-10 w-[18%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(69,216,255,0.2),transparent_72%)] blur-[10px]" />
       <div className="pointer-events-none absolute left-1/2 top-[74%] h-40 w-[66%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(20,112,230,0.2),transparent_72%)] blur-2xl" />
 
       <p className="relative text-sm font-semibold tracking-[0.24em] text-white/85">OPERATIONS PREVIEW</p>
@@ -120,6 +121,20 @@ export function DesktopOperationsPreview() {
               transition={{ opacity: { duration: 0.35, delay: 1.55 }, strokeDashoffset: { duration: 6.05, repeat: Infinity, ease: 'linear' } }}
             />
           ) : null}
+          {!reduceMotion ? (
+            <motion.path
+              d={signalPath}
+              stroke="url(#signal-line-live-desktop)"
+              strokeWidth="7.6"
+              fill="none"
+              strokeLinecap="round"
+              strokeDasharray="240 1440"
+              className="opacity-70 blur-[1.2px]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.72, strokeDashoffset: [0, -1680] }}
+              transition={{ opacity: { duration: 0.35, delay: 1.55 }, strokeDashoffset: { duration: 6.05, repeat: Infinity, ease: 'linear', delay: -3.02 } }}
+            />
+          ) : null}
           {signalNodes.map((node, i) => (
             <g key={node.x}>
               <motion.circle
@@ -144,7 +159,7 @@ export function DesktopOperationsPreview() {
 
         {!reduceMotion ? <motion.div className="pointer-events-none absolute top-0 h-full w-10 bg-gradient-to-r from-transparent via-cyan-100/28 to-transparent blur-[6px]" initial={{ opacity: 0 }} animate={{ opacity: 1, x: ['-14%', '108%'] }} transition={{ opacity: { duration: 0.35, delay: 1.55 }, x: { duration: 6.05, repeat: Infinity, ease: 'linear' } }} /> : null}
 
-        <div className="absolute left-1/2 top-[56%] h-[6.2rem] w-[6.2rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/38 bg-cyan-400/10 shadow-[0_0_26px_rgba(56,189,248,0.22)]" />
+        <div className="absolute left-1/2 top-[56%] h-[6.5rem] w-[6.5rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/42 bg-cyan-400/12 shadow-[0_0_30px_rgba(56,189,248,0.26)]" />
         <motion.div
           className="absolute left-1/2 top-[56%] h-[8.8rem] w-[8.8rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/24"
           animate={reduceMotion ? undefined : { scale: [1, 1.045, 1], opacity: [0.3, 0.12, 0.3] }}

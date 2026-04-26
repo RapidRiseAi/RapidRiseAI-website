@@ -40,15 +40,15 @@ export function ImpactSnapshotDesktop() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-8% 0px -8% 0px' }}
               transition={{ duration: 0.4, delay: 0.05 * index }}
-              className={`group relative min-h-[180px] overflow-hidden rounded-2xl border p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),inset_0_0_0_1px_rgba(148,163,184,0.05),0_10px_28px_rgba(2,6,23,0.58)] before:pointer-events-none before:absolute before:inset-0 before:opacity-90 before:content-[''] transition duration-300 hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.14),inset_0_0_0_1px_rgba(186,230,253,0.07),0_14px_40px_rgba(2,6,23,0.68)] ${accentShell[metric.tag]} ${accentAtmosphere[metric.tag]}`}
+              className={`group relative min-h-[188px] overflow-hidden rounded-2xl border p-[1.05rem] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),inset_0_0_0_1px_rgba(148,163,184,0.06),0_10px_28px_rgba(2,6,23,0.58)] before:pointer-events-none before:absolute before:inset-0 before:opacity-90 before:content-[''] transition duration-300 hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),inset_0_0_0_1px_rgba(186,230,253,0.08),0_14px_40px_rgba(2,6,23,0.68)] ${accentShell[metric.tag]} ${accentAtmosphere[metric.tag]}`}
             >
               <div className="relative flex items-center gap-3">
-                <span className={`inline-flex h-8.5 w-8.5 items-center justify-center rounded-full border border-cyan-100/26 bg-[radial-gradient(circle,rgba(15,23,42,0.98),rgba(2,6,23,0.94))] shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_0_0_1px_rgba(148,163,184,0.12)] transition duration-300 group-hover:border-cyan-200/42 ${iconAccent[metric.tag]}`}>
+                <span className={`inline-flex h-9 w-9 items-center justify-center rounded-full border border-cyan-100/30 bg-[radial-gradient(circle,rgba(15,23,42,0.98),rgba(2,6,23,0.94))] shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_0_0_1px_rgba(148,163,184,0.14)] transition duration-300 group-hover:border-cyan-200/46 ${iconAccent[metric.tag]}`}>
                   <Icon strokeWidth={2.1} className={`h-[1rem] w-[1rem] ${metric.accent} transition duration-300 group-hover:brightness-125`} />
                 </span>
                 <p className="text-[0.8rem] font-semibold tracking-[0.2em] text-white/88">{metric.tag}</p>
               </div>
-              <p className="relative mt-2.5 text-[2.56rem] font-semibold leading-none tracking-[-0.04em] text-white">
+              <p className="relative mt-2.5 text-[2.62rem] font-semibold leading-none tracking-[-0.04em] text-white">
                 {metric.tag === 'TIME' ? (
                   <>
                     <AnimatedCount value={metric.countTo} prefix="+" duration={metric.duration} />
@@ -58,7 +58,7 @@ export function ImpactSnapshotDesktop() {
                   <AnimatedCount value={metric.countTo} decimals={metric.decimals} prefix={metric.prefix} suffix={metric.suffix} duration={metric.duration} />
                 )}
               </p>
-              <p className="relative mt-1.5 text-[1.08rem] leading-tight text-slate-300">{metric.label}</p>
+              <p className="relative mt-1.5 text-[1.12rem] leading-tight text-slate-300">{metric.label}</p>
             </motion.article>
           );
         })}
