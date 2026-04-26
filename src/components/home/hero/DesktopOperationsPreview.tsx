@@ -29,21 +29,21 @@ export function DesktopOperationsPreview() {
         const rect = event.currentTarget.getBoundingClientRect();
         setSpotlight({ x: ((event.clientX - rect.left) / rect.width) * 100, y: ((event.clientY - rect.top) / rect.height) * 100 });
       }}
-      className="relative rounded-[32px] border border-cyan-400/52 bg-slate-950/60 p-9 shadow-[0_0_0_1px_rgba(59,130,246,0.36),0_34px_110px_rgba(2,6,23,0.94),0_0_84px_rgba(14,116,255,0.32)] backdrop-blur-xl"
+      className="relative rounded-[32px] border border-[rgba(74,176,255,0.42)] bg-[linear-gradient(180deg,rgba(5,11,24,0.96)_0%,rgba(3,9,20,0.95)_100%)] p-9 shadow-[0_0_0_1px_rgba(87,145,255,0.22),0_36px_120px_rgba(2,6,23,0.95),0_0_92px_rgba(19,72,184,0.26),inset_0_1px_0_rgba(191,219,254,0.08)] backdrop-blur-xl"
     >
-      <div className="pointer-events-none absolute inset-0 rounded-[32px] border border-white/10" />
+      <div className="pointer-events-none absolute inset-0 rounded-[32px] border border-white/12" />
       <div
         className="pointer-events-none absolute inset-2 rounded-[26px] opacity-75 transition duration-500"
         style={{ background: `radial-gradient(circle at ${spotlight.x}% ${spotlight.y}%, rgba(56,189,248,0.22), rgba(2,6,23,0) 46%)` }}
       />
-      <div className="pointer-events-none absolute left-1/2 top-[calc(100%+10px)] h-14 w-[46%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(56,189,248,0.36),rgba(14,116,255,0.14)_42%,transparent_72%)] blur-xl" />
-      <div className="pointer-events-none absolute left-1/2 top-[72%] h-44 w-[72%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.22),transparent_72%)] blur-2xl" />
+      <div className="pointer-events-none absolute left-1/2 top-[calc(100%+9px)] h-14 w-[42%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(69,216,255,0.34),rgba(46,140,255,0.18)_38%,transparent_72%)] blur-[18px]" />
+      <div className="pointer-events-none absolute left-1/2 top-[74%] h-40 w-[66%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(20,112,230,0.2),transparent_72%)] blur-2xl" />
 
       <p className="relative text-sm font-semibold tracking-[0.24em] text-white/85">OPERATIONS PREVIEW</p>
 
-      <div className="relative mt-7 grid grid-cols-3 divide-x divide-cyan-200/10 rounded-xl border border-cyan-200/12 bg-[linear-gradient(180deg,rgba(8,17,35,0.82)_0%,rgba(5,11,23,0.72)_100%)] py-5">
-        {heroMetrics.map((metric) => (
-          <div key={metric.label} className="px-4 text-center">
+      <div className="relative mt-7 grid grid-cols-3 rounded-xl border border-cyan-200/14 bg-[linear-gradient(180deg,rgba(8,17,35,0.9)_0%,rgba(4,11,25,0.82)_100%)] py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+        {heroMetrics.map((metric, index) => (
+          <div key={metric.label} className="relative px-4 text-center">
             <p className="text-[4.35rem] font-semibold leading-none tracking-[-0.04em] text-white">
               <span className={metric.accent ?? ''}>
                 {metric.suffix === ' min' ? (
@@ -57,6 +57,7 @@ export function DesktopOperationsPreview() {
               </span>
             </p>
             <p className="mt-2 text-[1.85rem] font-medium text-slate-300">{metric.label}</p>
+            {index < heroMetrics.length - 1 ? <span className="pointer-events-none absolute right-0 top-1/2 h-[60%] w-px -translate-y-1/2 bg-[linear-gradient(180deg,transparent,rgba(148,163,184,0.35),transparent)]" /> : null}
           </div>
         ))}
       </div>
@@ -91,7 +92,7 @@ export function DesktopOperationsPreview() {
             className="opacity-[0.98]"
             initial={reduceMotion ? undefined : { pathLength: 0, opacity: 0.5 }}
             animate={reduceMotion ? undefined : { pathLength: 1, opacity: [0.88, 1, 0.9] }}
-            transition={{ pathLength: { duration: 1.8, delay: 0.45, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 7.2, repeat: Infinity, ease: 'easeInOut' } }}
+            transition={{ pathLength: { duration: 1.55, delay: 0.15, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 7.2, repeat: Infinity, ease: 'easeInOut' } }}
           />
           <motion.path
             d={signalPath}
@@ -102,7 +103,7 @@ export function DesktopOperationsPreview() {
             className="blur-[2.4px]"
             initial={reduceMotion ? undefined : { pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 0.5 }}
-            transition={{ duration: 1.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
           />
           {!reduceMotion ? (
             <motion.path
@@ -111,10 +112,11 @@ export function DesktopOperationsPreview() {
               strokeWidth="8.8"
               fill="none"
               strokeLinecap="round"
-              strokeDasharray="280 1200"
+              strokeDasharray="300 1380"
               className="blur-[1.4px]"
-              animate={{ strokeDashoffset: [0, -1480] }}
-              transition={{ delay: 2.05, duration: 6.2, repeat: Infinity, repeatDelay: 1.15, ease: 'linear' }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, strokeDashoffset: [0, -1680] }}
+              transition={{ opacity: { duration: 0.35, delay: 1.55 }, strokeDashoffset: { duration: 6.05, repeat: Infinity, ease: 'linear' } }}
             />
           ) : null}
           {signalNodes.map((node, i) => (
@@ -125,28 +127,28 @@ export function DesktopOperationsPreview() {
               r="3.8"
               fill="url(#signal-node-core)"
               animate={reduceMotion ? undefined : { opacity: [0.5, 0.84, 1, 0.68, 0.5], scale: [1, 1, 1.15, 1, 1] }}
-              transition={{ duration: 7.35, delay: 2.15 + i * 0.35, repeat: Infinity, repeatDelay: 0.95, ease: 'easeInOut' }}
+              transition={{ duration: 6.1, delay: 1.55 + i * 0.42, repeat: Infinity, ease: 'easeInOut' }}
             />
           ))}
         </svg>
 
-        {!reduceMotion ? <motion.div className="pointer-events-none absolute top-0 h-full w-10 bg-gradient-to-r from-transparent via-cyan-100/26 to-transparent blur-[6px]" animate={{ x: ['-12%', '106%'] }} transition={{ delay: 2.05, duration: 6.2, repeat: Infinity, repeatDelay: 1.15, ease: 'linear' }} /> : null}
+        {!reduceMotion ? <motion.div className="pointer-events-none absolute top-0 h-full w-10 bg-gradient-to-r from-transparent via-cyan-100/28 to-transparent blur-[6px]" initial={{ opacity: 0 }} animate={{ opacity: 1, x: ['-14%', '108%'] }} transition={{ opacity: { duration: 0.35, delay: 1.55 }, x: { duration: 6.05, repeat: Infinity, ease: 'linear' } }} /> : null}
 
         <div className="absolute left-1/2 top-[56%] h-[6.2rem] w-[6.2rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/38 bg-cyan-400/10 shadow-[0_0_26px_rgba(56,189,248,0.22)]" />
         <motion.div
           className="absolute left-1/2 top-[56%] h-[8.8rem] w-[8.8rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/24"
           animate={reduceMotion ? undefined : { scale: [1, 1.045, 1], opacity: [0.3, 0.12, 0.3] }}
-          transition={{ delay: 2.05, duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 4.1, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
           className="absolute left-1/2 top-[56%] h-[11.8rem] w-[11.8rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/14"
           animate={reduceMotion ? undefined : { scale: [1, 1.03, 1], opacity: [0.2, 0.08, 0.2] }}
-          transition={{ delay: 2.05, duration: 6.8, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 6.8, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
           className="absolute left-1/2 top-[56%] h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-50 shadow-[0_0_20px_rgba(34,211,238,0.92)]"
           animate={reduceMotion ? undefined : { scale: [1, 1.12, 1], opacity: [0.95, 1, 0.95] }}
-          transition={{ delay: 2.05, duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 4.1, repeat: Infinity, ease: 'easeInOut' }}
         />
       </div>
 

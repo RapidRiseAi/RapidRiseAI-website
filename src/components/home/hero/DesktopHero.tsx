@@ -52,14 +52,14 @@ export function DesktopHero() {
             <motion.div initial={reduceMotion ? undefined : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, delay: 0.2 }} className="mt-7 flex items-center gap-3.5">
               <Link
                 href={heroCopy.primaryCta.href}
-                className="group inline-flex min-h-[64px] min-w-[252px] items-center justify-center gap-2 rounded-2xl border border-blue-400/55 bg-gradient-to-r from-blue-500 to-blue-600 px-8 text-[1.7rem] font-medium text-white shadow-[0_0_35px_rgba(37,99,235,0.35)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_50px_rgba(37,99,235,0.5)]"
+                className="group inline-flex min-h-[64px] min-w-[252px] items-center justify-center gap-2 rounded-2xl border border-blue-300/60 bg-gradient-to-r from-[#2d7dff] to-[#2f65ff] px-8 text-[1.7rem] font-medium text-white shadow-[0_0_36px_rgba(46,140,255,0.34),inset_0_1px_0_rgba(219,234,254,0.2)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_54px_rgba(46,140,255,0.45),inset_0_1px_0_rgba(219,234,254,0.28)]"
               >
                 {heroCopy.primaryCta.label}
                 <ArrowRight className="h-6 w-6 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
               <Link
                 href={heroCopy.secondaryCta.href}
-                className="group inline-flex min-h-[64px] min-w-[226px] items-center justify-center rounded-2xl border border-white/20 bg-slate-950/55 px-8 text-[1.7rem] font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:border-cyan-300/45 hover:shadow-[0_0_24px_rgba(34,211,238,0.15)]"
+                className="group inline-flex min-h-[64px] min-w-[226px] items-center justify-center rounded-2xl border border-white/22 bg-slate-950/58 px-8 text-[1.7rem] font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition duration-300 hover:-translate-y-0.5 hover:border-cyan-300/45 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_0_24px_rgba(34,211,238,0.15)]"
               >
                 {heroCopy.secondaryCta.label}
               </Link>
