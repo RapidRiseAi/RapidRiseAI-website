@@ -29,10 +29,11 @@ export function DesktopOperationsPreview() {
         const rect = event.currentTarget.getBoundingClientRect();
         setSpotlight({ x: ((event.clientX - rect.left) / rect.width) * 100, y: ((event.clientY - rect.top) / rect.height) * 100 });
       }}
-      className="relative rounded-[32px] border border-[rgba(74,176,255,0.42)] bg-[linear-gradient(180deg,rgba(5,11,24,0.96)_0%,rgba(3,9,20,0.95)_100%)] p-9 shadow-[0_0_0_1px_rgba(87,145,255,0.22),0_36px_120px_rgba(2,6,23,0.95),0_0_92px_rgba(19,72,184,0.26),inset_0_1px_0_rgba(191,219,254,0.08)] backdrop-blur-xl"
+      className="relative rounded-[32px] border border-[rgba(94,162,255,0.32)] bg-[linear-gradient(180deg,#07101c_0%,#081320_54%,#091624_100%)] p-9 shadow-[0_0_0_1px_rgba(84,190,255,0.16),0_34px_112px_rgba(2,6,22,0.94),0_0_82px_rgba(12,61,167,0.2),inset_0_1px_0_rgba(219,234,254,0.08)] backdrop-blur-xl"
     >
-      <div className="pointer-events-none absolute inset-0 rounded-[32px] border border-white/12" />
-      <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/50 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 rounded-[32px] border border-[rgba(84,190,255,0.2)]" />
+      <div className="pointer-events-none absolute inset-x-9 top-0 h-px bg-gradient-to-r from-transparent via-cyan-100/58 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-10 rounded-t-[32px] bg-[linear-gradient(180deg,rgba(56,189,248,0.1),transparent)]" />
       <div
         className="pointer-events-none absolute inset-2 rounded-[26px] opacity-75 transition duration-500"
         style={{ background: `radial-gradient(circle at ${spotlight.x}% ${spotlight.y}%, rgba(56,189,248,0.22), rgba(2,6,23,0) 46%)` }}
@@ -41,9 +42,9 @@ export function DesktopOperationsPreview() {
       <div className="pointer-events-none absolute left-1/2 top-[calc(100%-22px)] h-10 w-[18%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(69,216,255,0.2),transparent_72%)] blur-[10px]" />
       <div className="pointer-events-none absolute left-1/2 top-[74%] h-40 w-[66%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(20,112,230,0.2),transparent_72%)] blur-2xl" />
 
-      <p className="relative text-sm font-semibold tracking-[0.24em] text-white/85">OPERATIONS PREVIEW</p>
+      <p className="relative text-sm font-semibold tracking-[0.24em] text-slate-100/88">OPERATIONS PREVIEW</p>
 
-      <div className="relative mt-7 grid grid-cols-3 rounded-xl border border-cyan-200/14 bg-[linear-gradient(180deg,rgba(8,17,35,0.9)_0%,rgba(4,11,25,0.82)_100%)] py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+      <div className="relative mt-7 grid grid-cols-3 rounded-[17px] border border-[rgba(84,190,255,0.18)] bg-[linear-gradient(180deg,rgba(9,19,36,0.94)_0%,rgba(6,14,28,0.86)_100%)] py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),inset_0_-12px_30px_rgba(2,6,23,0.3)]">
         {heroMetrics.map((metric, index) => (
           <div key={metric.label} className="relative px-4 text-center">
             <p className="text-[4.35rem] font-semibold leading-none tracking-[-0.04em] text-white">
@@ -59,7 +60,7 @@ export function DesktopOperationsPreview() {
               </span>
             </p>
             <p className="mt-2 text-[1.85rem] font-medium text-slate-300">{metric.label}</p>
-            {index < heroMetrics.length - 1 ? <span className="pointer-events-none absolute right-0 top-1/2 h-[60%] w-px -translate-y-1/2 bg-[linear-gradient(180deg,transparent,rgba(148,163,184,0.35),transparent)]" /> : null}
+            {index < heroMetrics.length - 1 ? <span className="pointer-events-none absolute right-0 top-1/2 h-[61%] w-px -translate-y-1/2 bg-[linear-gradient(180deg,transparent,rgba(125,142,176,0.18),rgba(148,163,184,0.48),rgba(125,142,176,0.18),transparent)]" /> : null}
           </div>
         ))}
       </div>
