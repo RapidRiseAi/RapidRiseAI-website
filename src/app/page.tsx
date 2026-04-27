@@ -21,6 +21,7 @@ import { FeatureCard, MetricCard, VisualCard } from '@/components/system/cards';
 import { DrawLine, MotionConnector, PulseDot, RevealOnScroll } from '@/components/system/motion';
 import { systemIcons } from '@/components/system/icons';
 import { HomeHero } from '@/components/home/hero/HomeHero';
+import { BeforeAfterWorkflow } from '@/components/home/before-after-workflow/BeforeAfterWorkflow';
 import { BusinessLeakMap } from '@/components/home/business-leak-map/BusinessLeakMap';
 
 export const metadata: Metadata = buildMetadata({
@@ -67,6 +68,7 @@ export default function HomePage() {
   return (
     <>
       <HomeHero />
+      <BeforeAfterWorkflow />
       <BusinessLeakMap />
       <SectionShell className="overflow-hidden border-b border-border-subtle">
         <SystemLinePattern />
