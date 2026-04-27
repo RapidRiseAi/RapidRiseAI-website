@@ -23,6 +23,7 @@ import { systemIcons } from '@/components/system/icons';
 import { HomeHero } from '@/components/home/hero/HomeHero';
 import { BeforeAfterWorkflow } from '@/components/home/before-after-workflow/BeforeAfterWorkflow';
 import { BusinessLeakMap } from '@/components/home/business-leak-map/BusinessLeakMap';
+import { SystemModuleBentoGrid } from '@/components/home/system-module-bento-grid/SystemModuleBentoGrid';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Rapid Rise AI | AI Automation and Education',
@@ -71,6 +72,7 @@ export default function HomePage() {
       <main className="homepage-shell">
       <BusinessLeakMap />
       <BeforeAfterWorkflow />
+      <SystemModuleBentoGrid />
       <SectionShell className="overflow-hidden border-b border-border-subtle homepage-section">
         <SystemLinePattern />
         <RadialGlow />
