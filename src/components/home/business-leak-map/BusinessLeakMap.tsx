@@ -146,21 +146,23 @@ export function BusinessLeakMap() {
   const hoveredNode = useMemo(() => leakNodes.find((n) => n.id === hovered) ?? null, [hovered]);
 
   return (
-    <section className="relative overflow-hidden border-b border-white/10 bg-[linear-gradient(180deg,#030814_0%,#06101d_65%,#050d18_100%)] px-5 py-18 sm:px-7 lg:px-10">
+    <section className="business-leak-map-section relative overflow-hidden border-y border-white/10 bg-[linear-gradient(180deg,#030816_0%,#04101f_45%,#030814_100%)] px-5 pb-[88px] pt-[80px] scroll-mt-[120px] sm:px-7 lg:px-10 lg:pb-[116px] lg:pt-[118px]">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(3,8,20,0)_0%,rgba(4,10,22,0.72)_38%,rgba(3,8,18,1)_100%)]" />
+      <div className="pointer-events-none absolute left-1/2 top-0 h-px w-[min(900px,86vw)] -translate-x-1/2 bg-[linear-gradient(90deg,transparent,rgba(90,210,255,0.16),transparent)]" />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(60,120,190,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(60,120,190,0.08)_1px,transparent_1px)] bg-[size:52px_52px] opacity-30" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_70%_35%,rgba(30,120,255,0.12),transparent_56%),radial-gradient(ellipse_at_30%_70%,rgba(25,80,180,0.1),transparent_58%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_74%_44%,rgba(30,120,255,0.11),transparent_56%),radial-gradient(ellipse_at_26%_78%,rgba(25,80,180,0.08),transparent_58%)]" />
       <div className="relative mx-auto max-w-[1380px]">
         <motion.p initial={{ opacity: 0, y: 6 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.35 }} className="text-xs font-semibold tracking-[0.24em] text-cyan-300">
           BUSINESS LEAK MAP
         </motion.p>
-        <motion.h2 initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45, delay: 0.04 }} className="mt-3 max-w-[880px] text-[clamp(2.2rem,5.5vw,4.4rem)] font-semibold leading-[0.98] tracking-[-0.03em] text-white">
+        <motion.h2 initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45, delay: 0.04 }} className="mt-4 max-w-[880px] text-[clamp(2.2rem,5.5vw,4.4rem)] font-semibold leading-[0.98] tracking-[-0.03em] text-white">
           Where work leaks out.
         </motion.h2>
-        <motion.p initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45, delay: 0.08 }} className="mt-4 max-w-[760px] text-[clamp(0.98rem,1.45vw,1.24rem)] leading-[1.55] text-slate-300">
+        <motion.p initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45, delay: 0.08 }} className="mt-5 max-w-[760px] text-[clamp(0.98rem,1.45vw,1.24rem)] leading-[1.55] text-slate-300">
           Most businesses do not lose control in one big moment. They lose it through small manual gaps every day.
         </motion.p>
 
-        <div className="mt-10 hidden lg:block">
+        <div className="mt-12 hidden lg:block">
           <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-10% 0px -10% 0px' }} transition={{ duration: 0.55 }} onViewportEnter={() => setSystemActive(true)} className="relative h-[680px] overflow-hidden rounded-[32px] border border-[rgba(90,190,255,0.24)] bg-[linear-gradient(180deg,rgba(8,17,30,0.96),rgba(4,9,18,0.98))] p-8 shadow-[inset_0_0_0_1px_rgba(110,190,255,0.08),0_0_45px_rgba(24,126,255,0.1),0_30px_90px_rgba(0,0,0,0.35)]">
             <p className="pointer-events-none absolute left-1/2 top-[48%] -translate-x-1/2 -translate-y-1/2 text-xs tracking-[0.42em] text-slate-400/30">MANUAL WORKFLOW</p>
             <svg viewBox="0 0 920 560" className="absolute inset-0 h-full w-full" aria-hidden>
@@ -195,7 +197,7 @@ export function BusinessLeakMap() {
           </motion.div>
         </div>
 
-        <div className="mt-8 space-y-3 lg:hidden">
+        <div className="mt-10 space-y-3 lg:hidden">
           <div className="rounded-2xl border border-amber-300/24 bg-amber-950/20 px-4 py-3 text-sm text-amber-100/90">Manual workflow leaks: scattered messages, delayed quotes, forgotten follow-ups, and missing visibility.</div>
           {leakNodes
             .filter((n) => n.id !== 'staff' && n.id !== 'customer')
