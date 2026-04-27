@@ -67,6 +67,7 @@ export default function HomePage() {
   return (
     <>
       <HomeHero />
+      <div className="section-handoff section-handoff--impact-to-leakmap" aria-hidden />
       <BusinessLeakMap />
       <SectionShell className="overflow-hidden border-b border-border-subtle">
         <SystemLinePattern />

@@ -146,9 +146,7 @@ export function BusinessLeakMap() {
   const hoveredNode = useMemo(() => leakNodes.find((n) => n.id === hovered) ?? null, [hovered]);
 
   return (
-    <section className="business-leak-map-section relative overflow-hidden border-y border-white/10 bg-[linear-gradient(180deg,#030816_0%,#04101f_45%,#030814_100%)] px-5 pb-[88px] pt-[80px] scroll-mt-[120px] sm:px-7 lg:px-10 lg:pb-[116px] lg:pt-[118px]">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(3,8,20,0)_0%,rgba(4,10,22,0.72)_38%,rgba(3,8,18,1)_100%)]" />
-      <div className="pointer-events-none absolute left-1/2 top-0 h-px w-[min(900px,86vw)] -translate-x-1/2 bg-[linear-gradient(90deg,transparent,rgba(90,210,255,0.16),transparent)]" />
+    <section className="business-leak-map-section relative overflow-hidden bg-[linear-gradient(180deg,#030815_0%,#04101f_46%,#030814_100%)] px-5 pb-[88px] pt-[26px] scroll-mt-[120px] sm:px-7 lg:px-10 lg:pb-[116px] lg:pt-[34px]">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(60,120,190,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(60,120,190,0.08)_1px,transparent_1px)] bg-[size:52px_52px] opacity-30" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_74%_44%,rgba(30,120,255,0.11),transparent_56%),radial-gradient(ellipse_at_26%_78%,rgba(25,80,180,0.08),transparent_58%)]" />
       <div className="relative mx-auto max-w-[1380px]">

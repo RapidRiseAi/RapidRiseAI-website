@@ -133,6 +133,47 @@ body.mobile-view #mobile-sticky-cta-bar {
   background: color-mix(in srgb, var(--bg-0) 82%, transparent);
 }
 
+.section-handoff--impact-to-leakmap {
+  position: relative;
+  height: clamp(56px, 7vw, 84px);
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(4, 10, 22, 0) 0%, rgba(4, 10, 22, 0.45) 38%, rgba(3, 8, 18, 0.95) 100%),
+    radial-gradient(ellipse at center, rgba(72, 170, 255, 0.1) 0%, rgba(72, 170, 255, 0.04) 22%, rgba(72, 170, 255, 0) 58%);
+}
+
+.section-handoff--impact-to-leakmap::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1100px, 86vw);
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(98, 200, 255, 0.05) 14%, rgba(98, 200, 255, 0.14) 50%, rgba(98, 200, 255, 0.05) 86%, transparent 100%);
+  pointer-events: none;
+}
+
+.section-handoff--impact-to-leakmap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(60, 110, 180, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(60, 110, 180, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.74) 50%, rgba(0, 0, 0, 0.12) 100%);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.business-leak-map-section {
+  position: relative;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(48, 140, 255, 0.07), transparent 36%),
+    linear-gradient(180deg, #030815 0%, #04101f 45%, #030814 100%);
+}
+
 @media (max-width: 767px) {
   body {
     background:
@@ -163,6 +204,20 @@ body.mobile-view #mobile-sticky-cta-bar {
 
   .operations-graph-panel {
     max-height: 186px;
+  }
+
+  .section-handoff--impact-to-leakmap {
+    height: clamp(40px, 11vw, 56px);
+  }
+
+  .section-handoff--impact-to-leakmap::before {
+    top: 12px;
+    width: min(92vw, 760px);
+    background: linear-gradient(90deg, transparent 0%, rgba(98, 200, 255, 0.04) 18%, rgba(98, 200, 255, 0.11) 50%, rgba(98, 200, 255, 0.04) 82%, transparent 100%);
+  }
+
+  .section-handoff--impact-to-leakmap::after {
+    opacity: 0.26;
   }
 }
 
