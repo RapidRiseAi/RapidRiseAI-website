@@ -11,7 +11,7 @@ export function DesktopHero() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="relative hidden overflow-hidden border-b border-white/10 bg-[linear-gradient(114deg,#01050d_0%,#020814_45%,#03101d_100%)] pb-15 pt-14 xl:block">
+    <section className="relative hidden overflow-hidden border-b border-white/10 bg-[linear-gradient(114deg,#01050d_0%,#020814_45%,#03101d_100%)] pb-20 pt-14 xl:block">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(1,4,10,0.99)_0%,rgba(2,6,13,0.9)_58%,transparent_100%)]" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_24%_20%,rgba(148,163,184,0.1),transparent_50%),radial-gradient(circle_at_74%_20%,rgba(51,65,85,0.12),transparent_54%)] opacity-30" />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(38,92,150,0.14)_1px,transparent_1px),linear-gradient(to_bottom,rgba(38,92,150,0.14)_1px,transparent_1px)] bg-[size:50px_50px] opacity-[0.34]" />
