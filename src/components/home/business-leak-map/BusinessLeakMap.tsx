@@ -147,7 +147,6 @@ export function BusinessLeakMap() {
 
   return (
     <section className="business-leak-map-section relative overflow-hidden bg-[linear-gradient(180deg,#030815_0%,#04101f_46%,#030814_100%)] px-5 pb-[88px] pt-[30px] scroll-mt-[120px] sm:px-7 lg:px-10 lg:pb-[116px] lg:pt-[46px]">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-[linear-gradient(180deg,rgba(4,10,22,0.44)_0%,rgba(4,10,22,0.18)_45%,rgba(4,10,22,0)_100%)]" />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(60,120,190,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(60,120,190,0.08)_1px,transparent_1px)] bg-[size:52px_52px] opacity-30" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_74%_44%,rgba(30,120,255,0.11),transparent_56%),radial-gradient(ellipse_at_26%_78%,rgba(25,80,180,0.08),transparent_58%)]" />
       <div className="relative mx-auto max-w-[1380px]">

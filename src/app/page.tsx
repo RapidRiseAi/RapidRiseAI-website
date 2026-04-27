@@ -67,7 +67,6 @@ export default function HomePage() {
   return (
     <>
       <HomeHero />
-      <div aria-hidden className="relative h-6 bg-[linear-gradient(180deg,rgba(3,8,20,0)_0%,rgba(3,8,20,0.48)_100%)] sm:h-7 lg:h-9" />
       <BusinessLeakMap />
       <SectionShell className="overflow-hidden border-b border-border-subtle">
         <SystemLinePattern />
