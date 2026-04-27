@@ -68,9 +68,10 @@ export default function HomePage() {
   return (
     <>
       <HomeHero />
-      <BeforeAfterWorkflow />
+      <main className="homepage-shell">
       <BusinessLeakMap />
-      <SectionShell className="overflow-hidden border-b border-border-subtle">
+      <BeforeAfterWorkflow />
+      <SectionShell className="overflow-hidden border-b border-border-subtle homepage-section">
         <SystemLinePattern />
         <RadialGlow />
         <AnimatedGridBackground />
@@ -122,6 +123,7 @@ export default function HomePage() {
           </BentoGrid>
         </SystemContainer>
       </SectionShell>
+      </main>
 
       <div className="mobile-home md:hidden">
         <Section className="pt-3" label="Trusted by operators" title="Built to perform under pressure" intro="Premium systems engineered for fast moving teams.">

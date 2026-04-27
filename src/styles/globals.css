@@ -135,9 +135,48 @@ body.mobile-view #mobile-sticky-cta-bar {
 
 .business-leak-map-section {
   position: relative;
+  background: transparent;
+}
+
+.homepage-shell {
+  position: relative;
+  min-height: 100%;
+  overflow: hidden;
   background:
-    radial-gradient(circle at 50% 0%, rgba(48, 140, 255, 0.07), transparent 36%),
-    linear-gradient(180deg, #030815 0%, #04101f 45%, #030814 100%);
+    radial-gradient(circle at 72% 8%, rgba(36, 126, 255, 0.12), transparent 34%),
+    radial-gradient(circle at 42% 32%, rgba(69, 223, 255, 0.055), transparent 36%),
+    radial-gradient(circle at 72% 62%, rgba(46, 140, 255, 0.08), transparent 38%),
+    linear-gradient(180deg, #030814 0%, #04101d 42%, #030814 100%);
+}
+
+.homepage-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(70, 120, 190, 0.085) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(70, 120, 190, 0.085) 1px, transparent 1px);
+  background-size: 72px 72px;
+  background-position: 0 0;
+  opacity: 0.55;
+}
+
+.homepage-shell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at center top, rgba(55, 160, 255, 0.08), transparent 42%),
+    linear-gradient(180deg, rgba(3, 8, 20, 0), rgba(3, 8, 20, 0.18));
+}
+
+.homepage-section {
+  position: relative;
+  z-index: 1;
 }
 
 @media (max-width: 767px) {

@@ -69,9 +69,7 @@ export function BeforeAfterWorkflow() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden bg-[linear-gradient(180deg,#030814_0%,#04101c_50%,#030814_100%)] px-5 pb-20 pt-16 sm:px-7 lg:px-10 lg:pb-26 lg:pt-20">
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(60,120,190,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(60,120,190,0.08)_1px,transparent_1px)] bg-[size:52px_52px] opacity-26" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_22%_22%,rgba(30,120,255,0.1),transparent_56%),radial-gradient(ellipse_at_78%_66%,rgba(37,99,235,0.11),transparent_58%)]" />
+    <section className="homepage-section relative overflow-hidden bg-transparent px-5 pb-20 pt-16 sm:px-7 lg:px-10 lg:pb-26 lg:pt-20">
       <div className="relative mx-auto max-w-[1380px]">
         <motion.p initial={{ opacity: 0, y: 6 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4 }} className="text-xs font-semibold tracking-[0.24em] text-cyan-300">
           WORKFLOW TRANSFORMATION
