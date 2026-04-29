@@ -5,6 +5,7 @@ import Script from 'next/script';
 import { BotpressLauncher, CookieBanner, Footer, Header, MobileStickyCtaBar } from '@/components/site-chrome';
 import { MobileDetector } from '@/components/mobile-detector';
 import { buildMetadata, SITE_URL } from '@/lib/seo';
+import { MaintenanceGate } from '@/components/maintenance-gate';
 
 const inter = localFont({
   src: '../..//node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2',
@@ -63,6 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CookieBanner />
         <MobileStickyCtaBar />
         <BotpressLauncher />
+        <MaintenanceGate />
       </body>
     </html>
   );
