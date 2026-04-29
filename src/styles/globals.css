@@ -3,18 +3,38 @@
 @tailwind utilities;
 
 :root {
-  --bg-0: #05070d;
-  --bg-1: #0a1020;
-  --bg-2: #0d1630;
-  --stroke: rgba(255, 255, 255, 0.12);
-  --text-0: #f5f7ff;
-  --text-1: rgba(245, 247, 255, 0.74);
-  --text-2: rgba(245, 247, 255, 0.52);
-  --blue: #2d7cff;
+  --background-primary: #04060b;
+  --background-secondary: #0b111c;
+  --surface-primary: rgba(11, 17, 28, 0.72);
+  --surface-secondary: #131b29;
+  --surface-elevated: #182234;
+  --border-subtle: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.28);
+  --border-blue: rgba(45, 124, 255, 0.72);
+  --text-primary: #f5f7ff;
+  --text-secondary: rgba(245, 247, 255, 0.74);
+  --text-muted: rgba(245, 247, 255, 0.52);
+  --accent-primary: #2d7cff;
+  --accent-secondary: #67d9ff;
+  --accent-success: #22c55e;
+  --accent-warning: #f59e0b;
+  --accent-danger: #ef4444;
+  --glow-blue: rgba(45, 124, 255, 0.35);
+  --glow-cyan: rgba(103, 217, 255, 0.28);
+
+  /* Backward compatibility tokens */
+  --bg-0: var(--background-primary);
+  --bg-1: var(--background-secondary);
+  --bg-2: var(--surface-secondary);
+  --stroke: var(--border-subtle);
+  --text-0: var(--text-primary);
+  --text-1: var(--text-secondary);
+  --text-2: var(--text-muted);
+  --blue: var(--accent-primary);
   --blue-soft: rgba(45, 124, 255, 0.18);
-  --blue-glow: rgba(45, 124, 255, 0.35);
-  --success: #22c55e;
-  --danger: #ef4444;
+  --blue-glow: var(--glow-blue);
+  --success: var(--accent-success);
+  --danger: var(--accent-danger);
 }
 
 * { border-color: var(--stroke); }
@@ -40,6 +60,40 @@ body::before {
 }
 
 main, header, footer { position: relative; z-index: 1; }
+
+
+.text-system-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.text-system-h2 {
+  font-family: var(--font-jakarta);
+  font-size: clamp(1.7rem, 3.2vw, 2.8rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+.text-system-h3 {
+  font-family: var(--font-jakarta);
+  font-size: clamp(1.1rem, 2.4vw, 1.35rem);
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.text-system-body {
+  font-size: clamp(0.96rem, 1.4vw, 1.02rem);
+  line-height: 1.6;
+}
+
+.text-system-micro {
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
 
 body.mobile-view {
   overflow-x: hidden;
@@ -79,6 +133,52 @@ body.mobile-view #mobile-sticky-cta-bar {
   background: color-mix(in srgb, var(--bg-0) 82%, transparent);
 }
 
+.business-leak-map-section {
+  position: relative;
+  background: transparent;
+}
+
+.homepage-shell {
+  position: relative;
+  min-height: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 72% 8%, rgba(36, 126, 255, 0.12), transparent 34%),
+    radial-gradient(circle at 42% 32%, rgba(69, 223, 255, 0.055), transparent 36%),
+    radial-gradient(circle at 72% 62%, rgba(46, 140, 255, 0.08), transparent 38%),
+    linear-gradient(180deg, #030814 0%, #04101d 42%, #030814 100%);
+}
+
+.homepage-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(70, 120, 190, 0.085) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(70, 120, 190, 0.085) 1px, transparent 1px);
+  background-size: 72px 72px;
+  background-position: 0 0;
+  opacity: 0.55;
+}
+
+.homepage-shell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at center top, rgba(55, 160, 255, 0.08), transparent 42%),
+    linear-gradient(180deg, rgba(3, 8, 20, 0), rgba(3, 8, 20, 0.18));
+}
+
+.homepage-section {
+  position: relative;
+  z-index: 1;
+}
+
 @media (max-width: 767px) {
   body {
     background:
@@ -99,6 +199,18 @@ body.mobile-view #mobile-sticky-cta-bar {
   iframe[title*='botpress' i] {
     z-index: 130 !important;
   }
+
+  .operations-graph-panel .mobile-graph-svg {
+    width: 100%;
+    height: auto;
+    max-height: 154px;
+    display: block;
+  }
+
+  .operations-graph-panel {
+    max-height: 186px;
+  }
+
 }
 
 @media (max-width: 640px) {
@@ -254,5 +366,52 @@ body.mobile-view #mobile-sticky-cta-bar {
   .chip {
     @apply inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium;
     background: color-mix(in srgb, var(--bg-1) 80%, transparent);
+  }
+
+  .system-glass-panel {
+    @apply border border-border-subtle;
+    background: linear-gradient(145deg, color-mix(in srgb, var(--surface-primary) 92%, transparent), color-mix(in srgb, var(--surface-secondary) 84%, transparent));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 18px 34px rgba(0, 0, 0, 0.28);
+  }
+  .system-card {
+    @apply rounded-[20px] border border-border-subtle transition duration-300;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--surface-primary) 88%, transparent), color-mix(in srgb, var(--surface-secondary) 88%, transparent));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 12px 24px rgba(0, 0, 0, 0.24);
+  }
+  .system-card:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--border-blue) 72%, white 4%);
+  }
+  .system-border-glow {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 12px 24px rgba(0, 0, 0, 0.24), 0 0 0 1px color-mix(in srgb, var(--border-blue) 55%, transparent), 0 0 24px color-mix(in srgb, var(--glow-blue) 70%, transparent);
+  }
+  .system-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-button px-5 py-3 text-sm font-semibold transition;
+  }
+  .system-btn-primary {
+    background: linear-gradient(135deg, color-mix(in srgb, var(--accent-primary) 94%, white 6%), var(--accent-primary));
+    color: var(--text-primary);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--glow-blue) 64%, transparent);
+  }
+  .system-btn-primary:hover {
+    filter: brightness(1.08);
+  }
+  .system-btn-primary:active {
+    transform: translateY(1px);
+  }
+  .system-btn-secondary {
+    @apply border border-border-subtle text-text-primary;
+    background: color-mix(in srgb, var(--surface-primary) 86%, transparent);
+  }
+  .system-btn-secondary:hover {
+    border-color: color-mix(in srgb, var(--border-blue) 70%, transparent);
+  }
+  .system-btn-ghost {
+    @apply text-text-secondary;
+    background: transparent;
+  }
+  .system-btn-ghost:hover {
+    @apply text-text-primary;
+    background: rgba(255, 255, 255, 0.03);
   }
 }
