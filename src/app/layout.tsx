@@ -58,20 +58,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-[var(--font-inter)] antialiased" data-device="desktop">
         <Script id="mobile-detection" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: mobileDetectionScript }} />
         <MobileDetector />
-        {maintenanceModeEnabled ? (
-          <MaintenanceGate>{children}</MaintenanceGate>
-        ) : (
-          <>
-            <Header />
-            <main>{children}</main>
-            <Script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js" />
-            <Script src="https://files.bpcontent.cloud/2024/12/25/17/20241225175107-YFWHYV0L.js" defer />
-            <Footer />
-            <CookieBanner />
-            <MobileStickyCtaBar />
-            <BotpressLauncher />
-          </>
-        )}
+        <Header />
+        <main>{children}</main>
+        <Script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js" />
+        <Script src="https://files.bpcontent.cloud/2024/12/25/17/20241225175107-YFWHYV0L.js" defer />
+        <Footer />
+        <CookieBanner />
+        <MobileStickyCtaBar />
+        <BotpressLauncher />
+        {maintenanceModeEnabled ? <MaintenanceGate /> : null}
       </body>
     </html>
   );
