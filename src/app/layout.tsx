@@ -51,20 +51,27 @@ const mobileDetectionScript = `
 `;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const maintenanceModeEnabled = process.env.MAINTENANCE_MODE === 'true';
+
   return (
     <html lang="en" className={`${inter.variable} ${jakarta.variable}`}>
       <body className="font-[var(--font-inter)] antialiased" data-device="desktop">
         <Script id="mobile-detection" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: mobileDetectionScript }} />
         <MobileDetector />
-        <Header />
-        <main>{children}</main>
-        <Script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js" />
-        <Script src="https://files.bpcontent.cloud/2024/12/25/17/20241225175107-YFWHYV0L.js" defer />
-        <Footer />
-        <CookieBanner />
-        <MobileStickyCtaBar />
-        <BotpressLauncher />
-        <MaintenanceGate />
+        {maintenanceModeEnabled ? (
+          <MaintenanceGate>{children}</MaintenanceGate>
+        ) : (
+          <>
+            <Header />
+            <main>{children}</main>
+            <Script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js" />
+            <Script src="https://files.bpcontent.cloud/2024/12/25/17/20241225175107-YFWHYV0L.js" defer />
+            <Footer />
+            <CookieBanner />
+            <MobileStickyCtaBar />
+            <BotpressLauncher />
+          </>
+        )}
       </body>
     </html>
   );
