@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { FormEvent, useEffect, useMemo, useState } from 'react';
-import { Activity, CheckCircle2, Clock3, Facebook, Globe, Instagram, Linkedin, Mail, MessageCircle, Phone, ShieldCheck } from 'lucide-react';
+import { Activity, CheckCircle2, Clock3, Facebook, Globe, Instagram, Mail, MessageCircle, Phone, ShieldCheck } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 const STORAGE_KEY = 'rapidrise_admin_access';
@@ -16,9 +16,8 @@ const MAINTENANCE_CONFIG = {
   websiteDisplay: 'rapidriseai.com',
   websiteHref: 'https://rapidriseai.com',
   socials: {
-    facebook: 'https://facebook.com/rapidriseai',
+    facebook: 'https://www.facebook.com/people/Rapid-Rise-AI/61568527494461/',
     instagram: 'https://instagram.com/rapidriseai',
-    linkedin: 'https://linkedin.com/company/rapid-rise-ai',
   },
 };
 
@@ -112,7 +111,7 @@ export function MaintenanceGate() {
 
           <h3 className="mt-8 text-sm font-semibold uppercase tracking-[0.16em] text-slate-200">Connect With Us</h3>
           <div className="mt-3 flex flex-wrap gap-3">
-            {[{ label: 'Facebook', href: MAINTENANCE_CONFIG.socials.facebook, icon: Facebook }, { label: 'Instagram', href: MAINTENANCE_CONFIG.socials.instagram, icon: Instagram }, { label: 'LinkedIn', href: MAINTENANCE_CONFIG.socials.linkedin, icon: Linkedin }].map((social) => (
+            {[{ label: 'Facebook', href: MAINTENANCE_CONFIG.socials.facebook, icon: Facebook }, { label: 'Instagram', href: MAINTENANCE_CONFIG.socials.instagram, icon: Instagram }].map((social) => (
               <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer" aria-label={`Visit Rapid Rise AI on ${social.label}`} className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm transition hover:border-cyan-300/50 hover:bg-cyan-400/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300">
                 <social.icon aria-hidden className="h-4 w-4 text-cyan-300" />{social.label}
               </a>
