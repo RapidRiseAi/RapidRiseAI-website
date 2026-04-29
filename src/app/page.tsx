@@ -5,7 +5,6 @@ import { ArrowRight, Check, Sparkles } from 'lucide-react';
 import { siteContent } from '@/content/siteContent';
 import { Hero, ManualVsSystems, ProofStrip } from '@/components/page-template';
 import { Section } from '@/components/ui/section';
-import { FeatureGrid } from '@/components/ui/feature-grid';
 import { Steps } from '@/components/ui/steps';
 import { FAQAccordion } from '@/components/ui/faq-accordion';
 import { PricingCards } from '@/components/ui/pricing-cards';
@@ -13,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Pill } from '@/components/ui/pill';
 import { MobileSnapCarousel } from '@/components/ui/mobile-snap-carousel';
+import { SystemModuleBentoGrid } from '@/components/ui/system-module-bento-grid';
 import { getWorkProofTypeLabel, workProofProjects } from '@/content/workProof';
 import { workItems } from '@/content/workItems';
 import { buildMetadata } from '@/lib/seo';
@@ -236,18 +236,7 @@ export default function HomePage() {
 
       <div className="hidden md:block">
         <ProofStrip />
-        <Section label="Services" title="What we build" intro="Pick what you need now. Expand later.">
-          <FeatureGrid
-            items={[
-              { title: 'Lead Capture and Follow Up', description: 'Turn enquiries into tracked requests and consistent follow-ups.', href: '/solutions/lead-capture' },
-              { title: 'Workflow Automation and Integrations', description: 'Connect tools, remove repetition, keep work moving.', href: '/solutions/workflow-automation' },
-              { title: 'Smart Google Workspace', description: 'Automate Sheets, Gmail, Drive, Calendar, approvals, and reporting.', href: '/solutions/google-workspace' },
-              { title: 'Web Apps and Internal Tools', description: 'Portals, dashboards, trackers, and lightweight internal systems.', href: '/solutions/web-apps' },
-              { title: 'Websites that Convert', description: 'Clean messaging, strong trust, better capture.', href: '/solutions/websites' },
-              { title: 'Training and Enablement', description: 'Help your team use modern tools properly and safely.', href: '/solutions/training' },
-            ]}
-          />
-        </Section>
+        <SystemModuleBentoGrid />
         <Section label="PROOF" title="Featured proof" intro="A few recent builds and demos.">
           <div className="grid gap-4 md:grid-cols-3">
             {workProofProjects.map((project) => (
