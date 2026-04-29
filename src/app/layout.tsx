@@ -5,6 +5,7 @@ import Script from 'next/script';
 import { BotpressLauncher, CookieBanner, Footer, Header, MobileStickyCtaBar } from '@/components/site-chrome';
 import { MobileDetector } from '@/components/mobile-detector';
 import { buildMetadata, SITE_URL } from '@/lib/seo';
+import { MaintenanceGate } from '@/components/maintenance-gate';
 
 const inter = localFont({
   src: '../..//node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2',
@@ -50,19 +51,25 @@ const mobileDetectionScript = `
 `;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const MAINTENANCE_MODE = true;
+  const maintenanceModeEnabled = MAINTENANCE_MODE || process.env.MAINTENANCE_MODE === 'true' || process.env.NEXT_PUBLIC_MAINTENANCE_MODE === 'true';
+
   return (
     <html lang="en" className={`${inter.variable} ${jakarta.variable}`}>
       <body className="font-[var(--font-inter)] antialiased" data-device="desktop">
         <Script id="mobile-detection" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: mobileDetectionScript }} />
         <MobileDetector />
-        <Header />
-        <main>{children}</main>
-        <Script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js" />
-        <Script src="https://files.bpcontent.cloud/2024/12/25/17/20241225175107-YFWHYV0L.js" defer />
-        <Footer />
-        <CookieBanner />
-        <MobileStickyCtaBar />
-        <BotpressLauncher />
+        <div aria-hidden={maintenanceModeEnabled} inert={maintenanceModeEnabled}>
+          <Header />
+          <main>{children}</main>
+          <Script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js" />
+          <Script src="https://files.bpcontent.cloud/2024/12/25/17/20241225175107-YFWHYV0L.js" defer />
+          <Footer />
+          <CookieBanner />
+          <MobileStickyCtaBar />
+          <BotpressLauncher />
+        </div>
+        {maintenanceModeEnabled ? <MaintenanceGate /> : null}
       </body>
     </html>
   );
