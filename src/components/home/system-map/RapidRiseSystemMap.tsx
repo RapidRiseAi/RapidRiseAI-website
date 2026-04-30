@@ -21,10 +21,10 @@ const routePath = (x: number, y: number) => {
 };
 
 export function RapidRiseSystemMap() {
-  const [activeId, setActiveId] = useState<string>('services');
+  const [activeId, setActiveId] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const active = useMemo(() => systemLocations.find((l) => l.id === activeId) ?? systemLocations[0], [activeId]);
+  const active = useMemo(() => systemLocations.find((l) => l.id === activeId) ?? null, [activeId]);
   const selected = useMemo(() => systemLocations.find((l) => l.id === selectedId) ?? null, [selectedId]);
 
   useEffect(() => {
@@ -48,13 +48,13 @@ export function RapidRiseSystemMap() {
           <div className='pointer-events-none absolute inset-x-[20%] top-[25%] h-[52%] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(52,191,255,0.2),rgba(8,26,53,0)_65%)] blur-2xl' />
           <div className='pointer-events-none absolute inset-x-[18%] top-[36%] h-[32%] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(40,145,255,0.18),rgba(8,26,53,0)_70%)] blur-3xl' />
 
-          <div className='absolute inset-0 origin-center scale-[0.9]' onMouseLeave={() => setActiveId(selectedId ?? 'services')}>
+          <div className='absolute inset-0 origin-center scale-[0.9]' onMouseLeave={() => setActiveId(selectedId)}>
           <svg className='pointer-events-none absolute inset-[8%]' viewBox='0 0 100 100' preserveAspectRatio='none' aria-hidden>
             {systemLocations.map((location) => {
               const highlighted = activeId === location.id || selectedId === location.id;
               return (
                 <g key={location.id}>
-                  {highlighted && <path d={routePath(location.position.x, location.position.y)} stroke='rgba(31,140,255,0.18)' strokeWidth='5.2' fill='none' strokeLinecap='round' />}
+                  {highlighted && <path d={routePath(location.position.x, location.position.y)} stroke='rgba(31,140,255,0.16)' strokeWidth='5.6' fill='none' strokeLinecap='round' />}
                   <path d={routePath(location.position.x, location.position.y)} stroke={highlighted ? 'rgba(83,230,255,0.78)' : 'rgba(83,230,255,0.2)'} strokeWidth={highlighted ? '2.1' : '1.3'} fill='none' strokeLinecap='round' strokeLinejoin='round' />
                 </g>
               );
@@ -79,7 +79,7 @@ export function RapidRiseSystemMap() {
                 onMouseEnter={() => setActiveId(location.id)}
                 onFocus={() => setActiveId(location.id)}
                 onClick={() => setSelectedId(location.id)}
-                className={cn('absolute z-30 -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-[18px] border bg-[linear-gradient(170deg,rgba(8,18,38,0.96),rgba(4,10,22,0.96))] p-2.5 text-left shadow-[0_14px_24px_rgba(0,0,0,0.46)] transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70', sizeClasses[location.size], selectedId && selectedId !== location.id ? 'opacity-65' : 'opacity-100', highlighted ? 'translate-y-[-53%] scale-[1.015] border-cyan-300/80 shadow-[0_0_28px_rgba(83,230,255,0.32)]' : 'border-cyan-300/25 hover:translate-y-[-53%] hover:scale-[1.015] hover:border-cyan-300/65')}
+                className={cn('pointer-events-auto absolute z-30 -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-[18px] border bg-[linear-gradient(170deg,rgba(8,18,38,0.96),rgba(4,10,22,0.96))] p-2.5 text-left shadow-[0_14px_24px_rgba(0,0,0,0.46)] transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70', sizeClasses[location.size], selectedId && selectedId !== location.id ? 'opacity-60' : 'opacity-100', highlighted ? 'translate-y-[-53%] scale-[1.015] border-cyan-300/80 shadow-[0_0_28px_rgba(83,230,255,0.32)]' : 'border-cyan-300/25 hover:translate-y-[-53%] hover:scale-[1.015] hover:border-cyan-300/65')}
                 style={{ left: `${location.position.x}%`, top: `${location.position.y}%` }}
                 aria-label={`Open ${location.title} system details`}
               >
@@ -93,16 +93,17 @@ export function RapidRiseSystemMap() {
           })}
           </div>
 
-          {!selected && <div className='absolute bottom-6 left-6 z-40 w-[272px] rounded-2xl border border-cyan-300/30 bg-slate-950/62 p-3 shadow-[0_10px_24px_rgba(0,0,0,0.42)] backdrop-blur-md'>
+          {!selected && active && <div className='pointer-events-auto absolute bottom-6 left-6 z-40 w-[272px] rounded-2xl border border-cyan-300/30 bg-slate-950/62 p-3 shadow-[0_10px_24px_rgba(0,0,0,0.42)] backdrop-blur-md'>
             <p className='text-[11px] uppercase tracking-[0.16em] text-cyan-200'>System Preview</p>
-            <h3 className='mt-1.5 text-base font-semibold'>{active.title}</h3>
-            <p className='mt-1 text-xs text-slate-300'>{active.description}</p>
-            <ul className='mt-2 list-disc space-y-0.5 pl-4 text-xs text-slate-300'>{active.previewBullets.slice(0, 3).map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>
+            <h3 className='mt-1.5 text-base font-semibold'>{active?.title}</h3>
+            <p className='mt-1 text-xs text-slate-300'>{active?.description}</p>
+            <ul className='mt-2 list-disc space-y-0.5 pl-4 text-xs text-slate-300'>{active?.previewBullets.slice(0, 3).map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>
             <p className='mt-2 text-[10px] uppercase tracking-[0.13em] text-cyan-200/90'>Click to explore</p>
           </div>}
 
           <AnimatePresence>
-          {selected && <motion.aside initial={{ opacity: 0, y: 14, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 12, scale: 0.98 }} transition={{ duration: 0.3 }} className='absolute right-6 top-1/2 z-50 w-[390px] -translate-y-1/2 rounded-[26px] border border-[rgba(83,230,255,0.38)] bg-slate-950/92 p-5 shadow-[0_0_45px_rgba(31,140,255,0.22),0_30px_80px_rgba(0,0,0,0.45)] backdrop-blur-sm'>
+          {selected && <motion.aside initial={{ opacity: 0, y: 14, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 12, scale: 0.98 }} transition={{ duration: 0.3 }} className='pointer-events-auto absolute right-6 top-1/2 z-50 w-[390px] -translate-y-1/2 rounded-[26px] border border-[rgba(83,230,255,0.38)] bg-slate-950/92 p-5 shadow-[0_0_45px_rgba(31,140,255,0.22),0_30px_80px_rgba(0,0,0,0.45)] backdrop-blur-sm'>
+            <p className='text-[10px] uppercase tracking-[0.14em] text-cyan-200/90'>Selected destination</p>
             <div className='flex items-start justify-between gap-2'><h3 className='text-2xl font-semibold'>{selected.title}</h3><button type='button' onClick={() => setSelectedId(null)} className='rounded-full p-1 text-slate-300 hover:bg-slate-800' aria-label='Close detail panel'><X className='h-5 w-5' /></button></div>
             <p className='mt-2 text-sm text-slate-300'>{selected.description}</p>
             <p className='mt-4 text-sm text-slate-300'><span className='text-cyan-200'>Problem: </span>{selected.detail.problem}</p>
