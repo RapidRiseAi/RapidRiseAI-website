@@ -1,63 +1,121 @@
 'use client';
+
 import Link from 'next/link';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { MousePointerClick, X } from 'lucide-react';
-import { systemModules, serviceModules, type ServiceModule, type SystemModule } from './SystemMapData';
-import { ServiceTicker } from './ServiceTicker';
+import { useEffect, useMemo, useState } from 'react';
+import { X } from 'lucide-react';
+import { systemLocations } from './SystemMapData';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { HomeHero } from '@/components/home/hero/HomeHero';
-import { useMemo, useState } from 'react';
 
-const routePath = (m: SystemModule) => `M 50 48 L ${m.position.x} 48 L ${m.position.x} ${m.position.y}`;
+const hub = { x: 50, y: 48 };
+const sizeClasses = {
+  large: 'w-[220px] h-[120px]',
+  medium: 'w-[190px] h-[105px]',
+  small: 'w-[170px] h-[96px]',
+};
 
-export function RapidRiseSystemMapExperience() {
-  const reduceMotion = useReducedMotion();
-  const [active, setActive] = useState<string | null>('services');
-  const [detail, setDetail] = useState<ServiceModule | null>(null);
-  const selected = useMemo(() => systemModules.find((m) => m.id === active), [active]);
+const routePath = (x: number, y: number) => `M ${hub.x} ${hub.y} L ${x} ${hub.y} L ${x} ${y}`;
 
-  return <div className='relative overflow-hidden bg-[#040916] text-white'>
-    <HomeHero />
-    <div className='relative -mt-8'><ServiceTicker /></div>
+export function RapidRiseSystemMap() {
+  const [activeId, setActiveId] = useState<string>('services');
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
-    <section className='relative z-10 mx-auto hidden max-w-[1500px] px-8 pb-28 pt-20 xl:block'>
-      <p className='text-xs font-semibold tracking-[.22em] text-cyan-300'>INTERACTIVE SYSTEM MAP</p>
-      <h2 className='mt-3 text-[clamp(2.4rem,4vw,4.2rem)] font-semibold leading-[.98]'>Navigate your business systems.</h2>
-      <p className='mt-3 max-w-3xl text-lg text-slate-300'>Click any destination to explore the systems, services, and workflows your business needs next.</p>
+  const active = useMemo(() => systemLocations.find((l) => l.id === activeId) ?? systemLocations[0], [activeId]);
+  const selected = useMemo(() => systemLocations.find((l) => l.id === selectedId) ?? null, [selectedId]);
 
-      <div className='relative mt-8 h-[860px] overflow-hidden rounded-[2rem] border border-cyan-300/20 bg-[radial-gradient(circle_at_62%_42%,rgba(33,107,255,.25),transparent_38%),linear-gradient(160deg,#020815,#030b1c_38%,#030a18)] [perspective:1500px]'>
-        <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(2,8,21,.72)_100%)]' />
-        <div className='absolute inset-x-[3%] top-[13%] h-[83%] [transform-style:preserve-3d]'>
-          <div className='absolute inset-0 rounded-[2.5rem] border border-cyan-400/15 bg-[linear-gradient(to_right,rgba(56,189,248,.11)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,.11)_1px,transparent_1px),radial-gradient(circle_at_50%_45%,rgba(56,189,248,.18),transparent_45%)] bg-[size:58px_58px,58px_58px,100%_100%] [transform:rotateX(62deg)_rotateZ(-2deg)_translateY(90px)_scale(1.16)]' />
-          <svg className='pointer-events-none absolute inset-0 [transform:rotateX(62deg)_rotateZ(-2deg)_translateY(92px)_scale(1.16)]' viewBox='0 0 100 100' preserveAspectRatio='none'>
-            {systemModules.map((m) => <path key={m.id} d={routePath(m)} stroke={active===m.id?'rgba(90,235,255,.95)':'rgba(48,145,255,.34)'} strokeWidth={active===m.id?1.15:0.7} fill='none' strokeLinecap='round' />)}
-          </svg>
+  useEffect(() => {
+    const onEscape = (event: KeyboardEvent) => { if (event.key === 'Escape') setSelectedId(null); };
+    window.addEventListener('keydown', onEscape);
+    return () => window.removeEventListener('keydown', onEscape);
+  }, []);
 
-          <div className='absolute left-1/2 top-[48%] h-44 w-44 -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-200/45 bg-[radial-gradient(circle,rgba(56,189,248,.35),rgba(3,18,44,.95))] shadow-[0_0_60px_rgba(56,189,248,.5)]'>
-            <div className='absolute inset-3 animate-pulse rounded-full border border-cyan-200/40' />
-            <div className='absolute inset-8 rounded-full border border-cyan-300/55 bg-cyan-400/10 text-center pt-10 text-sm tracking-[.14em] text-cyan-100'>RAPID RISE AI</div>
-          </div>
-
-          {systemModules.map((m)=>{ const Icon = m.icon; const isActive = active===m.id; return <button key={m.id} onFocus={()=>setActive(m.id)} onMouseEnter={()=>setActive(m.id)} onClick={()=>setActive(m.id)} className={cn('group absolute -translate-x-1/2 -translate-y-1/2 text-left transition focus:outline-none', isActive?'z-30 scale-110':'z-20 hover:scale-105', active && !isActive && !reduceMotion && 'opacity-50')} style={{left:`${m.position.x}%`, top:`${m.position.y}%`}}>
-            <div className={cn('relative h-20 w-28 rounded-[1.2rem] border bg-[linear-gradient(170deg,rgba(9,20,44,.92),rgba(2,8,21,.95))] shadow-[0_14px_24px_rgba(0,0,0,.45),inset_0_1px_0_rgba(255,255,255,.05)]', isActive?'border-cyan-300/70 shadow-[0_0_32px_rgba(56,189,248,.48)]':'border-blue-300/30')}><div className='absolute -bottom-2 left-3 right-3 h-2 rounded-full bg-cyan-400/30 blur-sm' /><Icon className='ml-3 mt-3 h-4 w-4 text-cyan-200'/><div className='absolute right-3 top-3 h-2 w-2 rounded-full bg-cyan-300/80'/></div>
-            <div className='mt-2 w-44 rounded-xl border border-cyan-200/30 bg-slate-950/85 p-2 backdrop-blur-sm'><p className='text-sm font-semibold'>{m.title}</p><p className='text-xs text-slate-300'>{m.description}</p></div>
-          </button>;})}
+  return (
+    <section className='rapid-rise-system-map relative pb-20 pt-10'>
+      <div className='system-map-container mx-auto w-full max-w-[1320px] px-4 md:px-8'>
+        <div className='system-map-header mx-auto max-w-4xl text-center'>
+          <p className='text-xs font-semibold tracking-[0.24em] text-cyan-300'>RAPID RISE SYSTEM MAP</p>
+          <h2 className='mt-3 text-[clamp(2rem,4vw,3.3rem)] font-semibold leading-[1.02]'>Explore the Rapid Rise system.</h2>
+          <p className='mx-auto mt-4 max-w-3xl text-base text-slate-300 md:text-lg'>Choose a business area to see how we connect tools, workflows, dashboards, websites, and follow-ups into one operating layer.</p>
         </div>
 
-        <div className='absolute bottom-6 left-6 rounded-xl border border-cyan-300/20 bg-slate-950/80 p-4 text-sm'><p className='text-xs tracking-[.14em] text-cyan-200'>SYSTEM OVERVIEW</p><p className='mt-3 text-slate-300'>System Status</p><p className='mt-1 inline-flex items-center gap-2 text-emerald-300'><span className='h-2 w-2 rounded-full bg-emerald-400'/>All Systems Operational</p></div>
-        <div className='absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full border border-cyan-300/25 bg-slate-950/85 px-6 py-3 text-slate-200'><span className='inline-flex items-center gap-2'><MousePointerClick className='h-4 w-4 text-cyan-200'/>Click any destination to explore</span></div>
+        <div className='system-map-board relative mt-8 hidden min-h-[690px] overflow-hidden rounded-[34px] border border-cyan-300/20 bg-[radial-gradient(circle_at_50%_45%,rgba(18,101,161,0.2),transparent_42%),linear-gradient(160deg,#030914,#040c1a_40%,#020711)] p-10 shadow-[0_30px_100px_rgba(2,8,30,0.65),0_0_60px_rgba(58,164,255,0.2)] lg:block'>
+          <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_32%,rgba(2,7,17,0.75)_100%)]' />
+          <div className='system-map-floor pointer-events-none absolute inset-[8%] rounded-[28px] border border-cyan-300/15 bg-[linear-gradient(to_right,rgba(84,180,232,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(84,180,232,0.12)_1px,transparent_1px),radial-gradient(circle_at_50%_50%,rgba(83,230,255,0.15),transparent_45%)] bg-[size:58px_58px,58px_58px,100%_100%] [transform:perspective(1300px)_rotateX(58deg)_translateY(80px)_scale(1.06)]' />
+
+          <svg className='pointer-events-none absolute inset-[8%]' viewBox='0 0 100 100' preserveAspectRatio='none' aria-hidden>
+            {systemLocations.map((location) => {
+              const highlighted = activeId === location.id || selectedId === location.id;
+              return (
+                <g key={location.id}>
+                  {highlighted && <path d={routePath(location.position.x, location.position.y)} stroke='rgba(83,230,255,0.32)' strokeWidth='5' fill='none' strokeLinecap='round' />}
+                  <path d={routePath(location.position.x, location.position.y)} stroke={highlighted ? 'rgba(83,230,255,0.72)' : 'rgba(83,230,255,0.18)'} strokeWidth={highlighted ? '3' : '2'} fill='none' strokeLinecap='round' strokeLinejoin='round' />
+                </g>
+              );
+            })}
+          </svg>
+
+          <div className='absolute left-1/2 top-[48%] z-20 h-[170px] w-[170px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-200/65 bg-[radial-gradient(circle,rgba(83,230,255,0.45),rgba(3,12,30,0.95))] shadow-[0_0_50px_rgba(83,230,255,0.42)]'>
+            <div className='absolute inset-3 rounded-full border border-cyan-200/45' />
+            <div className='absolute inset-8 rounded-full border border-cyan-200/40' />
+            <div className='absolute inset-0 flex flex-col items-center justify-center text-center'><p className='text-sm font-semibold tracking-[0.14em] text-cyan-100'>Rapid Rise AI</p><p className='mt-2 px-4 text-[10px] uppercase tracking-[0.12em] text-cyan-200/90'>Capture • Route • Track • Automate • Report</p></div>
+          </div>
+
+          {systemLocations.map((location) => {
+            const Icon = location.icon;
+            const highlighted = activeId === location.id || selectedId === location.id;
+            return (
+              <button
+                key={location.id}
+                type='button'
+                onMouseEnter={() => setActiveId(location.id)}
+                onFocus={() => setActiveId(location.id)}
+                onClick={() => setSelectedId(location.id)}
+                className={cn('absolute z-30 -translate-x-1/2 -translate-y-1/2 rounded-2xl border bg-[linear-gradient(170deg,rgba(8,18,38,0.94),rgba(4,10,22,0.95))] p-3 text-left shadow-[0_15px_25px_rgba(0,0,0,0.45)] transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70', sizeClasses[location.size], highlighted ? '-translate-y-[calc(50%+6px)] border-cyan-300/70 shadow-[0_0_30px_rgba(83,230,255,0.34)]' : 'border-cyan-300/25 hover:-translate-y-[calc(50%+4px)] hover:border-cyan-300/45')}
+                style={{ left: `${location.position.x}%`, top: `${location.position.y}%` }}
+                aria-label={`Open ${location.title} system details`}
+              >
+                <div className='flex items-start justify-between gap-2'><Icon className='h-5 w-5 text-cyan-200' /><span className='rounded-full border border-cyan-300/35 px-2 py-0.5 text-[10px] uppercase tracking-[0.14em] text-cyan-100'>{location.status}</span></div>
+                <p className='mt-2 text-sm font-semibold text-white'>{location.title}</p>
+                <p className='mt-1 text-xs text-slate-300'>{location.description}</p>
+              </button>
+            );
+          })}
+
+          <div className='absolute bottom-6 left-6 z-30 w-[360px] rounded-2xl border border-cyan-300/25 bg-slate-950/80 p-4 backdrop-blur-sm'>
+            <p className='text-[11px] uppercase tracking-[0.16em] text-cyan-200'>System Preview</p>
+            <h3 className='mt-2 text-lg font-semibold'>{active.title}</h3>
+            <p className='mt-1 text-sm text-slate-300'>{active.description}</p>
+            <ul className='mt-3 list-disc space-y-1 pl-5 text-sm text-slate-300'>{active.previewBullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>
+          </div>
+
+          {selected && <aside className='absolute right-6 top-6 z-40 w-[420px] rounded-3xl border border-cyan-300/35 bg-slate-950/85 p-5 shadow-[0_20px_45px_rgba(0,0,0,0.55)] backdrop-blur-sm'>
+            <div className='flex items-start justify-between gap-2'><h3 className='text-2xl font-semibold'>{selected.title}</h3><button type='button' onClick={() => setSelectedId(null)} className='rounded-full p-1 text-slate-300 hover:bg-slate-800' aria-label='Close detail panel'><X className='h-5 w-5' /></button></div>
+            <p className='mt-2 text-sm text-slate-300'>{selected.description}</p>
+            <p className='mt-4 text-sm text-slate-300'><span className='text-cyan-200'>Problem: </span>{selected.detail.problem}</p>
+            <p className='mt-2 text-sm text-slate-300'><span className='text-cyan-200'>Rapid Rise fix: </span>{selected.detail.solution}</p>
+            <ul className='mt-3 list-disc space-y-1 pl-5 text-sm text-slate-200'>{selected.detail.outcomes.map((outcome) => <li key={outcome}>{outcome}</li>)}</ul>
+            <p className='mt-3 text-xs uppercase tracking-[0.14em] text-cyan-100'>{selected.detail.tools.join(' • ')}</p>
+            {selected.id === 'services' && selected.children && <div className='mt-4 rounded-2xl border border-cyan-300/25 bg-slate-900/70 p-3'><p className='text-xs font-semibold uppercase tracking-[0.14em] text-cyan-200'>Service modules</p><ul className='mt-2 space-y-2'>{selected.children.map((service) => <li key={service.id} className='rounded-xl border border-cyan-300/20 bg-slate-950/75 px-3 py-2 text-sm text-slate-200'><p className='font-medium'>{service.title}</p><p className='text-xs text-slate-300'>{service.description}</p></li>)}</ul></div>}
+            <Link href={selected.detail.ctaHref} className='mt-4 inline-flex rounded-xl border border-cyan-300/45 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-100 hover:bg-cyan-400/20'>{selected.detail.ctaLabel ?? 'Request a Quote'}</Link>
+          </aside>}
+        </div>
+
+        <div className='mt-8 space-y-3 lg:hidden'>
+          <div className='rounded-2xl border border-cyan-300/25 bg-slate-950/80 p-4'>
+            <p className='text-xs uppercase tracking-[0.14em] text-cyan-300'>Rapid Rise AI Core</p>
+            <p className='mt-2 text-sm text-slate-300'>Capture • Route • Track • Automate • Report</p>
+          </div>
+          {systemLocations.map((location) => {
+            const Icon = location.icon;
+            return <details key={location.id} className='rounded-2xl border border-cyan-300/25 bg-slate-950/80 p-4'>
+              <summary className='flex cursor-pointer list-none items-center justify-between gap-3'><span className='inline-flex items-center gap-2'><Icon className='h-4 w-4 text-cyan-200' /><span className='font-semibold'>{location.title}</span></span><span className='text-xs text-cyan-100'>{location.status}</span></summary>
+              <p className='mt-2 text-sm text-slate-300'>{location.description}</p>
+              <ul className='mt-2 list-disc space-y-1 pl-5 text-sm text-slate-300'>{location.previewBullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>
+              {location.id === 'services' && location.children && <div className='mt-3 rounded-xl border border-cyan-300/25 bg-slate-900/70 p-3'><p className='text-xs uppercase tracking-[0.14em] text-cyan-200'>Service modules</p><ul className='mt-2 space-y-2 text-sm text-slate-300'>{location.children.map((service) => <li key={service.id}>{service.title}</li>)}</ul></div>}
+              <Link href={location.detail.ctaHref} className='mt-3 inline-flex rounded-lg border border-cyan-300/35 px-3 py-2 text-sm text-cyan-100'>Request a Quote</Link>
+            </details>;
+          })}
+        </div>
       </div>
-
-      <AnimatePresence>{selected && <motion.aside initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} exit={{opacity:0,y:12}} className='mt-5 rounded-2xl border border-cyan-300/30 bg-slate-950/85 p-5'>
-        <div className='flex items-center justify-between'><h3 className='text-xl'>{selected.title}</h3><Link href={selected.ctaHref} className='text-cyan-200'>{selected.ctaLabel}</Link></div>
-        <ul className='mt-2 list-disc pl-5 text-sm text-slate-300'>{selected.previewBullets.map((b)=><li key={b}>{b}</li>)}</ul>
-        {selected.id === 'services' && <div className='mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4'>{serviceModules.map((s)=><button key={s.id} onClick={()=>setDetail(s)} className='rounded-xl border border-cyan-300/22 bg-slate-900/80 p-3 text-left hover:border-cyan-300/50'><p className='text-sm font-semibold'>{s.title}</p><p className='text-xs text-slate-300'>{s.outcome}</p></button>)}</div>}
-      </motion.aside>}</AnimatePresence>
     </section>
-
-    <section className='relative z-10 px-4 pb-20 pt-10 xl:hidden'><h2 className='text-2xl font-semibold'>Explore the Rapid Rise system</h2><div className='mt-3 rounded-xl border border-cyan-300/20 bg-slate-950/75 p-4 text-sm text-slate-300'>Tap a destination to open its module and tools.</div><div className='mt-4 space-y-3'>{systemModules.map((m)=> <details key={m.id} className='rounded-xl border border-cyan-300/25 bg-slate-950/75 p-3'><summary className='cursor-pointer text-sm font-semibold'>{m.title} <span className='text-slate-300'>— {m.description}</span></summary><ul className='mt-2 list-disc pl-5 text-sm text-slate-300'>{m.previewBullets.map((b)=><li key={b}>{b}</li>)}</ul>{m.id==='services' && <div className='mt-3 grid gap-2'>{serviceModules.map((s)=><button key={s.id} onClick={()=>setDetail(s)} className='rounded-lg border border-cyan-300/20 bg-slate-900/75 p-2 text-left text-sm'>{s.title}</button>)}</div>}<Link href={m.ctaHref} className='mt-3 inline-flex text-cyan-200'>{m.ctaLabel}</Link></details>)}</div></section>
-
-    <AnimatePresence>{detail && <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className='fixed inset-0 z-50 bg-slate-950/80 p-4 backdrop-blur-sm'><motion.div initial={{y:20}} animate={{y:0}} exit={{y:20}} className='mx-auto mt-10 max-w-2xl rounded-2xl border border-cyan-300/35 bg-slate-950 p-5'><div className='flex items-start justify-between'><h3 className='text-2xl'>{detail.title}</h3><button onClick={()=>setDetail(null)} aria-label='Close detail panel'><X/></button></div><p className='mt-3 text-sm text-slate-300'><span className='text-cyan-200'>Pain:</span> {detail.pain}</p><p className='mt-2 text-sm text-slate-300'><span className='text-cyan-200'>Solution:</span> {detail.solution}</p><ul className='mt-3 list-disc pl-5 text-sm text-slate-300'>{detail.outcomes.map((o)=><li key={o}>{o}</li>)}</ul><p className='mt-3 text-xs text-cyan-100'>{detail.tools.join(' · ')}</p><Button href={detail.ctaHref} className='mt-4'>{detail.ctaLabel}</Button></motion.div></motion.div>}</AnimatePresence>
-  </div>;
+  );
 }
