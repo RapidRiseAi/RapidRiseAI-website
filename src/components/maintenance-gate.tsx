@@ -144,7 +144,7 @@ export function MaintenanceGate() {
 
         <footer className="pt-8 text-xs text-slate-400">© Rapid Rise AI. Business systems, automation, websites, and practical AI training.<br />Website upgrade in progress. We are still available for new enquiries and active client work.</footer>
 
-      <div className="fixed bottom-0 left-0 z-[10000] w-[310px] p-2 opacity-0 transition-opacity hover:opacity-100 focus-within:opacity-100">
+      <div className="fixed bottom-0 left-0 z-[10000] w-[310px] opacity-0 transition-opacity hover:opacity-100 focus-within:opacity-100">
           <form onSubmit={handleSubmit} className="flex w-full items-center gap-2 rounded-md border border-white/25 bg-black/80 p-2">
             <input type="password" value={code} onChange={(event) => setCode(event.target.value)} placeholder="Admin code" aria-label="Admin code" className="h-8 flex-1 rounded border border-white/20 bg-white/10 px-2 text-xs" autoComplete="off" />
             <button type="submit" disabled={isSubmitting} className="h-8 rounded bg-cyan-400 px-2 text-xs font-semibold text-slate-900 disabled:cursor-not-allowed disabled:opacity-70">{isSubmitting ? 'Checking…' : 'Enter'}</button>
