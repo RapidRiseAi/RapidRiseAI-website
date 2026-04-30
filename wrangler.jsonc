@@ -2,6 +2,7 @@
   "name": "rapidriseai-website",
   "main": "worker.ts",
   "compatibility_date": "2026-02-17",
+  "compatibility_flags": ["nodejs_compat"],
   // Keeps Cloudflare dashboard vars/secrets (including SecretAdminCode) from being removed on deploy.
   "keep_vars": true,
   "assets": {
