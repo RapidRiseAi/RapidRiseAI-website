@@ -2,10 +2,36 @@ type AssetFetcher = { fetch: (request: Request) => Promise<Response> };
 
 type Env = {
   ASSETS: AssetFetcher;
+  SecretAdminCode?: string;
   APPS_SCRIPT_BASE_URL?: string;
   NEXT_PUBLIC_APPS_SCRIPT_BASE_URL?: string;
   SCRIPT_EXEC_URL?: string;
 };
+
+async function handleAdminAccessRequest(request: Request, env: Env): Promise<Response> {
+  if (request.method !== 'POST') {
+    return Response.json({ ok: false, error: 'Method not allowed.' }, { status: 405 });
+  }
+
+  const secretAdminCode = (env.SecretAdminCode || '').trim();
+  if (!secretAdminCode) {
+    return Response.json({ ok: false, error: 'Admin code is not configured.' }, { status: 500 });
+  }
+
+  let payload: { code?: string };
+  try {
+    payload = (await request.json()) as { code?: string };
+  } catch {
+    return Response.json({ ok: false, error: 'Unable to process request.' }, { status: 400 });
+  }
+
+  const isValid = (payload.code || '').trim() === secretAdminCode;
+  if (!isValid) {
+    return Response.json({ ok: false, error: 'Invalid admin code.' }, { status: 401 });
+  }
+
+  return Response.json({ ok: true }, { status: 200 });
+}
 
 function normalizeUrl(value?: string): string {
   return (value || '').trim().replace(/^['"]|['"]$/g, '');
@@ -116,6 +142,10 @@ const worker = {
 
     if (url.pathname === '/api/lead') {
       return handleLeadRequest(request, env);
+    }
+
+    if (url.pathname === '/api/admin-access') {
+      return handleAdminAccessRequest(request, env);
     }
 
     return env.ASSETS.fetch(request);
