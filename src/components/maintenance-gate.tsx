@@ -25,6 +25,7 @@ export function MaintenanceGate() {
   const [hasAccess, setHasAccess] = useState(false);
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (window.sessionStorage.getItem(STORAGE_KEY) === 'granted') setHasAccess(true);
@@ -51,12 +52,24 @@ export function MaintenanceGate() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!code.trim() || isSubmitting) return;
     setError('');
-    const response = await fetch('/api/admin-access', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code }) });
-    const payload = (await response.json()) as { ok?: boolean; error?: string };
-    if (!response.ok || !payload.ok) return setError(payload.error ?? 'Invalid admin code.');
-    window.sessionStorage.setItem(STORAGE_KEY, 'granted');
-    setHasAccess(true);
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/admin-access', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code }) });
+      const payload = (await response.json()) as { ok?: boolean; error?: string };
+      if (!response.ok || !payload.ok) {
+        setError(payload.error ?? 'Invalid admin code.');
+        return;
+      }
+      window.sessionStorage.setItem(STORAGE_KEY, 'granted');
+      setHasAccess(true);
+    } catch {
+      setError('Unable to verify admin code. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -123,10 +136,10 @@ export function MaintenanceGate() {
         <footer className="pt-8 text-xs text-slate-400">© Rapid Rise AI. Business systems, automation, websites, and practical AI training.<br />Website upgrade in progress. We are still available for new enquiries and active client work.</footer>
       </div>
 
-      <div className="fixed bottom-2 left-2 h-10 w-10 opacity-0 hover:opacity-100 focus-within:opacity-100">
-        <form onSubmit={handleSubmit} className="flex w-[250px] items-center gap-2 rounded-md border border-white/25 bg-black/75 p-2">
-          <input type="password" value={code} onChange={(event) => setCode(event.target.value)} placeholder="Admin code" aria-label="Admin code" className="h-8 flex-1 rounded border border-white/20 bg-white/10 px-2 text-xs" />
-          <button type="submit" className="h-8 rounded bg-cyan-400 px-2 text-xs font-semibold text-slate-900">Enter</button>
+      <div className="fixed bottom-2 left-2 z-[10000] opacity-70 transition-opacity hover:opacity-100 focus-within:opacity-100">
+        <form onSubmit={handleSubmit} className="flex w-[310px] items-center gap-2 rounded-md border border-white/25 bg-black/80 p-2">
+          <input type="password" value={code} onChange={(event) => setCode(event.target.value)} placeholder="Admin code" aria-label="Admin code" className="h-8 flex-1 rounded border border-white/20 bg-white/10 px-2 text-xs" autoComplete="off" />
+          <button type="submit" disabled={isSubmitting} className="h-8 rounded bg-cyan-400 px-2 text-xs font-semibold text-slate-900 disabled:cursor-not-allowed disabled:opacity-70">{isSubmitting ? 'Checking…' : 'Enter'}</button>
         </form>
         {error ? <p className="mt-1 text-[11px] text-rose-300">{error}</p> : null}
       </div>
