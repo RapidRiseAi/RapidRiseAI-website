@@ -1,99 +1,112 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
-import { systemLocations } from './SystemMapData';
-import { cn } from '@/lib/utils';
+import { Eye, Check, ArrowRight, Star } from 'lucide-react';
+import { useMemo, useState, type CSSProperties } from 'react';
+import { accentStyles, systemMapDestinations } from './SystemMapData';
 
-const routes: Record<string, string> = {
-  work: 'M600 390 L520 345 L430 305 L340 255',
-  dashboards: 'M600 390 L600 330 L600 225',
-  'google-workspace': 'M600 390 L690 335 L790 300 L870 270',
-  automation: 'M600 390 L500 405 L395 405 L300 405',
-  'internal-tools': 'M600 390 L705 405 L800 425 L880 430',
-  training: 'M600 390 L700 455 L800 520 L885 555',
-  websites: 'M600 390 L500 450 L405 515 L300 555',
-  services: 'M600 390 L600 465 L600 535',
-  pricing: 'M600 390 L535 485 L485 575 L430 640',
-  contact: 'M600 390 L705 485 L820 580 L930 640',
-  'support-assistant': 'M600 390 L485 430 L390 500 L280 545',
-  process: 'M600 390 L640 470 L690 560 L735 640',
-};
+const svgNodes = Array.from({ length: 84 }, (_, i) => ({
+  x: 84 + ((i * 137) % 1300),
+  y: 142 + ((i * 89) % 510),
+  r: 1.3 + (i % 3) * 0.35,
+  o: 0.25 + ((i * 7) % 50) / 100,
+  p: i % 9 === 0,
+}));
+const stars = Array.from({ length: 40 }, (_, i) => ({ x: (i * 71) % 1480, y: (i * 113) % 780, o: 0.08 + (i % 5) * 0.03 }));
 
 export function RapidRiseSystemMap() {
-  const [hoveredId, setHoveredId] = useState('services');
-  const hovered = useMemo(() => systemLocations.find((l) => l.id === hoveredId) ?? systemLocations[0], [hoveredId]);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const activeId = hoveredId ?? 'services';
+  const active = useMemo(() => systemMapDestinations.find((d) => d.id === activeId) ?? systemMapDestinations[0], [activeId]);
 
-  return <section className='rapid-rise-system-map relative pb-20 pt-12'>
-    <div className='mx-auto max-w-[1360px] px-6'>
-      <header className='mx-auto max-w-4xl text-center'>
-        <p className='text-xs font-semibold tracking-[0.24em] text-cyan-300'>RAPID RISE SYSTEM MAP</p>
-        <h2 className='mt-4 text-[clamp(2.1rem,4.4vw,4.2rem)] font-semibold leading-[1.02]'>Explore the Rapid Rise system.</h2>
-        <p className='mx-auto mt-5 max-w-3xl text-lg text-slate-300'>Choose a business area to see how we connect tools, workflows, dashboards, websites, and follow-ups into one operating layer.</p>
-      </header>
+  return <section className='relative overflow-hidden px-6 pb-16 pt-24 max-md:px-4 max-md:pt-16'>
+    <div className='mx-auto mb-10 max-w-[780px] px-6 text-center max-md:px-2'>
+      <p className='mb-4 text-[14px] font-extrabold uppercase tracking-[0.22em] text-[#32E6FF]'>RAPID RISE SYSTEM MAP</p>
+      <h2 className='mb-[18px] text-[clamp(44px,5vw,64px)] font-extrabold leading-[1.05] tracking-[-0.04em] text-[#F6FAFF] max-md:text-[clamp(34px,8vw,42px)]'>Explore the Rapid Rise system.</h2>
+      <p className='mx-auto max-w-[720px] text-[clamp(18px,2vw,20px)] leading-[1.6] text-[rgba(220,232,255,0.78)]'>Choose a business area to see how we connect tools, workflows, dashboards, websites, and follow-ups into one operating layer.</p>
+    </div>
 
-      <div className='relative mt-12 hidden h-[780px] w-full overflow-hidden rounded-[36px] border border-cyan-300/25 bg-[radial-gradient(circle_at_50%_50%,rgba(16,190,255,0.16),transparent_32%),radial-gradient(circle_at_50%_88%,rgba(31,140,255,0.16),transparent_24%),linear-gradient(180deg,#03101d_0%,#020712_100%)] shadow-[0_0_70px_rgba(31,140,255,0.12),inset_0_1px_0_rgba(255,255,255,0.05)] lg:block'>
-        <div className='pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(2,7,18,0.64)_100%)]' />
-        <svg className='pointer-events-none absolute inset-0 z-[2]' viewBox='0 0 1200 720' preserveAspectRatio='none' aria-hidden>
-          <defs>
-            <clipPath id='floor-clip'><polygon points='160,210 1040,210 1180,660 20,660' /></clipPath>
-          </defs>
-          <polygon points='160,210 1040,210 1180,660 20,660' fill='rgba(4,18,34,0.48)' stroke='rgba(83,230,255,0.16)' strokeWidth='1' />
-          <g clipPath='url(#floor-clip)'>
-            {[...Array(22)].map((_, i) => <line key={`a-${i}`} x1={120 + i * 55} y1='210' x2={-160 + i * 55} y2='660' stroke='rgba(83,230,255,0.11)' strokeWidth='1' />)}
-            {[...Array(22)].map((_, i) => <line key={`b-${i}`} x1={1080 - i * 55} y1='210' x2={1360 - i * 55} y2='660' stroke='rgba(83,230,255,0.11)' strokeWidth='1' />)}
-          </g>
-        </svg>
+    <div className='map-stage relative mx-auto hidden h-[780px] w-[calc(100%-48px)] max-w-[1480px] overflow-hidden rounded-[34px] border border-[rgba(50,230,255,0.30)] lg:block'>
+      <svg className='pointer-events-none absolute inset-0 z-[1] h-full w-full' viewBox='0 0 1480 780' preserveAspectRatio='none' aria-hidden>
+        <defs><clipPath id='floorClip'><polygon points='100,130 1380,130 1460,675 20,675' /></clipPath><radialGradient id='centerGlow' cx='50%' cy='50%' r='48%'><stop offset='0%' stopColor='rgba(50,230,255,0.24)' /><stop offset='100%' stopColor='rgba(50,230,255,0)' /></radialGradient></defs>
+        <rect width='1480' height='780' fill='url(#centerGlow)' />
+        <polygon points='100,130 1380,130 1460,675 20,675' fill='rgba(4,18,34,0.48)' stroke='rgba(50,230,255,0.16)' strokeWidth='1.3' />
+        <g clipPath='url(#floorClip)'>{Array.from({ length: 43 }).map((_, i) => <line key={`a${i}`} x1={-400 + i * 56} y1='675' x2={300 + i * 56} y2='130' stroke='rgba(50,160,255,0.11)' strokeWidth='1' />)}{Array.from({ length: 43 }).map((_, i) => <line key={`b${i}`} x1={1880 - i * 56} y1='675' x2={1180 - i * 56} y2='130' stroke='rgba(50,160,255,0.11)' strokeWidth='1' />)}</g>
+        <g>{svgNodes.map((n, i) => <circle key={i} cx={n.x} cy={n.y} r={n.r} fill={n.p ? 'rgba(139,92,255,0.52)' : 'rgba(50,230,255,0.45)'} opacity={n.o} />)}</g>
+        <g>{stars.map((s, i) => <circle key={i} cx={s.x} cy={s.y} r='1.1' fill='rgba(220,232,255,0.9)' opacity={s.o} />)}</g>
+      </svg>
 
-        <svg className='pointer-events-none absolute inset-0 z-[3]' viewBox='0 0 1200 720' preserveAspectRatio='none' aria-hidden>
-          {systemLocations.map((location) => {
-            const active = hoveredId === location.id || location.id === 'services';
-            const path = routes[location.id];
-            return <g key={`r-${location.id}`}>
-              <path d={path} stroke='rgba(31,140,255,0.16)' strokeWidth='8' strokeLinecap='round' strokeLinejoin='round' fill='none' opacity={active ? 0.6 : 0.15} />
-              <path d={path} stroke={active ? 'rgba(83,230,255,0.9)' : 'rgba(83,230,255,0.2)'} strokeWidth={active ? 3 : 2} strokeLinecap='round' strokeLinejoin='round' fill='none' />
+      <div className='map-scene-content absolute inset-0 z-[4] 2xl:right-[340px] xl:right-[340px]'>
+        <svg className='pointer-events-none absolute inset-0 z-[3] h-full w-full' viewBox='0 0 1480 780' preserveAspectRatio='none' aria-hidden>
+          {systemMapDestinations.map((item) => {
+            const a = activeId === item.id;
+            return <g key={item.id} opacity={a ? 1 : hoveredId ? 0.35 : item.id === 'services' ? 1 : 0.6}>
+              <path d={item.route} stroke='rgba(0,194,255,0.24)' strokeWidth='12' fill='none' strokeLinecap='round' filter='blur(5px)' opacity={a ? 0.72 : 0.18} />
+              <path d={item.route} stroke='rgba(36,220,255,0.84)' strokeWidth='4' fill='none' strokeLinecap='round' strokeLinejoin='round' opacity={a ? 1 : 0.35} />
+              <path d={item.route} stroke='rgba(255,255,255,0.58)' strokeWidth='1.2' strokeDasharray='5 8' fill='none' strokeLinecap='round' opacity={a ? 0.95 : 0.2} />
+              {a ? <path d={item.route} stroke='rgba(255,255,255,0.9)' strokeWidth='1.5' strokeDasharray='1 22' fill='none'><animate attributeName='stroke-dashoffset' from='0' to='-130' dur='3s' repeatCount='indefinite' /></path> : null}
             </g>;
           })}
         </svg>
 
-        <div className='pointer-events-none absolute left-1/2 top-[52%] z-[4] h-[70px] w-[230px] -translate-x-1/2 translate-y-[42px] rounded-full bg-[radial-gradient(ellipse,rgba(83,230,255,0.30),transparent_70%)] blur-[18px]' />
-        <div className='pointer-events-none absolute left-1/2 top-[52%] z-[5] h-[190px] w-[190px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-300/50 bg-[radial-gradient(circle_at_50%_45%,rgba(83,230,255,0.34),transparent_42%),linear-gradient(180deg,rgba(10,35,52,0.92),rgba(3,12,24,0.96))] shadow-[0_0_55px_rgba(83,230,255,0.22),inset_0_0_35px_rgba(83,230,255,0.10)]'>
-          <div className='absolute inset-4 rounded-full border border-cyan-300/30' /><div className='absolute inset-8 rounded-full border border-cyan-300/30' />
-          <div className='absolute inset-0 flex flex-col items-center justify-center text-center'><p className='text-xl font-semibold text-cyan-100'>Rapid Rise AI</p><p className='text-[10px] uppercase tracking-[0.16em] text-cyan-100'>Capture • Route</p><p className='text-[10px] uppercase tracking-[0.16em] text-cyan-100'>Track • Automate • Report</p></div>
+        <div className='pointer-events-none absolute left-1/2 top-1/2 z-[6] h-[220px] w-[220px] -translate-x-1/2 -translate-y-1/2'>
+          <div className='absolute left-1/2 top-[calc(50%+50px)] h-[105px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(50,230,255,0.36),rgba(20,121,255,0.18)_38%,transparent_72%)] blur-[22px]' />
+          <div className='h-full w-full rounded-full border border-[rgba(83,230,255,0.55)] bg-[radial-gradient(circle_at_50%_48%,rgba(50,230,255,0.25),transparent_42%),linear-gradient(180deg,rgba(5,35,55,0.82),rgba(2,10,22,0.96))] shadow-[0_0_55px_rgba(50,230,255,0.45),0_0_110px_rgba(20,121,255,0.22),inset_0_0_38px_rgba(50,230,255,0.18)]'>
+            <div className='absolute inset-[18px] rounded-full border border-[rgba(83,230,255,0.35)]' /><div className='absolute inset-[36px] rounded-full border border-[rgba(83,230,255,0.28)]' /><div className='absolute inset-[56px] rounded-full border border-[rgba(83,230,255,0.16)]' />
+            <div className='absolute left-1/2 top-1/2 h-7 w-7 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#32E6FF] shadow-[0_0_35px_rgba(50,230,255,0.85)]' />
+            <div className='absolute inset-0 flex flex-col items-center justify-center text-center'><p className='text-[20px] font-extrabold tracking-[0.04em] text-[#53E6FF]'>Rapid Rise AI</p><p className='text-[10px] uppercase tracking-[0.12em] text-[rgba(220,245,255,.82)]'>CAPTURE • ROUTE • TRACK</p><p className='text-[10px] uppercase tracking-[0.12em] text-[rgba(220,245,255,.82)]'>AUTOMATE • REPORT</p></div>
+          </div>
         </div>
 
-        {systemLocations.map((location) => {
-          const Icon = location.icon;
-          const active = hoveredId === location.id;
-          return <Link key={location.id} href={location.href} onMouseEnter={() => setHoveredId(location.id)} onFocus={() => setHoveredId(location.id)} className={cn('absolute z-[6] -translate-x-1/2 -translate-y-1/2 transition duration-200', active ? 'scale-[1.02] -translate-y-[calc(50%+6px)]' : '')} style={{ left: location.position.left, top: location.position.top }}>
-            <span className='pointer-events-none absolute left-1/2 top-full h-10 w-px -translate-x-1/2 bg-gradient-to-b from-cyan-300/40 to-transparent' />
-            <span className='pointer-events-none absolute left-1/2 top-[calc(100%+8px)] h-[18px] w-[78%] -translate-x-1/2 rounded-full bg-cyan-300/20 blur-[12px]' />
-            <span className={cn('block w-[185px] min-h-[104px] rounded-[18px] border bg-[linear-gradient(180deg,rgba(6,18,34,0.94),rgba(2,8,18,0.96))] p-[14px] shadow-[0_16px_34px_rgba(0,0,0,0.48),0_0_22px_rgba(31,140,255,0.14),inset_0_1px_0_rgba(255,255,255,0.05)]', active ? 'border-cyan-300/70' : 'border-cyan-300/32')}>
-              <span className='flex items-start justify-between gap-2'><span className='inline-flex h-[34px] w-[34px] items-center justify-center rounded-lg border border-cyan-300/40'><Icon className='h-4.5 w-4.5 text-cyan-300' /></span><span className='rounded-full border border-cyan-300/35 bg-cyan-300/10 px-2 py-0.5 text-[10px] uppercase tracking-[0.08em] text-cyan-100'>{location.status}</span></span>
-              <span className='mt-2 block text-base font-bold text-white'>{location.title}</span>
-              <span className='mt-1 block text-xs leading-[1.35] text-slate-300'>{location.description}</span>
-            </span>
-          </Link>;
-        })}
-
-        <aside className='absolute bottom-8 left-8 z-[8] w-[260px] rounded-[20px] border border-cyan-300/30 bg-slate-950/65 p-[18px]'>
-          <p className='text-xs font-semibold tracking-[0.16em] text-cyan-200'>SYSTEM PREVIEW</p>
-          <p className='mt-2 text-sm text-slate-300'>Hover a destination to preview the system path.</p>
-          <ul className='mt-3 space-y-1 text-sm text-slate-200'>{hovered.previewBullets.slice(0, 4).map((b) => <li key={b}>• {b}</li>)}</ul>
-          <p className='mt-3 text-xs text-cyan-100'>Click to explore</p>
-        </aside>
-        <div className='absolute bottom-4 left-1/2 z-[9] -translate-x-1/2 text-sm text-slate-300'>Hover to preview • Click to explore • Navigate to destinations</div>
-      </div>
-
-      <div className='mt-8 grid gap-3 lg:hidden'>
-        {systemLocations.filter((item) => !['support-assistant','process'].includes(item.id)).map((item) => {
+        {systemMapDestinations.map((item) => {
           const Icon = item.icon;
-          return <Link key={`m-${item.id}`} href={item.href} className='rounded-2xl border border-cyan-300/30 bg-slate-950/70 p-4'>
-            <div className='flex items-center justify-between'><span className='inline-flex items-center gap-2'><Icon className='h-4 w-4 text-cyan-200' /><span className='font-semibold'>{item.title}</span></span><span className='text-[10px] uppercase text-cyan-100'>{item.status}</span></div>
-            <p className='mt-2 text-sm text-slate-300'>{item.description}</p>
+          const accent = accentStyles[item.accent];
+          const st = { left: `${item.position.left}%`, top: `${item.position.top}%`, '--scale': item.scale, '--accent': accent.main, '--accent-glow': accent.glow } as CSSProperties;
+          return <Link key={item.id} href={item.href} className='group absolute z-[7] block w-[210px] min-h-[118px] -translate-x-1/2 -translate-y-1/2 rounded-[18px] border border-[rgba(83,230,255,0.34)] bg-[linear-gradient(180deg,rgba(8,22,40,0.96),rgba(2,8,18,0.98))] p-[18px] text-decoration-none shadow-[0_18px_34px_rgba(0,0,0,0.50),0_0_24px_rgba(31,140,255,0.16),inset_0_1px_0_rgba(255,255,255,0.06)] [opacity:.9] transition-all duration-200 hover:-translate-y-[calc(50%+7px)] hover:scale-[1.03] focus-visible:-translate-y-[calc(50%+7px)] focus-visible:scale-[1.03]' style={st} onMouseEnter={() => setHoveredId(item.id)} onMouseLeave={() => setHoveredId(null)} onFocus={() => setHoveredId(item.id)} onBlur={() => setHoveredId(null)}>
+            <span className='pointer-events-none absolute inset-x-[12px] -bottom-[3px] h-1 rounded-full bg-[linear-gradient(90deg,transparent,var(--accent),transparent)] opacity-80' /><span className='pointer-events-none absolute inset-x-[10%] -bottom-3 h-[18px] rounded-full bg-[var(--accent-glow)] blur-[12px]' />
+            <span className='absolute right-4 top-4 rounded-full border px-2 py-1 text-[10px] font-extrabold uppercase tracking-[0.08em]' style={{ borderColor: `${accent.main}6b`, background: `${accent.soft}`, color: accent.main }}>{item.tag}</span>
+            <span className='mb-3 flex h-[42px] w-[42px] items-center justify-center rounded-xl border' style={{ borderColor: `${accent.main}88`, background: accent.soft, boxShadow: `0 0 18px ${accent.glow}` }}><Icon className='h-5 w-5' style={{ color: accent.main }} /></span>
+            <p className='mb-[7px] pr-20 text-[16px] font-extrabold leading-[1.12] text-[#F6FAFF]'>{item.title}</p>
+            <p className='max-w-[160px] text-[12.5px] leading-[1.35] text-[rgba(220,232,255,.76)]'>{item.description}</p>
           </Link>;
         })}
       </div>
+
+      <aside className='absolute bottom-7 left-6 z-[10] w-[250px] rounded-[18px] border border-[rgba(83,230,255,.24)] bg-[rgba(4,14,28,.90)] p-5 shadow-[0_18px_45px_rgba(0,0,0,.45),0_0_26px_rgba(31,140,255,.14)] backdrop-blur-[14px]'>
+        <div className='mb-3 flex items-center justify-between text-[12px] font-black tracking-[0.16em] text-[#32E6FF]'>SYSTEM PREVIEW <Eye className='h-4 w-4' /></div>
+        <p className='text-sm text-[rgba(220,232,255,.78)]'>{hoveredId ? active.description : 'Hover any area to preview how we help.'}</p>
+        <ul className='mt-3 space-y-1.5 text-sm text-[#F6FAFF]'>{(hoveredId ? active.previewBullets : ['Capture Leads', 'Automate Work', 'Track Progress', 'Report Results']).slice(0, 5).map((b, i) => <li key={b} className='flex items-center gap-2'><span className='h-2 w-2 rounded-full' style={{ background: ['#32E6FF', '#27EF7D', '#8B5CFF', '#A066FF', '#FFCB2E'][i] }} />{b}</li>)}</ul>
+        <p className='mt-4 text-[13px] text-[#32E6FF]'>Click a destination to explore &gt;</p>
+      </aside>
+
+      <aside className='absolute bottom-[34px] right-7 top-[34px] z-[10] hidden w-[300px] rounded-[24px] border border-[rgba(255,203,46,0.35)] bg-[linear-gradient(180deg,rgba(5,15,30,0.96),rgba(2,7,17,0.98))] p-6 shadow-[0_20px_60px_rgba(0,0,0,.55),0_0_38px_rgba(255,203,46,.14),inset_0_1px_0_rgba(255,255,255,.05)] xl:block'>
+        <p className='text-center text-[13px] font-black tracking-[0.18em] text-[#FFCB2E]'>SERVICES</p>
+        <div className='mx-auto mt-6 flex h-[86px] w-[86px] items-center justify-center rounded-[24px] border border-[#FFCB2E66] text-[#FFCB2E] shadow-[0_0_28px_rgba(255,203,46,.22)]'><Star className='h-8 w-8' /></div>
+        <h3 className='mt-5 text-center text-[34px] font-extrabold leading-none text-[#F6FAFF]'>Services</h3>
+        <p className='mt-3 text-center text-[15px] leading-[1.55] text-[rgba(220,232,255,.78)]'>Core offerings and strategic systems that drive results.</p>
+        <div className='my-4 h-px bg-white/10' />
+        <p className='text-sm font-semibold text-[#FFCB2E]'>We help you:</p>
+        <ul className='mt-2 space-y-2 text-sm text-[#F6FAFF]'>{systemMapDestinations[0].previewBullets.map((b) => <li key={b} className='flex items-start gap-2'><span className='mt-0.5 inline-flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#FFCB2E] text-[#051120]'><Check className='h-3 w-3' /></span>{b}</li>)}</ul>
+        <Link href='/solutions' className='mt-5 flex h-[54px] items-center justify-center rounded-xl bg-[linear-gradient(135deg,#FFCB2E,#FFB300)] text-sm font-black text-[#06101C] shadow-[0_0_32px_rgba(255,203,46,.24)]'>Explore Services <ArrowRight className='ml-2 h-4 w-4' /></Link>
+      </aside>
+      <div className='absolute bottom-2 left-1/2 z-[9] -translate-x-1/2 text-sm text-[rgba(220,232,255,.72)]'>Hover to preview • Click to explore • Navigate to destinations</div>
     </div>
+
+    <div className='mx-auto mt-4 grid max-w-[1480px] gap-3 rounded-[24px] border border-[rgba(83,230,255,.26)] bg-[linear-gradient(180deg,rgba(4,14,28,.88),rgba(2,7,17,.95))] p-4 lg:hidden sm:grid-cols-2'>
+      {systemMapDestinations.map((item) => {
+        const Icon = item.icon;
+        const accent = accentStyles[item.accent];
+        return <Link key={item.id} href={item.href} className='rounded-2xl border border-[rgba(83,230,255,.26)] bg-[rgba(5,15,30,.88)] p-4'>
+          <div className='flex items-start justify-between gap-3'><span className='inline-flex h-10 w-10 items-center justify-center rounded-xl border' style={{ borderColor: `${accent.main}88`, background: accent.soft }}><Icon className='h-5 w-5' style={{ color: accent.main }} /></span><span className='rounded-full border px-2 py-1 text-[10px] font-extrabold uppercase' style={{ borderColor: `${accent.main}66`, color: accent.main }}>{item.tag}</span></div>
+          <p className='mt-2 text-base font-bold text-[#F6FAFF]'>{item.title}</p><p className='mt-1 text-sm text-[rgba(220,232,255,.76)]'>{item.description}</p>
+        </Link>;
+      })}
+    </div>
+
+    <style jsx>{`
+      .map-stage {background: radial-gradient(circle at 50% 50%, rgba(0, 185, 255, 0.24), transparent 24%), radial-gradient(circle at 50% 72%, rgba(0, 92, 255, 0.20), transparent 30%), radial-gradient(circle at 78% 58%, rgba(139, 92, 255, 0.11), transparent 24%), linear-gradient(180deg, #03101D 0%, #020711 100%); box-shadow: 0 0 0 1px rgba(255,255,255,0.03) inset, 0 35px 100px rgba(0,0,0,0.55), 0 0 80px rgba(20,121,255,0.16);} 
+      .map-stage::before {content:''; position:absolute; inset:0; background: radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.28) 100%); z-index:20; pointer-events:none;}
+      .map-stage::after {content:''; position:absolute; left:20px; right:20px; top:0; height:1px; background:linear-gradient(90deg, transparent, rgba(83,230,255,.45), transparent); pointer-events:none; z-index:21;}
+    `}</style>
   </section>;
 }
