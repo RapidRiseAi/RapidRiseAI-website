@@ -14,8 +14,9 @@ const sizeClasses = {
 };
 
 const routePath = (x: number, y: number) => {
-  const midY = y > hub.y ? hub.y + 9 : hub.y - 10;
-  return `M ${hub.x} ${hub.y} L ${hub.x} ${midY} L ${x} ${midY} L ${x} ${y}`;
+  const midY = y > hub.y ? hub.y + 7 : hub.y - 8;
+  const elbowX = x > hub.x ? x - 3 : x + 3;
+  return `M ${hub.x} ${hub.y} L ${hub.x} ${midY} L ${elbowX} ${midY} L ${x} ${y}`;
 };
 
 export function RapidRiseSystemMap() {
@@ -40,9 +41,9 @@ export function RapidRiseSystemMap() {
           <p className='mx-auto mt-4 max-w-3xl text-base text-slate-300 md:text-lg'>Choose a business area to see how we connect tools, workflows, dashboards, websites, and follow-ups into one operating layer.</p>
         </div>
 
-        <div className='system-map-board relative mt-10 hidden min-h-[730px] overflow-hidden rounded-[38px] border border-cyan-300/25 bg-[radial-gradient(circle_at_50%_43%,rgba(31,120,188,0.22),transparent_40%),linear-gradient(160deg,#020713,#071126_42%,#020611)] p-10 shadow-[0_32px_120px_rgba(2,8,30,0.7),0_0_70px_rgba(58,164,255,0.25)] lg:block'>
+        <div className='system-map-board relative mt-10 hidden min-h-[740px] overflow-hidden rounded-[38px] border border-cyan-300/25 bg-[radial-gradient(circle_at_50%_43%,rgba(31,120,188,0.22),transparent_40%),linear-gradient(160deg,#020713,#071126_42%,#020611)] p-10 shadow-[0_32px_120px_rgba(2,8,30,0.7),0_0_70px_rgba(58,164,255,0.25)] lg:block'>
           <div className='pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_32%,rgba(2,7,17,0.75)_100%)]' />
-          <div className='system-map-floor pointer-events-none absolute inset-[8%] rounded-[30px] border border-cyan-300/20 bg-[linear-gradient(to_right,rgba(84,180,232,0.11)_1px,transparent_1px),linear-gradient(to_bottom,rgba(84,180,232,0.11)_1px,transparent_1px),radial-gradient(circle_at_50%_46%,rgba(83,230,255,0.2),transparent_46%),linear-gradient(180deg,rgba(7,17,34,0.84),rgba(3,8,21,0.96))] bg-[size:54px_54px,54px_54px,100%_100%,100%_100%] [transform:perspective(1400px)_rotateX(61deg)_translateY(84px)_scale(1.08)]' />
+          <div className='system-map-floor pointer-events-none absolute inset-[11%] rounded-[30px] border border-cyan-300/20 bg-[linear-gradient(to_right,rgba(84,180,232,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(84,180,232,0.1)_1px,transparent_1px),radial-gradient(circle_at_50%_46%,rgba(83,230,255,0.2),transparent_46%),linear-gradient(180deg,rgba(7,17,34,0.84),rgba(3,8,21,0.96))] bg-[size:48px_48px,48px_48px,100%_100%,100%_100%] [transform:perspective(1450px)_rotateX(62deg)_rotateZ(45deg)_translateY(86px)_scale(0.96)]' />
           <div className='pointer-events-none absolute inset-x-[20%] top-[25%] h-[52%] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(52,191,255,0.2),rgba(8,26,53,0)_65%)] blur-2xl' />
 
           <svg className='pointer-events-none absolute inset-[8%]' viewBox='0 0 100 100' preserveAspectRatio='none' aria-hidden>
@@ -50,8 +51,8 @@ export function RapidRiseSystemMap() {
               const highlighted = activeId === location.id || selectedId === location.id;
               return (
                 <g key={location.id}>
-                  {highlighted && <path d={routePath(location.position.x, location.position.y)} stroke='rgba(83,230,255,0.32)' strokeWidth='5' fill='none' strokeLinecap='round' />}
-                  <path d={routePath(location.position.x, location.position.y)} stroke={highlighted ? 'rgba(83,230,255,0.72)' : 'rgba(83,230,255,0.18)'} strokeWidth={highlighted ? '3' : '2'} fill='none' strokeLinecap='round' strokeLinejoin='round' />
+                  {highlighted && <path d={routePath(location.position.x, location.position.y)} stroke='rgba(31,140,255,0.38)' strokeWidth='3.2' fill='none' strokeLinecap='round' />}
+                  <path d={routePath(location.position.x, location.position.y)} stroke={highlighted ? 'rgba(83,230,255,0.82)' : 'rgba(83,230,255,0.18)'} strokeWidth={highlighted ? '2.2' : '1.4'} fill='none' strokeLinecap='round' strokeLinejoin='round' />
                 </g>
               );
             })}
@@ -74,7 +75,7 @@ export function RapidRiseSystemMap() {
                 onMouseEnter={() => setActiveId(location.id)}
                 onFocus={() => setActiveId(location.id)}
                 onClick={() => setSelectedId(location.id)}
-                className={cn('absolute z-30 -translate-x-1/2 -translate-y-1/2 rounded-2xl border bg-[linear-gradient(170deg,rgba(8,18,38,0.96),rgba(4,10,22,0.96))] p-3 text-left shadow-[0_18px_28px_rgba(0,0,0,0.48)] transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70', sizeClasses[location.size], highlighted ? '-translate-y-[calc(50%+7px)] border-cyan-300/80 shadow-[0_0_34px_rgba(83,230,255,0.36)]' : 'border-cyan-300/25 hover:-translate-y-[calc(50%+5px)] hover:border-cyan-300/52')}
+                className={cn('absolute z-30 -translate-x-1/2 -translate-y-1/2 rounded-2xl border bg-[linear-gradient(170deg,rgba(8,18,38,0.96),rgba(4,10,22,0.96))] p-3 text-left shadow-[0_18px_28px_rgba(0,0,0,0.48)] transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70', sizeClasses[location.size], selectedId && selectedId !== location.id ? 'opacity-75' : 'opacity-100', highlighted ? '-translate-y-[calc(50%+7px)] border-cyan-300/80 shadow-[0_0_34px_rgba(83,230,255,0.36)]' : 'border-cyan-300/25 hover:-translate-y-[calc(50%+5px)] hover:border-cyan-300/52')}
                 style={{ left: `${location.position.x}%`, top: `${location.position.y}%` }}
                 aria-label={`Open ${location.title} system details`}
               >
@@ -95,7 +96,7 @@ export function RapidRiseSystemMap() {
             <p className='mt-3 text-xs uppercase tracking-[0.13em] text-cyan-200/90'>Click to explore</p>
           </div>
 
-          {selected && <aside className='absolute right-6 top-6 z-40 w-[420px] rounded-3xl border border-cyan-300/35 bg-slate-950/85 p-5 shadow-[0_20px_45px_rgba(0,0,0,0.55)] backdrop-blur-sm'>
+          {selected && <aside className='absolute right-6 bottom-6 z-40 w-[430px] rounded-3xl border border-cyan-300/35 bg-slate-950/90 p-5 shadow-[0_20px_45px_rgba(0,0,0,0.55)] backdrop-blur-sm'>
             <div className='flex items-start justify-between gap-2'><h3 className='text-2xl font-semibold'>{selected.title}</h3><button type='button' onClick={() => setSelectedId(null)} className='rounded-full p-1 text-slate-300 hover:bg-slate-800' aria-label='Close detail panel'><X className='h-5 w-5' /></button></div>
             <p className='mt-2 text-sm text-slate-300'>{selected.description}</p>
             <p className='mt-4 text-sm text-slate-300'><span className='text-cyan-200'>Problem: </span>{selected.detail.problem}</p>
