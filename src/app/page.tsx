@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo';
-import { RapidRiseSystemMapExperience } from '@/components/home/system-map/RapidRiseSystemMap';
+import { HomeHero } from '@/components/home/hero/HomeHero';
+import { RapidRiseSystemMap } from '@/components/home/system-map/RapidRiseSystemMap';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Rapid Rise AI | AI Automation and Education',
@@ -9,5 +10,10 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function HomePage() {
-  return <RapidRiseSystemMapExperience />;
+  return (
+    <>
+      <HomeHero />
+      <RapidRiseSystemMap />
+    </>
+  );
 }
