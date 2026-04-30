@@ -1,80 +1,29 @@
-import {
-  Briefcase,
-  Building2,
-  Cog,
-  Contact,
-  DollarSign,
-  GraduationCap,
-  Layers,
-  LayoutDashboard,
-  MonitorSmartphone,
-  Wrench,
-} from 'lucide-react';
+import { Briefcase, Building2, Cog, Contact, DollarSign, GraduationCap, Layers, LayoutDashboard, LifeBuoy, MonitorSmartphone, Route, Wrench } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-
-export type ServiceModule = {
-  id: string;
-  title: string;
-  description: string;
-};
 
 export type SystemLocation = {
   id: string;
   title: string;
   description: string;
-  icon: LucideIcon;
   status: string;
-  size: 'large' | 'medium' | 'small';
-  position: { x: number; y: number };
+  icon: LucideIcon;
+  href: string;
+  position: { left: string; top: string };
   previewBullets: string[];
-  detail: {
-    problem: string;
-    solution: string;
-    outcomes: string[];
-    tools: string[];
-    ctaLabel: string;
-    ctaHref: string;
-  };
-  children?: ServiceModule[];
+  detailBullets: string[];
 };
 
-export const serviceModules: ServiceModule[] = [
-  { id: 'lead-capture', title: 'Lead Capture Engine', description: 'Capture, qualify, and route leads instantly.' },
-  { id: 'workflow-automation', title: 'Workflow Automation', description: 'Automate repetitive operational handoffs.' },
-  { id: 'smart-workspace', title: 'Smart Google Workspace', description: 'Connect Gmail, Sheets, Drive, and Docs with automation.' },
-  { id: 'web-apps-tools', title: 'Web Apps and Internal Tools', description: 'Custom portals and internal applications for daily operations.' },
-  { id: 'websites-convert', title: 'Websites that Convert', description: 'Conversion-first websites integrated into your workflows.' },
-  { id: 'training-enablement', title: 'Training and Enablement', description: 'Practical onboarding and SOP-backed rollout support.' },
-  { id: 'support-assistant', title: 'Support Assistant', description: 'Faster responses and cleaner support handoffs.' },
-];
-
 export const systemLocations: SystemLocation[] = [
-  {
-    id: 'services',
-    title: 'Services',
-    description: 'Core offerings and strategic systems.',
-    icon: Layers,
-    status: 'Core layer',
-    size: 'large',
-    position: { x: 50, y: 68 },
-    previewBullets: ['Lead capture', 'Automation', 'Internal tools'],
-    detail: {
-      problem: 'Your business has scattered needs across tools, workflows, websites, and teams.',
-      solution: 'Rapid Rise AI designs the right operating layer for your next bottleneck.',
-      outcomes: ['Faster response', 'Cleaner tracking', 'Less manual work'],
-      tools: ['Websites', 'Forms', 'Apps Script', 'Supabase', 'Dashboards'],
-      ctaLabel: 'Explore services',
-      ctaHref: '/solutions',
-    },
-    children: serviceModules,
-  },
-  { id: 'automation', title: 'Automation', description: 'Remove manual workflow overhead.', icon: Cog, status: 'Live routes', size: 'medium', position: { x: 27, y: 50 }, previewBullets: ['Routing', 'Syncing', 'Follow-up'], detail: { problem: 'Manual handoffs slow delivery and create mistakes.', solution: 'We automate task routing, updates, and triggers across your stack.', outcomes: ['Less admin', 'Faster turnaround', 'Lower error rate'], tools: ['Make', 'n8n', 'Zapier', 'APIs'], ctaLabel: 'Request a quote', ctaHref: '/quote' } },
-  { id: 'websites', title: 'Websites', description: 'High-converting digital front doors.', icon: MonitorSmartphone, status: 'Conversion ready', size: 'medium', position: { x: 25, y: 70 }, previewBullets: ['Messaging', 'Forms', 'Speed'], detail: { problem: 'Visitors leave without taking action.', solution: 'We build conversion-focused websites connected to your system layer.', outcomes: ['More qualified leads', 'Faster response', 'Better mobile UX'], tools: ['Next.js', 'SEO', 'Forms'], ctaLabel: 'Request a quote', ctaHref: '/quote' } },
-  { id: 'internal-tools', title: 'Internal Tools', description: 'Portals, apps, and custom workflows.', icon: Wrench, status: 'Ops control', size: 'medium', position: { x: 72, y: 54 }, previewBullets: ['Portals', 'Role access', 'Task flows'], detail: { problem: 'Operations run through chat and spreadsheets.', solution: 'We build internal systems that centralize process and ownership.', outcomes: ['Clear accountability', 'Faster handoffs', 'Better visibility'], tools: ['Supabase', 'Next.js', 'Role-based access'], ctaLabel: 'Request a quote', ctaHref: '/quote' } },
-  { id: 'google-workspace', title: 'Google Workspace', description: 'Structured workflows in familiar tools.', icon: Building2, status: 'Connected', size: 'small', position: { x: 72, y: 28 }, previewBullets: ['Gmail', 'Sheets', 'Drive'], detail: { problem: 'Work gets buried across inboxes and files.', solution: 'We implement structured automations and reporting in Workspace.', outcomes: ['Better team coordination', 'Stronger file trails', 'Less rework'], tools: ['Gmail', 'Sheets', 'Drive', 'Calendar'], ctaLabel: 'Request a quote', ctaHref: '/quote' } },
-  { id: 'dashboards', title: 'Dashboards', description: 'Live business visibility and KPIs.', icon: LayoutDashboard, status: 'Signal live', size: 'small', position: { x: 50, y: 22 }, previewBullets: ['KPIs', 'Bottlenecks', 'Trends'], detail: { problem: 'Leaders cannot see what is blocked or leaking.', solution: 'We build dashboards that show status, risk, and next actions.', outcomes: ['Faster decisions', 'Shared visibility', 'Clear priorities'], tools: ['Looker Studio', 'Sheets', 'Supabase'], ctaLabel: 'Request a quote', ctaHref: '/quote' } },
-  { id: 'work', title: 'Work', description: 'Proof from real client builds.', icon: Briefcase, status: 'Case studies', size: 'small', position: { x: 30, y: 26 }, previewBullets: ['Recent builds', 'Outcomes', 'Delivery quality'], detail: { problem: 'You need confidence before committing to a build.', solution: 'Review real implementation examples and outcomes.', outcomes: ['Higher trust', 'Clear expectations', 'Faster scoping'], tools: ['Case studies', 'Screenshots', 'Walkthroughs'], ctaLabel: 'View Work', ctaHref: '/work' } },
-  { id: 'training', title: 'Training', description: 'Enable teams to adopt systems.', icon: GraduationCap, status: 'Adoption', size: 'small', position: { x: 70, y: 42 }, previewBullets: ['SOPs', 'Team coaching', 'Rollout support'], detail: { problem: 'Great systems fail without team adoption.', solution: 'We provide practical training and handover playbooks.', outcomes: ['Faster onboarding', 'Stronger usage', 'Long-term value'], tools: ['Playbooks', 'Templates', 'Coaching'], ctaLabel: 'Request a quote', ctaHref: '/quote' } },
-  { id: 'pricing', title: 'Pricing', description: 'Build scope for your stage.', icon: DollarSign, status: 'Scope plans', size: 'small', position: { x: 36, y: 80 }, previewBullets: ['Quick wins', 'Core build', 'Scale support'], detail: { problem: 'Unclear scope delays decisions and progress.', solution: 'Select a build path aligned to your current bottleneck and goals.', outcomes: ['Clear costs', 'Defined phases', 'Confident next steps'], tools: ['Discovery', 'Scoping', 'Roadmaps'], ctaLabel: 'View pricing', ctaHref: '/pricing' } },
-  { id: 'contact', title: 'Contact', description: 'Start your build conversation.', icon: Contact, status: 'Open intake', size: 'small', position: { x: 74, y: 73 }, previewBullets: ['Request quote', 'Book discovery', 'Get plan'], detail: { problem: 'You know you need help but need clear next steps.', solution: 'Share your context and get a focused recommendation and quote path.', outcomes: ['Clear action plan', 'Fast response', 'Defined timeline'], tools: ['Discovery call', 'Quote request', 'Roadmap'], ctaLabel: 'Request a Quote', ctaHref: '/quote' } },
+  { id: 'work', title: 'Work', description: 'Proof from real client builds.', status: 'Case Studies', icon: Briefcase, href: '/work', position: { left: '18%', top: '18%' }, previewBullets: ['Recent builds', 'Delivery quality', 'Real outcomes'], detailBullets: ['Review recent implementation examples', 'Understand delivery quality before investing', 'See practical outcomes from real businesses'] },
+  { id: 'dashboards', title: 'Dashboards', description: 'Live business visibility and KPIs.', status: 'Signal Live', icon: LayoutDashboard, href: '/solutions/web-apps', position: { left: '43%', top: '12%' }, previewBullets: ['KPIs', 'Visibility', 'Executive reporting'], detailBullets: ['Track bottlenecks in real time', 'See response and delivery trends', 'Share one source of truth across teams'] },
+  { id: 'google-workspace', title: 'Google Workspace', description: 'Structured workflows in familiar tools.', status: 'Connected', icon: Building2, href: '/solutions/google-workspace', position: { left: '66%', top: '18%' }, previewBullets: ['Gmail', 'Sheets', 'Drive'], detailBullets: ['Connect existing Workspace tools', 'Automate repetitive operations', 'Improve file and workflow consistency'] },
+  { id: 'automation', title: 'Automation', description: 'Remove manual workflow overhead.', status: 'Live Routes', icon: Cog, href: '/solutions/workflow-automation', position: { left: '14%', top: '38%' }, previewBullets: ['Routing', 'Automation', 'Follow-up'], detailBullets: ['Automate repetitive handoffs', 'Reduce manual admin and delays', 'Keep every lead and task moving'] },
+  { id: 'internal-tools', title: 'Internal Tools', description: 'Portals, apps, and custom workflows.', status: 'Ops Control', icon: Wrench, href: '/solutions/web-apps', position: { left: '67%', top: '40%' }, previewBullets: ['Portals', 'Apps', 'Control'], detailBullets: ['Build tools for your exact workflow', 'Create role-based operational views', 'Replace patchwork systems with one layer'] },
+  { id: 'training', title: 'Training', description: 'Enable teams to adopt systems fast.', status: 'Adoption', icon: GraduationCap, href: '/education', position: { left: '66%', top: '58%' }, previewBullets: ['Enablement', 'SOPs', 'Rollout'], detailBullets: ['Upskill teams on practical AI workflows', 'Improve system adoption speed', 'Keep execution consistent after launch'] },
+  { id: 'support-assistant', title: 'Support Assistant', description: 'AI support for your teams and clients.', status: 'AI Enabled', icon: LifeBuoy, href: '/contact', position: { left: '4%', top: '58%' }, previewBullets: ['AI replies', 'Routing', 'Summaries'], detailBullets: ['Improve first-response speed', 'Route conversations intelligently', 'Maintain cleaner handoff context'] },
+  { id: 'websites', title: 'Websites', description: 'High-converting sites that generate leads.', status: 'Conversion Ready', icon: MonitorSmartphone, href: '/solutions/websites', position: { left: '18%', top: '68%' }, previewBullets: ['Conversion', 'Messaging', 'Capture'], detailBullets: ['Increase conversion from core pages', 'Connect website forms to operations', 'Support follow-up with clean data capture'] },
+  { id: 'services', title: 'Services', description: 'Core offerings and strategic systems.', status: 'Core Layer', icon: Layers, href: '/solutions', position: { left: '43%', top: '64%' }, previewBullets: ['Capture leads', 'Automate work', 'Track progress'], detailBullets: ['Capture more high-quality leads', 'Automate manual work', 'Track every opportunity', 'Report with clarity', 'Scale with confidence'] },
+  { id: 'pricing', title: 'Pricing', description: 'Clear, flexible pricing that scales.', status: 'Scope Plans', icon: DollarSign, href: '/pricing', position: { left: '32%', top: '79%' }, previewBullets: ['Clarity', 'Scope', 'Scale'], detailBullets: ['Choose scope based on bottleneck', 'Match investment to business stage', 'Plan growth without guesswork'] },
+  { id: 'process', title: 'Process', description: 'Proven process that delivers outcomes.', status: 'System Flow', icon: Route, href: '/about', position: { left: '54%', top: '79%' }, previewBullets: ['Discover', 'Build', 'Enable'], detailBullets: ['Clear discovery and scope alignment', 'Structured implementation and QA', 'Operational handover and enablement'] },
+  { id: 'contact', title: 'Contact', description: 'Start a conversation with our team.', status: 'Open Intake', icon: Contact, href: '/contact', position: { left: '74%', top: '76%' }, previewBullets: ['Quote', 'Discovery', 'Plan'], detailBullets: ['Get a clear next step quickly', 'Request a focused quote path', 'Start implementation with confidence'] },
 ];
