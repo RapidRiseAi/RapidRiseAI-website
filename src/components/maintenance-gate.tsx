@@ -25,6 +25,7 @@ export function MaintenanceGate() {
   const [hasAccess, setHasAccess] = useState(false);
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (window.sessionStorage.getItem(STORAGE_KEY) === 'granted') setHasAccess(true);
@@ -51,21 +52,45 @@ export function MaintenanceGate() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!code.trim() || isSubmitting) return;
     setError('');
-    const response = await fetch('/api/admin-access', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code }) });
-    const payload = (await response.json()) as { ok?: boolean; error?: string };
-    if (!response.ok || !payload.ok) return setError(payload.error ?? 'Invalid admin code.');
-    window.sessionStorage.setItem(STORAGE_KEY, 'granted');
-    setHasAccess(true);
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/admin-access', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code }) });
+      const rawPayload = await response.text();
+      let payload: { ok?: boolean; error?: string } = {};
+      try {
+        payload = rawPayload ? (JSON.parse(rawPayload) as { ok?: boolean; error?: string }) : {};
+      } catch {
+        payload = { error: rawPayload || response.statusText };
+      }
+
+      if (typeof payload.error === 'string' && /<html|<!doctype html/i.test(payload.error)) {
+        payload.error = 'Server error while validating code (Cloudflare worker exception). Please try again shortly.';
+      }
+
+      if (!response.ok || !payload.ok) {
+        setError(payload.error ?? `Access check failed (${response.status}).`);
+        return;
+      }
+      window.sessionStorage.setItem(STORAGE_KEY, 'granted');
+      setHasAccess(true);
+    } catch {
+      setError('Unable to verify admin code. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
-  if (hasAccess) return null;
-
   return (
-    <div className="fixed inset-0 z-[9999] min-h-screen w-screen overflow-y-auto bg-[#020617] text-white">
+    <div
+      className={`fixed inset-0 z-[9999] h-[100dvh] w-screen overflow-y-auto bg-[#020617] text-white transition-transform duration-500 ease-in ${hasAccess ? 'translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'}`}
+      aria-hidden={hasAccess}
+    >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_18%,rgba(34,211,238,0.2),transparent_42%),radial-gradient(circle_at_82%_22%,rgba(37,99,235,0.2),transparent_40%),linear-gradient(to_bottom,#020617,#050816_55%,#04060f)]" />
       <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(148,163,184,0.22)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.22)_1px,transparent_1px)] [background-size:46px_46px]" />
-      <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 py-8 sm:px-8 lg:px-10">
+      <div className="relative mx-auto flex min-h-full w-full max-w-6xl flex-col px-6 py-8 pb-20 sm:px-8 lg:px-10">
         <header className="flex flex-col items-start justify-between gap-3 border-b border-white/10 pb-6 sm:flex-row sm:items-center">
           <p className="text-xl font-semibold tracking-tight">{MAINTENANCE_CONFIG.companyName}</p>
           <span className="rounded-full border border-cyan-300/30 bg-cyan-400/10 px-4 py-2 text-xs font-semibold tracking-[0.14em] text-cyan-200">BUSINESS RUNNING AS NORMAL</span>
@@ -122,10 +147,10 @@ export function MaintenanceGate() {
         <footer className="pt-8 text-xs text-slate-400">© Rapid Rise AI. Business systems, automation, websites, and practical AI training.<br />Website upgrade in progress. We are still available for new enquiries and active client work.</footer>
       </div>
 
-      <div className="fixed bottom-2 left-2 h-10 w-10 opacity-0 hover:opacity-100 focus-within:opacity-100">
-        <form onSubmit={handleSubmit} className="flex w-[250px] items-center gap-2 rounded-md border border-white/25 bg-black/75 p-2">
-          <input type="password" value={code} onChange={(event) => setCode(event.target.value)} placeholder="Admin code" aria-label="Admin code" className="h-8 flex-1 rounded border border-white/20 bg-white/10 px-2 text-xs" />
-          <button type="submit" className="h-8 rounded bg-cyan-400 px-2 text-xs font-semibold text-slate-900">Enter</button>
+      <div className="fixed bottom-2 left-2 z-[10000] w-[310px] opacity-0 transition-opacity hover:opacity-100 focus-within:opacity-100">
+        <form onSubmit={handleSubmit} className="flex w-full items-center gap-2 rounded-md border border-white/25 bg-black/80 p-2">
+          <input type="password" value={code} onChange={(event) => setCode(event.target.value)} placeholder="Admin code" aria-label="Admin code" className="h-8 flex-1 rounded border border-white/20 bg-white/10 px-2 text-xs" autoComplete="off" />
+          <button type="submit" disabled={isSubmitting} className="h-8 rounded bg-cyan-400 px-2 text-xs font-semibold text-slate-900 disabled:cursor-not-allowed disabled:opacity-70">{isSubmitting ? 'Checking…' : 'Enter'}</button>
         </form>
         {error ? <p className="mt-1 text-[11px] text-rose-300">{error}</p> : null}
       </div>
