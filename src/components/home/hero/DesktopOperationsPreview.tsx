@@ -30,11 +30,11 @@ export function DesktopOperationsPreview() {
         const rect = event.currentTarget.getBoundingClientRect();
         setSpotlight({ x: ((event.clientX - rect.left) / rect.width) * 100, y: ((event.clientY - rect.top) / rect.height) * 100 });
       }}
-      className="relative rounded-[32px] border border-[rgba(94,185,255,0.34)] bg-[linear-gradient(180deg,#06111e_0%,#071423_54%,#081525_100%)] p-9 shadow-[0_0_0_1px_rgba(84,190,255,0.2),0_34px_112px_rgba(2,6,22,0.95),0_0_90px_rgba(12,61,167,0.24),inset_0_1px_0_rgba(219,234,254,0.1)] backdrop-blur-xl"
+      className="relative rounded-[27px] border border-[rgba(94,185,255,0.34)] bg-[linear-gradient(180deg,#06111e_0%,#071423_54%,#081525_100%)] p-[1.9rem] shadow-[0_0_0_1px_rgba(84,190,255,0.2),0_30px_95px_rgba(2,6,22,0.95),0_0_76px_rgba(12,61,167,0.24),inset_0_1px_0_rgba(219,234,254,0.1)] backdrop-blur-xl"
     >
-      <div className="pointer-events-none absolute inset-0 rounded-[32px] border border-[rgba(84,190,255,0.2)]" />
-      <div className="pointer-events-none absolute inset-x-9 top-0 h-px bg-gradient-to-r from-transparent via-cyan-100/58 to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-10 rounded-t-[32px] bg-[linear-gradient(180deg,rgba(56,189,248,0.1),transparent)]" />
+      <div className="pointer-events-none absolute inset-0 rounded-[27px] border border-[rgba(84,190,255,0.2)]" />
+      <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-cyan-100/58 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-8 rounded-t-[27px] bg-[linear-gradient(180deg,rgba(56,189,248,0.1),transparent)]" />
       <div
         className="pointer-events-none absolute inset-2 rounded-[26px] opacity-75 transition duration-500"
         style={{ background: `radial-gradient(circle at ${spotlight.x}% ${spotlight.y}%, rgba(56,189,248,0.22), rgba(2,6,23,0) 46%)` }}
@@ -43,12 +43,12 @@ export function DesktopOperationsPreview() {
       <div className="pointer-events-none absolute left-1/2 top-[calc(100%-18px)] h-10 w-[13%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(69,216,255,0.2),transparent_72%)] blur-[9px]" />
       <div className="pointer-events-none absolute left-1/2 top-[74%] h-40 w-[66%] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(20,112,230,0.2),transparent_72%)] blur-2xl" />
 
-      <p className="relative text-sm font-semibold tracking-[0.24em] text-slate-100/88">OPERATIONS PREVIEW</p>
+      <p className="relative text-[0.74rem] font-semibold tracking-[0.22em] text-slate-100/88">OPERATIONS PREVIEW</p>
 
-      <div className="relative mt-7 grid grid-cols-3 rounded-[17px] border border-[rgba(84,190,255,0.18)] bg-[linear-gradient(180deg,rgba(9,19,36,0.94)_0%,rgba(6,14,28,0.86)_100%)] py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),inset_0_-12px_30px_rgba(2,6,23,0.3)]">
+      <div className="relative mt-6 grid grid-cols-3 rounded-[14px] border border-[rgba(84,190,255,0.18)] bg-[linear-gradient(180deg,rgba(9,19,36,0.94)_0%,rgba(6,14,28,0.86)_100%)] py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),inset_0_-12px_30px_rgba(2,6,23,0.3)]">
         {heroMetrics.map((metric, index) => (
           <div key={metric.label} className="relative px-4 text-center">
-            <p className="text-[4.35rem] font-semibold leading-none tracking-[-0.04em] text-white">
+            <p className="text-[3.7rem] font-semibold leading-none tracking-[-0.04em] text-white">
               <span className={metric.accent ?? ''}>
                 {metric.suffix === ' min' ? (
                   <>
@@ -60,13 +60,13 @@ export function DesktopOperationsPreview() {
                 )}
               </span>
             </p>
-            <p className="mt-2 text-[1.85rem] font-medium text-slate-300">{metric.label}</p>
+            <p className="mt-1.5 text-[1.56rem] font-medium text-slate-300">{metric.label}</p>
             {index < heroMetrics.length - 1 ? <span className="pointer-events-none absolute right-0 top-1/2 h-[61%] w-px -translate-y-1/2 bg-[linear-gradient(180deg,transparent,rgba(125,142,176,0.18),rgba(148,163,184,0.48),rgba(125,142,176,0.18),transparent)]" /> : null}
           </div>
         ))}
       </div>
 
-      <div className="relative mt-9 h-[280px] overflow-hidden rounded-[19px] border border-cyan-200/24 bg-[linear-gradient(180deg,#050a14_0%,rgba(4,10,22,0.98)_48%,rgba(2,7,18,0.99)_100%)] shadow-[inset_0_1px_0_rgba(191,219,254,0.08)]">
+      <div className="relative mt-8 h-[238px] overflow-hidden rounded-[16px] border border-cyan-200/24 bg-[linear-gradient(180deg,#050a14_0%,rgba(4,10,22,0.98)_48%,rgba(2,7,18,0.99)_100%)] shadow-[inset_0_1px_0_rgba(191,219,254,0.08)]">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_22%_45%,rgba(38,190,255,0.2),transparent_42%),radial-gradient(circle_at_48%_50%,rgba(69,223,255,0.32),transparent_32%),radial-gradient(circle_at_78%_42%,rgba(46,140,255,0.22),transparent_36%),linear-gradient(180deg,rgba(3,7,14,0.2),rgba(1,4,10,0.55))]" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_52%_56%,rgba(69,223,255,0.14),transparent_30%),radial-gradient(ellipse_at_50%_56%,rgba(46,140,255,0.12),transparent_52%)]" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-[linear-gradient(180deg,transparent,rgba(2,8,22,0.72))]" />
@@ -212,7 +212,7 @@ export function DesktopOperationsPreview() {
           {!reduceMotion ? <motion.div className="pointer-events-none absolute top-0 h-full w-10 bg-gradient-to-r from-transparent via-cyan-100/32 to-transparent blur-[6px]" initial={{ opacity: 0 }} animate={{ opacity: 1, x: ['-14%', '108%'] }} transition={{ opacity: { duration: 0.35, delay: 1.55 }, x: { duration: 6.05, repeat: Infinity, ease: 'linear' } }} /> : null}
       </div>
 
-      <div className="mt-8 grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-center gap-5">
+      <div className="mt-7 grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-center gap-4">
         {processSteps.map((step, index) => {
           const Icon = step.icon;
           const accentRing = ['border-[rgba(69,223,255,0.5)]', 'border-[rgba(138,108,255,0.5)]', 'border-[rgba(88,166,255,0.52)]', 'border-[rgba(162,118,255,0.54)]'][index];
@@ -224,12 +224,12 @@ export function DesktopOperationsPreview() {
                 animate={reduceMotion ? undefined : { opacity: [0.85, 1, 0.85] }}
                 transition={{ duration: 3.8, delay: index * 0.22, repeat: Infinity }}
               >
-                <span className={`mx-auto inline-flex h-[4.32rem] w-[4.32rem] items-center justify-center rounded-full border ${accentRing} bg-[radial-gradient(circle,rgba(15,23,42,0.98),rgba(2,6,23,0.95))] shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_0_0_1px_rgba(56,189,248,0.14)] transition duration-300 group-hover:border-cyan-300/66 ${accentGlow}`}>
-                  <Icon strokeWidth={2.15} className={`h-[1.86rem] w-[1.86rem] ${step.accent} transition duration-300 group-hover:brightness-125`} />
+                <span className={`mx-auto inline-flex h-[3.7rem] w-[3.7rem] items-center justify-center rounded-full border ${accentRing} bg-[radial-gradient(circle,rgba(15,23,42,0.98),rgba(2,6,23,0.95))] shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_0_0_1px_rgba(56,189,248,0.14)] transition duration-300 group-hover:border-cyan-300/66 ${accentGlow}`}>
+                  <Icon strokeWidth={2.15} className={`h-[1.56rem] w-[1.56rem] ${step.accent} transition duration-300 group-hover:brightness-125`} />
                 </span>
-                <p className="mt-2.5 text-[1.86rem] text-slate-200 transition duration-300 group-hover:text-white">{step.label}</p>
+                <p className="mt-2 text-[1.58rem] text-slate-200 transition duration-300 group-hover:text-white">{step.label}</p>
               </motion.div>
-              {index < processSteps.length - 1 ? <span className="flex h-px w-14 items-center justify-center bg-gradient-to-r from-cyan-200/18 via-cyan-200/70 to-cyan-200/18 text-[0.75rem] text-cyan-100/82">→</span> : null}
+              {index < processSteps.length - 1 ? <span className="flex h-px w-12 items-center justify-center bg-gradient-to-r from-cyan-200/18 via-cyan-200/70 to-cyan-200/18 text-[0.65rem] text-cyan-100/82">→</span> : null}
             </div>
           );
         })}
