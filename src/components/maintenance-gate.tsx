@@ -59,10 +59,11 @@ export function MaintenanceGate() {
     setHasAccess(true);
   }
 
-  if (hasAccess) return null;
-
   return (
-    <div className="fixed inset-0 z-[9999] min-h-screen w-screen overflow-y-auto bg-[#020617] text-white">
+    <div
+      className={`fixed inset-0 z-[9999] min-h-screen w-screen overflow-y-auto bg-[#020617] text-white transition-transform duration-500 ease-in ${hasAccess ? 'translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'}`}
+      aria-hidden={hasAccess}
+    >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_18%,rgba(34,211,238,0.2),transparent_42%),radial-gradient(circle_at_82%_22%,rgba(37,99,235,0.2),transparent_40%),linear-gradient(to_bottom,#020617,#050816_55%,#04060f)]" />
       <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(148,163,184,0.22)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.22)_1px,transparent_1px)] [background-size:46px_46px]" />
       <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 py-8 sm:px-8 lg:px-10">
