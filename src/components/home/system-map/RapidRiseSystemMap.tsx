@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
-import { X } from 'lucide-react';
 import { systemLocations } from './SystemMapData';
 import { cn } from '@/lib/utils';
 
@@ -21,8 +20,6 @@ export function RapidRiseSystemMap() {
   const [selectedId, setSelectedId] = useState<string>('services');
 
   const hovered = useMemo(() => systemLocations.find((item) => item.id === hoveredId) ?? systemLocations[8], [hoveredId]);
-  const selected = useMemo(() => systemLocations.find((item) => item.id === selectedId) ?? systemLocations[8], [selectedId]);
-
   return (
     <section className='rapid-rise-system-map relative pb-20 pt-12'>
       <div className='mx-auto w-full max-w-[1500px] px-6'>
@@ -32,7 +29,7 @@ export function RapidRiseSystemMap() {
           <p className='mx-auto mt-5 max-w-3xl text-lg text-slate-300'>Choose a business area to see how we connect tools, workflows, dashboards, websites, and follow-ups into one operating layer.</p>
         </header>
 
-        <div className='relative mt-12 hidden min-h-[790px] w-full overflow-hidden rounded-[34px] border border-cyan-300/30 bg-[radial-gradient(circle_at_50%_52%,rgba(0,194,255,0.20),transparent_28%),radial-gradient(circle_at_78%_35%,rgba(72,64,255,0.10),transparent_30%),linear-gradient(180deg,#03101d_0%,#020711_100%)] shadow-[0_0_65px_rgba(31,140,255,0.14),inset_0_1px_0_rgba(255,255,255,0.05)] xl:block'>
+        <div className='relative mt-12 hidden h-[750px] w-full overflow-hidden rounded-[34px] border border-cyan-300/25 bg-[radial-gradient(circle_at_50%_52%,rgba(0,194,255,0.20),transparent_28%),radial-gradient(circle_at_78%_35%,rgba(72,64,255,0.10),transparent_30%),linear-gradient(180deg,#03101d_0%,#020711_100%)] shadow-[0_0_50px_rgba(31,140,255,0.14),inset_0_1px_0_rgba(255,255,255,0.05)] xl:block'>
           <svg className='pointer-events-none absolute inset-0 z-[1]' viewBox='0 0 100 100' preserveAspectRatio='none' aria-hidden>
             <defs>
               <linearGradient id='grid-fade' x1='0' y1='0' x2='0' y2='1'>
@@ -40,8 +37,8 @@ export function RapidRiseSystemMap() {
                 <stop offset='100%' stopColor='rgba(83,230,255,0.04)' />
               </linearGradient>
             </defs>
-            {[...Array(18)].map((_, i) => <line key={`v-${i}`} x1={-20 + i * 8} y1='8' x2={25 + i * 8} y2='100' stroke='url(#grid-fade)' strokeWidth='0.2' />)}
-            {[...Array(18)].map((_, i) => <line key={`d-${i}`} x1={120 - i * 8} y1='8' x2={75 - i * 8} y2='100' stroke='url(#grid-fade)' strokeWidth='0.2' />)}
+            {[...Array(44)].map((_, i) => <line key={`v-${i}`} x1={-40 + i * 4} y1='10' x2={10 + i * 4} y2='100' stroke='url(#grid-fade)' strokeWidth='0.08' />)}
+            {[...Array(44)].map((_, i) => <line key={`d-${i}`} x1={140 - i * 4} y1='10' x2={90 - i * 4} y2='100' stroke='url(#grid-fade)' strokeWidth='0.08' />)}
           </svg>
 
           <svg className='pointer-events-none absolute inset-0 z-[2]' viewBox='0 0 100 100' preserveAspectRatio='none' aria-hidden>
@@ -49,8 +46,8 @@ export function RapidRiseSystemMap() {
               const active = hoveredId === item.id || selectedId === item.id;
               const path = routeFor(item.position.left, item.position.top);
               return <g key={`route-${item.id}`}>
-                {active && <path d={path} stroke='rgba(31,140,255,0.18)' strokeWidth='0.95' fill='none' strokeLinecap='round' />}
-                <path d={path} stroke={active ? 'rgba(83,230,255,0.95)' : 'rgba(83,230,255,0.28)'} strokeWidth={active ? '0.35' : '0.2'} fill='none' strokeLinecap='round' />
+                {active && <path d={path} stroke='rgba(31,140,255,0.16)' strokeWidth='0.6' fill='none' strokeLinecap='round' />}
+                <path d={path} stroke={active ? 'rgba(83,230,255,0.9)' : 'rgba(83,230,255,0.2)'} strokeWidth={active ? '0.22' : '0.14'} fill='none' strokeLinecap='round' />
               </g>;
             })}
           </svg>
@@ -68,18 +65,18 @@ export function RapidRiseSystemMap() {
           {systemLocations.map((item) => {
             const Icon = item.icon;
             const active = hoveredId === item.id || selectedId === item.id;
-            return <Link key={item.id} href={item.href} onMouseEnter={() => setHoveredId(item.id)} onFocus={() => setHoveredId(item.id)} onClick={() => setSelectedId(item.id)} className={cn('absolute z-[5] block w-[220px] min-h-[112px] rounded-[20px] border bg-[linear-gradient(180deg,rgba(6,18,34,0.94),rgba(2,8,18,0.96))] p-4 text-left shadow-[0_14px_35px_rgba(0,0,0,0.45),0_0_22px_rgba(31,140,255,0.16),inset_0_1px_0_rgba(255,255,255,0.05)] transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80', active ? 'scale-[1.025] -translate-y-1.5 border-cyan-300/75' : 'border-cyan-300/35 hover:scale-[1.025] hover:-translate-y-1.5 hover:border-cyan-300/65')} style={{ left: item.position.left, top: item.position.top }}>
+            return <Link key={item.id} href={item.href} onMouseEnter={() => setHoveredId(item.id)} onFocus={() => setHoveredId(item.id)} onClick={() => setSelectedId(item.id)} className={cn('absolute z-[5] block w-[182px] min-h-[98px] rounded-[17px] border bg-[linear-gradient(180deg,rgba(6,18,34,0.94),rgba(2,8,18,0.96))] p-[14px] text-left shadow-[0_12px_30px_rgba(0,0,0,0.42),0_0_20px_rgba(31,140,255,0.14)] transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80', item.id === 'services' ? 'w-[198px] min-h-[110px]' : '', active ? 'scale-[1.02] -translate-y-1 border-cyan-300/75' : 'border-cyan-300/35 hover:scale-[1.02] hover:-translate-y-1 hover:border-cyan-300/70')} style={{ left: item.position.left, top: item.position.top }}>
               <span className='pointer-events-none absolute -bottom-[10px] left-[8%] right-[8%] h-3 rounded-full bg-cyan-300/40 blur-[14px]' />
               <div className='flex items-start justify-between gap-2'>
-                <span className='inline-flex h-11 w-11 items-center justify-center rounded-xl border border-cyan-300/45 bg-cyan-400/12'><Icon className='h-6 w-6 text-cyan-200' /></span>
-                <span className='rounded-full border border-cyan-300/35 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-cyan-100'>{item.status}</span>
+                <span className='inline-flex h-8 w-8 items-center justify-center rounded-lg border border-cyan-300/45 bg-cyan-400/12'><Icon className='h-4.5 w-4.5 text-cyan-200' /></span>
+                <span className='rounded-full border border-cyan-300/35 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.11em] text-cyan-100'>{item.status}</span>
               </div>
-              <p className='mt-2 text-3xl font-semibold text-white'>{item.title}</p>
-              <p className='mt-1 text-xl text-slate-300'>{item.description}</p>
+              <p className='mt-1.5 text-[17px] font-semibold text-white'>{item.title}</p>
+              <p className='mt-1 text-[12px] leading-tight text-slate-300'>{item.description}</p>
             </Link>;
           })}
 
-          <aside className='absolute bottom-7 left-7 z-[6] w-[280px] rounded-2xl border border-cyan-300/30 bg-slate-950/65 p-5 backdrop-blur-md'>
+          <aside className='absolute bottom-6 left-6 z-[6] w-[268px] rounded-[18px] border border-cyan-300/28 bg-slate-950/62 p-[18px] backdrop-blur-md'>
             <p className='text-xs font-semibold tracking-[0.16em] text-cyan-200'>SYSTEM PREVIEW</p>
             <p className='mt-2 text-lg text-slate-200'>{hovered.title}</p>
             <p className='mt-1 text-sm text-slate-300'>{hovered.description}</p>
@@ -87,13 +84,7 @@ export function RapidRiseSystemMap() {
             <p className='mt-4 text-xs text-cyan-100/90'>Click a destination to explore</p>
           </aside>
 
-          <aside className='absolute right-8 top-1/2 z-[7] hidden w-[320px] -translate-y-1/2 rounded-3xl border border-cyan-300/35 bg-slate-950/88 p-6 shadow-[0_0_45px_rgba(31,140,255,0.22),0_30px_80px_rgba(0,0,0,0.45)] 2xl:block'>
-            <div className='flex items-center justify-between'><p className='text-sm font-semibold uppercase tracking-[0.16em] text-amber-300'>{selected.title}</p><X className='h-5 w-5 text-slate-400' /></div>
-            <h3 className='mt-5 text-5xl font-semibold text-white'>{selected.title}</h3>
-            <p className='mt-3 text-lg text-slate-300'>{selected.description}</p>
-            <ul className='mt-4 space-y-2 text-base text-slate-200'>{selected.detailBullets.slice(0, 5).map((b) => <li key={b}>• {b}</li>)}</ul>
-            <Link href={selected.href} className='mt-6 inline-flex w-full items-center justify-center rounded-xl bg-amber-400 px-5 py-3 text-lg font-semibold text-slate-950'>Explore {selected.title}</Link>
-          </aside>
+          
 
           <div className='absolute bottom-4 left-1/2 z-[6] -translate-x-1/2 text-sm text-slate-300'>Hover to preview • Click to explore • Navigate to destinations</div>
         </div>
