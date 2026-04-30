@@ -34,7 +34,7 @@ export function MaintenanceGate() {
   useEffect(() => {
     if (hasAccess) return;
     const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'auto';
     return () => {
       document.body.style.overflow = originalOverflow;
     };
@@ -85,11 +85,11 @@ export function MaintenanceGate() {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] h-[100dvh] w-screen overflow-y-auto bg-[#020617] text-white transition-transform duration-500 ease-in ${hasAccess ? 'translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'}`}
+      className={`relative z-[9999] min-h-screen w-full bg-[#020617] text-white transition-transform duration-500 ease-in ${hasAccess ? 'translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'}`}
       aria-hidden={hasAccess}
     >
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_15%_18%,rgba(34,211,238,0.2),transparent_42%),radial-gradient(circle_at_82%_22%,rgba(37,99,235,0.2),transparent_40%),linear-gradient(to_bottom,#020617,#050816_55%,#04060f)]" />
-      <div className="pointer-events-none fixed inset-0 opacity-20 [background-image:linear-gradient(rgba(148,163,184,0.22)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.22)_1px,transparent_1px)] [background-size:46px_46px]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_18%,rgba(34,211,238,0.2),transparent_42%),radial-gradient(circle_at_82%_22%,rgba(37,99,235,0.2),transparent_40%),linear-gradient(to_bottom,#020617,#050816_55%,#04060f)]" />
+      <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(148,163,184,0.22)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.22)_1px,transparent_1px)] [background-size:46px_46px]" />
       <div className="relative mx-auto flex min-h-full w-full max-w-6xl flex-col px-6 py-8 pb-24 sm:px-8 lg:px-10">
         <header className="flex flex-col items-start justify-between gap-3 border-b border-white/10 pb-6 sm:flex-row sm:items-center">
           <p className="text-xl font-semibold tracking-tight">{MAINTENANCE_CONFIG.companyName}</p>
@@ -147,7 +147,7 @@ export function MaintenanceGate() {
         <footer className="pt-8 text-xs text-slate-400">© Rapid Rise AI. Business systems, automation, websites, and practical AI training.<br />Website upgrade in progress. We are still available for new enquiries and active client work.</footer>
       </div>
 
-      <div className="fixed bottom-0 left-0 z-[10000] w-[310px] p-2 opacity-0 transition-opacity hover:opacity-100 focus-within:opacity-100">
+      <div className="absolute bottom-0 left-0 z-[10000] w-[310px] p-2 opacity-0 transition-opacity hover:opacity-100 focus-within:opacity-100">
         <form onSubmit={handleSubmit} className="flex w-full items-center gap-2 rounded-md border border-white/25 bg-black/80 p-2">
           <input type="password" value={code} onChange={(event) => setCode(event.target.value)} placeholder="Admin code" aria-label="Admin code" className="h-8 flex-1 rounded border border-white/20 bg-white/10 px-2 text-xs" autoComplete="off" />
           <button type="submit" disabled={isSubmitting} className="h-8 rounded bg-cyan-400 px-2 text-xs font-semibold text-slate-900 disabled:cursor-not-allowed disabled:opacity-70">{isSubmitting ? 'Checking…' : 'Enter'}</button>
