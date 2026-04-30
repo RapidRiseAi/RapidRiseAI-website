@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { systemLocations } from './SystemMapData';
 import { cn } from '@/lib/utils';
+import { useRouter } from 'next/navigation';
 
 const hub = { x: 50, y: 46 };
 const sizeClasses = {
@@ -21,6 +22,7 @@ const routePath = (x: number, y: number) => {
 };
 
 export function RapidRiseSystemMap() {
+  const router = useRouter();
   const [activeId, setActiveId] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
@@ -78,7 +80,10 @@ export function RapidRiseSystemMap() {
                 type='button'
                 onMouseEnter={() => setActiveId(location.id)}
                 onFocus={() => setActiveId(location.id)}
-                onClick={() => setSelectedId(location.id)}
+                onClick={() => {
+                  setSelectedId(location.id);
+                  window.setTimeout(() => router.push(location.detail.ctaHref), 180);
+                }}
                 className={cn('pointer-events-auto absolute z-30 -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-[18px] border bg-[linear-gradient(170deg,rgba(8,18,38,0.96),rgba(4,10,22,0.96))] p-2.5 text-left shadow-[0_14px_24px_rgba(0,0,0,0.46)] transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/70', sizeClasses[location.size], selectedId && selectedId !== location.id ? 'opacity-60' : 'opacity-100', highlighted ? 'translate-y-[-53%] scale-[1.015] border-cyan-300/80 shadow-[0_0_28px_rgba(83,230,255,0.32)]' : 'border-cyan-300/25 hover:translate-y-[-53%] hover:scale-[1.015] hover:border-cyan-300/65')}
                 style={{ left: `${location.position.x}%`, top: `${location.position.y}%` }}
                 aria-label={`Open ${location.title} system details`}
@@ -111,7 +116,7 @@ export function RapidRiseSystemMap() {
             <ul className='mt-3 list-disc space-y-1 pl-5 text-sm text-slate-200'>{selected.detail.outcomes.map((outcome) => <li key={outcome}>{outcome}</li>)}</ul>
             <p className='mt-3 text-xs uppercase tracking-[0.14em] text-cyan-100'>{selected.detail.tools.join(' • ')}</p>
             {selected.id === 'services' && selected.children && <div className='mt-4 rounded-2xl border border-cyan-300/25 bg-slate-900/70 p-3'><p className='text-xs font-semibold uppercase tracking-[0.14em] text-cyan-200'>Service modules</p><ul className='mt-2 space-y-2'>{selected.children.map((service) => <li key={service.id} className='rounded-xl border border-cyan-300/20 bg-slate-950/75 px-3 py-2 text-sm text-slate-200'><p className='font-medium'>{service.title}</p><p className='text-xs text-slate-300'>{service.description}</p></li>)}</ul></div>}
-            <Link href='/quote' className='mt-4 inline-flex rounded-xl border border-cyan-300/45 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-100 hover:bg-cyan-400/20'>Request a Quote</Link>
+            <Link href={selected.detail.ctaHref} className='mt-4 inline-flex rounded-xl border border-cyan-300/45 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-100 hover:bg-cyan-400/20'>Request a Quote</Link>
           </motion.aside>}
           </AnimatePresence>
         </div>
