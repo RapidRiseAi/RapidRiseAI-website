@@ -65,6 +65,11 @@ export function MaintenanceGate() {
       } catch {
         payload = { error: rawPayload || response.statusText };
       }
+
+      if (typeof payload.error === 'string' && /<html|<!doctype html/i.test(payload.error)) {
+        payload.error = 'Server error while validating code (Cloudflare worker exception). Please try again shortly.';
+      }
+
       if (!response.ok || !payload.ok) {
         setError(payload.error ?? `Access check failed (${response.status}).`);
         return;
@@ -80,12 +85,12 @@ export function MaintenanceGate() {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] min-h-screen w-screen overflow-y-auto bg-[#020617] text-white transition-transform duration-500 ease-in ${hasAccess ? 'translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'}`}
+      className={`fixed inset-0 z-[9999] h-[100dvh] w-screen overflow-y-auto bg-[#020617] text-white transition-transform duration-500 ease-in ${hasAccess ? 'translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'}`}
       aria-hidden={hasAccess}
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_18%,rgba(34,211,238,0.2),transparent_42%),radial-gradient(circle_at_82%_22%,rgba(37,99,235,0.2),transparent_40%),linear-gradient(to_bottom,#020617,#050816_55%,#04060f)]" />
       <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(148,163,184,0.22)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.22)_1px,transparent_1px)] [background-size:46px_46px]" />
-      <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 py-8 sm:px-8 lg:px-10">
+      <div className="relative mx-auto flex min-h-full w-full max-w-6xl flex-col px-6 py-8 pb-20 sm:px-8 lg:px-10">
         <header className="flex flex-col items-start justify-between gap-3 border-b border-white/10 pb-6 sm:flex-row sm:items-center">
           <p className="text-xl font-semibold tracking-tight">{MAINTENANCE_CONFIG.companyName}</p>
           <span className="rounded-full border border-cyan-300/30 bg-cyan-400/10 px-4 py-2 text-xs font-semibold tracking-[0.14em] text-cyan-200">BUSINESS RUNNING AS NORMAL</span>
