@@ -58,7 +58,7 @@ export function RapidRiseSystemMap() {
     <style jsx>{`
       
       .floor-perspective{perspective:1600px;transform-style:preserve-3d}
-      .floor-plane{position:absolute;left:50%;top:55%;width:220%;height:175%;transform:translate(-50%,-50%) rotateX(60deg) rotateZ(45deg) scale(1.58);transform-style:preserve-3d;border:1px solid rgba(90,230,255,.24);background:radial-gradient(circle at 52% 50%, rgba(50,230,255,.15), rgba(5,18,36,.72) 56%, rgba(2,8,18,.9) 100%);box-shadow:0 0 50px rgba(30,144,255,.2), inset 0 0 40px rgba(50,230,255,.08)}
+      .floor-plane{position:absolute;left:54.5%;top:53.8%;width:270%;height:185%;transform:translate(-50%,-50%) rotateX(60deg) rotateZ(45deg) scale(1.62);transform-origin:42% 54%;transform-style:preserve-3d;border:1px solid rgba(90,230,255,.24);background:radial-gradient(circle at 52% 50%, rgba(50,230,255,.15), rgba(5,18,36,.72) 56%, rgba(2,8,18,.9) 100%);box-shadow:0 0 50px rgba(30,144,255,.2), inset 0 0 40px rgba(50,230,255,.08)}
       .floor-grid{position:absolute;inset:0;background-image:linear-gradient(0deg, rgba(50,170,255,.10) 1px, transparent 1px),linear-gradient(90deg, rgba(50,170,255,.10) 1px, transparent 1px);background-size:30px 30px;opacity:.8;mix-blend-mode:screen}
       .floor-grid-2{background-image:linear-gradient(0deg, rgba(100,235,255,.16) 1px, transparent 1px),linear-gradient(90deg, rgba(100,235,255,.16) 1px, transparent 1px);background-size:150px 150px;opacity:.4}
       .floor-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center, transparent 45%, rgba(1,6,14,.45) 100%)}
