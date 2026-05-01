@@ -5,6 +5,10 @@ import { useMemo, useState, type CSSProperties } from 'react';
 import { accentStyles, systemMapDestinations } from './SystemMapData';
 const tools = [Bot, Workflow, BarChart3, Globe, Wrench, GraduationCap, DollarSign, Contact, Star, Eye];
 const nodes = Array.from({ length: 180 }, (_, i) => ({ x: 40 + ((i * 73) % 1120), y: 120 + ((i * 59) % 530), r: 1.2 + (i % 5) * 0.24, o: 0.25 + ((i * 7) % 60) / 100 }));
+const floorPolygonPoints = '40,120 420,25 1540,210 1640,800 -80,770';
+const minorGridOffsets = Array.from({ length: Math.floor((2400 - (-1400)) / 34) + 1 }, (_, i) => -1400 + i * 34);
+const majorGridOffsets = Array.from({ length: Math.floor((2400 - (-1400)) / 136) + 1 }, (_, i) => -1400 + i * 136);
+const floorDots = Array.from({ length: 10 }, (_, r) => Array.from({ length: 19 }, (_, c) => ({ x: 80 + c * 82, y: 110 + r * 72 }))).flat();
 
 // ACTIVE_RENDERED_SYSTEM_MAP_COMPONENT
 export function RapidRiseSystemMap() {
@@ -18,14 +22,31 @@ export function RapidRiseSystemMap() {
     <div className='map-stage relative mx-auto hidden h-[940px] w-[calc(100%-48px)] max-w-[1580px] overflow-hidden rounded-[34px] border border-[rgba(50,230,255,0.34)] lg:block'>
       <div className='absolute inset-x-0 top-0 h-[760px] overflow-hidden'>
         <div className='absolute inset-y-0 left-0 right-0 bg-[radial-gradient(circle_at_50%_48%,rgba(50,230,255,0.22),transparent_28%)] xl:right-[340px]'>
-          {/* ACTIVE_SINGLE_SYSTEM_MAP_FLOOR: CSS 3D floor viewport + transformed floor surface */}
-          <div className='floor-perspective pointer-events-none absolute inset-0 z-[1]'>
-            <div className='floor-plane'>
-              {/* ACTIVE_SYSTEM_MAP_GRID_LAYER */}
-              <div className='floor-grid' />
-              {/* REMOVED_DUPLICATE_GRID_LAYER: consolidated major+minor grid into single layer */}
-              <div className='floor-vignette' />
-            </div>
+          {/* REMOVED_OLD_DUPLICATE_PLANE / REMOVED_OLD_EXTENSION_PLANE / REMOVED_OLD_GRID_OVERLAY */}
+          {/* ACTIVE_SINGLE_FLOOR_SYSTEM */}
+          <div className='pointer-events-none absolute inset-0 z-[1] overflow-hidden'>
+            <svg className='map-floor-svg absolute inset-0 h-full w-full' viewBox='0 0 1600 900' preserveAspectRatio='none'>
+              <defs>
+                <clipPath id='systemMapFloorClip'>
+                  <polygon points={floorPolygonPoints} />
+                </clipPath>
+                <radialGradient id='floorGlow' cx='44%' cy='54%' r='44%'>
+                  <stop offset='0%' stopColor='rgba(50,230,255,0.20)' />
+                  <stop offset='58%' stopColor='rgba(20,90,180,0.14)' />
+                  <stop offset='100%' stopColor='rgba(2,8,18,0.04)' />
+                </radialGradient>
+              </defs>
+
+              <polygon points={floorPolygonPoints} fill='rgba(4,18,38,0.88)' stroke='rgba(90,230,255,0.22)' strokeWidth='1.1' />
+              <g clipPath='url(#systemMapFloorClip)'>
+                {minorGridOffsets.map((o) => <line key={`mA-${o}`} x1={o} y1='-700' x2={o + 2100} y2='1400' stroke='rgba(53,150,255,0.10)' strokeWidth='1' />)}
+                {minorGridOffsets.map((o) => <line key={`mB-${o}`} x1={o} y1='1400' x2={o + 2100} y2='-700' stroke='rgba(53,150,255,0.10)' strokeWidth='1' />)}
+                {majorGridOffsets.map((o) => <line key={`MA-${o}`} x1={o} y1='-760' x2={o + 2200} y2='1450' stroke='rgba(87,220,255,0.20)' strokeWidth='1.2' />)}
+                {majorGridOffsets.map((o) => <line key={`MB-${o}`} x1={o} y1='1450' x2={o + 2200} y2='-760' stroke='rgba(87,220,255,0.20)' strokeWidth='1.2' />)}
+                {floorDots.map((d, i) => <circle key={`dot-${i}`} cx={d.x} cy={d.y} r='1.6' fill='rgba(95,225,255,0.35)' />)}
+                <rect x='-160' y='-120' width='2000' height='1180' fill='url(#floorGlow)' />
+              </g>
+            </svg>
             <svg className='absolute inset-0 h-full w-full' viewBox='0 0 1200 760' preserveAspectRatio='none'>
               {nodes.map((n, i) => <circle key={i} cx={n.x} cy={n.y} r={n.r} fill={i % 11 === 0 ? 'rgba(139,92,255,.56)' : i % 16 === 0 ? 'rgba(46,139,255,.56)' : i % 19 === 0 ? 'rgba(51,230,138,.40)' : 'rgba(50,230,255,.48)'} opacity={n.o} />)}
               <ellipse cx='600' cy='620' rx='520' ry='86' fill='rgba(46,139,255,0.14)' filter='blur(24px)' />
@@ -58,10 +79,7 @@ export function RapidRiseSystemMap() {
 
     <style jsx>{`
       
-      .floor-perspective{perspective:1600px;transform-style:preserve-3d}
-      .floor-plane{position:absolute;left:55.8%;top:50.2%;width:318%;height:210%;transform:translate(-50%,-50%) rotateX(60deg) rotateZ(45deg) scale(1.66);transform-origin:36% 57%;transform-style:preserve-3d;border:none;background:radial-gradient(circle at 52% 50%, rgba(50,230,255,.15), rgba(5,18,36,.72) 56%, rgba(2,8,18,.9) 100%);box-shadow:0 0 50px rgba(30,144,255,.2), inset 0 0 40px rgba(50,230,255,.08)}
-      .floor-grid{position:absolute;inset:0;background-image:linear-gradient(0deg, rgba(45,160,255,.14) 1px, transparent 1px),linear-gradient(90deg, rgba(45,160,255,.14) 1px, transparent 1px),linear-gradient(0deg, rgba(85,220,255,.22) 1px, transparent 1px),linear-gradient(90deg, rgba(85,220,255,.22) 1px, transparent 1px);background-size:26px 26px,26px 26px,114px 114px,114px 114px;background-repeat:repeat;opacity:.9;mix-blend-mode:screen}
-      .floor-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at 28% 66%, transparent 62%, rgba(1,6,14,.22) 100%)}
+      .map-floor-svg{filter:drop-shadow(0 0 24px rgba(30,144,255,0.2))}
 
       .map-stage{background:radial-gradient(circle at 38% 43%, rgba(50,230,255,0.18), transparent 30%),radial-gradient(circle at 44% 75%, rgba(20,121,255,0.18), transparent 32%),radial-gradient(circle at 70% 55%, rgba(139,92,255,0.10), transparent 28%),linear-gradient(180deg,#03101D 0%,#020711 100%);box-shadow:0 0 0 1px rgba(255,255,255,0.035) inset,0 45px 110px rgba(0,0,0,0.58),0 0 95px rgba(20,121,255,0.18)}
       .hub{animation:breath 5s ease-in-out infinite}
