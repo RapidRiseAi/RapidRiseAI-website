@@ -67,11 +67,12 @@ export function RapidRiseSystemMap() {
 
       .map-stage{background:radial-gradient(circle at 38% 43%, rgba(50,230,255,0.18), transparent 30%),radial-gradient(circle at 44% 75%, rgba(20,121,255,0.18), transparent 32%),radial-gradient(circle at 70% 55%, rgba(139,92,255,0.10), transparent 28%),linear-gradient(180deg,#03101D 0%,#020711 100%);box-shadow:0 0 0 1px rgba(255,255,255,0.035) inset,0 45px 110px rgba(0,0,0,0.58),0 0 95px rgba(20,121,255,0.18)}
       .hub{animation:breath 5s ease-in-out infinite}
-      .map-card{border:1px solid color-mix(in srgb,var(--accent) 55%, rgba(255,255,255,0.08));background:linear-gradient(180deg, rgba(7,20,35,0.98), rgba(3,11,20,0.99));box-shadow:0 22px 45px rgba(0,0,0,0.52),0 0 30px var(--accent-glow),inset 0 1px 0 rgba(255,255,255,0.06);transition:all .22s ease}
-      .map-card:before{content:'';position:absolute;left:14%;right:14%;bottom:-5px;height:4px;border-radius:999px;background:var(--accent);box-shadow:0 0 18px var(--accent);opacity:.85}
-      .map-card:after{content:'';position:absolute;left:12%;right:12%;bottom:-14px;height:18px;border-radius:999px;background:var(--accent);filter:blur(13px);opacity:.36}
+      .map-card{border:1px solid color-mix(in srgb,var(--accent) 68%, rgba(255,255,255,0.08));background:linear-gradient(180deg, rgba(8,22,40,0.96), rgba(3,10,20,0.985));box-shadow:0 18px 32px rgba(0,0,0,0.44),0 36px 52px rgba(0,0,0,0.36),0 0 28px color-mix(in srgb,var(--accent) 22%, transparent),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 24px rgba(12,52,84,0.24);transform:translate(-50%,-50%) perspective(900px) rotateX(9deg);transform-origin:center 70%;transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease}
+      .map-card:before{content:'';position:absolute;left:10%;right:10%;bottom:-7px;height:6px;border-radius:999px;background:color-mix(in srgb,var(--accent) 78%, transparent);box-shadow:0 0 20px color-mix(in srgb,var(--accent) 70%, transparent);opacity:.95}
+      .map-card:after{content:'';position:absolute;left:11%;right:11%;bottom:-16px;height:16px;border-radius:999px;background:color-mix(in srgb,var(--accent) 58%, transparent);filter:blur(11px);opacity:.52}
+      .badge{box-shadow:0 8px 18px rgba(0,0,0,0.35),0 0 16px color-mix(in srgb,var(--accent) 35%, transparent),inset 0 1px 0 rgba(255,255,255,0.14)}
       .pill{border:1px solid}
-      .map-card:hover,.map-card:focus-visible{transform:translate(-50%,-50%) scale(calc(var(--scale) * 1.025)) translateY(-6px);z-index:35;outline:none}
+      .map-card:hover,.map-card:focus-visible{transform:translate(-50%,-50%) perspective(900px) rotateX(9deg) scale(calc(var(--scale) * 1.04)) translateY(-7px);box-shadow:0 24px 38px rgba(0,0,0,0.48),0 42px 62px rgba(0,0,0,0.38),0 0 36px color-mix(in srgb,var(--accent) 34%, transparent),inset 0 1px 0 rgba(255,255,255,0.14);z-index:35;outline:none}
       .services-panel{box-shadow:0 22px 70px rgba(0,0,0,0.58),0 0 50px rgba(244,197,58,0.15),inset 0 1px 0 rgba(255,255,255,0.06)}
       @keyframes breath{0%,100%{filter:brightness(1)}50%{filter:brightness(1.08)}}
     `}</style>
