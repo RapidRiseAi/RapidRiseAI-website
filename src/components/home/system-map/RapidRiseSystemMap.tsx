@@ -6,6 +6,7 @@ import { accentStyles, systemMapDestinations } from './SystemMapData';
 const tools = [Bot, Workflow, BarChart3, Globe, Wrench, GraduationCap, DollarSign, Contact, Star, Eye];
 const nodes = Array.from({ length: 180 }, (_, i) => ({ x: 40 + ((i * 73) % 1120), y: 120 + ((i * 59) % 530), r: 1.2 + (i % 5) * 0.24, o: 0.25 + ((i * 7) % 60) / 100 }));
 
+// ACTIVE_RENDERED_SYSTEM_MAP_COMPONENT
 export function RapidRiseSystemMap() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const activeId = hoveredId ?? 'services';
@@ -17,6 +18,7 @@ export function RapidRiseSystemMap() {
     <div className='map-stage relative mx-auto hidden h-[940px] w-[calc(100%-48px)] max-w-[1580px] overflow-hidden rounded-[34px] border border-[rgba(50,230,255,0.34)] lg:block'>
       <div className='absolute inset-x-0 top-0 h-[760px] overflow-hidden'>
         <div className='absolute inset-y-0 left-0 right-0 bg-[radial-gradient(circle_at_50%_48%,rgba(50,230,255,0.22),transparent_28%)] xl:right-[340px]'>
+          {/* ACTIVE_RENDERED_FLOOR_PLANE_LAYER: CSS 3D floor viewport + transformed floor surface */}
           <div className='floor-perspective pointer-events-none absolute inset-0 z-[1]'>
             <div className='floor-plane'>
               <div className='floor-grid' />
@@ -55,8 +57,8 @@ export function RapidRiseSystemMap() {
 
     <style jsx>{`
       
-      .floor-perspective{perspective:1650px;transform-style:preserve-3d}
-      .floor-plane{position:absolute;left:50%;top:52%;width:128%;height:128%;transform:translate(-50%,-50%) rotateX(67deg) rotateZ(45deg) scale(1.22);transform-style:preserve-3d;border:1px solid rgba(90,230,255,.24);background:radial-gradient(circle at 52% 50%, rgba(50,230,255,.15), rgba(5,18,36,.72) 56%, rgba(2,8,18,.9) 100%);box-shadow:0 0 50px rgba(30,144,255,.2), inset 0 0 40px rgba(50,230,255,.08)}
+      .floor-perspective{perspective:1500px;transform-style:preserve-3d}
+      .floor-plane{position:absolute;left:50%;top:50%;width:185%;height:165%;transform:translate(-50%,-50%) rotateX(66deg) rotateZ(45deg) scale(1.45);transform-style:preserve-3d;border:1px solid rgba(90,230,255,.24);background:radial-gradient(circle at 52% 50%, rgba(50,230,255,.15), rgba(5,18,36,.72) 56%, rgba(2,8,18,.9) 100%);box-shadow:0 0 50px rgba(30,144,255,.2), inset 0 0 40px rgba(50,230,255,.08)}
       .floor-grid{position:absolute;inset:0;background-image:linear-gradient(0deg, rgba(50,170,255,.10) 1px, transparent 1px),linear-gradient(90deg, rgba(50,170,255,.10) 1px, transparent 1px);background-size:30px 30px;opacity:.8;mix-blend-mode:screen}
       .floor-grid-2{background-image:linear-gradient(0deg, rgba(100,235,255,.16) 1px, transparent 1px),linear-gradient(90deg, rgba(100,235,255,.16) 1px, transparent 1px);background-size:150px 150px;opacity:.4}
       .floor-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center, transparent 45%, rgba(1,6,14,.45) 100%)}
