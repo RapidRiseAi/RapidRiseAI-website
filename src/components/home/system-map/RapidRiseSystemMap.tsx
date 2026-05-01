@@ -18,9 +18,10 @@ export function RapidRiseSystemMap() {
     <div className='map-stage relative mx-auto hidden h-[940px] w-[calc(100%-48px)] max-w-[1580px] overflow-hidden rounded-[34px] border border-[rgba(50,230,255,0.34)] lg:block'>
       <div className='absolute inset-x-0 top-0 h-[760px] overflow-hidden'>
         <div className='absolute inset-y-0 left-0 right-0 bg-[radial-gradient(circle_at_50%_48%,rgba(50,230,255,0.22),transparent_28%)] xl:right-[340px]'>
-          {/* ACTIVE_KEEP_SINGLE_FLOOR_LAYER: restored pre-reset CSS 3D floor viewport + transformed floor surface */}
+          {/* ACTIVE_SINGLE_PLANE_KEEP: restored pre-reset CSS 3D floor viewport + transformed floor surface */}
           <div className='floor-perspective pointer-events-none absolute inset-0 z-[1]'>
             <div className='floor-plane'>
+              {/* REMOVED_DUPLICATE_PLANE: removed hard-reset SVG floor system and extra floor silhouette */}
               {/* ACTIVE_SYSTEM_MAP_GRID_LAYER */}
               {/* REMOVED_DUPLICATE_FLOOR_LAYER: removed hard-reset SVG floor system */}
               <div className='floor-grid' />
@@ -29,7 +30,7 @@ export function RapidRiseSystemMap() {
             </div>
             <svg className='absolute inset-0 h-full w-full' viewBox='0 0 1200 760' preserveAspectRatio='none'>
               {nodes.map((n, i) => <circle key={i} cx={n.x} cy={n.y} r={n.r} fill={i % 11 === 0 ? 'rgba(139,92,255,.56)' : i % 16 === 0 ? 'rgba(46,139,255,.56)' : i % 19 === 0 ? 'rgba(51,230,138,.40)' : 'rgba(50,230,255,.48)'} opacity={n.o} />)}
-              <ellipse cx='600' cy='620' rx='520' ry='86' fill='rgba(46,139,255,0.14)' filter='blur(24px)' />
+              {/* REMOVED_DUPLICATE_GRID_LAYER: removed secondary floor-like ellipse glow */}
             </svg>
           </div>
 
@@ -60,7 +61,7 @@ export function RapidRiseSystemMap() {
     <style jsx>{`
       
       .floor-perspective{perspective:1600px;transform-style:preserve-3d}
-      .floor-plane{position:absolute;left:55.8%;top:50.2%;width:318%;height:210%;transform:translate(-50%,-50%) rotateX(60deg) rotateZ(45deg) scale(1.66);transform-origin:36% 57%;transform-style:preserve-3d;border:none;background:radial-gradient(circle at 52% 50%, rgba(50,230,255,.15), rgba(5,18,36,.72) 56%, rgba(2,8,18,.9) 100%);box-shadow:0 0 50px rgba(30,144,255,.2), inset 0 0 40px rgba(50,230,255,.08)}
+      .floor-plane{position:absolute;left:57.5%;top:49.4%;width:360%;height:230%;transform:translate(-50%,-50%) rotateX(60deg) rotateZ(45deg) scale(1.66);transform-origin:36% 57%;transform-style:preserve-3d;border:none;background:radial-gradient(circle at 52% 50%, rgba(50,230,255,.15), rgba(5,18,36,.72) 56%, rgba(2,8,18,.9) 100%);box-shadow:0 0 50px rgba(30,144,255,.2), inset 0 0 40px rgba(50,230,255,.08)}
       .floor-grid{position:absolute;inset:0;background-image:linear-gradient(0deg, rgba(45,160,255,.14) 1px, transparent 1px),linear-gradient(90deg, rgba(45,160,255,.14) 1px, transparent 1px),linear-gradient(0deg, rgba(85,220,255,.22) 1px, transparent 1px),linear-gradient(90deg, rgba(85,220,255,.22) 1px, transparent 1px);background-size:26px 26px,26px 26px,114px 114px,114px 114px;background-repeat:repeat;opacity:.9;mix-blend-mode:screen}
       .floor-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at 28% 66%, transparent 62%, rgba(1,6,14,.22) 100%)}
 
