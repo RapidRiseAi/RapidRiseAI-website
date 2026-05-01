@@ -25,7 +25,7 @@ export function RapidRiseSystemMap() {
             </div>
             <svg className='absolute inset-0 h-full w-full' viewBox='0 0 1200 760' preserveAspectRatio='none'>
               {nodes.map((n, i) => <circle key={i} cx={n.x} cy={n.y} r={n.r} fill={i % 11 === 0 ? 'rgba(139,92,255,.56)' : i % 16 === 0 ? 'rgba(46,139,255,.56)' : i % 19 === 0 ? 'rgba(51,230,138,.40)' : 'rgba(50,230,255,.48)'} opacity={n.o} />)}
-              <ellipse cx='600' cy='602' rx='450' ry='70' fill='rgba(46,139,255,0.14)' filter='blur(24px)' />
+              <ellipse cx='600' cy='620' rx='520' ry='86' fill='rgba(46,139,255,0.14)' filter='blur(24px)' />
             </svg>
           </div>
 
@@ -55,10 +55,10 @@ export function RapidRiseSystemMap() {
 
     <style jsx>{`
       
-      .floor-perspective{perspective:1400px;transform-style:preserve-3d}
-      .floor-plane{position:absolute;left:50%;top:53%;width:92%;height:78%;transform:translate(-50%,-50%) rotateX(66deg) rotateZ(45deg);transform-style:preserve-3d;border:1px solid rgba(90,230,255,.24);background:radial-gradient(circle at 52% 50%, rgba(50,230,255,.15), rgba(5,18,36,.72) 56%, rgba(2,8,18,.9) 100%);box-shadow:0 0 50px rgba(30,144,255,.2), inset 0 0 40px rgba(50,230,255,.08)}
-      .floor-grid{position:absolute;inset:0;background-image:linear-gradient(0deg, rgba(50,170,255,.10) 1px, transparent 1px),linear-gradient(90deg, rgba(50,170,255,.10) 1px, transparent 1px);background-size:34px 34px;opacity:.8;mix-blend-mode:screen}
-      .floor-grid-2{background-image:linear-gradient(0deg, rgba(100,235,255,.16) 1px, transparent 1px),linear-gradient(90deg, rgba(100,235,255,.16) 1px, transparent 1px);background-size:170px 170px;opacity:.4}
+      .floor-perspective{perspective:1650px;transform-style:preserve-3d}
+      .floor-plane{position:absolute;left:50%;top:52%;width:128%;height:128%;transform:translate(-50%,-50%) rotateX(67deg) rotateZ(45deg) scale(1.22);transform-style:preserve-3d;border:1px solid rgba(90,230,255,.24);background:radial-gradient(circle at 52% 50%, rgba(50,230,255,.15), rgba(5,18,36,.72) 56%, rgba(2,8,18,.9) 100%);box-shadow:0 0 50px rgba(30,144,255,.2), inset 0 0 40px rgba(50,230,255,.08)}
+      .floor-grid{position:absolute;inset:0;background-image:linear-gradient(0deg, rgba(50,170,255,.10) 1px, transparent 1px),linear-gradient(90deg, rgba(50,170,255,.10) 1px, transparent 1px);background-size:30px 30px;opacity:.8;mix-blend-mode:screen}
+      .floor-grid-2{background-image:linear-gradient(0deg, rgba(100,235,255,.16) 1px, transparent 1px),linear-gradient(90deg, rgba(100,235,255,.16) 1px, transparent 1px);background-size:150px 150px;opacity:.4}
       .floor-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center, transparent 45%, rgba(1,6,14,.45) 100%)}
 
       .map-stage{background:radial-gradient(circle at 38% 43%, rgba(50,230,255,0.18), transparent 30%),radial-gradient(circle at 44% 75%, rgba(20,121,255,0.18), transparent 32%),radial-gradient(circle at 70% 55%, rgba(139,92,255,0.10), transparent 28%),linear-gradient(180deg,#03101D 0%,#020711 100%);box-shadow:0 0 0 1px rgba(255,255,255,0.035) inset,0 45px 110px rgba(0,0,0,0.58),0 0 95px rgba(20,121,255,0.18)}
