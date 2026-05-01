@@ -18,16 +18,19 @@ export function RapidRiseSystemMap() {
     <div className='map-stage relative mx-auto hidden h-[940px] w-[calc(100%-48px)] max-w-[1580px] overflow-hidden rounded-[34px] border border-[rgba(50,230,255,0.34)] lg:block'>
       <div className='absolute inset-x-0 top-0 h-[760px] overflow-hidden'>
         <div className='absolute inset-y-0 left-0 right-0 bg-[radial-gradient(circle_at_50%_48%,rgba(50,230,255,0.22),transparent_28%)] xl:right-[340px]'>
-          {/* ACTIVE_RENDERED_FLOOR_PLANE_LAYER: CSS 3D floor viewport + transformed floor surface */}
+          {/* ACTIVE_SINGLE_PLANE_KEEP: restored pre-reset CSS 3D floor viewport + transformed floor surface */}
           <div className='floor-perspective pointer-events-none absolute inset-0 z-[1]'>
             <div className='floor-plane'>
+              {/* REMOVED_DUPLICATE_PLANE: removed hard-reset SVG floor system and extra floor silhouette */}
+              {/* ACTIVE_SYSTEM_MAP_GRID_LAYER */}
+              {/* REMOVED_DUPLICATE_FLOOR_LAYER: removed hard-reset SVG floor system */}
               <div className='floor-grid' />
-              <div className='floor-grid floor-grid-2' />
+              {/* REMOVED_DUPLICATE_GRID_LAYER: consolidated major+minor grid into single layer */}
               <div className='floor-vignette' />
             </div>
             <svg className='absolute inset-0 h-full w-full' viewBox='0 0 1200 760' preserveAspectRatio='none'>
               {nodes.map((n, i) => <circle key={i} cx={n.x} cy={n.y} r={n.r} fill={i % 11 === 0 ? 'rgba(139,92,255,.56)' : i % 16 === 0 ? 'rgba(46,139,255,.56)' : i % 19 === 0 ? 'rgba(51,230,138,.40)' : 'rgba(50,230,255,.48)'} opacity={n.o} />)}
-              <ellipse cx='600' cy='620' rx='520' ry='86' fill='rgba(46,139,255,0.14)' filter='blur(24px)' />
+              {/* REMOVED_DUPLICATE_GRID_LAYER: removed secondary floor-like ellipse glow */}
             </svg>
           </div>
 
@@ -58,18 +61,18 @@ export function RapidRiseSystemMap() {
     <style jsx>{`
       
       .floor-perspective{perspective:1600px;transform-style:preserve-3d}
-      .floor-plane{position:absolute;left:50%;top:54%;width:175%;height:155%;transform:translate(-50%,-50%) rotateX(60deg) rotateZ(45deg) scale(1.45);transform-style:preserve-3d;border:1px solid rgba(90,230,255,.24);background:radial-gradient(circle at 52% 50%, rgba(50,230,255,.15), rgba(5,18,36,.72) 56%, rgba(2,8,18,.9) 100%);box-shadow:0 0 50px rgba(30,144,255,.2), inset 0 0 40px rgba(50,230,255,.08)}
-      .floor-grid{position:absolute;inset:0;background-image:linear-gradient(0deg, rgba(50,170,255,.10) 1px, transparent 1px),linear-gradient(90deg, rgba(50,170,255,.10) 1px, transparent 1px);background-size:30px 30px;opacity:.8;mix-blend-mode:screen}
-      .floor-grid-2{background-image:linear-gradient(0deg, rgba(100,235,255,.16) 1px, transparent 1px),linear-gradient(90deg, rgba(100,235,255,.16) 1px, transparent 1px);background-size:150px 150px;opacity:.4}
-      .floor-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center, transparent 45%, rgba(1,6,14,.45) 100%)}
+      .floor-plane{position:absolute;left:79.5%;top:36.4%;width:1115%;height:532%;transform:translate(-50%,-50%) rotateX(60deg) rotateZ(45deg) scale(1.66);transform-origin:36% 57%;transform-style:preserve-3d;border:none;background:radial-gradient(circle at 52% 50%, rgba(50,230,255,.15), rgba(5,18,36,.72) 56%, rgba(2,8,18,.9) 100%);box-shadow:0 0 50px rgba(30,144,255,.2), inset 0 0 40px rgba(50,230,255,.08)}
+      .floor-grid{position:absolute;inset:0;background-image:linear-gradient(0deg, rgba(45,160,255,.14) 1px, transparent 1px),linear-gradient(90deg, rgba(45,160,255,.14) 1px, transparent 1px);background-size:26px 26px;background-repeat:repeat;opacity:.84;mix-blend-mode:screen}
+      .floor-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at 2% 102%, transparent 100%, rgba(1,6,14,.04) 100%)}
 
       .map-stage{background:radial-gradient(circle at 38% 43%, rgba(50,230,255,0.18), transparent 30%),radial-gradient(circle at 44% 75%, rgba(20,121,255,0.18), transparent 32%),radial-gradient(circle at 70% 55%, rgba(139,92,255,0.10), transparent 28%),linear-gradient(180deg,#03101D 0%,#020711 100%);box-shadow:0 0 0 1px rgba(255,255,255,0.035) inset,0 45px 110px rgba(0,0,0,0.58),0 0 95px rgba(20,121,255,0.18)}
       .hub{animation:breath 5s ease-in-out infinite}
-      .map-card{border:1px solid color-mix(in srgb,var(--accent) 55%, rgba(255,255,255,0.08));background:linear-gradient(180deg, rgba(7,20,35,0.98), rgba(3,11,20,0.99));box-shadow:0 22px 45px rgba(0,0,0,0.52),0 0 30px var(--accent-glow),inset 0 1px 0 rgba(255,255,255,0.06);transition:all .22s ease}
-      .map-card:before{content:'';position:absolute;left:14%;right:14%;bottom:-5px;height:4px;border-radius:999px;background:var(--accent);box-shadow:0 0 18px var(--accent);opacity:.85}
-      .map-card:after{content:'';position:absolute;left:12%;right:12%;bottom:-14px;height:18px;border-radius:999px;background:var(--accent);filter:blur(13px);opacity:.36}
+      .map-card{border:1px solid color-mix(in srgb,var(--accent) 68%, rgba(255,255,255,0.08));background:linear-gradient(180deg, rgba(8,22,40,0.96), rgba(3,10,20,0.985));box-shadow:0 18px 32px rgba(0,0,0,0.44),0 36px 52px rgba(0,0,0,0.36),0 0 28px color-mix(in srgb,var(--accent) 22%, transparent),inset 0 1px 0 rgba(255,255,255,0.1),inset 0 0 24px rgba(12,52,84,0.24);transform:translate(-50%,-50%) perspective(900px) rotateX(9deg);transform-origin:center 70%;transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease}
+      .map-card:before{content:'';position:absolute;left:10%;right:10%;bottom:-7px;height:6px;border-radius:999px;background:color-mix(in srgb,var(--accent) 78%, transparent);box-shadow:0 0 20px color-mix(in srgb,var(--accent) 70%, transparent);opacity:.95}
+      .map-card:after{content:'';position:absolute;left:11%;right:11%;bottom:-16px;height:16px;border-radius:999px;background:color-mix(in srgb,var(--accent) 58%, transparent);filter:blur(11px);opacity:.52}
+      .badge{box-shadow:0 8px 18px rgba(0,0,0,0.35),0 0 16px color-mix(in srgb,var(--accent) 35%, transparent),inset 0 1px 0 rgba(255,255,255,0.14)}
       .pill{border:1px solid}
-      .map-card:hover,.map-card:focus-visible{transform:translate(-50%,-50%) scale(calc(var(--scale) * 1.025)) translateY(-6px);z-index:35;outline:none}
+      .map-card:hover,.map-card:focus-visible{transform:translate(-50%,-50%) perspective(900px) rotateX(9deg) scale(calc(var(--scale) * 1.04)) translateY(-7px);box-shadow:0 24px 38px rgba(0,0,0,0.48),0 42px 62px rgba(0,0,0,0.38),0 0 36px color-mix(in srgb,var(--accent) 34%, transparent),inset 0 1px 0 rgba(255,255,255,0.14);z-index:35;outline:none}
       .services-panel{box-shadow:0 22px 70px rgba(0,0,0,0.58),0 0 50px rgba(244,197,58,0.15),inset 0 1px 0 rgba(255,255,255,0.06)}
       @keyframes breath{0%,100%{filter:brightness(1)}50%{filter:brightness(1.08)}}
     `}</style>
