@@ -17,19 +17,23 @@ export function RapidRiseSystemMap() {
     <div className='map-stage relative mx-auto hidden h-[940px] w-[calc(100%-48px)] max-w-[1580px] overflow-hidden rounded-[34px] border border-[rgba(50,230,255,0.34)] lg:block'>
       <div className='absolute inset-x-0 top-0 h-[760px] overflow-hidden'>
         <div className='absolute inset-y-0 left-0 right-0 bg-[radial-gradient(circle_at_50%_48%,rgba(50,230,255,0.22),transparent_28%)] xl:right-[340px]'>
-          <svg className='pointer-events-none absolute inset-0 z-[1] h-full w-full' viewBox='0 0 1200 760' preserveAspectRatio='none'>
-            <defs><clipPath id='floor'><polygon points='135,185 1005,185 1140,610 60,610' /></clipPath></defs>
-            <polygon points='135,185 1005,185 1140,610 60,610' fill='rgba(3,18,34,0.60)' stroke='rgba(50,230,255,0.20)' strokeWidth='1.2' />
-            <g clipPath='url(#floor)'>{Array.from({ length: 56 }).map((_, i) => <line key={`a${i}`} x1={-220 + i * 44} y1='610' x2={260 + i * 44} y2='185' stroke={i % 5 === 0 ? 'rgba(50,230,255,0.20)' : 'rgba(50,160,255,0.13)'} strokeWidth={i % 5 === 0 ? 1.15 : 1} />)}{Array.from({ length: 56 }).map((_, i) => <line key={`b${i}`} x1={1420 - i * 44} y1='610' x2={940 - i * 44} y2='185' stroke={i % 5 === 0 ? 'rgba(50,230,255,0.20)' : 'rgba(50,160,255,0.13)'} strokeWidth={i % 5 === 0 ? 1.15 : 1} />)}</g>
-            {nodes.map((n, i) => <circle key={i} cx={n.x} cy={n.y} r={n.r} fill={i % 11 === 0 ? 'rgba(139,92,255,.56)' : i % 16 === 0 ? 'rgba(46,139,255,.56)' : i % 19 === 0 ? 'rgba(51,230,138,.40)' : 'rgba(50,230,255,.48)'} opacity={n.o} />)}
-            <ellipse cx='600' cy='606' rx='400' ry='58' fill='rgba(46,139,255,0.14)' filter='blur(24px)' />
-          </svg>
+          <div className='floor-perspective pointer-events-none absolute inset-0 z-[1]'>
+            <div className='floor-plane'>
+              <div className='floor-grid' />
+              <div className='floor-grid floor-grid-2' />
+              <div className='floor-vignette' />
+            </div>
+            <svg className='absolute inset-0 h-full w-full' viewBox='0 0 1200 760' preserveAspectRatio='none'>
+              {nodes.map((n, i) => <circle key={i} cx={n.x} cy={n.y} r={n.r} fill={i % 11 === 0 ? 'rgba(139,92,255,.56)' : i % 16 === 0 ? 'rgba(46,139,255,.56)' : i % 19 === 0 ? 'rgba(51,230,138,.40)' : 'rgba(50,230,255,.48)'} opacity={n.o} />)}
+              <ellipse cx='600' cy='602' rx='450' ry='70' fill='rgba(46,139,255,0.14)' filter='blur(24px)' />
+            </svg>
+          </div>
 
           <svg className='pointer-events-none absolute inset-0 z-[4] h-full w-full' viewBox='0 0 1200 760' preserveAspectRatio='none'>
             {systemMapDestinations.map((item) => { const a = activeId === item.id; const accent = accentStyles[item.accent].main; return <g key={item.id} opacity={a ? 1 : hoveredId ? 0.26 : item.id === 'services' ? 1 : 0.58}><path d={item.route} stroke={accent} strokeWidth='18' opacity={a ? .55 : .18} fill='none' filter='blur(7px)' /><path d={item.route} stroke={accent} strokeWidth='9' opacity={a ? .68 : .2} fill='none' strokeLinecap='round' /><path d={item.route} stroke={accent} strokeWidth='3.2' opacity={a ? 1 : .45} fill='none' strokeLinecap='round' filter={`drop-shadow(0 0 8px ${accent})`} /><path d={item.route} stroke='rgba(255,255,255,0.72)' strokeWidth='1.1' strokeDasharray='5 8' opacity={a ? .85 : .18} fill='none' /><circle cx={item.anchor.x} cy={item.anchor.y} r={a ? 6 : 4.5} fill={accent} opacity={a ? 1 : .45} /> </g>; })}
           </svg>
 
-          <div className='hub absolute left-1/2 top-[51.6%] z-[10] h-[230px] w-[230px] -translate-x-1/2 -translate-y-1/2 pointer-events-none'>
+          <div className='hub absolute left-1/2 top-[50.6%] z-[10] h-[230px] w-[230px] -translate-x-1/2 -translate-y-1/2 pointer-events-none'>
             <div className='absolute left-1/2 top-[57%] h-[94px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(50,230,255,0.35),rgba(46,139,255,0.16)_48%,transparent_74%)] blur-[22px]' />
             <div className='absolute inset-[-34px] rounded-full bg-[radial-gradient(circle,rgba(50,230,255,0.28),transparent_66%)] blur-[10px]' />
             <div className='absolute inset-[24px] rounded-full border-2 border-[rgba(50,230,255,0.78)] bg-[radial-gradient(circle_at_50%_48%,rgba(50,230,255,0.28),transparent_48%),linear-gradient(180deg,rgba(6,35,58,0.92),rgba(2,10,22,0.98))] shadow-[0_0_38px_rgba(50,230,255,0.58),0_0_95px_rgba(46,139,255,0.30),inset_0_0_42px_rgba(50,230,255,0.16)]'><div className='absolute inset-[44px] rounded-full border border-[rgba(50,230,255,0.36)]' /><div className='absolute inset-[62px] rounded-full border border-[rgba(50,230,255,0.24)]' /><div className='absolute inset-[80px] rounded-full border border-[rgba(50,230,255,0.16)]' /><div className='absolute left-1/2 top-1/2 h-[26px] w-[26px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#F6FAFF] shadow-[0_0_24px_#33E6FF,0_0_70px_rgba(50,230,255,0.88)]' /><div className='absolute inset-0 flex flex-col items-center justify-center text-center'><p className='text-[20px] font-black text-[#57E8FF]'>Rapid Rise AI</p><p className='text-[10px] uppercase tracking-[.14em] text-[rgba(220,245,255,.86)]'>CAPTURE • ROUTE</p><p className='text-[10px] uppercase tracking-[.14em] text-[rgba(220,245,255,.86)]'>TRACK • AUTOMATE • REPORT</p></div></div>
@@ -50,6 +54,13 @@ export function RapidRiseSystemMap() {
     <div className='mx-auto mt-4 grid max-w-[1540px] gap-3 rounded-[24px] border border-[rgba(83,230,255,.26)] bg-[linear-gradient(180deg,rgba(4,14,28,.88),rgba(2,7,17,.95))] p-4 lg:hidden sm:grid-cols-2'>{systemMapDestinations.map((item) => { const accent = accentStyles[item.accent]; const Icon = item.icon; return <Link key={item.id} href={item.href} className='rounded-2xl border border-[rgba(83,230,255,.26)] bg-[rgba(5,15,30,.88)] p-4'><div className='flex items-start justify-between gap-3'><span className='inline-flex h-10 w-10 items-center justify-center rounded-xl border' style={{ borderColor: `${accent.main}88`, background: accent.soft }}><Icon className='h-5 w-5' style={{ color: accent.main }} /></span><span className='rounded-full border px-2 py-1 text-[10px] font-extrabold uppercase' style={{ borderColor: `${accent.main}66`, color: accent.main }}>{item.tag}</span></div><p className='mt-2 text-base font-bold text-[#F6FAFF]'>{item.title}</p><p className='mt-1 text-sm text-[rgba(220,232,255,.76)]'>{item.description}</p></Link>; })}</div>
 
     <style jsx>{`
+      
+      .floor-perspective{perspective:1400px;transform-style:preserve-3d}
+      .floor-plane{position:absolute;left:50%;top:53%;width:92%;height:78%;transform:translate(-50%,-50%) rotateX(66deg) rotateZ(45deg);transform-style:preserve-3d;border:1px solid rgba(90,230,255,.24);background:radial-gradient(circle at 52% 50%, rgba(50,230,255,.15), rgba(5,18,36,.72) 56%, rgba(2,8,18,.9) 100%);box-shadow:0 0 50px rgba(30,144,255,.2), inset 0 0 40px rgba(50,230,255,.08)}
+      .floor-grid{position:absolute;inset:0;background-image:linear-gradient(0deg, rgba(50,170,255,.10) 1px, transparent 1px),linear-gradient(90deg, rgba(50,170,255,.10) 1px, transparent 1px);background-size:34px 34px;opacity:.8;mix-blend-mode:screen}
+      .floor-grid-2{background-image:linear-gradient(0deg, rgba(100,235,255,.16) 1px, transparent 1px),linear-gradient(90deg, rgba(100,235,255,.16) 1px, transparent 1px);background-size:170px 170px;opacity:.4}
+      .floor-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center, transparent 45%, rgba(1,6,14,.45) 100%)}
+
       .map-stage{background:radial-gradient(circle at 38% 43%, rgba(50,230,255,0.18), transparent 30%),radial-gradient(circle at 44% 75%, rgba(20,121,255,0.18), transparent 32%),radial-gradient(circle at 70% 55%, rgba(139,92,255,0.10), transparent 28%),linear-gradient(180deg,#03101D 0%,#020711 100%);box-shadow:0 0 0 1px rgba(255,255,255,0.035) inset,0 45px 110px rgba(0,0,0,0.58),0 0 95px rgba(20,121,255,0.18)}
       .hub{animation:breath 5s ease-in-out infinite}
       .map-card{border:1px solid color-mix(in srgb,var(--accent) 55%, rgba(255,255,255,0.08));background:linear-gradient(180deg, rgba(7,20,35,0.98), rgba(3,11,20,0.99));box-shadow:0 22px 45px rgba(0,0,0,0.52),0 0 30px var(--accent-glow),inset 0 1px 0 rgba(255,255,255,0.06);transition:all .22s ease}
