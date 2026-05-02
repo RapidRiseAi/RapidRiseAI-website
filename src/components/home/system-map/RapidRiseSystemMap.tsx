@@ -34,6 +34,19 @@ export function RapidRiseSystemMap() {
     };
   }, [showNavigationMap]);
 
+  useEffect(() => {
+    if (!showNavigationMap) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setShowNavigationMap(false);
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [showNavigationMap]);
+
   return (
     <section id="home-hero" className="hero-shell relative overflow-visible border-b border-white/10 text-white">
       <div className="hero-bg pointer-events-none absolute inset-0" />
@@ -41,7 +54,7 @@ export function RapidRiseSystemMap() {
       <div className="hero-atmosphere pointer-events-none absolute inset-0" />
 
       <div className="relative mx-auto flex min-h-[120px] w-full max-w-[1600px] flex-col px-4 pb-6 pt-4 sm:px-8 lg:px-10 xl:px-12">
-        <div className="fixed left-0 right-0 top-2 z-[600] flex justify-center px-3">
+        <div className="fixed left-0 right-0 top-2 z-[1100] flex justify-center px-3">
           <div className="hero-command-nav flex w-full max-w-[520px] items-center justify-end gap-3 rounded-2xl px-3 py-2">
             {showNavigationMap ? (
               <button
@@ -54,9 +67,11 @@ export function RapidRiseSystemMap() {
             ) : null}
             <button
               type="button"
-              onMouseDown={() => setShowNavigationMap(true)}
               onClick={() => setShowNavigationMap(true)}
-              className="inline-flex h-11 items-center gap-2 rounded-xl border border-blue-300/30 bg-slate-950/70 px-4 text-sm font-medium text-slate-100 transition hover:border-blue-300/55 hover:text-white"
+              aria-haspopup="dialog"
+              aria-expanded={showNavigationMap}
+              aria-controls="home-navigation-map-popup"
+              className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-xl border border-blue-300/30 bg-slate-950/70 px-4 text-sm font-medium text-slate-100 transition hover:border-blue-300/55 hover:text-white"
             >
               Navigation
             </button>
@@ -200,8 +215,15 @@ export function RapidRiseSystemMap() {
 
 
         {showNavigationMap ? (
-          <div className="hero-navigation-overlay fixed inset-0 z-[500] overflow-y-auto pt-24" role="dialog" aria-modal="true" aria-label="Navigation map popup">
-            <div className="mx-auto w-full max-w-[980px] px-4 pb-12 sm:px-8">
+          <div
+            id="home-navigation-map-popup"
+            className="hero-navigation-overlay fixed inset-0 z-[1050] overflow-y-auto pt-24"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation map popup"
+            onClick={() => setShowNavigationMap(false)}
+          >
+            <div className="mx-auto w-full max-w-[980px] px-4 pb-12 sm:px-8" onClick={(event) => event.stopPropagation()}>
               <div className="rounded-[28px] border border-blue-300/30 bg-[rgba(3,10,24,0.92)] p-6 shadow-[0_30px_90px_rgba(0,0,0,.55)]">
                 <p className="text-center text-xs font-semibold tracking-[0.14em] text-[#93c5fd]">SYSTEM MAP POPUP</p>
                 <h3 className="mt-2 text-center font-serif text-4xl text-white">Navigation</h3>
