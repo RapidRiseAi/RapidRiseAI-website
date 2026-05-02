@@ -212,6 +212,8 @@ export function RapidRiseSystemMap() {
                   <h1 className="max-w-[360px] xl:max-w-[392px] font-serif text-[clamp(40px,3.6vw,72px)] font-medium leading-[0.98] tracking-[-0.04em] text-[#f8fafc]">
                     From Chaos<br />to Clarity.<br />From Insight<br />to <span className="text-[#3b82f6] [text-shadow:0_0_32px_rgba(37,99,235,0.25)]">Impact.</span>
                   </h1>
+                  <p className="mt-11 max-w-[400px] text-[17px] leading-[1.7] text-[rgba(226,232,240,0.78)]">Rapid Rise AI connects your people, processes, and data into one intelligent operating system that drives results.</p>
+                  <p className="mt-9 text-[13px] tracking-[0.02em] text-[rgba(148,163,184,0.72)]">One connected system. Endless impact.</p>
                 </div>
                 <div className="relative flex items-center justify-center">
                   <div className="relative h-[560px] w-[560px] xl:h-[690px] xl:w-[690px] max-w-full">
@@ -248,8 +250,42 @@ export function RapidRiseSystemMap() {
                 <aside key={`popup-preview-${activeDestination.id}`} className="preview-panel relative min-h-[720px] rounded-[32px] p-8 xl:p-10">
                   <p className="inline-flex rounded-full border border-blue-300/30 bg-blue-500/10 px-3 py-1 text-[11px] font-medium tracking-[0.12em] text-[#93c5fd]">{activeDestination.label}</p>
                   <h2 className="mt-6 font-serif text-[56px] leading-[0.95] text-white">{activeDestination.title}</h2>
+                  <div className="mt-5 h-[2px] w-12 rounded-full bg-[#f5c451]" />
                   <p className="mt-7 text-[16px] leading-[1.65] text-[rgba(226,232,240,0.78)]">{activeDestination.description}</p>
+                  <ul className="mt-10 space-y-7">
+                    {activeDestination.benefits.map((benefit) => {
+                      const Icon = benefit.icon;
+                      return (
+                        <li key={`popup-benefit-${benefit.title}`} className="flex gap-4">
+                          <Icon className="mt-0.5 h-6 w-6 text-[#60a5fa]" strokeWidth={1.9} />
+                          <div>
+                            <p className="text-[16px] font-semibold text-white">{benefit.title}</p>
+                            <p className="text-[14px] leading-[1.45] text-[rgba(148,163,184,0.9)]">{benefit.text}</p>
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <Link href={activeDestination.href} onClick={() => setShowHelloPopup(false)} className="mt-8 inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-xl bg-[linear-gradient(135deg,#2563eb,#3b82f6)] text-base font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:brightness-110">
+                    {activeDestination.cta} <ArrowRight className="h-5 w-5" />
+                  </Link>
+                  <Link href="/solutions" onClick={() => setShowHelloPopup(false)} className="mt-4 inline-flex items-center gap-1 text-[15px] text-[#60a5fa] hover:text-[#93c5fd]">
+                    {activeDestination.secondaryCta} <ArrowRight className="h-4 w-4" />
+                  </Link>
                 </aside>
+              </div>
+              <div className="mx-auto w-full max-w-[1120px] lg:-mt-1 lg:pl-[1%] xl:-mt-2 xl:pl-[2%]">
+                <div className="process-strip mt-8 inline-flex h-[90px] w-full max-w-[560px] items-center gap-4 rounded-[24px] px-6">
+                  {processSteps.map((step, idx) => {
+                    const Icon = step.icon;
+                    return (
+                      <div key={`popup-step-${step.label}`} className="flex items-center gap-4 text-[15px] text-slate-200">
+                        <span className="inline-flex items-center gap-2"><Icon className="h-5 w-5 text-[#60a5fa]" />{step.label}</span>
+                        {idx < processSteps.length - 1 ? <span className="text-slate-500">→</span> : null}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
