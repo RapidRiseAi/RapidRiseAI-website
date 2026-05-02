@@ -4,9 +4,21 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { destinations, processSteps, type DestinationId } from './SystemMapData';
+import { destinations, processSteps, type DestinationId, type OrbitSlot } from './SystemMapData';
 
 const DEFAULT_ID: DestinationId = 'services';
+
+
+const slotClasses: Record<OrbitSlot, string> = {
+  top: 'left-1/2 top-[4%]',
+  upperLeft: 'left-[16%] top-[15%]',
+  upperRight: 'left-[84%] top-[15%]',
+  left: 'left-[6%] top-[39%]',
+  right: 'left-[94%] top-[39%]',
+  lowerLeft: 'left-[16%] top-[75%]',
+  lowerRight: 'left-[84%] top-[75%]',
+  bottom: 'left-1/2 top-[92%]',
+};
 
 export function RapidRiseSystemMap() {
   const [activeId, setActiveId] = useState<DestinationId>(DEFAULT_ID);
@@ -64,8 +76,8 @@ export function RapidRiseSystemMap() {
                   const active = d.id === activeId;
                   return (
                     <g key={d.id} opacity={active ? 1 : 0.6}>
-                      <line x1="500" y1="500" x2={d.position.x} y2={d.position.y} stroke={active ? 'rgba(96,165,250,0.85)' : 'rgba(96,165,250,0.27)'} strokeWidth={active ? 2 : 1.35} />
-                      <circle cx={d.position.x} cy={d.position.y} r={active ? 6.5 : 4} fill={active ? 'rgba(147,197,253,0.95)' : 'rgba(148,163,184,0.72)'} />
+                      <line x1="500" y1="500" x2={d.routePoint.x} y2={d.routePoint.y} stroke={active ? 'rgba(96,165,250,0.85)' : 'rgba(96,165,250,0.27)'} strokeWidth={active ? 2 : 1.35} />
+                      <circle cx={d.routePoint.x} cy={d.routePoint.y} r={active ? 6.5 : 4} fill={active ? 'rgba(147,197,253,0.95)' : 'rgba(148,163,184,0.72)'} />
                     </g>
                   );
                 })}
@@ -89,8 +101,8 @@ export function RapidRiseSystemMap() {
                     href={d.href}
                     onMouseEnter={() => setActiveId(d.id)}
                     onFocus={() => setActiveId(d.id)}
-                    className={`destination-card absolute z-[6] -translate-x-1/2 -translate-y-1/2 rounded-[20px] p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 ${active ? 'destination-active' : ''} ${d.id === 'services' ? 'destination-services' : ''}`}
-                    style={{ left: `${(d.position.x / 1000) * 100}%`, top: `${(d.position.y / 1000) * 100}%` }}
+                    className={`destination-card absolute z-[6] ${slotClasses[d.slot]} -translate-x-1/2 -translate-y-1/2 rounded-[20px] p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 ${active ? 'destination-active' : ''} ${d.id === 'services' ? 'destination-services' : ''}`}
+                    
                   >
                     <Icon className="mb-2 h-6 w-6 text-[#93c5fd]" strokeWidth={1.85} />
                     <p className="text-[17px] font-semibold leading-tight text-white">{d.title}</p>
