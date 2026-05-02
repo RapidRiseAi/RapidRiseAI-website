@@ -22,6 +22,7 @@ const slotClasses: Record<OrbitSlot, string> = {
 
 export function RapidRiseSystemMap() {
   const [activeId, setActiveId] = useState<DestinationId>(DEFAULT_ID);
+  const [showHelloPopup, setShowHelloPopup] = useState(false);
   const activeDestination = useMemo(() => destinations.find((d) => d.id === activeId) ?? destinations[0], [activeId]);
 
 
@@ -33,14 +34,15 @@ export function RapidRiseSystemMap() {
       <div className="hero-atmosphere pointer-events-none absolute inset-0" />
 
       <div className="relative mx-auto flex min-h-[120px] w-full max-w-[1600px] flex-col px-4 pb-6 pt-4 sm:px-8 lg:px-10 xl:px-12">
-        <div className="fixed left-0 right-0 top-2 z-[1100] flex justify-center px-3">
+        <div className="fixed left-0 right-0 top-2 z-[2147483646] flex justify-center px-3">
           <div className="hero-command-nav flex w-full max-w-[520px] items-center justify-end gap-3 rounded-2xl px-3 py-2">
-            <a
-              href="#home-navigation-map-popup"
+            <button
+              type="button"
+              onClick={() => setShowHelloPopup(true)}
               className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-xl border border-blue-300/30 bg-slate-950/70 px-4 text-sm font-medium text-slate-100 transition hover:border-blue-300/55 hover:text-white"
             >
               Navigation
-            </a>
+            </button>
             <Link href="/quote" className="inline-flex h-11 items-center gap-2 rounded-xl bg-[linear-gradient(135deg,#2563eb,#3b82f6)] px-5 text-sm font-medium text-white shadow-[0_14px_36px_rgba(37,99,235,0.35)] transition duration-300 hover:-translate-y-0.5 hover:brightness-110">
               Request a Quote <ArrowRight className="h-4 w-4" />
             </Link>
@@ -178,29 +180,27 @@ export function RapidRiseSystemMap() {
         </div>
         </>
       </div>
+        {showHelloPopup ? (
         <div
-          id="home-navigation-map-popup"
-          className="hero-navigation-overlay hero-navigation-overlay-target fixed inset-0 z-[1200] overflow-y-auto pt-24"
+          className="hero-navigation-overlay fixed inset-0 z-[2147483647] flex items-center justify-center px-4"
           role="dialog"
           aria-modal="true"
-          aria-label="Navigation map popup"
+          aria-label="Navigation hello world popup"
+          onClick={() => setShowHelloPopup(false)}
         >
-          <div className="mx-auto w-full max-w-[980px] px-4 pb-12 sm:px-8">
-            <div className="rounded-[28px] border border-blue-300/30 bg-[rgba(3,10,24,0.92)] p-6 shadow-[0_30px_90px_rgba(0,0,0,.55)]">
-              <p className="text-center text-xs font-semibold tracking-[0.14em] text-[#93c5fd]">BUTTON TEST POPUP</p>
-              <h3 className="mt-2 text-center font-serif text-4xl text-white">Navigation works</h3>
-              <p className="mt-4 text-center text-slate-200">If you can see this popup, the Navigation button is working.</p>
-              <div className="mt-6 flex justify-center">
-                <a
-                  href="#"
-                  className="rounded-xl border border-blue-300/35 bg-blue-500/15 px-6 py-3 text-sm font-medium text-white hover:border-blue-300/60"
-                >
-                  Close popup
-                </a>
-              </div>
-            </div>
+          <div className="w-full max-w-md rounded-2xl border border-blue-300/40 bg-[rgba(3,10,24,0.96)] p-6 text-center shadow-[0_30px_90px_rgba(0,0,0,.55)]" onClick={(event) => event.stopPropagation()}>
+            <h3 className="text-3xl font-semibold text-white">Hello world</h3>
+            <p className="mt-3 text-slate-200">Navigation button is working.</p>
+            <button
+              type="button"
+              onClick={() => setShowHelloPopup(false)}
+              className="mt-6 rounded-xl border border-blue-300/35 bg-blue-500/15 px-6 py-3 text-sm font-medium text-white hover:border-blue-300/60"
+            >
+              Close
+            </button>
           </div>
         </div>
+      ) : null}
 
       <style jsx global>{`
         .hero-shell { background: linear-gradient(160deg, #030712 0%, #050b16 35%, #08111f 62%, #020617 100%); }
@@ -209,8 +209,6 @@ export function RapidRiseSystemMap() {
         .hero-shell .hero-atmosphere { background: radial-gradient(circle at 50% 52%, rgba(59,130,246,.18), transparent 34%), radial-gradient(circle at 48% 48%, rgba(96,165,250,.12), transparent 46%); }
         .hero-shell .hero-command-nav { background: rgba(4, 12, 24, 0.78); border: 1px solid rgba(120, 170, 255, 0.2); box-shadow: 0 16px 40px rgba(2,6,23,.45); backdrop-filter: blur(14px); }
         .hero-shell .hero-navigation-overlay { background: linear-gradient(180deg, rgba(2,6,23,.97), rgba(2,6,23,.99)); backdrop-filter: blur(4px); }
-        .hero-shell .hero-navigation-overlay-target { opacity: 0; pointer-events: none; transition: opacity .2s ease; }
-        .hero-shell .hero-navigation-overlay-target:target { opacity: 1; pointer-events: auto; }
         .hero-shell .ring-a, .hero-shell .ring-b, .hero-shell .ring-c, .hero-shell .ring-d, .hero-shell .ring-e { position:absolute; left:50%; top:50%; border-radius:9999px; transform:translate(-50%,-50%); pointer-events:none; }
         .hero-shell .ring-a { width: min(650px, 96%); height: min(650px, 96%); border: 1px solid rgba(148,163,184,.18); box-shadow: 0 0 60px rgba(59,130,246,.08); }
         .hero-shell .ring-b { width: min(585px, 86%); height: min(585px, 86%); border: 1px dashed rgba(96,165,250,.26); }
