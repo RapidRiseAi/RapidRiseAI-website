@@ -54,10 +54,11 @@ export function RapidRiseSystemMap() {
             ) : null}
             <button
               type="button"
-              onClick={() => setShowNavigationMap((prev) => !prev)}
+              onMouseDown={() => setShowNavigationMap(true)}
+              onClick={() => setShowNavigationMap(true)}
               className="inline-flex h-11 items-center gap-2 rounded-xl border border-blue-300/30 bg-slate-950/70 px-4 text-sm font-medium text-slate-100 transition hover:border-blue-300/55 hover:text-white"
             >
-              {showNavigationMap ? 'Close Navigation' : 'Navigation'}
+              Navigation
             </button>
             <Link href="/quote" className="inline-flex h-11 items-center gap-2 rounded-xl bg-[linear-gradient(135deg,#2563eb,#3b82f6)] px-5 text-sm font-medium text-white shadow-[0_14px_36px_rgba(37,99,235,0.35)] transition duration-300 hover:-translate-y-0.5 hover:brightness-110">
               Request a Quote <ArrowRight className="h-4 w-4" />
@@ -65,10 +66,6 @@ export function RapidRiseSystemMap() {
           </div>
         </div>
 
-        {showNavigationMap ? (
-        <div className="hero-navigation-overlay fixed inset-0 z-[500] overflow-y-auto pt-24" role="dialog" aria-modal="true" aria-label="Navigation map">
-        <div className="mx-auto w-full max-w-[1600px] px-4 pb-12 sm:px-8 lg:px-10 xl:px-12">
-        <p className="mb-4 text-center text-sm font-semibold tracking-[0.12em] text-[#93c5fd]">NAVIGATION MAP OPEN</p>
         <>
         <div className="hero-main hidden flex-1 lg:grid lg:grid-cols-[minmax(220px,0.72fr)_minmax(520px,1.2fr)_minmax(300px,0.9fr)] lg:gap-8 xl:grid-cols-[minmax(270px,0.82fr)_minmax(640px,1.42fr)_minmax(390px,0.96fr)] xl:gap-[54px] 2xl:grid-cols-[minmax(300px,0.85fr)_minmax(670px,1.46fr)_minmax(400px,1fr)]">
           <div className="pt-14 xl:pt-20 2xl:pt-24">
@@ -199,10 +196,27 @@ export function RapidRiseSystemMap() {
           </aside>
         </div>
         </>
-        </div>
-        </div>
-        ) : null}
       </div>
+
+
+        {showNavigationMap ? (
+          <div className="hero-navigation-overlay fixed inset-0 z-[500] overflow-y-auto pt-24" role="dialog" aria-modal="true" aria-label="Navigation map popup">
+            <div className="mx-auto w-full max-w-[980px] px-4 pb-12 sm:px-8">
+              <div className="rounded-[28px] border border-blue-300/30 bg-[rgba(3,10,24,0.92)] p-6 shadow-[0_30px_90px_rgba(0,0,0,.55)]">
+                <p className="text-center text-xs font-semibold tracking-[0.14em] text-[#93c5fd]">SYSTEM MAP POPUP</p>
+                <h3 className="mt-2 text-center font-serif text-4xl text-white">Navigation</h3>
+                <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                  {destinations.map((d) => (
+                    <Link key={`popup-${d.id}`} href={d.href} onClick={() => setShowNavigationMap(false)} className="rounded-xl border border-blue-300/25 bg-slate-900/70 px-4 py-3 text-sm text-slate-100 hover:border-blue-300/55">
+                      <span className="block text-base font-semibold text-white">{d.title}</span>
+                      <span className="text-slate-300">{d.shortDescription}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : null}
 
       <style jsx global>{`
         .hero-shell { background: linear-gradient(160deg, #030712 0%, #050b16 35%, #08111f 62%, #020617 100%); }
