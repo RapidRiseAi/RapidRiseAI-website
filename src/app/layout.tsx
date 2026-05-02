@@ -51,7 +51,7 @@ const mobileDetectionScript = `
 `;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const MAINTENANCE_MODE = false;
+  const MAINTENANCE_MODE = true;
   const maintenanceModeEnabled = MAINTENANCE_MODE || process.env.MAINTENANCE_MODE === 'true' || process.env.NEXT_PUBLIC_MAINTENANCE_MODE === 'true';
 
   return (
