@@ -101,12 +101,12 @@ export function RapidRiseSystemMap() {
                     href={d.href}
                     onMouseEnter={() => setActiveId(d.id)}
                     onFocus={() => setActiveId(d.id)}
-                    className={`destination-card absolute z-[6] ${slotClasses[d.slot]} -translate-x-1/2 -translate-y-1/2 rounded-[20px] p-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 ${active ? 'destination-active' : ''} ${d.id === 'services' ? 'destination-services' : ''}`}
+                    className={`destination-card absolute z-[6] ${slotClasses[d.slot]} -translate-x-1/2 -translate-y-1/2 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 ${active ? 'destination-active' : ''} ${d.id === 'services' ? 'destination-services' : ''}`}
                     
                   >
-                    <Icon className="mb-2 h-6 w-6 text-[#93c5fd]" strokeWidth={1.85} />
-                    <p className="text-[17px] font-semibold leading-tight text-white">{d.title}</p>
-                    <p className="mt-1 line-clamp-2 text-[12.5px] leading-[1.38] text-[rgba(203,213,225,0.76)]">{d.shortDescription}</p>
+                    <Icon className="mb-[9px] h-6 w-6 text-[#93c5fd]" strokeWidth={1.85} />
+                    <p className="text-[16.5px] font-semibold leading-[1.12] tracking-[0.01em] text-white">{d.title}</p>
+                    <p className="mt-[6px] line-clamp-2 text-[12.25px] leading-[1.42] text-[rgba(203,213,225,0.8)]">{d.shortDescription}</p>
                   </Link>
                 );
               })}
@@ -191,12 +191,12 @@ export function RapidRiseSystemMap() {
         .core { border:1px solid rgba(147,197,253,.22); background: radial-gradient(circle at 50% 35%, rgba(96,165,250,.18), rgba(15,23,42,.96) 55%, rgba(2,6,23,1) 100%); box-shadow:0 0 0 1px rgba(59,130,246,.08),0 24px 80px rgba(0,0,0,.55),0 0 90px rgba(37,99,235,.22); animation: breathe 7s ease-in-out infinite; }
         .core-inner { border: 1px solid rgba(147,197,253,.2); }
         .core-badge { border: 1px solid rgba(96,165,250,.7); display:flex; align-items:center; justify-content:center; font-size:34px; font-weight:600; background: radial-gradient(circle,rgba(30,64,175,.3),rgba(15,23,42,.9)); box-shadow:0 0 30px rgba(59,130,246,.35); }
-        .destination-card { display:block; width: 172px; min-height: 132px; border:1px solid rgba(148,163,184,.28); background:linear-gradient(180deg, rgba(20, 32, 52, 0.96), rgba(4, 9, 20, 0.98)); box-shadow:0 22px 60px rgba(0,0,0,.45),0 10px 28px rgba(2,6,23,.35),inset 0 1px 0 rgba(255,255,255,.11); backdrop-filter: blur(4px); transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; overflow:hidden; }
-        .destination-card::before { content:''; position:absolute; left:0; right:0; top:0; height:42%; background:linear-gradient(180deg, rgba(255,255,255,.09), transparent); pointer-events:none; }
-        .destination-card:hover { transform:translate(-50%,-56%); border-color: rgba(96,165,250,.72); box-shadow:0 30px 82px rgba(0,0,0,.52),0 0 40px rgba(59,130,246,.32),inset 0 1px 0 rgba(255,255,255,.12); }
-        .destination-active { border-color:rgba(96,165,250,.9); box-shadow:0 0 0 1px rgba(59,130,246,.4),0 30px 80px rgba(37,99,235,.34),0 0 52px rgba(96,165,250,.22),inset 0 1px 0 rgba(255,255,255,.12); }
-        .destination-services { width: 202px; min-height: 156px; }
-        .destination-services::after { content:''; position:absolute; left:18%; right:18%; bottom:-16px; height:24px; border-radius:999px; background:rgba(59,130,246,.4); filter:blur(14px); }
+        .destination-card { display:block; width: 172px; min-height: 132px; padding: 15px 15px 14px; border:1px solid rgba(156,176,201,.36); border-radius:20px; background:linear-gradient(180deg, rgba(23, 37, 59, 0.97), rgba(6, 12, 25, 0.985)); box-shadow:0 34px 86px rgba(0,0,0,.56),0 14px 36px rgba(2,6,23,.42),0 2px 0 rgba(255,255,255,.08),inset 0 1px 0 rgba(255,255,255,.14),inset 0 0 0 1px rgba(148,163,184,.2); backdrop-filter: blur(5px); transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; overflow:hidden; }
+        .destination-card::before { content:''; position:absolute; left:0; right:0; top:0; height:50%; background:linear-gradient(180deg, rgba(255,255,255,.16) 0%, rgba(255,255,255,.04) 36%, transparent 100%); pointer-events:none; }
+        .destination-card:hover { transform:translate(-50%,-56%); border-color: rgba(125,186,255,.84); box-shadow:0 38px 94px rgba(0,0,0,.58),0 12px 32px rgba(2,6,23,.45),0 0 40px rgba(59,130,246,.34),inset 0 1px 0 rgba(255,255,255,.16),inset 0 0 0 1px rgba(147,197,253,.3); }
+        .destination-active { border-color:rgba(147,197,253,.98); box-shadow:0 0 0 1px rgba(147,197,253,.72),0 0 0 2px rgba(37,99,235,.38),0 34px 92px rgba(14,42,104,.62),0 0 56px rgba(96,165,250,.34),inset 0 1px 0 rgba(255,255,255,.2),inset 0 0 0 1px rgba(191,219,254,.38); }
+        .destination-services { width: 202px; min-height: 156px; border-radius:20px; padding: 16px 16px 15px; }
+        .destination-services::after { content:''; position:absolute; left:14%; right:14%; bottom:-17px; height:26px; border-radius:999px; background:radial-gradient(ellipse at center, rgba(96,165,250,.58) 0%, rgba(59,130,246,.36) 48%, rgba(37,99,235,0) 100%); filter:blur(12px); pointer-events:none; }
         .preview-panel { background: linear-gradient(180deg, rgba(15, 23, 42, 0.94), rgba(2, 6, 23, 0.98)); border:1px solid rgba(148,163,184,.24); box-shadow:0 30px 100px rgba(0,0,0,.58),0 0 92px rgba(37,99,235,.18),inset 0 1px 0 rgba(255,255,255,.08); }
         .preview-panel::after { content:''; position:absolute; right:-40px; bottom:-40px; width:180px; height:180px; border-radius:999px; background:radial-gradient(circle, rgba(37,99,235,.25), transparent 68%); pointer-events:none; }
         .process-strip { background: rgba(15,23,42,.72); border:1px solid rgba(148,163,184,.18); box-shadow:0 16px 45px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.05); }
