@@ -52,13 +52,14 @@ export function RapidRiseSystemMap() {
           </div>
 
           <div className="relative flex items-center justify-center">
-            <div className="relative h-[660px] w-[660px] max-w-full">
+            <div className="relative h-[690px] w-[690px] max-w-full">
               <div className="ring-a" />
+              <div className="ring-e" />
               <div className="ring-b" />
               <div className="ring-c" />
               <div className="ring-d" />
 
-              <svg viewBox="0 0 1000 1000" className="absolute inset-0 h-full w-full" aria-hidden>
+              <svg viewBox="0 0 1000 1000" className="absolute inset-0 z-[2] h-full w-full" aria-hidden>
                 {destinations.map((d) => {
                   const active = d.id === activeId;
                   return (
@@ -70,7 +71,7 @@ export function RapidRiseSystemMap() {
                 })}
               </svg>
 
-              <div className="core absolute left-1/2 top-1/2 h-[232px] w-[232px] -translate-x-1/2 -translate-y-1/2 rounded-full">
+              <div className="core absolute left-1/2 top-1/2 z-[5] h-[238px] w-[238px] -translate-x-1/2 -translate-y-1/2 rounded-full">
                 <div className="core-inner absolute inset-[18px] rounded-full" />
                 <div className="core-badge absolute left-1/2 top-[34%] h-[54px] w-[54px] -translate-x-1/2 -translate-y-1/2 rounded-full">R</div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center pt-11 text-center">
@@ -88,7 +89,7 @@ export function RapidRiseSystemMap() {
                     href={d.href}
                     onMouseEnter={() => setActiveId(d.id)}
                     onFocus={() => setActiveId(d.id)}
-                    className={`destination-card absolute -translate-x-1/2 -translate-y-1/2 rounded-[20px] p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 ${active ? 'destination-active' : ''} ${d.id === 'services' ? 'destination-services' : ''}`}
+                    className={`destination-card absolute z-[6] -translate-x-1/2 -translate-y-1/2 rounded-[20px] p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 ${active ? 'destination-active' : ''} ${d.id === 'services' ? 'destination-services' : ''}`}
                     style={{ left: `${(d.position.x / 1000) * 100}%`, top: `${(d.position.y / 1000) * 100}%` }}
                   >
                     <Icon className="mb-2 h-6 w-6 text-[#93c5fd]" strokeWidth={1.85} />
@@ -169,20 +170,21 @@ export function RapidRiseSystemMap() {
         .hero-bg { background-image: radial-gradient(circle at 47% 45%, rgba(37, 99, 235, 0.20), transparent 40%), radial-gradient(circle at 84% 44%, rgba(37, 99, 235, 0.14), transparent 32%), linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px); background-size: auto, auto, 78px 78px, 78px 78px; }
         .hero-vignette { box-shadow: inset 0 0 180px rgba(0,0,0,0.6); }
         .hero-nav { background: rgba(4, 12, 24, 0.72); border: 1px solid rgba(120, 170, 255, 0.14); box-shadow: 0 16px 40px rgba(2,6,23,.45); backdrop-filter: blur(14px); }
-        .ring-a, .ring-b, .ring-c, .ring-d { position:absolute; left:50%; top:50%; border-radius:9999px; transform:translate(-50%,-50%); pointer-events:none; }
-        .ring-a { width: 620px; height: 620px; border: 1px solid rgba(148,163,184,.12); }
-        .ring-b { width: 540px; height: 540px; border: 1px dashed rgba(96,165,250,.18); }
-        .ring-c { width: 470px; height: 470px; border: 1px solid rgba(148,163,184,.1); }
-        .ring-d { width: 380px; height: 380px; border: 1px solid rgba(59,130,246,.14); }
+        .ring-a, .ring-b, .ring-c, .ring-d, .ring-e { position:absolute; left:50%; top:50%; border-radius:9999px; transform:translate(-50%,-50%); pointer-events:none; }
+        .ring-a { width: 650px; height: 650px; border: 1px solid rgba(148,163,184,.12); }
+        .ring-b { width: 585px; height: 585px; border: 1px dashed rgba(96,165,250,.19); }
+        .ring-c { width: 510px; height: 510px; border: 1px solid rgba(148,163,184,.1); }
+        .ring-d { width: 430px; height: 430px; border: 1px solid rgba(59,130,246,.14); }
+        .ring-e { width: 350px; height: 350px; border: 1px solid rgba(148,163,184,.09); }
         .core { border:1px solid rgba(147,197,253,.22); background: radial-gradient(circle at 50% 35%, rgba(96,165,250,.18), rgba(15,23,42,.96) 55%, rgba(2,6,23,1) 100%); box-shadow:0 0 0 1px rgba(59,130,246,.08),0 24px 80px rgba(0,0,0,.55),0 0 90px rgba(37,99,235,.22); animation: breathe 7s ease-in-out infinite; }
         .core-inner { border: 1px solid rgba(147,197,253,.2); }
         .core-badge { border: 1px solid rgba(96,165,250,.7); display:flex; align-items:center; justify-content:center; font-size:34px; font-weight:600; background: radial-gradient(circle,rgba(30,64,175,.3),rgba(15,23,42,.9)); box-shadow:0 0 30px rgba(59,130,246,.35); }
-        .destination-card { width: 164px; min-height: 126px; border:1px solid rgba(148,163,184,.18); background:linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(3, 7, 18, 0.94)); box-shadow:0 20px 60px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.05); transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; }
-        .destination-card:hover { transform:translate(-50%,-55%); border-color: rgba(96,165,250,.55); box-shadow:0 24px 70px rgba(0,0,0,.45),0 0 34px rgba(59,130,246,.25),inset 0 1px 0 rgba(255,255,255,.08); }
-        .destination-active { border-color:rgba(96,165,250,.78); box-shadow:0 0 0 1px rgba(59,130,246,.24),0 24px 70px rgba(37,99,235,.28),inset 0 1px 0 rgba(255,255,255,.08); }
-        .destination-services { width: 196px; min-height: 152px; }
+        .destination-card { width: 172px; min-height: 132px; border:1px solid rgba(148,163,184,.26); background:linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(2, 6, 23, 0.98)); box-shadow:0 22px 60px rgba(0,0,0,.45),0 10px 28px rgba(2,6,23,.35),inset 0 1px 0 rgba(255,255,255,.08); backdrop-filter: blur(4px); transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; }
+        .destination-card:hover { transform:translate(-50%,-56%); border-color: rgba(96,165,250,.72); box-shadow:0 30px 82px rgba(0,0,0,.52),0 0 40px rgba(59,130,246,.32),inset 0 1px 0 rgba(255,255,255,.12); }
+        .destination-active { border-color:rgba(96,165,250,.9); box-shadow:0 0 0 1px rgba(59,130,246,.4),0 30px 80px rgba(37,99,235,.34),0 0 52px rgba(96,165,250,.22),inset 0 1px 0 rgba(255,255,255,.12); }
+        .destination-services { width: 205px; min-height: 158px; }
         .destination-services::after { content:''; position:absolute; left:18%; right:18%; bottom:-16px; height:24px; border-radius:999px; background:rgba(59,130,246,.4); filter:blur(14px); }
-        .preview-panel { background: linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(2, 6, 23, 0.96)); border:1px solid rgba(148,163,184,.18); box-shadow:0 30px 100px rgba(0,0,0,.55),0 0 80px rgba(37,99,235,.16),inset 0 1px 0 rgba(255,255,255,.06); }
+        .preview-panel { background: linear-gradient(180deg, rgba(15, 23, 42, 0.94), rgba(2, 6, 23, 0.98)); border:1px solid rgba(148,163,184,.24); box-shadow:0 30px 100px rgba(0,0,0,.58),0 0 92px rgba(37,99,235,.18),inset 0 1px 0 rgba(255,255,255,.08); }
         .preview-panel::after { content:''; position:absolute; right:-40px; bottom:-40px; width:180px; height:180px; border-radius:999px; background:radial-gradient(circle, rgba(37,99,235,.25), transparent 68%); pointer-events:none; }
         .process-strip { background: rgba(15,23,42,.72); border:1px solid rgba(148,163,184,.18); box-shadow:0 16px 45px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.05); }
         @keyframes breathe { 0%,100% { filter: brightness(1); } 50% { filter: brightness(1.07); } }
