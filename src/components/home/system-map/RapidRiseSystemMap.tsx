@@ -200,13 +200,51 @@ export function RapidRiseSystemMap() {
               </button>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              {destinations.map((d) => (
-                <Link key={`popup-${d.id}`} href={d.href} className="rounded-xl border border-slate-700/80 bg-slate-900/70 p-4 transition hover:border-blue-300/70 hover:bg-slate-800/80" onClick={() => setShowHelloPopup(false)}>
-                  <p className="text-base font-semibold text-white">{d.title}</p>
-                  <p className="mt-1 text-sm text-slate-300">{d.shortDescription}</p>
-                </Link>
-              ))}
+            <div className="max-h-[80vh] overflow-auto rounded-2xl border border-blue-300/20 bg-[rgba(2,8,24,0.7)] p-4">
+              <div className="hero-main hidden min-w-[1200px] lg:grid lg:grid-cols-[minmax(220px,0.72fr)_minmax(520px,1.2fr)_minmax(300px,0.9fr)] lg:gap-8 xl:grid-cols-[minmax(270px,0.82fr)_minmax(640px,1.42fr)_minmax(390px,0.96fr)] xl:gap-[54px] 2xl:grid-cols-[minmax(300px,0.85fr)_minmax(670px,1.46fr)_minmax(400px,1fr)]">
+                <div className="pt-14 xl:pt-20 2xl:pt-24">
+                  <h1 className="max-w-[360px] xl:max-w-[392px] font-serif text-[clamp(40px,3.6vw,72px)] font-medium leading-[0.98] tracking-[-0.04em] text-[#f8fafc]">
+                    From Chaos<br />to Clarity.<br />From Insight<br />to <span className="text-[#3b82f6] [text-shadow:0_0_32px_rgba(37,99,235,0.25)]">Impact.</span>
+                  </h1>
+                </div>
+                <div className="relative flex items-center justify-center">
+                  <div className="relative h-[560px] w-[560px] xl:h-[690px] xl:w-[690px] max-w-full">
+                    <div className="ring-a" /><div className="ring-e" /><div className="ring-b" /><div className="ring-c" /><div className="ring-d" />
+                    <svg viewBox="0 0 1000 1000" className="absolute inset-0 z-[2] h-full w-full" aria-hidden>
+                      {destinations.map((d) => {
+                        const active = d.id === activeId;
+                        return (
+                          <g key={`popup-line-${d.id}`} opacity={active ? 1 : 0.75}>
+                            <line x1="500" y1="500" x2={d.routePoint.x} y2={d.routePoint.y} stroke="rgba(96,165,250,0.22)" strokeWidth={1.6} />
+                            <line x1="500" y1="500" x2={d.routePoint.x} y2={d.routePoint.y} stroke={active ? 'rgba(147,197,253,0.95)' : 'rgba(96,165,250,0.42)'} strokeWidth={active ? 2.9 : 2.05} filter="url(#routeGlow)" />
+                            <circle cx={d.routePoint.x} cy={d.routePoint.y} r={active ? 7.6 : 5.2} fill={active ? 'rgba(191,219,254,0.98)' : 'rgba(148,163,184,0.86)'} />
+                          </g>
+                        );
+                      })}
+                    </svg>
+                    <div className="core absolute left-1/2 top-1/2 z-[5] h-[268px] w-[268px] xl:h-[292px] xl:w-[292px] -translate-x-1/2 -translate-y-1/2 rounded-full">
+                      <div className="core-inner absolute inset-[16px] xl:inset-[18px] rounded-full" />
+                      <div className="core-badge absolute left-1/2 top-[33%] h-[60px] w-[60px] xl:h-[64px] xl:w-[64px] -translate-x-1/2 -translate-y-1/2 rounded-full">R</div>
+                    </div>
+                    {destinations.map((d) => {
+                      const Icon = d.icon;
+                      const active = d.id === activeId;
+                      return (
+                        <Link key={`popup-card-${d.id}`} href={d.href} onMouseEnter={() => setActiveId(d.id)} onFocus={() => setActiveId(d.id)} onClick={() => setShowHelloPopup(false)} className={`destination-card absolute z-[6] ${slotClasses[d.slot]} -translate-x-1/2 -translate-y-1/2 rounded-[20px] p-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 ${active ? 'destination-active' : ''} ${d.id === 'services' ? 'destination-services' : ''}`}>
+                          <Icon className="mb-2 h-6 w-6 text-[#93c5fd]" strokeWidth={1.85} />
+                          <p className="text-[17px] font-semibold leading-tight text-white">{d.title}</p>
+                          <p className="mt-1 line-clamp-2 text-[12.5px] leading-[1.38] text-[rgba(203,213,225,0.76)]">{d.shortDescription}</p>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+                <aside key={`popup-preview-${activeDestination.id}`} className="preview-panel relative min-h-[720px] rounded-[32px] p-8 xl:p-10">
+                  <p className="inline-flex rounded-full border border-blue-300/30 bg-blue-500/10 px-3 py-1 text-[11px] font-medium tracking-[0.12em] text-[#93c5fd]">{activeDestination.label}</p>
+                  <h2 className="mt-6 font-serif text-[56px] leading-[0.95] text-white">{activeDestination.title}</h2>
+                  <p className="mt-7 text-[16px] leading-[1.65] text-[rgba(226,232,240,0.78)]">{activeDestination.description}</p>
+                </aside>
+              </div>
             </div>
           </div>
         </div>
