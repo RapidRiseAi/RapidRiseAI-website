@@ -25,6 +25,11 @@ export function RapidRiseSystemMap() {
   const [showNavigationMap, setShowNavigationMap] = useState(false);
   const activeDestination = useMemo(() => destinations.find((d) => d.id === activeId) ?? destinations[0], [activeId]);
 
+  const openNavigationTestPopup = () => {
+    setShowNavigationMap(true);
+    window.alert('Navigation button clicked. Popup should now be visible.');
+  };
+
   useEffect(() => {
     if (typeof document === 'undefined') return;
     const previousOverflow = document.body.style.overflow;
@@ -67,7 +72,8 @@ export function RapidRiseSystemMap() {
             ) : null}
             <button
               type="button"
-              onClick={() => setShowNavigationMap(true)}
+              onPointerDown={openNavigationTestPopup}
+              onClick={openNavigationTestPopup}
               aria-haspopup="dialog"
               aria-expanded={showNavigationMap}
               aria-controls="home-navigation-map-popup"
@@ -225,15 +231,17 @@ export function RapidRiseSystemMap() {
           >
             <div className="mx-auto w-full max-w-[980px] px-4 pb-12 sm:px-8" onClick={(event) => event.stopPropagation()}>
               <div className="rounded-[28px] border border-blue-300/30 bg-[rgba(3,10,24,0.92)] p-6 shadow-[0_30px_90px_rgba(0,0,0,.55)]">
-                <p className="text-center text-xs font-semibold tracking-[0.14em] text-[#93c5fd]">SYSTEM MAP POPUP</p>
-                <h3 className="mt-2 text-center font-serif text-4xl text-white">Navigation</h3>
-                <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                  {destinations.map((d) => (
-                    <Link key={`popup-${d.id}`} href={d.href} onClick={() => setShowNavigationMap(false)} className="rounded-xl border border-blue-300/25 bg-slate-900/70 px-4 py-3 text-sm text-slate-100 hover:border-blue-300/55">
-                      <span className="block text-base font-semibold text-white">{d.title}</span>
-                      <span className="text-slate-300">{d.shortDescription}</span>
-                    </Link>
-                  ))}
+                <p className="text-center text-xs font-semibold tracking-[0.14em] text-[#93c5fd]">BUTTON TEST POPUP</p>
+                <h3 className="mt-2 text-center font-serif text-4xl text-white">Navigation works</h3>
+                <p className="mt-4 text-center text-slate-200">If you can see this popup, the Navigation button click is working.</p>
+                <div className="mt-6 flex justify-center">
+                  <button
+                    type="button"
+                    onClick={() => setShowNavigationMap(false)}
+                    className="rounded-xl border border-blue-300/35 bg-blue-500/15 px-6 py-3 text-sm font-medium text-white hover:border-blue-300/60"
+                  >
+                    Close popup
+                  </button>
                 </div>
               </div>
             </div>
