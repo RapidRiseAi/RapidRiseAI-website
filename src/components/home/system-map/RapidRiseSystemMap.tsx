@@ -31,9 +31,9 @@ export function RapidRiseSystemMap() {
       <div className="hero-vignette pointer-events-none absolute inset-0" />
       <div className="hero-atmosphere pointer-events-none absolute inset-0" />
 
-      <div className="relative mx-auto flex min-h-[920px] w-full max-w-[1600px] flex-col px-4 pb-12 pt-7 sm:px-8 lg:px-10 xl:px-12">
-        <div className="sticky top-0 z-[40] mb-8 flex w-full justify-end pt-1">
-          <div className="hero-command-nav flex items-center gap-3 rounded-2xl px-3 py-2">
+      <div className="relative mx-auto flex min-h-[120px] w-full max-w-[1600px] flex-col px-4 pb-6 pt-4 sm:px-8 lg:px-10 xl:px-12">
+        <div className="fixed left-0 right-0 top-2 z-[220] flex justify-center px-3">
+          <div className="hero-command-nav flex w-full max-w-[520px] items-center justify-end gap-3 rounded-2xl px-3 py-2">
             {showNavigationMap ? (
               <button
                 type="button"
@@ -57,6 +57,8 @@ export function RapidRiseSystemMap() {
         </div>
 
         {showNavigationMap ? (
+        <div className="hero-navigation-overlay fixed inset-0 z-[180] overflow-y-auto pt-24">
+        <div className="mx-auto w-full max-w-[1600px] px-4 pb-12 sm:px-8 lg:px-10 xl:px-12">
         <>
         <div className="hero-main hidden flex-1 lg:grid lg:grid-cols-[minmax(220px,0.72fr)_minmax(520px,1.2fr)_minmax(300px,0.9fr)] lg:gap-8 xl:grid-cols-[minmax(270px,0.82fr)_minmax(640px,1.42fr)_minmax(390px,0.96fr)] xl:gap-[54px] 2xl:grid-cols-[minmax(300px,0.85fr)_minmax(670px,1.46fr)_minmax(400px,1fr)]">
           <div className="pt-14 xl:pt-20 2xl:pt-24">
@@ -187,6 +189,8 @@ export function RapidRiseSystemMap() {
           </aside>
         </div>
         </>
+        </div>
+        </div>
         ) : null}
       </div>
 
@@ -195,7 +199,8 @@ export function RapidRiseSystemMap() {
         .hero-shell .hero-bg { background-image: radial-gradient(circle at 47% 45%, rgba(37, 99, 235, 0.20), transparent 40%), radial-gradient(circle at 84% 44%, rgba(37, 99, 235, 0.14), transparent 32%), linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px); background-size: auto, auto, 78px 78px, 78px 78px; }
         .hero-shell .hero-vignette { box-shadow: inset 0 0 180px rgba(0,0,0,0.6); }
         .hero-shell .hero-atmosphere { background: radial-gradient(circle at 50% 52%, rgba(59,130,246,.18), transparent 34%), radial-gradient(circle at 48% 48%, rgba(96,165,250,.12), transparent 46%); }
-        .hero-shell .hero-command-nav { background: rgba(4, 12, 24, 0.72); border: 1px solid rgba(120, 170, 255, 0.14); box-shadow: 0 16px 40px rgba(2,6,23,.45); backdrop-filter: blur(14px); }
+        .hero-shell .hero-command-nav { background: rgba(4, 12, 24, 0.78); border: 1px solid rgba(120, 170, 255, 0.2); box-shadow: 0 16px 40px rgba(2,6,23,.45); backdrop-filter: blur(14px); }
+        .hero-shell .hero-navigation-overlay { background: linear-gradient(180deg, rgba(2,6,23,.92), rgba(2,6,23,.96)); }
         .hero-shell .ring-a, .hero-shell .ring-b, .hero-shell .ring-c, .hero-shell .ring-d, .hero-shell .ring-e { position:absolute; left:50%; top:50%; border-radius:9999px; transform:translate(-50%,-50%); pointer-events:none; }
         .hero-shell .ring-a { width: min(650px, 96%); height: min(650px, 96%); border: 1px solid rgba(148,163,184,.18); box-shadow: 0 0 60px rgba(59,130,246,.08); }
         .hero-shell .ring-b { width: min(585px, 86%); height: min(585px, 86%); border: 1px dashed rgba(96,165,250,.26); }
