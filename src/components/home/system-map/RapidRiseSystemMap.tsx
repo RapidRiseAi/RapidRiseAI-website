@@ -182,14 +182,20 @@ export function RapidRiseSystemMap() {
       </div>
         {showHelloPopup ? (
         <div
-          className="hero-navigation-overlay fixed inset-0 z-[2147483647] flex items-center justify-center px-4"
+          className="hero-navigation-overlay fixed inset-0 z-[2147483647] overflow-y-auto"
           role="dialog"
           aria-modal="true"
           aria-label="Navigation system map popup"
-          onClick={() => setShowHelloPopup(false)}
         >
-          <div className="w-full max-w-5xl rounded-2xl border border-blue-300/40 bg-[rgba(3,10,24,0.96)] p-6 shadow-[0_30px_90px_rgba(0,0,0,.55)]" onClick={(event) => event.stopPropagation()}>
-            <div className="mb-5 flex items-center justify-between gap-4 border-b border-blue-200/20 pb-4">
+          <div className="min-h-screen w-full bg-[rgba(2,8,24,0.98)] px-4 pb-8 pt-4 sm:px-6 lg:px-10">
+            <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between gap-4 border-b border-blue-200/20 pb-4">
+              <button
+                type="button"
+                onClick={() => setShowHelloPopup(false)}
+                className="rounded-xl border border-blue-300/35 bg-blue-500/15 px-4 py-2 text-sm font-medium text-white hover:border-blue-300/60"
+              >
+                ← Back
+              </button>
               <h3 className="text-2xl font-semibold text-white">System Map</h3>
               <button
                 type="button"
@@ -200,8 +206,8 @@ export function RapidRiseSystemMap() {
               </button>
             </div>
 
-            <div className="max-h-[80vh] overflow-auto rounded-2xl border border-blue-300/20 bg-[rgba(2,8,24,0.7)] p-4">
-              <div className="hero-main hidden min-w-[1200px] lg:grid lg:grid-cols-[minmax(220px,0.72fr)_minmax(520px,1.2fr)_minmax(300px,0.9fr)] lg:gap-8 xl:grid-cols-[minmax(270px,0.82fr)_minmax(640px,1.42fr)_minmax(390px,0.96fr)] xl:gap-[54px] 2xl:grid-cols-[minmax(300px,0.85fr)_minmax(670px,1.46fr)_minmax(400px,1fr)]">
+            <div className="mx-auto mt-5 w-full max-w-[1600px] rounded-2xl border border-blue-300/20 bg-[rgba(2,8,24,0.45)] p-4 sm:p-6">
+              <div className="hero-main hidden lg:grid lg:grid-cols-[minmax(220px,0.72fr)_minmax(520px,1.2fr)_minmax(300px,0.9fr)] lg:gap-8 xl:grid-cols-[minmax(270px,0.82fr)_minmax(640px,1.42fr)_minmax(390px,0.96fr)] xl:gap-[54px] 2xl:grid-cols-[minmax(300px,0.85fr)_minmax(670px,1.46fr)_minmax(400px,1fr)]">
                 <div className="pt-14 xl:pt-20 2xl:pt-24">
                   <h1 className="max-w-[360px] xl:max-w-[392px] font-serif text-[clamp(40px,3.6vw,72px)] font-medium leading-[0.98] tracking-[-0.04em] text-[#f8fafc]">
                     From Chaos<br />to Clarity.<br />From Insight<br />to <span className="text-[#3b82f6] [text-shadow:0_0_32px_rgba(37,99,235,0.25)]">Impact.</span>
