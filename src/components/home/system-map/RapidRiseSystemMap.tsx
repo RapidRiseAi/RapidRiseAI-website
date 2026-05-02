@@ -26,7 +26,7 @@ export function RapidRiseSystemMap() {
   const activeDestination = useMemo(() => destinations.find((d) => d.id === activeId) ?? destinations[0], [activeId]);
 
   return (
-    <section id="home-hero" className="hero-shell relative overflow-hidden border-b border-white/10 text-white">
+    <section id="home-hero" className="hero-shell relative overflow-visible border-b border-white/10 text-white">
       <div className="hero-bg pointer-events-none absolute inset-0" />
       <div className="hero-vignette pointer-events-none absolute inset-0" />
       <div className="hero-atmosphere pointer-events-none absolute inset-0" />
