@@ -54,13 +54,13 @@ export function RapidRiseSystemMap() {
           </div>
         </header>
 
-        <div className="hero-main hidden flex-1 xl:grid xl:grid-cols-[minmax(320px,0.95fr)_minmax(620px,1.35fr)_minmax(390px,1fr)] xl:gap-[56px]">
-          <div className="pt-20">
-            <h1 className="max-w-[430px] font-serif text-[clamp(54px,4.6vw,78px)] font-medium leading-[0.98] tracking-[-0.04em] text-[#f8fafc]">
+        <div className="hero-main hidden flex-1 xl:grid xl:grid-cols-[minmax(280px,0.82fr)_minmax(640px,1.42fr)_minmax(390px,0.96fr)] xl:gap-[54px] 2xl:grid-cols-[minmax(300px,0.85fr)_minmax(670px,1.46fr)_minmax(400px,1fr)]">
+          <div className="pt-20 2xl:pt-24">
+            <h1 className="max-w-[392px] font-serif text-[clamp(48px,4.2vw,72px)] font-medium leading-[0.98] tracking-[-0.04em] text-[#f8fafc]">
               From Chaos<br />to Clarity.<br />From Insight<br />to <span className="text-[#3b82f6] [text-shadow:0_0_32px_rgba(37,99,235,0.25)]">Impact.</span>
             </h1>
-            <p className="mt-8 max-w-[410px] text-[17px] leading-[1.7] text-[rgba(226,232,240,0.78)]">Rapid Rise AI connects your people, processes, and data into one intelligent operating system that drives results.</p>
-            <p className="mt-8 text-[13px] tracking-[0.02em] text-[rgba(148,163,184,0.72)]">One connected system. Endless impact.</p>
+            <p className="mt-11 max-w-[400px] text-[17px] leading-[1.7] text-[rgba(226,232,240,0.78)]">Rapid Rise AI connects your people, processes, and data into one intelligent operating system that drives results.</p>
+            <p className="mt-9 text-[13px] tracking-[0.02em] text-[rgba(148,163,184,0.72)]">One connected system. Endless impact.</p>
           </div>
 
           <div className="relative flex items-center justify-center">
