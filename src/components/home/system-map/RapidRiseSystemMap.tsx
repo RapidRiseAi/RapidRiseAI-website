@@ -22,6 +22,7 @@ const slotClasses: Record<OrbitSlot, string> = {
 
 export function RapidRiseSystemMap() {
   const [activeId, setActiveId] = useState<DestinationId>(DEFAULT_ID);
+  const [showNavigationMap, setShowNavigationMap] = useState(false);
   const activeDestination = useMemo(() => destinations.find((d) => d.id === activeId) ?? destinations[0], [activeId]);
 
   return (
@@ -31,30 +32,32 @@ export function RapidRiseSystemMap() {
       <div className="hero-atmosphere pointer-events-none absolute inset-0" />
 
       <div className="relative mx-auto flex min-h-[920px] w-full max-w-[1600px] flex-col px-4 pb-12 pt-7 sm:px-8 lg:px-10 xl:px-12">
-        <header className="hero-nav mx-auto mb-10 flex h-[68px] w-full max-w-[1420px] items-center justify-between gap-4 rounded-[20px] px-5 md:px-7">
-          <Link href="/" className="flex items-center gap-3">
-            <Image src="/brand/rapid-rise-ai-logo.png" alt="Rapid Rise AI" width={236} height={52} className="h-10 w-auto md:h-11" priority />
-          </Link>
-          <nav className="hidden items-center gap-8 text-sm font-medium text-slate-100 lg:flex">
-            {['Solutions:/solutions', 'Work:/work', 'Pricing:/pricing', 'Education:/education', 'About:/about', 'Contact:/contact'].map((item) => {
-              const [label, href] = item.split(':');
-              return (
-                <Link key={label} href={href} className="transition-colors duration-300 hover:text-[#60a5fa] focus-visible:text-[#93c5fd]">
-                  {label}
-                </Link>
-              );
-            })}
-          </nav>
-          <div className="flex items-center gap-3">
-            <span className="hidden h-9 items-center rounded-full border border-emerald-300/25 bg-emerald-500/10 px-3 text-xs text-emerald-100 md:inline-flex"> 
-              <span className="mr-2 inline-block h-2 w-2 rounded-full bg-emerald-400" />Response within 24h
-            </span>
+        <div className="sticky top-0 z-[40] mb-8 flex w-full justify-end pt-1">
+          <div className="hero-command-nav flex items-center gap-3 rounded-2xl px-3 py-2">
+            {showNavigationMap ? (
+              <button
+                type="button"
+                onClick={() => setShowNavigationMap(false)}
+                className="inline-flex h-11 items-center gap-2 rounded-xl border border-blue-300/30 bg-slate-950/70 px-4 text-sm font-medium text-slate-100 transition hover:border-blue-300/55 hover:text-white"
+              >
+                Back
+              </button>
+            ) : null}
+            <button
+              type="button"
+              onClick={() => setShowNavigationMap((prev) => !prev)}
+              className="inline-flex h-11 items-center gap-2 rounded-xl border border-blue-300/30 bg-slate-950/70 px-4 text-sm font-medium text-slate-100 transition hover:border-blue-300/55 hover:text-white"
+            >
+              Navigation
+            </button>
             <Link href="/quote" className="inline-flex h-11 items-center gap-2 rounded-xl bg-[linear-gradient(135deg,#2563eb,#3b82f6)] px-5 text-sm font-medium text-white shadow-[0_14px_36px_rgba(37,99,235,0.35)] transition duration-300 hover:-translate-y-0.5 hover:brightness-110">
               Request a Quote <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-        </header>
+        </div>
 
+        {showNavigationMap ? (
+        <>
         <div className="hero-main hidden flex-1 lg:grid lg:grid-cols-[minmax(220px,0.72fr)_minmax(520px,1.2fr)_minmax(300px,0.9fr)] lg:gap-8 xl:grid-cols-[minmax(270px,0.82fr)_minmax(640px,1.42fr)_minmax(390px,0.96fr)] xl:gap-[54px] 2xl:grid-cols-[minmax(300px,0.85fr)_minmax(670px,1.46fr)_minmax(400px,1fr)]">
           <div className="pt-14 xl:pt-20 2xl:pt-24">
             <h1 className="max-w-[360px] xl:max-w-[392px] font-serif text-[clamp(40px,3.6vw,72px)] font-medium leading-[0.98] tracking-[-0.04em] text-[#f8fafc]">
@@ -183,6 +186,8 @@ export function RapidRiseSystemMap() {
             <p className="mt-4 text-[15px] leading-[1.6] text-slate-300">{activeDestination.description}</p>
           </aside>
         </div>
+        </>
+        ) : null}
       </div>
 
       <style jsx global>{`
@@ -190,7 +195,7 @@ export function RapidRiseSystemMap() {
         .hero-shell .hero-bg { background-image: radial-gradient(circle at 47% 45%, rgba(37, 99, 235, 0.20), transparent 40%), radial-gradient(circle at 84% 44%, rgba(37, 99, 235, 0.14), transparent 32%), linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px); background-size: auto, auto, 78px 78px, 78px 78px; }
         .hero-shell .hero-vignette { box-shadow: inset 0 0 180px rgba(0,0,0,0.6); }
         .hero-shell .hero-atmosphere { background: radial-gradient(circle at 50% 52%, rgba(59,130,246,.18), transparent 34%), radial-gradient(circle at 48% 48%, rgba(96,165,250,.12), transparent 46%); }
-        .hero-shell .hero-nav { background: rgba(4, 12, 24, 0.72); border: 1px solid rgba(120, 170, 255, 0.14); box-shadow: 0 16px 40px rgba(2,6,23,.45); backdrop-filter: blur(14px); }
+        .hero-shell .hero-command-nav { background: rgba(4, 12, 24, 0.72); border: 1px solid rgba(120, 170, 255, 0.14); box-shadow: 0 16px 40px rgba(2,6,23,.45); backdrop-filter: blur(14px); }
         .hero-shell .ring-a, .hero-shell .ring-b, .hero-shell .ring-c, .hero-shell .ring-d, .hero-shell .ring-e { position:absolute; left:50%; top:50%; border-radius:9999px; transform:translate(-50%,-50%); pointer-events:none; }
         .hero-shell .ring-a { width: min(650px, 96%); height: min(650px, 96%); border: 1px solid rgba(148,163,184,.18); box-shadow: 0 0 60px rgba(59,130,246,.08); }
         .hero-shell .ring-b { width: min(585px, 86%); height: min(585px, 86%); border: 1px dashed rgba(96,165,250,.26); }
