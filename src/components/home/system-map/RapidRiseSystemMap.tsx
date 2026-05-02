@@ -13,94 +13,180 @@ export function RapidRiseSystemMap() {
   const activeDestination = useMemo(() => destinations.find((d) => d.id === activeId) ?? destinations[0], [activeId]);
 
   return (
-    <section id="home-hero" className="relative overflow-hidden border-b border-white/10 bg-[#05080d] text-white">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_44%,rgba(59,130,246,0.20),transparent_42%),radial-gradient(circle_at_86%_50%,rgba(56,189,248,0.12),transparent_28%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(59,130,246,0.10)_1px,transparent_1px),linear-gradient(to_bottom,rgba(59,130,246,0.08)_1px,transparent_1px)] bg-[size:48px_48px] opacity-30" />
+    <section id="home-hero" className="hero-shell relative overflow-hidden border-b border-white/10 text-white">
+      <div className="hero-bg pointer-events-none absolute inset-0" />
+      <div className="hero-vignette pointer-events-none absolute inset-0" />
 
-      <div className="relative mx-auto max-w-[1540px] px-4 pb-12 pt-6 sm:px-8 lg:pb-16">
-        <header className="mb-8 flex items-center justify-between rounded-2xl border border-white/10 bg-[rgba(4,12,22,0.72)] px-4 py-3 backdrop-blur md:px-6">
+      <div className="relative mx-auto flex min-h-[920px] w-full max-w-[1600px] flex-col px-4 pb-12 pt-7 sm:px-8 lg:px-10 xl:px-12">
+        <header className="hero-nav mx-auto mb-10 flex h-[68px] w-full max-w-[1420px] items-center justify-between gap-4 rounded-[20px] px-5 md:px-7">
           <Link href="/" className="flex items-center gap-3">
-            <Image src="/brand/rapid-rise-ai-logo.png" alt="Rapid Rise AI" width={184} height={38} className="h-9 w-auto" />
+            <Image src="/brand/rapid-rise-ai-logo.png" alt="Rapid Rise AI" width={236} height={52} className="h-10 w-auto md:h-11" priority />
           </Link>
-          <nav className="hidden items-center gap-7 text-sm text-slate-200 lg:flex">
-            {['Solutions:/solutions','Work:/work','Pricing:/pricing','Education:/education','About:/about','Contact:/contact'].map((item) => {
+          <nav className="hidden items-center gap-8 text-sm font-medium text-slate-100 lg:flex">
+            {['Solutions:/solutions', 'Work:/work', 'Pricing:/pricing', 'Education:/education', 'About:/about', 'Contact:/contact'].map((item) => {
               const [label, href] = item.split(':');
-              return <Link key={label} href={href} className="transition hover:text-sky-300">{label}</Link>;
+              return (
+                <Link key={label} href={href} className="transition-colors duration-300 hover:text-[#60a5fa] focus-visible:text-[#93c5fd]">
+                  {label}
+                </Link>
+              );
             })}
           </nav>
           <div className="flex items-center gap-3">
-            <span className="hidden rounded-full border border-emerald-400/25 bg-emerald-500/8 px-3 py-1 text-xs text-emerald-200 md:inline-flex">●&nbsp;Response within 24h</span>
-            <Link href="/quote" className="inline-flex items-center gap-2 rounded-xl bg-[#2f7cff] px-4 py-2 text-sm font-medium text-white shadow-[0_10px_30px_rgba(47,124,255,0.35)] hover:bg-[#3f88ff]">Request a Quote <ArrowRight className="h-4 w-4" /></Link>
+            <span className="hidden h-9 items-center rounded-full border border-emerald-300/25 bg-emerald-500/10 px-3 text-xs text-emerald-100 md:inline-flex"> 
+              <span className="mr-2 inline-block h-2 w-2 rounded-full bg-emerald-400" />Response within 24h
+            </span>
+            <Link href="/quote" className="inline-flex h-11 items-center gap-2 rounded-xl bg-[linear-gradient(135deg,#2563eb,#3b82f6)] px-5 text-sm font-medium text-white shadow-[0_14px_36px_rgba(37,99,235,0.35)] transition duration-300 hover:-translate-y-0.5 hover:brightness-110">
+              Request a Quote <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </header>
 
-        <div className="hidden grid-cols-[0.8fr_1.3fr_0.82fr] gap-6 xl:grid">
-          <div className="pt-16">
-            <h1 className="font-serif text-[clamp(3rem,4.7vw,5.2rem)] leading-[0.98] tracking-tight text-slate-50">From Chaos<br/>to Clarity.<br/>From Insight<br/>to <span className="text-[#3b82f6]">Impact.</span></h1>
-            <p className="mt-8 max-w-[420px] text-lg leading-relaxed text-slate-300">Rapid Rise AI connects your people, processes, and data into one intelligent operating system that drives results.</p>
-            <p className="mt-10 text-sm text-slate-400">One connected system. Endless impact.</p>
+        <div className="hero-main hidden flex-1 xl:grid xl:grid-cols-[minmax(300px,0.9fr)_minmax(560px,1.35fr)_minmax(390px,0.95fr)] xl:gap-14">
+          <div className="pt-20">
+            <h1 className="max-w-[430px] font-serif text-[clamp(56px,4.6vw,82px)] font-medium leading-[0.98] tracking-[-0.04em] text-[#f8fafc]">
+              From Chaos<br />to Clarity.<br />From Insight<br />to <span className="text-[#3b82f6] [text-shadow:0_0_32px_rgba(37,99,235,0.25)]">Impact.</span>
+            </h1>
+            <p className="mt-8 max-w-[410px] text-[17px] leading-[1.7] text-[rgba(226,232,240,0.78)]">Rapid Rise AI connects your people, processes, and data into one intelligent operating system that drives results.</p>
+            <p className="mt-8 text-[13px] tracking-[0.02em] text-[rgba(148,163,184,0.72)]">One connected system. Endless impact.</p>
           </div>
 
-          <div className="relative h-[760px]">
-            <svg viewBox="0 0 1000 760" className="absolute inset-0 h-full w-full" aria-hidden>
-              {destinations.map((d) => {
-                const active = activeId === d.id;
-                return <g key={d.id} opacity={active ? 1 : 0.45}><line x1="500" y1="380" x2={d.position.x} y2={d.position.y} stroke={active ? 'rgba(96,165,250,0.95)' : 'rgba(148,163,184,0.35)'} strokeWidth={active ? 2.4 : 1.1} /><circle cx={d.position.x} cy={d.position.y} r={active ? 6 : 4} fill={active ? '#60a5fa' : '#64748b'} /></g>;
-              })}
-            </svg>
-            <div className="absolute left-1/2 top-1/2 h-[260px] w-[260px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-300/35 bg-[radial-gradient(circle,rgba(17,30,53,0.92)_0%,rgba(5,12,22,0.94)_68%)] shadow-[0_0_70px_rgba(59,130,246,0.24),inset_0_0_40px_rgba(96,165,250,0.12)]">
-              <div className="absolute inset-5 rounded-full border border-blue-200/30" />
-              <div className="absolute inset-12 rounded-full border border-blue-100/20" />
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                <span className="text-5xl font-semibold">R</span>
-                <p className="mt-4 text-[12px] tracking-[0.18em] text-slate-100">OPERATING CORE</p>
-                <p className="mt-2 text-[11px] tracking-[0.08em] text-sky-300">CAPTURE • AUTOMATE • GROW</p>
+          <div className="relative flex items-center justify-center">
+            <div className="relative h-[660px] w-[660px] max-w-full">
+              <div className="ring-a" />
+              <div className="ring-b" />
+              <div className="ring-c" />
+              <div className="ring-d" />
+
+              <svg viewBox="0 0 1000 1000" className="absolute inset-0 h-full w-full" aria-hidden>
+                {destinations.map((d) => {
+                  const active = d.id === activeId;
+                  return (
+                    <g key={d.id} opacity={active ? 1 : 0.6}>
+                      <line x1="500" y1="500" x2={d.position.x} y2={d.position.y} stroke={active ? 'rgba(96,165,250,0.85)' : 'rgba(96,165,250,0.27)'} strokeWidth={active ? 2 : 1.35} />
+                      <circle cx={d.position.x} cy={d.position.y} r={active ? 6.5 : 4} fill={active ? 'rgba(147,197,253,0.95)' : 'rgba(148,163,184,0.72)'} />
+                    </g>
+                  );
+                })}
+              </svg>
+
+              <div className="core absolute left-1/2 top-1/2 h-[232px] w-[232px] -translate-x-1/2 -translate-y-1/2 rounded-full">
+                <div className="core-inner absolute inset-[18px] rounded-full" />
+                <div className="core-badge absolute left-1/2 top-[34%] h-[54px] w-[54px] -translate-x-1/2 -translate-y-1/2 rounded-full">R</div>
+                <div className="absolute inset-0 flex flex-col items-center justify-center pt-11 text-center">
+                  <p className="text-[19px] font-semibold tracking-[0.12em] text-[#f8fafc]">OPERATING CORE</p>
+                  <p className="mt-1 text-[10.5px] tracking-[0.13em] text-[#93c5fd]">CAPTURE • AUTOMATE • GROW</p>
+                </div>
               </div>
+
+              {destinations.map((d) => {
+                const Icon = d.icon;
+                const active = d.id === activeId;
+                return (
+                  <Link
+                    key={d.id}
+                    href={d.href}
+                    onMouseEnter={() => setActiveId(d.id)}
+                    onFocus={() => setActiveId(d.id)}
+                    className={`destination-card absolute -translate-x-1/2 -translate-y-1/2 rounded-[20px] p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 ${active ? 'destination-active' : ''} ${d.id === 'services' ? 'destination-services' : ''}`}
+                    style={{ left: `${(d.position.x / 1000) * 100}%`, top: `${(d.position.y / 1000) * 100}%` }}
+                  >
+                    <Icon className="mb-2 h-6 w-6 text-[#93c5fd]" strokeWidth={1.85} />
+                    <p className="text-[17px] font-semibold leading-tight text-white">{d.title}</p>
+                    <p className="mt-1 line-clamp-2 text-[12.5px] leading-[1.38] text-[rgba(203,213,225,0.76)]">{d.shortDescription}</p>
+                  </Link>
+                );
+              })}
             </div>
-            {destinations.map((d) => {
-              const Icon = d.icon;
-              const active = activeId === d.id;
-              return <Link key={d.id} href={d.href} onMouseEnter={() => setActiveId(d.id)} onFocus={() => setActiveId(d.id)} className={`absolute w-[180px] -translate-x-1/2 -translate-y-1/2 rounded-2xl border p-4 backdrop-blur transition ${active ? 'border-blue-400/80 bg-[linear-gradient(180deg,rgba(18,32,52,0.98),rgba(7,13,24,0.95))] shadow-[0_16px_40px_rgba(59,130,246,0.35)]' : 'border-slate-400/25 bg-[linear-gradient(180deg,rgba(18,32,52,0.88),rgba(7,13,24,0.84))] hover:-translate-y-[52%] hover:border-blue-300/60'}`} style={{ left: `${(d.position.x / 1000) * 100}%`, top: `${(d.position.y / 760) * 100}%` }}>
-                <Icon className="mb-2 h-5 w-5 text-sky-300" />
-                <p className="text-lg font-medium text-white">{d.title}</p>
-                <p className="mt-1 text-sm text-slate-300">{d.shortDescription}</p>
-              </Link>;
-            })}
           </div>
 
-          <aside className="rounded-[28px] border border-blue-200/30 bg-[linear-gradient(180deg,rgba(8,18,32,0.9),rgba(6,12,22,0.92))] p-8 shadow-[0_20px_60px_rgba(15,23,42,0.9),0_0_40px_rgba(59,130,246,0.2)]">
-            <p className="inline-flex rounded-full border border-blue-300/30 px-3 py-1 text-xs tracking-[0.12em] text-blue-300">{activeDestination.label}</p>
-            <h2 className="mt-5 font-serif text-6xl leading-none">{activeDestination.title}</h2>
-            <div className="mt-4 h-1 w-14 rounded-full bg-[#d8a84f]" />
-            <p className="mt-6 text-lg leading-relaxed text-slate-300">{activeDestination.description}</p>
-            <ul className="mt-8 space-y-5">
+          <aside key={activeDestination.id} className="preview-panel relative min-h-[650px] rounded-[32px] p-10">
+            <p className="inline-flex rounded-full border border-blue-300/30 bg-blue-500/10 px-3 py-1 text-[11px] font-medium tracking-[0.12em] text-[#93c5fd]">{activeDestination.label}</p>
+            <h2 className="mt-6 font-serif text-[56px] leading-[0.95] text-white">{activeDestination.title}</h2>
+            <div className="mt-5 h-[2px] w-12 rounded-full bg-[#f5c451]" />
+            <p className="mt-7 text-[16px] leading-[1.65] text-[rgba(226,232,240,0.78)]">{activeDestination.description}</p>
+
+            <ul className="mt-8 space-y-6">
               {activeDestination.benefits.map((benefit) => {
                 const Icon = benefit.icon;
-                return <li key={benefit.title} className="flex gap-3"><Icon className="mt-0.5 h-5 w-5 text-sky-300" /><div><p className="text-xl text-slate-100">{benefit.title}</p><p className="text-slate-400">{benefit.text}</p></div></li>;
+                return (
+                  <li key={benefit.title} className="flex gap-4">
+                    <Icon className="mt-0.5 h-6 w-6 text-[#60a5fa]" strokeWidth={1.9} />
+                    <div>
+                      <p className="text-[16px] font-semibold text-white">{benefit.title}</p>
+                      <p className="text-[14px] leading-[1.45] text-[rgba(148,163,184,0.9)]">{benefit.text}</p>
+                    </div>
+                  </li>
+                );
               })}
             </ul>
-            <Link href={activeDestination.href} className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#2f7cff] px-5 py-3 text-lg">{activeDestination.cta} <ArrowRight className="h-5 w-5" /></Link>
-            <Link href="/solutions" className="mt-4 inline-flex text-base text-blue-300">{activeDestination.secondaryCta}</Link>
+
+            <Link href={activeDestination.href} className="mt-8 inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-xl bg-[linear-gradient(135deg,#2563eb,#3b82f6)] text-base font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:brightness-110">
+              {activeDestination.cta} <ArrowRight className="h-5 w-5" />
+            </Link>
+            <Link href="/solutions" className="mt-4 inline-flex items-center gap-1 text-[15px] text-[#60a5fa] hover:text-[#93c5fd]">
+              {activeDestination.secondaryCta} <ArrowRight className="h-4 w-4" />
+            </Link>
           </aside>
         </div>
 
-        <div className="space-y-5 xl:hidden">
-          <h1 className="font-serif text-5xl leading-tight">From Chaos to Clarity. From Insight to <span className="text-[#3b82f6]">Impact.</span></h1>
-          <div className="mx-auto flex h-40 w-40 items-center justify-center rounded-full border border-blue-300/30 bg-slate-900/70">OPERATING CORE</div>
-          <div className="flex gap-3 overflow-x-auto pb-2">
-            {destinations.map((d) => <button key={d.id} onClick={() => setActiveId(d.id)} className={`min-w-[220px] rounded-xl border p-3 text-left ${activeId === d.id ? 'border-blue-400 bg-blue-500/10' : 'border-slate-500/40 bg-slate-900/60'}`}><p className="font-medium">{d.title}</p><p className="text-sm text-slate-400">{d.shortDescription}</p></button>)}
-          </div>
-        </div>
-
-        <div className="mt-8 rounded-2xl border border-white/10 bg-[rgba(8,16,28,0.72)] p-4">
-          <div className="flex flex-wrap items-center gap-3 text-sm text-slate-300">
+        <div className="mx-auto w-full max-w-[1120px] xl:pl-[2%]">
+          <div className="process-strip mt-8 inline-flex h-[86px] w-full max-w-[530px] items-center gap-4 rounded-[24px] px-6">
             {processSteps.map((step, idx) => {
               const Icon = step.icon;
-              return <div key={step.label} className="flex items-center gap-3"><span className="inline-flex items-center gap-2"><Icon className="h-4 w-4 text-sky-300" />{step.label}</span>{idx < processSteps.length - 1 ? <span className="text-slate-500">→</span> : null}</div>;
+              return (
+                <div key={step.label} className="flex items-center gap-4 text-[15px] text-slate-200">
+                  <span className="inline-flex items-center gap-2"><Icon className="h-5 w-5 text-[#60a5fa]" />{step.label}</span>
+                  {idx < processSteps.length - 1 ? <span className="text-slate-500">→</span> : null}
+                </div>
+              );
             })}
           </div>
         </div>
+
+        <div className="space-y-6 xl:hidden">
+          <h1 className="max-w-[720px] font-serif text-[clamp(48px,10vw,72px)] leading-[0.98] tracking-[-0.04em]">From Chaos to Clarity. From Insight to <span className="text-[#3b82f6]">Impact.</span></h1>
+          <p className="max-w-[700px] text-[17px] leading-[1.65] text-[rgba(226,232,240,0.78)]">Rapid Rise AI connects your people, processes, and data into one intelligent operating system that drives results.</p>
+          <div className="mx-auto flex h-44 w-44 items-center justify-center rounded-full border border-blue-300/25 bg-[radial-gradient(circle,rgba(17,30,53,.92),rgba(5,12,22,.96))] text-sm tracking-[0.1em]">OPERATING CORE</div>
+          <div className="flex gap-3 overflow-x-auto pb-2">
+            {destinations.map((d) => (
+              <button key={d.id} onClick={() => setActiveId(d.id)} className={`min-h-[126px] min-w-[240px] rounded-2xl border p-4 text-left ${activeId === d.id ? 'border-blue-400/80 bg-blue-500/10 shadow-[0_14px_30px_rgba(37,99,235,0.25)]' : 'border-slate-400/30 bg-slate-900/70'}`}>
+                <p className="text-lg font-semibold text-white">{d.title}</p>
+                <p className="mt-1 text-[13px] leading-[1.4] text-slate-300">{d.shortDescription}</p>
+              </button>
+            ))}
+          </div>
+          <aside className="preview-panel relative rounded-[28px] p-7">
+            <p className="inline-flex rounded-full border border-blue-300/30 bg-blue-500/10 px-3 py-1 text-[11px] tracking-[0.12em] text-[#93c5fd]">{activeDestination.label}</p>
+            <h2 className="mt-4 font-serif text-5xl">{activeDestination.title}</h2>
+            <p className="mt-4 text-[15px] leading-[1.6] text-slate-300">{activeDestination.description}</p>
+          </aside>
+        </div>
       </div>
+
+      <style jsx>{`
+        .hero-shell { background: linear-gradient(160deg, #030712 0%, #050b16 35%, #08111f 62%, #020617 100%); }
+        .hero-bg { background-image: radial-gradient(circle at 47% 45%, rgba(37, 99, 235, 0.20), transparent 40%), radial-gradient(circle at 84% 44%, rgba(37, 99, 235, 0.14), transparent 32%), linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px); background-size: auto, auto, 78px 78px, 78px 78px; }
+        .hero-vignette { box-shadow: inset 0 0 180px rgba(0,0,0,0.6); }
+        .hero-nav { background: rgba(4, 12, 24, 0.72); border: 1px solid rgba(120, 170, 255, 0.14); box-shadow: 0 16px 40px rgba(2,6,23,.45); backdrop-filter: blur(14px); }
+        .ring-a, .ring-b, .ring-c, .ring-d { position:absolute; left:50%; top:50%; border-radius:9999px; transform:translate(-50%,-50%); pointer-events:none; }
+        .ring-a { width: 620px; height: 620px; border: 1px solid rgba(148,163,184,.12); }
+        .ring-b { width: 540px; height: 540px; border: 1px dashed rgba(96,165,250,.18); }
+        .ring-c { width: 470px; height: 470px; border: 1px solid rgba(148,163,184,.1); }
+        .ring-d { width: 380px; height: 380px; border: 1px solid rgba(59,130,246,.14); }
+        .core { border:1px solid rgba(147,197,253,.22); background: radial-gradient(circle at 50% 35%, rgba(96,165,250,.18), rgba(15,23,42,.96) 55%, rgba(2,6,23,1) 100%); box-shadow:0 0 0 1px rgba(59,130,246,.08),0 24px 80px rgba(0,0,0,.55),0 0 90px rgba(37,99,235,.22); animation: breathe 7s ease-in-out infinite; }
+        .core-inner { border: 1px solid rgba(147,197,253,.2); }
+        .core-badge { border: 1px solid rgba(96,165,250,.7); display:flex; align-items:center; justify-content:center; font-size:34px; font-weight:600; background: radial-gradient(circle,rgba(30,64,175,.3),rgba(15,23,42,.9)); box-shadow:0 0 30px rgba(59,130,246,.35); }
+        .destination-card { width: 164px; min-height: 126px; border:1px solid rgba(148,163,184,.18); background:linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(3, 7, 18, 0.94)); box-shadow:0 20px 60px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.05); transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; }
+        .destination-card:hover { transform:translate(-50%,-55%); border-color: rgba(96,165,250,.55); box-shadow:0 24px 70px rgba(0,0,0,.45),0 0 34px rgba(59,130,246,.25),inset 0 1px 0 rgba(255,255,255,.08); }
+        .destination-active { border-color:rgba(96,165,250,.78); box-shadow:0 0 0 1px rgba(59,130,246,.24),0 24px 70px rgba(37,99,235,.28),inset 0 1px 0 rgba(255,255,255,.08); }
+        .destination-services { width: 196px; min-height: 152px; }
+        .destination-services::after { content:''; position:absolute; left:18%; right:18%; bottom:-16px; height:24px; border-radius:999px; background:rgba(59,130,246,.4); filter:blur(14px); }
+        .preview-panel { background: linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(2, 6, 23, 0.96)); border:1px solid rgba(148,163,184,.18); box-shadow:0 30px 100px rgba(0,0,0,.55),0 0 80px rgba(37,99,235,.16),inset 0 1px 0 rgba(255,255,255,.06); }
+        .preview-panel::after { content:''; position:absolute; right:-40px; bottom:-40px; width:180px; height:180px; border-radius:999px; background:radial-gradient(circle, rgba(37,99,235,.25), transparent 68%); pointer-events:none; }
+        .process-strip { background: rgba(15,23,42,.72); border:1px solid rgba(148,163,184,.18); box-shadow:0 16px 45px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.05); }
+        @keyframes breathe { 0%,100% { filter: brightness(1); } 50% { filter: brightness(1.07); } }
+      `}</style>
     </section>
   );
 }
