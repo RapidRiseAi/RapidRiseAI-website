@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { destinations, processSteps, type DestinationId, type OrbitSlot } from './SystemMapData';
 
 const DEFAULT_ID: DestinationId = 'services';
@@ -25,6 +25,15 @@ export function RapidRiseSystemMap() {
   const [showNavigationMap, setShowNavigationMap] = useState(false);
   const activeDestination = useMemo(() => destinations.find((d) => d.id === activeId) ?? destinations[0], [activeId]);
 
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = showNavigationMap ? 'hidden' : previousOverflow;
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [showNavigationMap]);
+
   return (
     <section id="home-hero" className="hero-shell relative overflow-visible border-b border-white/10 text-white">
       <div className="hero-bg pointer-events-none absolute inset-0" />
@@ -32,7 +41,7 @@ export function RapidRiseSystemMap() {
       <div className="hero-atmosphere pointer-events-none absolute inset-0" />
 
       <div className="relative mx-auto flex min-h-[120px] w-full max-w-[1600px] flex-col px-4 pb-6 pt-4 sm:px-8 lg:px-10 xl:px-12">
-        <div className="fixed left-0 right-0 top-2 z-[220] flex justify-center px-3">
+        <div className="fixed left-0 right-0 top-2 z-[600] flex justify-center px-3">
           <div className="hero-command-nav flex w-full max-w-[520px] items-center justify-end gap-3 rounded-2xl px-3 py-2">
             {showNavigationMap ? (
               <button
@@ -48,7 +57,7 @@ export function RapidRiseSystemMap() {
               onClick={() => setShowNavigationMap((prev) => !prev)}
               className="inline-flex h-11 items-center gap-2 rounded-xl border border-blue-300/30 bg-slate-950/70 px-4 text-sm font-medium text-slate-100 transition hover:border-blue-300/55 hover:text-white"
             >
-              Navigation
+              {showNavigationMap ? 'Close Navigation' : 'Navigation'}
             </button>
             <Link href="/quote" className="inline-flex h-11 items-center gap-2 rounded-xl bg-[linear-gradient(135deg,#2563eb,#3b82f6)] px-5 text-sm font-medium text-white shadow-[0_14px_36px_rgba(37,99,235,0.35)] transition duration-300 hover:-translate-y-0.5 hover:brightness-110">
               Request a Quote <ArrowRight className="h-4 w-4" />
@@ -57,8 +66,9 @@ export function RapidRiseSystemMap() {
         </div>
 
         {showNavigationMap ? (
-        <div className="hero-navigation-overlay fixed inset-0 z-[180] overflow-y-auto pt-24">
+        <div className="hero-navigation-overlay fixed inset-0 z-[500] overflow-y-auto pt-24" role="dialog" aria-modal="true" aria-label="Navigation map">
         <div className="mx-auto w-full max-w-[1600px] px-4 pb-12 sm:px-8 lg:px-10 xl:px-12">
+        <p className="mb-4 text-center text-sm font-semibold tracking-[0.12em] text-[#93c5fd]">NAVIGATION MAP OPEN</p>
         <>
         <div className="hero-main hidden flex-1 lg:grid lg:grid-cols-[minmax(220px,0.72fr)_minmax(520px,1.2fr)_minmax(300px,0.9fr)] lg:gap-8 xl:grid-cols-[minmax(270px,0.82fr)_minmax(640px,1.42fr)_minmax(390px,0.96fr)] xl:gap-[54px] 2xl:grid-cols-[minmax(300px,0.85fr)_minmax(670px,1.46fr)_minmax(400px,1fr)]">
           <div className="pt-14 xl:pt-20 2xl:pt-24">
@@ -200,7 +210,7 @@ export function RapidRiseSystemMap() {
         .hero-shell .hero-vignette { box-shadow: inset 0 0 180px rgba(0,0,0,0.6); }
         .hero-shell .hero-atmosphere { background: radial-gradient(circle at 50% 52%, rgba(59,130,246,.18), transparent 34%), radial-gradient(circle at 48% 48%, rgba(96,165,250,.12), transparent 46%); }
         .hero-shell .hero-command-nav { background: rgba(4, 12, 24, 0.78); border: 1px solid rgba(120, 170, 255, 0.2); box-shadow: 0 16px 40px rgba(2,6,23,.45); backdrop-filter: blur(14px); }
-        .hero-shell .hero-navigation-overlay { background: linear-gradient(180deg, rgba(2,6,23,.92), rgba(2,6,23,.96)); }
+        .hero-shell .hero-navigation-overlay { background: linear-gradient(180deg, rgba(2,6,23,.97), rgba(2,6,23,.99)); backdrop-filter: blur(4px); }
         .hero-shell .ring-a, .hero-shell .ring-b, .hero-shell .ring-c, .hero-shell .ring-d, .hero-shell .ring-e { position:absolute; left:50%; top:50%; border-radius:9999px; transform:translate(-50%,-50%); pointer-events:none; }
         .hero-shell .ring-a { width: min(650px, 96%); height: min(650px, 96%); border: 1px solid rgba(148,163,184,.18); box-shadow: 0 0 60px rgba(59,130,246,.08); }
         .hero-shell .ring-b { width: min(585px, 86%); height: min(585px, 86%); border: 1px dashed rgba(96,165,250,.26); }
