@@ -33,6 +33,7 @@ const mobileMenuItems = [
 
 export function Header() {
   const pathname = usePathname();
+  if (pathname === '/') return null;
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const reduceMotion = useReducedMotion();
