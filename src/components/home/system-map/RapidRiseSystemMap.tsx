@@ -185,19 +185,29 @@ export function RapidRiseSystemMap() {
           className="hero-navigation-overlay fixed inset-0 z-[2147483647] flex items-center justify-center px-4"
           role="dialog"
           aria-modal="true"
-          aria-label="Navigation hello world popup"
+          aria-label="Navigation system map popup"
           onClick={() => setShowHelloPopup(false)}
         >
-          <div className="w-full max-w-md rounded-2xl border border-blue-300/40 bg-[rgba(3,10,24,0.96)] p-6 text-center shadow-[0_30px_90px_rgba(0,0,0,.55)]" onClick={(event) => event.stopPropagation()}>
-            <h3 className="text-3xl font-semibold text-white">Hello world</h3>
-            <p className="mt-3 text-slate-200">Navigation button is working.</p>
-            <button
-              type="button"
-              onClick={() => setShowHelloPopup(false)}
-              className="mt-6 rounded-xl border border-blue-300/35 bg-blue-500/15 px-6 py-3 text-sm font-medium text-white hover:border-blue-300/60"
-            >
-              Close
-            </button>
+          <div className="w-full max-w-5xl rounded-2xl border border-blue-300/40 bg-[rgba(3,10,24,0.96)] p-6 shadow-[0_30px_90px_rgba(0,0,0,.55)]" onClick={(event) => event.stopPropagation()}>
+            <div className="mb-5 flex items-center justify-between gap-4 border-b border-blue-200/20 pb-4">
+              <h3 className="text-2xl font-semibold text-white">System Map</h3>
+              <button
+                type="button"
+                onClick={() => setShowHelloPopup(false)}
+                className="rounded-xl border border-blue-300/35 bg-blue-500/15 px-4 py-2 text-sm font-medium text-white hover:border-blue-300/60"
+              >
+                Close
+              </button>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {destinations.map((d) => (
+                <Link key={`popup-${d.id}`} href={d.href} className="rounded-xl border border-slate-700/80 bg-slate-900/70 p-4 transition hover:border-blue-300/70 hover:bg-slate-800/80" onClick={() => setShowHelloPopup(false)}>
+                  <p className="text-base font-semibold text-white">{d.title}</p>
+                  <p className="mt-1 text-sm text-slate-300">{d.shortDescription}</p>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       ) : null}
