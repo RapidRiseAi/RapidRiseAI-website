@@ -42,9 +42,9 @@ export function RapidRiseSystemMap() {
           </div>
         </header>
 
-        <div className="hero-main hidden flex-1 xl:grid xl:grid-cols-[minmax(300px,0.9fr)_minmax(560px,1.35fr)_minmax(390px,0.95fr)] xl:gap-14">
+        <div className="hero-main hidden flex-1 xl:grid xl:grid-cols-[minmax(320px,0.95fr)_minmax(620px,1.35fr)_minmax(390px,1fr)] xl:gap-[56px]">
           <div className="pt-20">
-            <h1 className="max-w-[430px] font-serif text-[clamp(56px,4.6vw,82px)] font-medium leading-[0.98] tracking-[-0.04em] text-[#f8fafc]">
+            <h1 className="max-w-[430px] font-serif text-[clamp(54px,4.6vw,78px)] font-medium leading-[0.98] tracking-[-0.04em] text-[#f8fafc]">
               From Chaos<br />to Clarity.<br />From Insight<br />to <span className="text-[#3b82f6] [text-shadow:0_0_32px_rgba(37,99,235,0.25)]">Impact.</span>
             </h1>
             <p className="mt-8 max-w-[410px] text-[17px] leading-[1.7] text-[rgba(226,232,240,0.78)]">Rapid Rise AI connects your people, processes, and data into one intelligent operating system that drives results.</p>
@@ -131,7 +131,7 @@ export function RapidRiseSystemMap() {
           </aside>
         </div>
 
-        <div className="mx-auto w-full max-w-[1120px] xl:pl-[2%]">
+        <div className="mx-auto w-full max-w-[1120px] xl:-mt-2 xl:pl-[2%]">
           <div className="process-strip mt-8 inline-flex h-[86px] w-full max-w-[530px] items-center gap-4 rounded-[24px] px-6">
             {processSteps.map((step, idx) => {
               const Icon = step.icon;
@@ -179,10 +179,11 @@ export function RapidRiseSystemMap() {
         .core { border:1px solid rgba(147,197,253,.22); background: radial-gradient(circle at 50% 35%, rgba(96,165,250,.18), rgba(15,23,42,.96) 55%, rgba(2,6,23,1) 100%); box-shadow:0 0 0 1px rgba(59,130,246,.08),0 24px 80px rgba(0,0,0,.55),0 0 90px rgba(37,99,235,.22); animation: breathe 7s ease-in-out infinite; }
         .core-inner { border: 1px solid rgba(147,197,253,.2); }
         .core-badge { border: 1px solid rgba(96,165,250,.7); display:flex; align-items:center; justify-content:center; font-size:34px; font-weight:600; background: radial-gradient(circle,rgba(30,64,175,.3),rgba(15,23,42,.9)); box-shadow:0 0 30px rgba(59,130,246,.35); }
-        .destination-card { width: 172px; min-height: 132px; border:1px solid rgba(148,163,184,.26); background:linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(2, 6, 23, 0.98)); box-shadow:0 22px 60px rgba(0,0,0,.45),0 10px 28px rgba(2,6,23,.35),inset 0 1px 0 rgba(255,255,255,.08); backdrop-filter: blur(4px); transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; }
+        .destination-card { width: 172px; min-height: 132px; border:1px solid rgba(148,163,184,.28); background:linear-gradient(180deg, rgba(20, 32, 52, 0.96), rgba(4, 9, 20, 0.98)); box-shadow:0 22px 60px rgba(0,0,0,.45),0 10px 28px rgba(2,6,23,.35),inset 0 1px 0 rgba(255,255,255,.11); backdrop-filter: blur(4px); transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; overflow:hidden; }
+        .destination-card::before { content:''; position:absolute; left:0; right:0; top:0; height:42%; background:linear-gradient(180deg, rgba(255,255,255,.09), transparent); pointer-events:none; }
         .destination-card:hover { transform:translate(-50%,-56%); border-color: rgba(96,165,250,.72); box-shadow:0 30px 82px rgba(0,0,0,.52),0 0 40px rgba(59,130,246,.32),inset 0 1px 0 rgba(255,255,255,.12); }
         .destination-active { border-color:rgba(96,165,250,.9); box-shadow:0 0 0 1px rgba(59,130,246,.4),0 30px 80px rgba(37,99,235,.34),0 0 52px rgba(96,165,250,.22),inset 0 1px 0 rgba(255,255,255,.12); }
-        .destination-services { width: 205px; min-height: 158px; }
+        .destination-services { width: 202px; min-height: 156px; }
         .destination-services::after { content:''; position:absolute; left:18%; right:18%; bottom:-16px; height:24px; border-radius:999px; background:rgba(59,130,246,.4); filter:blur(14px); }
         .preview-panel { background: linear-gradient(180deg, rgba(15, 23, 42, 0.94), rgba(2, 6, 23, 0.98)); border:1px solid rgba(148,163,184,.24); box-shadow:0 30px 100px rgba(0,0,0,.58),0 0 92px rgba(37,99,235,.18),inset 0 1px 0 rgba(255,255,255,.08); }
         .preview-panel::after { content:''; position:absolute; right:-40px; bottom:-40px; width:180px; height:180px; border-radius:999px; background:radial-gradient(circle, rgba(37,99,235,.25), transparent 68%); pointer-events:none; }
