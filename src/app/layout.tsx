@@ -59,7 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-[var(--font-inter)] antialiased" data-device="desktop">
         <Script id="mobile-detection" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: mobileDetectionScript }} />
         <MobileDetector />
-        <div aria-hidden={maintenanceModeEnabled} inert={maintenanceModeEnabled}>
+        <div>
           <Header />
           <main>{children}</main>
           <Script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js" />
