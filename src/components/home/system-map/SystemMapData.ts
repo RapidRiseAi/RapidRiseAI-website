@@ -1,18 +1,95 @@
-import { Briefcase, Bot, Contact, DollarSign, Gauge, GraduationCap, Layers, Sparkles, Wrench, Workflow, Globe, type LucideIcon } from 'lucide-react';
-export type AccentTone = 'cyan' | 'blue' | 'purple' | 'green' | 'gold' | 'magenta' | 'google';
-export type SystemMapDestination = { id:string; title:string; description:string; tag:string; href:string; accent:AccentTone; icon:LucideIcon; scale:number; previewBullets:string[]; left:number; top:number; route:string; anchor:{x:number;y:number}; };
-export const accentStyles={cyan:{main:'#33E6FF',glow:'rgba(51,230,255,.42)',soft:'rgba(51,230,255,.16)'},blue:{main:'#2E8BFF',glow:'rgba(46,139,255,.42)',soft:'rgba(46,139,255,.14)'},purple:{main:'#8A5CFF',glow:'rgba(138,92,255,.42)',soft:'rgba(138,92,255,.14)'},green:{main:'#33E68A',glow:'rgba(51,230,138,.38)',soft:'rgba(51,230,138,.14)'},gold:{main:'#F4C53A',glow:'rgba(244,197,58,.46)',soft:'rgba(244,197,58,.16)'},magenta:{main:'#D84CFF',glow:'rgba(216,76,255,.42)',soft:'rgba(216,76,255,.14)'},google:{main:'#33E6FF',glow:'rgba(51,230,255,.4)',soft:'rgba(51,230,255,.14)'}} as const;
-export const systemMapDestinations:SystemMapDestination[]=[
-{id:'work',title:'Work',description:'Proof from real client builds.',tag:'CASE STUDIES',href:'/work',accent:'purple',scale:.96,left:28,top:21,route:'M600 392 C540 320 455 245 335 180',anchor:{x:335,y:180},previewBullets:['See real builds','Review outcomes','Understand capability'],icon:Briefcase},
-{id:'dashboards',title:'Dashboards',description:'Live business visibility and KPIs.',tag:'SIGNAL LIVE',href:'/solutions#dashboards',accent:'blue',scale:.96,left:50,top:16,route:'M600 392 C600 305 600 225 600 140',anchor:{x:600,y:140},previewBullets:['Track status','See bottlenecks','Report clearly'],icon:Gauge},
-{id:'google-workspace',title:'Google Workspace',description:'Structured workflows in familiar tools.',tag:'CONNECTED',href:'/solutions#google-workspace',accent:'google',scale:.96,left:73,top:21,route:'M600 392 C675 315 760 240 865 180',anchor:{x:865,y:180},previewBullets:['Connect Gmail and Sheets','Organize Drive documents','Trigger reminders'],icon:Sparkles},
-{id:'automation',title:'Automation',description:'Remove manual workflow overhead.',tag:'LIVE ROUTES',href:'/solutions#automation',accent:'cyan',scale:1,left:22,top:40,route:'M600 392 C500 360 405 345 315 335',anchor:{x:315,y:335},previewBullets:['Sync tools automatically','Route tasks and reminders','Reduce repetitive admin'],icon:Workflow},
-{id:'internal-tools',title:'Internal Tools',description:'Portals, apps, and custom workflows.',tag:'OPS CONTROL',href:'/solutions#internal-tools',accent:'purple',scale:1,left:74,top:40,route:'M600 392 C700 360 785 345 865 335',anchor:{x:865,y:335},previewBullets:['Build team dashboards','Manage requests','Control operations'],icon:Wrench},
-{id:'support-assistant',title:'Support Assistant',description:'AI support for your team and clients.',tag:'AI ENABLED',href:'/solutions#support-assistant',accent:'blue',scale:.92,left:10,top:59,route:'M600 392 C470 390 310 430 165 470',anchor:{x:165,y:470},previewBullets:['Answer faster','Summarize requests','Handoff cleanly'],icon:Bot},
-{id:'websites',title:'Websites',description:'High-converting sites that generate leads.',tag:'CONVERSION READY',href:'/solutions#websites',accent:'cyan',scale:1,left:26,top:73,route:'M600 392 C500 430 425 500 340 560',anchor:{x:340,y:560},previewBullets:['Build trust fast','Capture quote requests','Connect forms to workflows'],icon:Globe},
-{id:'services',title:'Services',description:'Core offerings and strategic systems that drive results.',tag:'CORE LAYER',href:'/solutions',accent:'gold',scale:1.08,left:50,top:72,route:'M600 392 C600 435 600 500 600 555',anchor:{x:600,y:555},previewBullets:['Capture more high-quality leads','Automate manual work','Track every opportunity','Report with clarity','Scale with confidence'],icon:Layers},
-{id:'training',title:'Training',description:'Enable teams to adopt systems fast.',tag:'ADOPTION',href:'/education',accent:'blue',scale:1,left:72,top:61,route:'M600 392 C690 420 775 465 855 500',anchor:{x:855,y:500},previewBullets:['Teach modern workflows','Provide SOPs','Improve adoption'],icon:GraduationCap},
-{id:'contact',title:'Contact',description:'Start a conversation with our team.',tag:'OPEN INTAKE',href:'/contact',accent:'green',scale:1,left:80,top:73,route:'M600 392 C720 470 835 560 935 610',anchor:{x:935,y:610},previewBullets:['Request a quote','Book discovery','Start the build path'],icon:Contact},
-{id:'pricing',title:'Pricing',description:'Clear, flexible pricing that scales.',tag:'SCOPE PLANS',href:'/pricing',accent:'magenta',scale:1,left:38,top:86,route:'M600 392 C560 485 505 585 450 650',anchor:{x:450,y:650},previewBullets:['Pick the right scope','Start with a quick win','Scale with support'],icon:DollarSign},
-{id:'process',title:'Process',description:'Proven process that delivers outcomes.',tag:'SYSTEM FLOW',href:'/about#process',accent:'blue',scale:1,left:62,top:86,route:'M600 392 C635 490 685 585 730 650',anchor:{x:730,y:650},previewBullets:['Diagnose the leak','Design the system','Ship and improve'],icon:Workflow},
+import {
+  ArrowUpRight,
+  BarChart3,
+  Briefcase,
+  Compass,
+  Gauge,
+  Globe,
+  Mail,
+  Settings2,
+  Sparkles,
+  Target,
+  ShieldCheck,
+  GitBranch,
+  Users,
+  ScanLine,
+  Zap,
+  Send,
+  type LucideIcon,
+} from 'lucide-react';
+
+export type DestinationId = 'solutions' | 'dashboards' | 'automation' | 'internal-tools' | 'contact' | 'services' | 'websites' | 'work';
+export type OrbitSlot = 'top' | 'upperLeft' | 'upperRight' | 'left' | 'right' | 'lowerLeft' | 'lowerRight' | 'bottom';
+
+export type Destination = {
+  id: DestinationId;
+  title: string;
+  label: string;
+  shortDescription: string;
+  description: string;
+  href: string;
+  icon: LucideIcon;
+  slot: OrbitSlot;
+  routePoint: { x: number; y: number };
+  cta: string;
+  secondaryCta: string;
+  benefits: Array<{ title: string; text: string; icon: LucideIcon }>;
+};
+
+export const processSteps = [
+  { label: 'Capture', icon: ScanLine },
+  { label: 'Automate', icon: Zap },
+  { label: 'Deliver', icon: Send },
+  { label: 'Grow', icon: ArrowUpRight },
+] as const;
+
+export const destinations: Destination[] = [
+  { id: 'solutions', title: 'Solutions', label: 'FRAMEWORK', shortDescription: 'Strategy, systems & marketing that scale.', description: 'Turn scattered business needs into clear systems, workflows, and digital assets that support growth.', href: '/solutions', icon: Compass, slot: 'upperLeft', routePoint: { x: 268, y: 198 }, cta: 'Explore Solutions', secondaryCta: 'View service pathways', benefits: [
+    { title: 'Map the Bottlenecks', text: 'Identify where time, leads, and money leak.', icon: Target },
+    { title: 'Design the System', text: 'Build a practical operating layer around your real workflow.', icon: Sparkles },
+    { title: 'Connect the Tools', text: 'Link the platforms your team already uses.', icon: GitBranch },
+    { title: 'Improve Over Time', text: 'Use data and feedback to refine the system.', icon: Gauge },
+  ] },
+  { id: 'dashboards', title: 'Dashboards', label: 'VISIBILITY', shortDescription: 'Live visibility across performance & KPIs.', description: 'See the numbers, tasks, leads, and outcomes that matter without digging through scattered tools.', href: '/solutions#dashboards', icon: BarChart3, slot: 'top', routePoint: { x: 500, y: 110 }, cta: 'View Dashboard Work', secondaryCta: 'See how reporting works', benefits: [
+    { title: 'Real-Time Clarity', text: 'Track important activity in one place.', icon: Gauge },
+    { title: 'Better Decisions', text: 'Surface trends before they become problems.', icon: Target },
+    { title: 'Team Accountability', text: 'Make ownership and progress visible.', icon: Users },
+    { title: 'Cleaner Reporting', text: 'Replace guesswork with structured insight.', icon: BarChart3 },
+  ] },
+  { id: 'automation', title: 'Automation', label: 'EFFICIENCY', shortDescription: 'Remove manual work and streamline ops.', description: 'Remove repetitive manual work and create connected workflows that keep the business moving.', href: '/solutions#workflow-automation', icon: Zap, slot: 'upperRight', routePoint: { x: 732, y: 198 }, cta: 'Automate My Workflow', secondaryCta: 'Explore automation ideas', benefits: [
+    { title: 'Save Time', text: 'Automate repetitive admin and follow-ups.', icon: Zap },
+    { title: 'Reduce Mistakes', text: 'Standardize handoffs and data capture.', icon: ShieldCheck },
+    { title: 'Respond Faster', text: 'Trigger actions the moment something happens.', icon: Sparkles },
+    { title: 'Scale Capacity', text: 'Let systems handle more of the workload.', icon: ArrowUpRight },
+  ] },
+  { id: 'work', title: 'Work', label: 'PROOF', shortDescription: 'From roadmaps to real client outcomes.', description: 'Explore real builds, systems, and concepts that show how Rapid Rise AI turns ideas into practical outcomes.', href: '/work', icon: Briefcase, slot: 'left', routePoint: { x: 168, y: 408 }, cta: 'View Work', secondaryCta: 'See case studies', benefits: [
+    { title: 'Real Outcomes', text: 'See what has already been built.', icon: Briefcase },
+    { title: 'Practical Thinking', text: 'Understand the logic behind the work.', icon: Compass },
+    { title: 'Visual Proof', text: 'Review systems, dashboards, apps, and websites.', icon: Globe },
+    { title: 'Confidence Before You Commit', text: 'Know what quality looks like.', icon: ShieldCheck },
+  ] },
+  { id: 'internal-tools', title: 'Internal Tools', label: 'OPERATIONS', shortDescription: 'Custom portals and workflows for your team.', description: 'Build custom portals, dashboards, calculators, and workflow tools around how your team actually works.', href: '/solutions#web-apps', icon: Settings2, slot: 'right', routePoint: { x: 832, y: 408 }, cta: 'Build Internal Tools', secondaryCta: 'See examples', benefits: [
+    { title: 'Custom Fit', text: 'Tools designed around your real process.', icon: Target },
+    { title: 'Team Control', text: 'Give staff clean interfaces to manage work.', icon: Users },
+    { title: 'Cleaner Handoffs', text: 'Move tasks between people without confusion.', icon: GitBranch },
+    { title: 'Better Oversight', text: 'Give owners visibility without micromanaging.', icon: Gauge },
+  ] },
+  { id: 'websites', title: 'Websites', label: 'CONVERSION', shortDescription: 'High-converting sites that turn visitors into customers.', description: 'Replace flat, outdated websites with premium pages built to create trust, explain value, and convert visitors.', href: '/solutions#websites', icon: Globe, slot: 'lowerLeft', routePoint: { x: 267, y: 734 }, cta: 'Upgrade My Website', secondaryCta: 'View website work', benefits: [
+    { title: 'Strong First Impression', text: 'Make the business feel credible instantly.', icon: Sparkles },
+    { title: 'Clear Service Flow', text: 'Guide visitors to the right action.', icon: Target },
+    { title: 'Better Mobile Experience', text: 'Design for how people actually browse.', icon: Users },
+    { title: 'Built to Convert', text: 'Turn attention into enquiries.', icon: ArrowUpRight },
+  ] },
+  { id: 'contact', title: 'Contact', label: 'START HERE', shortDescription: 'Start a conversation. Let’s build together.', description: 'Tell us what is slowing your business down and we will help you map the best next step.', href: '/contact', icon: Mail, slot: 'lowerRight', routePoint: { x: 733, y: 734 }, cta: 'Request a Quote', secondaryCta: 'Send a message', benefits: [
+    { title: 'Clear Next Step', text: 'Know what to build first.', icon: Target },
+    { title: 'Practical Scope', text: 'Get a realistic plan, not vague promises.', icon: ShieldCheck },
+    { title: 'Fast Response', text: 'Start the conversation quickly.', icon: Zap },
+    { title: 'Built Around You', text: 'Recommendations based on your business.', icon: Users },
+  ] },
+  { id: 'services', title: 'Services', label: 'FEATURED', shortDescription: 'Core systems & strategy that drive real results.', description: 'We design and implement core systems that power your business, so you can focus on growth, not busywork.', href: '/solutions', icon: Sparkles, slot: 'bottom', routePoint: { x: 500, y: 842 }, cta: 'Explore Services', secondaryCta: 'View all solutions', benefits: [
+    { title: 'Strategic by Design', text: 'Built around your goals, market, and customers.', icon: Target },
+    { title: 'Operational Excellence', text: 'Streamline operations and eliminate friction.', icon: ShieldCheck },
+    { title: 'Data-Driven Decisions', text: 'Dashboards and insights that measure what matters.', icon: GitBranch },
+    { title: 'Scalable Growth', text: 'Systems that scale with you, efficiently and sustainably.', icon: Users },
+  ] },
 ];
