@@ -177,29 +177,29 @@ export function RapidRiseSystemMap() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style jsx global>{`
         .hero-shell { background: linear-gradient(160deg, #030712 0%, #050b16 35%, #08111f 62%, #020617 100%); }
-        .hero-bg { background-image: radial-gradient(circle at 47% 45%, rgba(37, 99, 235, 0.20), transparent 40%), radial-gradient(circle at 84% 44%, rgba(37, 99, 235, 0.14), transparent 32%), linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px); background-size: auto, auto, 78px 78px, 78px 78px; }
-        .hero-vignette { box-shadow: inset 0 0 180px rgba(0,0,0,0.6); }
-        .hero-nav { background: rgba(4, 12, 24, 0.72); border: 1px solid rgba(120, 170, 255, 0.14); box-shadow: 0 16px 40px rgba(2,6,23,.45); backdrop-filter: blur(14px); }
-        .ring-a, .ring-b, .ring-c, .ring-d, .ring-e { position:absolute; left:50%; top:50%; border-radius:9999px; transform:translate(-50%,-50%); pointer-events:none; }
-        .ring-a { width: 650px; height: 650px; border: 1px solid rgba(148,163,184,.12); }
-        .ring-b { width: 585px; height: 585px; border: 1px dashed rgba(96,165,250,.19); }
-        .ring-c { width: 510px; height: 510px; border: 1px solid rgba(148,163,184,.1); }
-        .ring-d { width: 430px; height: 430px; border: 1px solid rgba(59,130,246,.14); }
-        .ring-e { width: 350px; height: 350px; border: 1px solid rgba(148,163,184,.09); }
-        .core { border:1px solid rgba(147,197,253,.22); background: radial-gradient(circle at 50% 35%, rgba(96,165,250,.18), rgba(15,23,42,.96) 55%, rgba(2,6,23,1) 100%); box-shadow:0 0 0 1px rgba(59,130,246,.08),0 24px 80px rgba(0,0,0,.55),0 0 90px rgba(37,99,235,.22); animation: breathe 7s ease-in-out infinite; }
-        .core-inner { border: 1px solid rgba(147,197,253,.2); }
-        .core-badge { border: 1px solid rgba(96,165,250,.7); display:flex; align-items:center; justify-content:center; font-size:34px; font-weight:600; background: radial-gradient(circle,rgba(30,64,175,.3),rgba(15,23,42,.9)); box-shadow:0 0 30px rgba(59,130,246,.35); }
-        .destination-card { display:block; width: 172px; min-height: 132px; border:1px solid rgba(148,163,184,.28); background:linear-gradient(180deg, rgba(20, 32, 52, 0.96), rgba(4, 9, 20, 0.98)); box-shadow:0 22px 60px rgba(0,0,0,.45),0 10px 28px rgba(2,6,23,.35),inset 0 1px 0 rgba(255,255,255,.11); backdrop-filter: blur(4px); transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; overflow:hidden; }
-        .destination-card::before { content:''; position:absolute; left:0; right:0; top:0; height:42%; background:linear-gradient(180deg, rgba(255,255,255,.09), transparent); pointer-events:none; }
-        .destination-card:hover { transform:translate(-50%,-56%); border-color: rgba(96,165,250,.72); box-shadow:0 30px 82px rgba(0,0,0,.52),0 0 40px rgba(59,130,246,.32),inset 0 1px 0 rgba(255,255,255,.12); }
-        .destination-active { border-color:rgba(96,165,250,.9); box-shadow:0 0 0 1px rgba(59,130,246,.4),0 30px 80px rgba(37,99,235,.34),0 0 52px rgba(96,165,250,.22),inset 0 1px 0 rgba(255,255,255,.12); }
-        .destination-services { width: 202px; min-height: 156px; }
-        .destination-services::after { content:''; position:absolute; left:18%; right:18%; bottom:-16px; height:24px; border-radius:999px; background:rgba(59,130,246,.4); filter:blur(14px); }
-        .preview-panel { background: linear-gradient(180deg, rgba(15, 23, 42, 0.94), rgba(2, 6, 23, 0.98)); border:1px solid rgba(148,163,184,.24); box-shadow:0 30px 100px rgba(0,0,0,.58),0 0 92px rgba(37,99,235,.18),inset 0 1px 0 rgba(255,255,255,.08); }
-        .preview-panel::after { content:''; position:absolute; right:-40px; bottom:-40px; width:180px; height:180px; border-radius:999px; background:radial-gradient(circle, rgba(37,99,235,.25), transparent 68%); pointer-events:none; }
-        .process-strip { background: rgba(15,23,42,.72); border:1px solid rgba(148,163,184,.18); box-shadow:0 16px 45px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.05); }
+        .hero-shell .hero-bg { background-image: radial-gradient(circle at 47% 45%, rgba(37, 99, 235, 0.20), transparent 40%), radial-gradient(circle at 84% 44%, rgba(37, 99, 235, 0.14), transparent 32%), linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px); background-size: auto, auto, 78px 78px, 78px 78px; }
+        .hero-shell .hero-vignette { box-shadow: inset 0 0 180px rgba(0,0,0,0.6); }
+        .hero-shell .hero-nav { background: rgba(4, 12, 24, 0.72); border: 1px solid rgba(120, 170, 255, 0.14); box-shadow: 0 16px 40px rgba(2,6,23,.45); backdrop-filter: blur(14px); }
+        .hero-shell .ring-a, .hero-shell .ring-b, .hero-shell .ring-c, .hero-shell .ring-d, .hero-shell .ring-e { position:absolute; left:50%; top:50%; border-radius:9999px; transform:translate(-50%,-50%); pointer-events:none; }
+        .hero-shell .ring-a { width: 650px; height: 650px; border: 1px solid rgba(148,163,184,.12); }
+        .hero-shell .ring-b { width: 585px; height: 585px; border: 1px dashed rgba(96,165,250,.19); }
+        .hero-shell .ring-c { width: 510px; height: 510px; border: 1px solid rgba(148,163,184,.1); }
+        .hero-shell .ring-d { width: 430px; height: 430px; border: 1px solid rgba(59,130,246,.14); }
+        .hero-shell .ring-e { width: 350px; height: 350px; border: 1px solid rgba(148,163,184,.09); }
+        .hero-shell .core { border:1px solid rgba(147,197,253,.22); background: radial-gradient(circle at 50% 35%, rgba(96,165,250,.18), rgba(15,23,42,.96) 55%, rgba(2,6,23,1) 100%); box-shadow:0 0 0 1px rgba(59,130,246,.08),0 24px 80px rgba(0,0,0,.55),0 0 90px rgba(37,99,235,.22); animation: breathe 7s ease-in-out infinite; }
+        .hero-shell .core-inner { border: 1px solid rgba(147,197,253,.2); }
+        .hero-shell .core-badge { border: 1px solid rgba(96,165,250,.7); display:flex; align-items:center; justify-content:center; font-size:34px; font-weight:600; background: radial-gradient(circle,rgba(30,64,175,.3),rgba(15,23,42,.9)); box-shadow:0 0 30px rgba(59,130,246,.35); }
+        .hero-shell .destination-card { display:block; width: 172px; min-height: 132px; border:1px solid rgba(148,163,184,.28); background:linear-gradient(180deg, rgba(20, 32, 52, 0.96), rgba(4, 9, 20, 0.98)); box-shadow:0 22px 60px rgba(0,0,0,.45),0 10px 28px rgba(2,6,23,.35),inset 0 1px 0 rgba(255,255,255,.11); backdrop-filter: blur(4px); transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; overflow:hidden; }
+        .hero-shell .destination-card::before { content:''; position:absolute; left:0; right:0; top:0; height:42%; background:linear-gradient(180deg, rgba(255,255,255,.09), transparent); pointer-events:none; }
+        .hero-shell .destination-card:hover { transform:translate(-50%,-56%); border-color: rgba(96,165,250,.72); box-shadow:0 30px 82px rgba(0,0,0,.52),0 0 40px rgba(59,130,246,.32),inset 0 1px 0 rgba(255,255,255,.12); }
+        .hero-shell .destination-active { border-color:rgba(96,165,250,.9); box-shadow:0 0 0 1px rgba(59,130,246,.4),0 30px 80px rgba(37,99,235,.34),0 0 52px rgba(96,165,250,.22),inset 0 1px 0 rgba(255,255,255,.12); }
+        .hero-shell .destination-services { width: 202px; min-height: 156px; }
+        .hero-shell .destination-services::after { content:''; position:absolute; left:18%; right:18%; bottom:-16px; height:24px; border-radius:999px; background:rgba(59,130,246,.4); filter:blur(14px); }
+        .hero-shell .preview-panel { background: linear-gradient(180deg, rgba(15, 23, 42, 0.94), rgba(2, 6, 23, 0.98)); border:1px solid rgba(148,163,184,.24); box-shadow:0 30px 100px rgba(0,0,0,.58),0 0 92px rgba(37,99,235,.18),inset 0 1px 0 rgba(255,255,255,.08); }
+        .hero-shell .preview-panel::after { content:''; position:absolute; right:-40px; bottom:-40px; width:180px; height:180px; border-radius:999px; background:radial-gradient(circle, rgba(37,99,235,.25), transparent 68%); pointer-events:none; }
+        .hero-shell .process-strip { background: rgba(15,23,42,.72); border:1px solid rgba(148,163,184,.18); box-shadow:0 16px 45px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.05); }
         @keyframes breathe { 0%,100% { filter: brightness(1); } 50% { filter: brightness(1.07); } }
       `}</style>
     </section>
