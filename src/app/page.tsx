@@ -5,6 +5,7 @@ import { BusinessLeakMap } from '@/components/home/business-leak-map/BusinessLea
 import { BeforeAfterWorkflow } from '@/components/home/before-after-workflow/BeforeAfterWorkflow';
 import { SystemModuleBentoGrid } from '@/components/home/system-module-bento-grid/SystemModuleBentoGrid';
 import { StickySystemStory } from '@/components/home/sticky-system-story/StickySystemStory';
+import { ProofGalleryPreview } from '@/components/home/proof-gallery-preview/ProofGalleryPreview';
 import { RapidRiseSystemMap } from '@/components/home/system-map/RapidRiseSystemMap';
 
 export const metadata: Metadata = buildMetadata({
@@ -21,6 +22,7 @@ export default function HomePage() {
       <BeforeAfterWorkflow />
       <SystemModuleBentoGrid />
       <StickySystemStory />
+      <ProofGalleryPreview />
       <RapidRiseSystemMap />
     </>
   );
