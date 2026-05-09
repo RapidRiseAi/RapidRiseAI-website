@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { destinations, processSteps, type DestinationId, type OrbitSlot } from './SystemMapData';
@@ -22,23 +21,19 @@ const slotClasses: Record<OrbitSlot, string> = {
 
 export function RapidRiseSystemMap() {
   const [activeId, setActiveId] = useState<DestinationId>(DEFAULT_ID);
-  const [showHelloPopup, setShowHelloPopup] = useState(false);
+  const [showSystemMapPopup, setShowSystemMapPopup] = useState(false);
   const activeDestination = useMemo(() => destinations.find((d) => d.id === activeId) ?? destinations[0], [activeId]);
 
 
 
   return (
-    <section id="home-hero" className="hero-shell relative overflow-visible border-b border-white/10 text-white">
-      <div className="hero-bg pointer-events-none absolute inset-0" />
-      <div className="hero-vignette pointer-events-none absolute inset-0" />
-      <div className="hero-atmosphere pointer-events-none absolute inset-0" />
-
-      <div className="relative mx-auto flex min-h-[120px] w-full max-w-[1600px] flex-col px-4 pb-6 pt-4 sm:px-8 lg:px-10 xl:px-12">
+    <section id="home-hero" className="hero-shell contents text-white">
+      <div className="contents">
         <div className="fixed left-0 right-0 top-2 z-[2147483646] flex justify-center px-3">
           <div className="hero-command-nav flex w-full max-w-[520px] items-center justify-end gap-3 rounded-2xl px-3 py-2">
             <button
               type="button"
-              onClick={() => setShowHelloPopup(true)}
+              onClick={() => setShowSystemMapPopup(true)}
               className="inline-flex h-11 cursor-pointer items-center gap-2 rounded-xl border border-blue-300/30 bg-slate-950/70 px-4 text-sm font-medium text-slate-100 transition hover:border-blue-300/55 hover:text-white"
             >
               Navigation
@@ -49,138 +44,9 @@ export function RapidRiseSystemMap() {
           </div>
         </div>
 
-        <>
-        <div className="hero-main hidden flex-1 lg:grid lg:grid-cols-[minmax(220px,0.72fr)_minmax(520px,1.2fr)_minmax(300px,0.9fr)] lg:gap-8 xl:grid-cols-[minmax(270px,0.82fr)_minmax(640px,1.42fr)_minmax(390px,0.96fr)] xl:gap-[54px] 2xl:grid-cols-[minmax(300px,0.85fr)_minmax(670px,1.46fr)_minmax(400px,1fr)]">
-          <div className="pt-14 xl:pt-20 2xl:pt-24">
-            <h1 className="max-w-[360px] xl:max-w-[392px] font-serif text-[clamp(40px,3.6vw,72px)] font-medium leading-[0.98] tracking-[-0.04em] text-[#f8fafc]">
-              From Chaos<br />to Clarity.<br />From Insight<br />to <span className="text-[#3b82f6] [text-shadow:0_0_32px_rgba(37,99,235,0.25)]">Impact.</span>
-            </h1>
-            <p className="mt-11 max-w-[400px] text-[17px] leading-[1.7] text-[rgba(226,232,240,0.78)]">Rapid Rise AI connects your people, processes, and data into one intelligent operating system that drives results.</p>
-            <p className="mt-9 text-[13px] tracking-[0.02em] text-[rgba(148,163,184,0.72)]">One connected system. Endless impact.</p>
-          </div>
-
-          <div className="relative flex items-center justify-center">
-            <div className="relative h-[560px] w-[560px] xl:h-[690px] xl:w-[690px] max-w-full">
-              <div className="ring-a" />
-              <div className="ring-e" />
-              <div className="ring-b" />
-              <div className="ring-c" />
-              <div className="ring-d" />
-
-              <svg viewBox="0 0 1000 1000" className="absolute inset-0 z-[2] h-full w-full" aria-hidden>
-                <defs>
-                  <filter id="routeGlow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur stdDeviation="3" result="blur" />
-                    <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-                  </filter>
-                </defs>
-                {destinations.map((d) => {
-                  const active = d.id === activeId;
-                  return (
-                    <g key={d.id} opacity={active ? 1 : 0.75}>
-                      <line x1="500" y1="500" x2={d.routePoint.x} y2={d.routePoint.y} stroke="rgba(96,165,250,0.22)" strokeWidth={1.6} />
-                      <line x1="500" y1="500" x2={d.routePoint.x} y2={d.routePoint.y} stroke={active ? 'rgba(147,197,253,0.95)' : 'rgba(96,165,250,0.42)'} strokeWidth={active ? 2.9 : 2.05} filter="url(#routeGlow)" />
-                      <circle cx={d.routePoint.x} cy={d.routePoint.y} r={active ? 7.6 : 5.2} fill={active ? 'rgba(191,219,254,0.98)' : 'rgba(148,163,184,0.86)'} />
-                    </g>
-                  );
-                })}
-              </svg>
-
-              <div className="core absolute left-1/2 top-1/2 z-[5] h-[268px] w-[268px] xl:h-[292px] xl:w-[292px] -translate-x-1/2 -translate-y-1/2 rounded-full">
-                <div className="core-inner absolute inset-[16px] xl:inset-[18px] rounded-full" />
-                <div className="core-badge absolute left-1/2 top-[33%] h-[60px] w-[60px] xl:h-[64px] xl:w-[64px] -translate-x-1/2 -translate-y-1/2 rounded-full">R</div>
-                <div className="absolute inset-0 flex flex-col items-center justify-center pt-14 text-center">
-                  <p className="text-[19px] font-semibold tracking-[0.12em] text-[#f8fafc]">OPERATING CORE</p>
-                  <p className="mt-1 text-[10.5px] tracking-[0.13em] text-[#93c5fd]">CAPTURE • AUTOMATE • GROW</p>
-                </div>
-              </div>
-
-              {destinations.map((d) => {
-                const Icon = d.icon;
-                const active = d.id === activeId;
-                return (
-                  <Link
-                    key={d.id}
-                    href={d.href}
-                    onMouseEnter={() => setActiveId(d.id)}
-                    onFocus={() => setActiveId(d.id)}
-                    className={`destination-card absolute z-[6] ${slotClasses[d.slot]} -translate-x-1/2 -translate-y-1/2 rounded-[20px] p-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 ${active ? 'destination-active' : ''} ${d.id === 'services' ? 'destination-services' : ''}`}
-                    
-                  >
-                    <Icon className="mb-2 h-6 w-6 text-[#93c5fd]" strokeWidth={1.85} />
-                    <p className="text-[17px] font-semibold leading-tight text-white">{d.title}</p>
-                    <p className="mt-1 line-clamp-2 text-[12.5px] leading-[1.38] text-[rgba(203,213,225,0.76)]">{d.shortDescription}</p>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-
-          <aside key={activeDestination.id} className="preview-panel relative min-h-[720px] rounded-[32px] p-8 xl:p-10 2xl:min-h-[760px]">
-            <p className="inline-flex rounded-full border border-blue-300/30 bg-blue-500/10 px-3 py-1 text-[11px] font-medium tracking-[0.12em] text-[#93c5fd]">{activeDestination.label}</p>
-            <h2 className="mt-6 font-serif text-[56px] leading-[0.95] text-white">{activeDestination.title}</h2>
-            <div className="mt-5 h-[2px] w-12 rounded-full bg-[#f5c451]" />
-            <p className="mt-7 text-[16px] leading-[1.65] text-[rgba(226,232,240,0.78)]">{activeDestination.description}</p>
-
-            <ul className="mt-10 space-y-7">
-              {activeDestination.benefits.map((benefit) => {
-                const Icon = benefit.icon;
-                return (
-                  <li key={benefit.title} className="flex gap-4">
-                    <Icon className="mt-0.5 h-6 w-6 text-[#60a5fa]" strokeWidth={1.9} />
-                    <div>
-                      <p className="text-[16px] font-semibold text-white">{benefit.title}</p>
-                      <p className="text-[14px] leading-[1.45] text-[rgba(148,163,184,0.9)]">{benefit.text}</p>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-
-            <Link href={activeDestination.href} className="mt-8 inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-xl bg-[linear-gradient(135deg,#2563eb,#3b82f6)] text-base font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:brightness-110">
-              {activeDestination.cta} <ArrowRight className="h-5 w-5" />
-            </Link>
-            <Link href="/solutions" className="mt-4 inline-flex items-center gap-1 text-[15px] text-[#60a5fa] hover:text-[#93c5fd]">
-              {activeDestination.secondaryCta} <ArrowRight className="h-4 w-4" />
-            </Link>
-          </aside>
-        </div>
-
-        <div className="mx-auto w-full max-w-[1120px] lg:-mt-1 lg:pl-[1%] xl:-mt-2 xl:pl-[2%]">
-          <div className="process-strip mt-8 inline-flex h-[90px] w-full max-w-[560px] items-center gap-4 rounded-[24px] px-6">
-            {processSteps.map((step, idx) => {
-              const Icon = step.icon;
-              return (
-                <div key={step.label} className="flex items-center gap-4 text-[15px] text-slate-200">
-                  <span className="inline-flex items-center gap-2"><Icon className="h-5 w-5 text-[#60a5fa]" />{step.label}</span>
-                  {idx < processSteps.length - 1 ? <span className="text-slate-500">→</span> : null}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="space-y-6 lg:hidden">
-          <h1 className="max-w-[720px] font-serif text-[clamp(48px,10vw,72px)] leading-[0.98] tracking-[-0.04em]">From Chaos to Clarity. From Insight to <span className="text-[#3b82f6]">Impact.</span></h1>
-          <p className="max-w-[700px] text-[17px] leading-[1.65] text-[rgba(226,232,240,0.78)]">Rapid Rise AI connects your people, processes, and data into one intelligent operating system that drives results.</p>
-          <div className="mx-auto flex h-44 w-44 items-center justify-center rounded-full border border-blue-300/25 bg-[radial-gradient(circle,rgba(17,30,53,.92),rgba(5,12,22,.96))] text-sm tracking-[0.1em]">OPERATING CORE</div>
-          <div className="flex gap-3 overflow-x-auto pb-2">
-            {destinations.map((d) => (
-              <button key={d.id} onClick={() => setActiveId(d.id)} className={`min-h-[126px] min-w-[240px] rounded-2xl border p-4 text-left ${activeId === d.id ? 'border-blue-400/80 bg-blue-500/10 shadow-[0_14px_30px_rgba(37,99,235,0.25)]' : 'border-slate-400/30 bg-slate-900/70'}`}>
-                <p className="text-lg font-semibold text-white">{d.title}</p>
-                <p className="mt-1 text-[13px] leading-[1.4] text-slate-300">{d.shortDescription}</p>
-              </button>
-            ))}
-          </div>
-          <aside className="preview-panel relative rounded-[28px] p-7">
-            <p className="inline-flex rounded-full border border-blue-300/30 bg-blue-500/10 px-3 py-1 text-[11px] tracking-[0.12em] text-[#93c5fd]">{activeDestination.label}</p>
-            <h2 className="mt-4 font-serif text-5xl">{activeDestination.title}</h2>
-            <p className="mt-4 text-[15px] leading-[1.6] text-slate-300">{activeDestination.description}</p>
-          </aside>
-        </div>
-        </>
+        <div className="sr-only" aria-live="polite">Open the Navigation menu to view the system map.</div>
       </div>
-        {showHelloPopup ? (
+        {showSystemMapPopup ? (
         <div
           className="hero-navigation-overlay fixed inset-0 z-[2147483647] overflow-y-auto"
           role="dialog"
@@ -191,7 +57,7 @@ export function RapidRiseSystemMap() {
             <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between gap-4 border-b border-blue-200/20 pb-4">
               <button
                 type="button"
-                onClick={() => setShowHelloPopup(false)}
+                onClick={() => setShowSystemMapPopup(false)}
                 className="rounded-xl border border-blue-300/35 bg-blue-500/15 px-4 py-2 text-sm font-medium text-white hover:border-blue-300/60"
               >
                 ← Back
@@ -199,7 +65,7 @@ export function RapidRiseSystemMap() {
               <h3 className="text-2xl font-semibold text-white">System Map</h3>
               <button
                 type="button"
-                onClick={() => setShowHelloPopup(false)}
+                onClick={() => setShowSystemMapPopup(false)}
                 className="rounded-xl border border-blue-300/35 bg-blue-500/15 px-4 py-2 text-sm font-medium text-white hover:border-blue-300/60"
               >
                 Close
@@ -219,6 +85,12 @@ export function RapidRiseSystemMap() {
                   <div className="relative h-[560px] w-[560px] xl:h-[690px] xl:w-[690px] max-w-full">
                     <div className="ring-a" /><div className="ring-e" /><div className="ring-b" /><div className="ring-c" /><div className="ring-d" />
                     <svg viewBox="0 0 1000 1000" className="absolute inset-0 z-[2] h-full w-full" aria-hidden>
+                      <defs>
+                        <filter id="routeGlow" x="-20%" y="-20%" width="140%" height="140%">
+                          <feGaussianBlur stdDeviation="3" result="blur" />
+                          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                        </filter>
+                      </defs>
                       {destinations.map((d) => {
                         const active = d.id === activeId;
                         return (
@@ -238,7 +110,7 @@ export function RapidRiseSystemMap() {
                       const Icon = d.icon;
                       const active = d.id === activeId;
                       return (
-                        <Link key={`popup-card-${d.id}`} href={d.href} onMouseEnter={() => setActiveId(d.id)} onFocus={() => setActiveId(d.id)} onClick={() => setShowHelloPopup(false)} className={`destination-card absolute z-[6] ${slotClasses[d.slot]} -translate-x-1/2 -translate-y-1/2 rounded-[20px] p-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 ${active ? 'destination-active' : ''} ${d.id === 'services' ? 'destination-services' : ''}`}>
+                        <Link key={`popup-card-${d.id}`} href={d.href} onMouseEnter={() => setActiveId(d.id)} onFocus={() => setActiveId(d.id)} onClick={() => setShowSystemMapPopup(false)} className={`destination-card absolute z-[6] ${slotClasses[d.slot]} -translate-x-1/2 -translate-y-1/2 rounded-[20px] p-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 ${active ? 'destination-active' : ''} ${d.id === 'services' ? 'destination-services' : ''}`}>
                           <Icon className="mb-2 h-6 w-6 text-[#93c5fd]" strokeWidth={1.85} />
                           <p className="text-[17px] font-semibold leading-tight text-white">{d.title}</p>
                           <p className="mt-1 line-clamp-2 text-[12.5px] leading-[1.38] text-[rgba(203,213,225,0.76)]">{d.shortDescription}</p>
@@ -266,10 +138,10 @@ export function RapidRiseSystemMap() {
                       );
                     })}
                   </ul>
-                  <Link href={activeDestination.href} onClick={() => setShowHelloPopup(false)} className="mt-8 inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-xl bg-[linear-gradient(135deg,#2563eb,#3b82f6)] text-base font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:brightness-110">
+                  <Link href={activeDestination.href} onClick={() => setShowSystemMapPopup(false)} className="mt-8 inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-xl bg-[linear-gradient(135deg,#2563eb,#3b82f6)] text-base font-medium text-white transition duration-300 hover:-translate-y-0.5 hover:brightness-110">
                     {activeDestination.cta} <ArrowRight className="h-5 w-5" />
                   </Link>
-                  <Link href="/solutions" onClick={() => setShowHelloPopup(false)} className="mt-4 inline-flex items-center gap-1 text-[15px] text-[#60a5fa] hover:text-[#93c5fd]">
+                  <Link href="/solutions" onClick={() => setShowSystemMapPopup(false)} className="mt-4 inline-flex items-center gap-1 text-[15px] text-[#60a5fa] hover:text-[#93c5fd]">
                     {activeDestination.secondaryCta} <ArrowRight className="h-4 w-4" />
                   </Link>
                 </aside>
