@@ -33,6 +33,7 @@ type StoryStep = {
   microcopy: string;
   state: string;
   visualState: VisualState;
+  visualLabels: string[];
   icon: LucideIcon;
 };
 
@@ -44,6 +45,7 @@ const systemStorySteps: StoryStep[] = [
     microcopy: 'Requests can come from anywhere.',
     state: 'Scattered manual inputs',
     visualState: 'inputs',
+    visualLabels: ['Website form', 'WhatsApp', 'Email'],
     icon: RadioTower,
   },
   {
@@ -53,6 +55,7 @@ const systemStorySteps: StoryStep[] = [
     microcopy: 'Details are collected before they disappear.',
     state: 'Central intake activates',
     visualState: 'intake',
+    visualLabels: ['New request', 'Captured', 'Details saved'],
     icon: Database,
   },
   {
@@ -62,6 +65,7 @@ const systemStorySteps: StoryStep[] = [
     microcopy: 'The system sorts what matters.',
     state: 'Qualification layer',
     visualState: 'qualification',
+    visualLabels: ['Service', 'Urgency', 'Timeline'],
     icon: ScanLine,
   },
   {
@@ -71,6 +75,7 @@ const systemStorySteps: StoryStep[] = [
     microcopy: 'Everyone knows who is responsible.',
     state: 'Routing and accountability',
     visualState: 'owner',
+    visualLabels: ['Assigned', 'Owner ready', 'Next action'],
     icon: UserCheck,
   },
   {
@@ -80,6 +85,7 @@ const systemStorySteps: StoryStep[] = [
     microcopy: 'Nothing relies on memory.',
     state: 'Reminder automation',
     visualState: 'reminder',
+    visualLabels: ['Scheduled', 'Reminder active', 'No memory gap'],
     icon: CalendarClock,
   },
   {
@@ -89,6 +95,7 @@ const systemStorySteps: StoryStep[] = [
     microcopy: 'The next action moves faster.',
     state: 'Action generation',
     visualState: 'quote',
+    visualLabels: ['Quote ready', 'Approval', 'Next step'],
     icon: FileText,
   },
   {
@@ -98,6 +105,7 @@ const systemStorySteps: StoryStep[] = [
     microcopy: 'Status becomes visible.',
     state: 'Visibility',
     visualState: 'dashboard',
+    visualLabels: ['New enquiries', 'Assigned', 'Visible'],
     icon: Gauge,
   },
   {
@@ -107,6 +115,7 @@ const systemStorySteps: StoryStep[] = [
     microcopy: 'You see what is moving, stuck, or ready.',
     state: 'Final operating layer',
     visualState: 'control',
+    visualLabels: ['Moving', 'Stuck', 'Ready'],
     icon: ShieldCheck,
   },
 ];
@@ -410,7 +419,7 @@ function StickySystemVisual({ activeIndex, reduceMotion }: { activeIndex: number
           <h3 className="mt-2 text-xl font-semibold text-white">{systemStorySteps[activeIndex].title}</h3>
         </div>
         <span className="inline-flex items-center gap-1.5 rounded-full border border-cyan-300/30 bg-cyan-400/10 px-3 py-1.5 text-[0.64rem] font-semibold uppercase tracking-[0.12em] text-cyan-100">
-          <span className="h-1.5 w-1.5 rounded-full bg-cyan-200 story-cyan-pulse" /> Step {activeIndex + 1} / 8
+          <span className="h-1.5 w-1.5 rounded-full bg-cyan-200 story-cyan-pulse" /> {systemStorySteps[activeIndex].visualState}
         </span>
       </div>
 
@@ -430,16 +439,20 @@ function StickySystemVisual({ activeIndex, reduceMotion }: { activeIndex: number
 }
 
 function MobileMiniVisual({ index }: { index: number }) {
-  const Icon = systemStorySteps[index].icon;
+  const step = systemStorySteps[index];
+  const Icon = step.icon;
   return (
     <div className="mt-4 rounded-2xl border border-cyan-300/16 bg-[rgba(3,10,24,0.76)] p-4">
       <div className="flex items-center justify-between gap-3">
         <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-cyan-300/26 bg-cyan-400/10 text-cyan-100"><Icon className="h-5 w-5" /></span>
-        <span className="rounded-full border border-cyan-300/28 bg-cyan-400/10 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-cyan-100">{systemStorySteps[index].state}</span>
+        <span className="rounded-full border border-cyan-300/28 bg-cyan-400/10 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-cyan-100">{step.state}</span>
       </div>
       <div className="mt-4 grid grid-cols-3 gap-2">
-        {[0, 1, 2].map((item) => (
-          <div key={item} className={`h-14 rounded-xl border ${item <= Math.min(2, Math.floor(index / 2)) ? 'border-cyan-300/24 bg-cyan-400/10' : 'border-amber-300/18 bg-amber-400/8'}`} />
+        {step.visualLabels.map((label, item) => (
+          <div key={label} className={`min-h-14 rounded-xl border p-2 ${item <= Math.min(2, Math.floor(index / 2)) ? 'border-cyan-300/24 bg-cyan-400/10' : 'border-amber-300/18 bg-amber-400/8'}`}>
+            <span className="block text-[0.62rem] font-semibold leading-tight text-slate-100">{label}</span>
+            <span className={`mt-2 block h-1.5 rounded-full ${item <= Math.min(2, Math.floor(index / 2)) ? 'bg-cyan-300/42' : 'bg-amber-300/32'}`} />
+          </div>
         ))}
       </div>
       <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-800/90"><div className="h-full rounded-full bg-gradient-to-r from-[#0ea5ff] to-[#38dfff]" style={{ width: `${((index + 1) / systemStorySteps.length) * 100}%` }} /></div>
@@ -509,7 +522,7 @@ export function StickySystemStory() {
         <div className="relative mt-14 hidden min-h-[760vh] lg:block">
           <div className="sticky top-24 z-20 grid grid-cols-[0.38fr_0.62fr] items-start gap-14">
             <div>
-              <div className="mb-5 rounded-3xl border border-cyan-200/14 bg-slate-950/42 p-5 backdrop-blur-md">
+              <div className="mb-5 rounded-3xl border border-cyan-200/14 bg-slate-950/42 p-5 backdrop-blur-md" aria-live="polite">
                 <p className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-cyan-200">Active state</p>
                 <h3 className="mt-2 text-2xl font-semibold text-white">{activeStep.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-300">{activeStep.microcopy}</p>
