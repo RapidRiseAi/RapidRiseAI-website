@@ -519,7 +519,7 @@ export function StickySystemStory() {
           <p className="mt-5 max-w-[720px] text-[clamp(1rem,1.45vw,1.25rem)] leading-[1.58] text-slate-300">From first enquiry to tracked outcome, every step becomes visible.</p>
         </motion.div>
 
-        <div className="relative mt-14 hidden min-h-[760vh] lg:block">
+        <div className="relative mt-14 hidden min-h-[180vh] lg:block">
           <div className="sticky top-24 z-20 grid grid-cols-[0.38fr_0.62fr] items-start gap-14">
             <div>
               <div className="mb-5 rounded-3xl border border-cyan-200/14 bg-slate-950/42 p-5 backdrop-blur-md" aria-live="polite">
@@ -538,8 +538,8 @@ export function StickySystemStory() {
                 key={step.id}
                 ref={(element) => { markerRefs.current[index] = element; }}
                 data-step-index={index}
-                className="absolute left-0 h-[86vh] w-px"
-                style={{ top: `${index * 92}vh` }}
+                className="absolute left-0 h-[34vh] w-px"
+                style={{ top: `${index * 20}vh` }}
               />
             ))}
           </div>
