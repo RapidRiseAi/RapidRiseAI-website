@@ -1364,3 +1364,305 @@ body.mobile-view #mobile-sticky-cta-bar {
     transform: none !important;
   }
 }
+
+.quote-command-shell {
+  --quote-bg: #020711;
+  --quote-panel: rgba(4, 13, 28, 0.84);
+  --quote-featured: rgba(5, 16, 34, 0.92);
+  --quote-border: rgba(80, 210, 255, 0.2);
+  --quote-cyan: #38dfff;
+  --quote-blue: #0ea5ff;
+  position: relative;
+  background:
+    radial-gradient(circle at 48% 18%, rgba(0, 145, 255, 0.13), transparent 34%),
+    radial-gradient(circle at 82% 58%, rgba(0, 220, 255, 0.06), transparent 30%),
+    #020711;
+}
+
+.quote-command-shell::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(80, 210, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(80, 210, 255, 0.055) 1px, transparent 1px),
+    radial-gradient(ellipse at center top, rgba(14, 165, 255, 0.1), transparent 42%);
+  background-size: 76px 76px, 76px 76px, 100% 100%;
+  opacity: 0.8;
+}
+
+.quote-command-shell::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 42%, rgba(2, 7, 17, 0.48) 100%);
+}
+
+.quote-section {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4.75rem 1.25rem;
+}
+
+.quote-reveal,
+.quote-form-panel,
+.dynamic-diagnostic-panel,
+.quote-hero-card,
+.next-step-card {
+  animation: quote-reveal 620ms ease both;
+}
+
+.quote-hero-card {
+  min-height: 180px;
+}
+
+.quote-line,
+.quote-draw-line {
+  animation: quote-line-draw-svg 900ms ease 220ms both;
+}
+
+.quote-step-indicator {
+  display: flex;
+  min-height: 58px;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid rgba(80, 210, 255, 0.18);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.035);
+  padding: 0.65rem;
+  color: #94a3b8;
+  text-align: left;
+  transition: border-color 220ms ease, background 220ms ease, color 220ms ease;
+}
+
+.quote-step-indicator span {
+  display: flex;
+  height: 1.75rem;
+  width: 1.75rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid rgba(80, 210, 255, 0.24);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.quote-step-indicator strong {
+  font-size: 0.78rem;
+  line-height: 1.15;
+}
+
+.quote-step-indicator.is-active {
+  border-color: rgba(56, 223, 255, 0.66);
+  background: rgba(14, 165, 255, 0.14);
+  color: #f8fafc;
+}
+
+.quote-step-indicator.is-complete span {
+  border-color: rgba(52, 211, 153, 0.38);
+  background: rgba(52, 211, 153, 0.12);
+  color: #86efac;
+}
+
+.quote-step-body {
+  animation: quote-reveal 420ms ease both;
+}
+
+.quote-field input,
+.quote-field textarea,
+.quote-field select,
+.quote-form-panel input:not([type='checkbox']):not([type='radio']),
+.quote-form-panel textarea,
+.quote-form-panel select {
+  width: 100%;
+  border: 1px solid rgba(120, 180, 255, 0.16);
+  border-radius: 14px;
+  background: rgba(3, 10, 24, 0.88);
+  padding: 0.85rem 1rem;
+  color: #f8fafc;
+  font-size: 0.92rem;
+  outline: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.quote-field input::placeholder,
+.quote-field textarea::placeholder {
+  color: rgba(148, 163, 184, 0.7);
+}
+
+.quote-field input:focus,
+.quote-field textarea:focus,
+.quote-field select:focus,
+.quote-form-panel input:not([type='checkbox']):not([type='radio']):focus,
+.quote-form-panel textarea:focus,
+.quote-form-panel select:focus {
+  border-color: rgba(56, 223, 255, 0.64);
+  box-shadow: 0 0 0 3px rgba(56, 223, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.build-type-card,
+.quote-option-card {
+  min-height: 52px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.build-type-card.selected,
+.quote-option-card.selected {
+  box-shadow: 0 0 28px rgba(14, 165, 255, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.quote-option-card {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border: 1px solid rgba(80, 210, 255, 0.24);
+  border-radius: 18px;
+  background: rgba(2, 7, 17, 0.72);
+  padding: 0.9rem 1rem;
+  color: #cbd5e1;
+  font-weight: 700;
+  transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
+}
+
+.quote-option-card:hover,
+.quote-option-card:focus-within {
+  transform: translateY(-2px);
+  border-color: rgba(56, 223, 255, 0.55);
+}
+
+.quote-option-card.selected {
+  border-color: rgba(56, 223, 255, 0.68);
+  background: rgba(14, 165, 255, 0.14);
+  color: #f8fafc;
+}
+
+.quote-back-button,
+.quote-primary-button,
+.quote-primary-link,
+.quote-secondary-link {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 16px;
+  padding: 0.8rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 800;
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease, opacity 220ms ease;
+}
+
+.quote-primary-button,
+.quote-primary-link {
+  background: linear-gradient(135deg, #38dfff, #0ea5ff);
+  color: #020711;
+  box-shadow: 0 14px 38px rgba(14, 165, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.34);
+}
+
+.quote-primary-button:hover:not(:disabled),
+.quote-primary-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 46px rgba(14, 165, 255, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.38);
+}
+
+.quote-back-button,
+.quote-secondary-link {
+  border: 1px solid rgba(80, 210, 255, 0.24);
+  background: rgba(255, 255, 255, 0.04);
+  color: #cbd5e1;
+}
+
+.quote-back-button:hover:not(:disabled),
+.quote-secondary-link:hover {
+  border-color: rgba(56, 223, 255, 0.58);
+  color: #f8fafc;
+}
+
+.quote-back-button:disabled,
+.quote-primary-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.quote-error-state {
+  border: 1px solid rgba(255, 90, 95, 0.36);
+  border-radius: 20px;
+  background: rgba(255, 90, 95, 0.1);
+  padding: 1rem;
+  color: #fecaca;
+}
+
+.quote-turnstile .rounded-card.border.border-stroke {
+  border-color: rgba(80, 210, 255, 0.2);
+  border-radius: 20px;
+  background: rgba(3, 10, 24, 0.72);
+}
+
+.quote-trust-chip {
+  border: 1px solid rgba(80, 210, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.45rem 0.65rem;
+  color: #cbd5e1;
+}
+
+@keyframes quote-reveal {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes quote-line-draw-svg {
+  from { stroke-dashoffset: 360; }
+  to { stroke-dashoffset: 0; }
+}
+
+.quote-draw-line {
+  stroke-dasharray: 360;
+  stroke-dashoffset: 360;
+}
+
+@media (max-width: 767px) {
+  .quote-section {
+    padding: 3rem 1rem;
+  }
+
+  .quote-step-indicator strong {
+    display: none;
+  }
+
+  .quote-step-indicator {
+    min-height: 44px;
+    justify-content: center;
+    padding: 0.45rem;
+  }
+
+  .quote-primary-button,
+  .quote-back-button,
+  .quote-primary-link,
+  .quote-secondary-link {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quote-command-shell *,
+  .quote-command-shell *::before,
+  .quote-command-shell *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .quote-draw-line {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}
