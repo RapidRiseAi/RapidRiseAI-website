@@ -415,3 +415,196 @@ body.mobile-view #mobile-sticky-cta-bar {
     background: rgba(255, 255, 255, 0.03);
   }
 }
+
+.pricing-command-shell {
+  --pricing-bg: #020711;
+  --pricing-panel: rgba(4, 13, 28, 0.84);
+  --pricing-featured: rgba(5, 16, 34, 0.92);
+  --pricing-border: rgba(80, 210, 255, 0.2);
+  --pricing-cyan: #38dfff;
+  --pricing-blue: #0ea5ff;
+  position: relative;
+}
+
+.pricing-command-shell::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 24%, rgba(56, 223, 255, 0.08), transparent 28%),
+    radial-gradient(circle at 84% 42%, rgba(14, 165, 255, 0.11), transparent 32%);
+}
+
+.pricing-section {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4.75rem 1.25rem;
+}
+
+.premium-card,
+.product-card {
+  border: 1px solid rgba(80, 210, 255, 0.22);
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(6, 18, 34, 0.94), rgba(2, 8, 18, 0.98));
+  box-shadow:
+    0 22px 60px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: transform 280ms ease, border-color 280ms ease, box-shadow 280ms ease;
+}
+
+.premium-card:hover,
+.product-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(56, 223, 255, 0.58);
+  box-shadow:
+    0 28px 78px rgba(0, 0, 0, 0.42),
+    0 0 36px rgba(14, 165, 255, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.pricing-reveal {
+  animation: pricing-reveal 620ms ease both;
+}
+
+.path-line {
+  transform-origin: top;
+  animation: pricing-line-draw 900ms ease 220ms both;
+}
+
+.path-stage {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: pricing-reveal 520ms ease both;
+}
+
+.health-pulse {
+  animation: pricing-pulse-once 1.2s ease 900ms both;
+  box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.55);
+}
+
+.mini-visual {
+  position: relative;
+  overflow: hidden;
+}
+
+.mini-visual::before {
+  content: '';
+  position: absolute;
+  inset: -40% auto auto -20%;
+  width: 70%;
+  height: 120%;
+  transform: rotate(18deg) translateX(-120%);
+  background: linear-gradient(90deg, transparent, rgba(56, 223, 255, 0.12), transparent);
+  transition: transform 500ms ease;
+}
+
+.product-card:hover .mini-visual::before {
+  transform: rotate(18deg) translateX(220%);
+}
+
+.mini-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  color: #cbd5e1;
+  font-size: 0.75rem;
+}
+
+.mini-flow svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  color: #38dfff;
+}
+
+.mini-flow span {
+  border: 1px solid rgba(80, 210, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.45rem 0.65rem;
+}
+
+.mini-flow .lit,
+.mini-flow .report {
+  border-color: rgba(56, 223, 255, 0.55);
+  background: rgba(14, 165, 255, 0.16);
+  color: #f8fafc;
+}
+
+.mini-chip {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  border: 1px solid rgba(52, 211, 153, 0.28);
+  border-radius: 999px;
+  background: rgba(52, 211, 153, 0.1);
+  padding: 0.35rem 0.65rem;
+  color: #a7f3d0;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.draw-line {
+  stroke-dasharray: 360;
+  stroke-dashoffset: 360;
+  animation: pricing-line-draw-svg 1s ease 300ms both;
+}
+
+.addon-card:hover {
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.34), 0 0 26px rgba(14, 165, 255, 0.13);
+}
+
+.final-path {
+  justify-content: center;
+}
+
+@keyframes pricing-reveal {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pricing-line-draw {
+  from { transform: scaleY(0); opacity: 0.4; }
+  to { transform: scaleY(1); opacity: 1; }
+}
+
+@keyframes pricing-line-draw-svg {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes pricing-pulse-once {
+  0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.55); }
+  70% { box-shadow: 0 0 0 12px rgba(52, 211, 153, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+
+@media (max-width: 767px) {
+  .pricing-section {
+    padding: 3rem 1rem;
+  }
+
+  .premium-card,
+  .product-card {
+    border-radius: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pricing-command-shell *,
+  .pricing-command-shell *::before,
+  .pricing-command-shell *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .path-line,
+  .draw-line {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+    transform: none !important;
+  }
+}
