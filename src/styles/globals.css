@@ -1138,3 +1138,229 @@ body.mobile-view #mobile-sticky-cta-bar {
     stroke-dashoffset: 0 !important;
   }
 }
+
+.contact-command-shell {
+  --contact-bg: #020711;
+  --contact-panel: rgba(4, 13, 28, 0.84);
+  --contact-featured: rgba(5, 16, 34, 0.92);
+  --contact-border: rgba(80, 210, 255, 0.2);
+  --contact-cyan: #38dfff;
+  --contact-blue: #0ea5ff;
+  position: relative;
+  background:
+    radial-gradient(circle at 52% 18%, rgba(0, 145, 255, 0.13), transparent 34%),
+    radial-gradient(circle at 82% 58%, rgba(0, 220, 255, 0.06), transparent 30%),
+    #020711;
+}
+
+.contact-command-shell::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(80, 210, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(80, 210, 255, 0.055) 1px, transparent 1px),
+    radial-gradient(ellipse at center top, rgba(14, 165, 255, 0.1), transparent 42%);
+  background-size: 76px 76px, 76px 76px, 100% 100%;
+  opacity: 0.8;
+}
+
+.contact-command-shell::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 42%, rgba(2, 7, 17, 0.48) 100%);
+}
+
+.contact-section {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4.75rem 1.25rem;
+}
+
+.contact-reveal,
+.contact-trust-panel,
+.contact-form-panel,
+.next-step-card {
+  animation: contact-reveal 620ms ease both;
+}
+
+.contact-status-chip {
+  animation: contact-reveal 540ms ease both;
+}
+
+.contact-line-draw,
+.next-step-line {
+  animation: contact-line-draw 900ms ease 220ms both;
+  transform-origin: left;
+}
+
+.contact-mini-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  color: #cbd5e1;
+  font-size: 0.75rem;
+}
+
+.contact-mini-flow svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  color: #38dfff;
+}
+
+.contact-mini-flow span,
+.contact-mini-panel {
+  border: 1px solid rgba(80, 210, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.45rem 0.65rem;
+}
+
+.contact-mini-flow .lit {
+  border-color: rgba(56, 223, 255, 0.55);
+  background: rgba(14, 165, 255, 0.16);
+  color: #f8fafc;
+}
+
+.contact-mini-panel {
+  display: block;
+  border-radius: 14px;
+  color: #cbd5e1;
+}
+
+.contact-form-panel label > span:first-child,
+.contact-form-panel legend {
+  color: #cbd5e1;
+  font-weight: 700;
+}
+
+.contact-form-panel input:not([type='checkbox']),
+.contact-form-panel textarea,
+.contact-form-panel select {
+  border: 1px solid rgba(120, 180, 255, 0.16);
+  background: rgba(3, 10, 24, 0.88);
+  color: #f8fafc;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.contact-form-panel input::placeholder,
+.contact-form-panel textarea::placeholder {
+  color: rgba(148, 163, 184, 0.7);
+}
+
+.contact-form-panel input:not([type='checkbox']):focus,
+.contact-form-panel textarea:focus,
+.contact-form-panel select:focus {
+  border-color: rgba(56, 223, 255, 0.64);
+  box-shadow: 0 0 0 3px rgba(56, 223, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.contact-form-panel input.border-red-400\/70,
+.contact-form-panel textarea.border-red-400\/70,
+.contact-form-panel select.border-red-400\/70 {
+  border-color: rgba(255, 90, 95, 0.8);
+}
+
+.contact-form-panel .rounded-card.border.border-stroke {
+  border-color: rgba(80, 210, 255, 0.2);
+  border-radius: 20px;
+  background: rgba(3, 10, 24, 0.72);
+}
+
+.contact-submit-button {
+  background: linear-gradient(135deg, #38dfff, #0ea5ff);
+  color: #020711;
+  box-shadow:
+    0 14px 38px rgba(14, 165, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.34);
+}
+
+.contact-submit-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow:
+    0 18px 46px rgba(14, 165, 255, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.38);
+}
+
+.contact-form-state {
+  display: flex;
+  gap: 0.75rem;
+  border-radius: 20px;
+  padding: 1rem;
+  font-size: 0.95rem;
+}
+
+.contact-form-state-success {
+  border: 1px solid rgba(52, 211, 153, 0.34);
+  background: rgba(52, 211, 153, 0.1);
+  color: #bbf7d0;
+}
+
+.contact-form-state-success span {
+  border: 1px solid rgba(52, 211, 153, 0.28);
+  border-radius: 999px;
+  padding: 0.25rem 0.5rem;
+}
+
+.contact-form-state-error {
+  border: 1px solid rgba(255, 90, 95, 0.36);
+  background: rgba(255, 90, 95, 0.1);
+  color: #fecaca;
+}
+
+.next-steps-panel {
+  overflow: hidden;
+}
+
+.next-step-line {
+  position: absolute;
+  left: 2.25rem;
+  right: 2.25rem;
+  top: 4.55rem;
+  height: 2px;
+  background: linear-gradient(90deg, #38dfff, rgba(14, 165, 255, 0.4));
+}
+
+@keyframes contact-reveal {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes contact-line-draw {
+  from { transform: scaleX(0); opacity: 0.35; }
+  to { transform: scaleX(1); opacity: 1; }
+}
+
+@media (max-width: 1023px) {
+  .next-step-line {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .contact-section {
+    padding: 3rem 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-command-shell *,
+  .contact-command-shell *::before,
+  .contact-command-shell *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .contact-line-draw,
+  .next-step-line {
+    animation: none !important;
+    transform: none !important;
+  }
+}

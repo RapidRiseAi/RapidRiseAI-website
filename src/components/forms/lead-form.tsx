@@ -1,5 +1,6 @@
 'use client';
 
+import { ArrowRight, CheckCircle2, Loader2 } from 'lucide-react';
 import { FormEvent, useCallback, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -88,10 +89,16 @@ export function LeadForm({ type, selectedProduct = '' }: { type: 'quote' | 'cont
     await submit(new FormData(event.currentTarget));
   }
 
-  return <form onSubmit={handleSubmit} className="space-y-5">
+  const submitLabel = status === 'loading'
+    ? type === 'contact' ? 'Sending message...' : 'Submitting…'
+    : type === 'contact' ? 'Send message' : type === 'booking' ? 'Request a time' : 'Submit request';
+
+  return <form onSubmit={handleSubmit} className="space-y-5" aria-busy={status === 'loading'}>
     {type === 'quote' && productSelection ? <input type="hidden" name="selected_product" value={productSelection} /> : null}
-    {status === 'success' ? <Toast message={type === 'quote' ? 'Request received. Thanks. We will review it and respond within 24 hours.' : type === 'contact' ? 'Message received. Thanks. We will reply within 24 hours.' : 'Request received. We will confirm a time within 24 hours.'} /> : null}
-    {status === 'error' ? <Toast message={submitError || 'Something went wrong. Please try again.'} type="error" /> : null}
+    {status === 'success' && type === 'contact' ? <div className="contact-form-state contact-form-state-success" role="status" aria-live="polite"><CheckCircle2 className="h-5 w-5" /><div><p className="font-semibold">Message received.</p><p className="mt-1 text-sm">We will review it and reply with the cleanest next step.</p><div className="mt-3 flex flex-wrap gap-2 text-xs"><span>Received</span><span>Reviewing</span><span>Reply within 24h</span></div></div></div> : null}
+    {status === 'success' && type !== 'contact' ? <Toast message={type === 'quote' ? 'Request received. Thanks. We will review it and respond within 24 hours.' : 'Request received. We will confirm a time within 24 hours.'} /> : null}
+    {status === 'error' && type === 'contact' ? <div className="contact-form-state contact-form-state-error" role="alert"><p className="font-semibold">Something went wrong.</p><p className="mt-1 text-sm">{submitError || 'Please try again or email us directly at team@rapidriseai.com.'}</p></div> : null}
+    {status === 'error' && type !== 'contact' ? <Toast message={submitError || 'Something went wrong. Please try again.'} type="error" /> : null}
     <TextField name="full_name" autoComplete="name" label={type === 'booking' ? 'Name' : 'Full name'} placeholder="Your name" helper="Use your preferred contact name" error={errors.full_name} required />
     {type === 'quote' ? <TextField name="company" autoComplete="organization" label="Company name" placeholder="Company or team name" error={errors.company} required /> : null}
     <TextField name="role" autoComplete="organization-title" label={type === 'quote' ? 'Role optional' : type === 'booking' ? 'Preferred day/time' : 'WhatsApp (optional)'} placeholder={type === 'quote' ? 'Manager, Owner, Ops, Admin, etc' : ''} />
@@ -109,7 +116,8 @@ export function LeadForm({ type, selectedProduct = '' }: { type: 'quote' | 'cont
       onTokenChange={handleTurnstileTokenChange}
       error={errors.turnstile}
     />
-    <button className="rounded-button bg-blue px-6 py-3 font-semibold text-white transition hover:shadow-glow" type="submit">{status === 'loading' ? 'Submitting…' : type === 'contact' ? 'Send message' : type === 'booking' ? 'Request a time' : 'Submit request'}</button>
+    {type === 'contact' ? <p className="text-xs font-semibold text-[#94A3B8]">No spam. No pressure. Clear next steps.</p> : null}
+    <button className="contact-submit-button group inline-flex min-h-12 items-center justify-center gap-2 rounded-button bg-blue px-6 py-3 font-semibold text-white transition hover:shadow-glow disabled:cursor-not-allowed disabled:opacity-70 max-sm:w-full" type="submit" disabled={status === 'loading'}>{status === 'loading' ? <Loader2 className="h-4 w-4 animate-spin" /> : null}{submitLabel}{status !== 'loading' ? <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" /> : null}</button>
     {status === 'success' ? <div className="rounded-button border border-blue/40 bg-blue/10 p-4 text-sm"><p className="mb-3">Next steps are ready.</p><div className="flex flex-wrap gap-3"><Button href="/work" variant="secondary">View Work</Button><Button href="/book" variant="secondary">Book a Call</Button></div></div> : null}
   </form>;
 }
