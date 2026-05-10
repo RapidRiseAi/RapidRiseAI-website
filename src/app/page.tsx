@@ -7,6 +7,7 @@ import { SystemModuleBentoGrid } from '@/components/home/system-module-bento-gri
 import { StickySystemStory } from '@/components/home/sticky-system-story/StickySystemStory';
 import { ProofGalleryPreview } from '@/components/home/proof-gallery-preview/ProofGalleryPreview';
 import { PackagePathway } from '@/components/home/package-pathway/PackagePathway';
+import { DeliveryTimeline } from '@/components/home/delivery-timeline/DeliveryTimeline';
 import { RapidRiseSystemMap } from '@/components/home/system-map/RapidRiseSystemMap';
 
 export const metadata: Metadata = buildMetadata({
@@ -25,6 +26,7 @@ export default function HomePage() {
       <StickySystemStory />
       <ProofGalleryPreview />
       <PackagePathway />
+      <DeliveryTimeline />
       <RapidRiseSystemMap />
     </>
   );
