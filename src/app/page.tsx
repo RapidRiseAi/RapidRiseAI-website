@@ -9,6 +9,7 @@ import { ProofGalleryPreview } from '@/components/home/proof-gallery-preview/Pro
 import { PackagePathway } from '@/components/home/package-pathway/PackagePathway';
 import { DeliveryTimeline } from '@/components/home/delivery-timeline/DeliveryTimeline';
 import { TrustLayer } from '@/components/home/trust-layer/TrustLayer';
+import { FinalHomepageCTA } from '@/components/home/final-homepage-cta/FinalHomepageCTA';
 import { RapidRiseSystemMap } from '@/components/home/system-map/RapidRiseSystemMap';
 
 export const metadata: Metadata = buildMetadata({
@@ -30,6 +31,7 @@ export default function HomePage() {
       <DeliveryTimeline />
       <TrustLayer />
       <RapidRiseSystemMap />
+      <FinalHomepageCTA />
     </>
   );
 }
