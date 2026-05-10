@@ -8,6 +8,7 @@ import { StickySystemStory } from '@/components/home/sticky-system-story/StickyS
 import { ProofGalleryPreview } from '@/components/home/proof-gallery-preview/ProofGalleryPreview';
 import { PackagePathway } from '@/components/home/package-pathway/PackagePathway';
 import { DeliveryTimeline } from '@/components/home/delivery-timeline/DeliveryTimeline';
+import { TrustLayer } from '@/components/home/trust-layer/TrustLayer';
 import { RapidRiseSystemMap } from '@/components/home/system-map/RapidRiseSystemMap';
 
 export const metadata: Metadata = buildMetadata({
@@ -27,6 +28,7 @@ export default function HomePage() {
       <ProofGalleryPreview />
       <PackagePathway />
       <DeliveryTimeline />
+      <TrustLayer />
       <RapidRiseSystemMap />
     </>
   );
