@@ -1938,3 +1938,164 @@ body.mobile-view #mobile-sticky-cta-bar {
     opacity: 0.28;
   }
 }
+
+.smart-workspace-page {
+  background:
+    radial-gradient(circle at 50% 16%, rgba(0, 145, 255, 0.13), transparent 34%),
+    radial-gradient(circle at 82% 54%, rgba(0, 220, 255, 0.06), transparent 30%),
+    #020711;
+}
+
+.smart-workspace-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(80, 210, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(80, 210, 255, 0.07) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, black, transparent 92%);
+  opacity: 0.55;
+}
+
+.smart-workspace-page::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.28) 100%);
+}
+
+.smart-workspace-page > section {
+  position: relative;
+  z-index: 1;
+}
+
+.smart-workspace-visual::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(80, 210, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(80, 210, 255, 0.08) 1px, transparent 1px);
+  background-size: 34px 34px;
+  opacity: 0.45;
+}
+
+.smart-tool-node,
+.smart-output-card,
+.smart-reveal-card {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: smart-card-in 620ms ease forwards;
+}
+
+.smart-reveal-card {
+  animation-delay: var(--smart-delay, 0ms);
+}
+
+.smart-route-line {
+  fill: none;
+  stroke: #38dfff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 230;
+  stroke-dashoffset: 230;
+  filter: drop-shadow(0 0 10px rgba(56, 223, 255, 0.45));
+  animation: smart-line-draw 900ms ease forwards;
+  animation-delay: 360ms;
+}
+
+.smart-delay-1 { animation-delay: 520ms; }
+.smart-delay-2 { animation-delay: 760ms; }
+.smart-delay-3 { animation-delay: 940ms; }
+.smart-delay-4 { animation-delay: 1120ms; }
+
+.smart-travel-dot {
+  position: absolute;
+  left: 17%;
+  top: 50%;
+  z-index: 2;
+  height: 0.62rem;
+  width: 0.62rem;
+  border-radius: 9999px;
+  background: #33e68a;
+  box-shadow: 0 0 18px rgba(51, 230, 138, 0.72);
+  animation: smart-dot-travel 2600ms ease-in-out infinite;
+}
+
+.smart-manual-chip {
+  animation: smart-manual-fade 2200ms ease forwards;
+}
+
+.smart-warning-dot {
+  box-shadow: 0 0 0 0 rgba(245, 165, 36, 0.62);
+  animation: smart-warning-pulse 900ms ease-out 1;
+}
+
+.smart-flow-line {
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: smart-line-grow 1200ms ease forwards;
+}
+
+@keyframes smart-card-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes smart-line-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes smart-line-grow {
+  to { transform: scaleX(1); }
+}
+
+@keyframes smart-dot-travel {
+  0% { transform: translate3d(0, -50%, 0); opacity: 0; }
+  18% { opacity: 1; }
+  55% { transform: translate3d(210%, -50%, 0); opacity: 1; }
+  100% { transform: translate3d(420%, -50%, 0); opacity: 0; }
+}
+
+@keyframes smart-manual-fade {
+  0%, 45% { opacity: 1; }
+  100% { opacity: 0.55; }
+}
+
+@keyframes smart-warning-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(245, 165, 36, 0.62); }
+  100% { box-shadow: 0 0 0 14px rgba(245, 165, 36, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .smart-tool-node,
+  .smart-output-card,
+  .smart-reveal-card,
+  .smart-route-line,
+  .smart-travel-dot,
+  .smart-manual-chip,
+  .smart-warning-dot,
+  .smart-flow-line {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .smart-workspace-page::before {
+    background-size: 48px 48px;
+    opacity: 0.28;
+  }
+
+  .smart-travel-dot {
+    display: none;
+  }
+}
