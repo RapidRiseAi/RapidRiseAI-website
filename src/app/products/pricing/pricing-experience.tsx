@@ -100,6 +100,7 @@ const products: Product[] = [
     notIncluded: ['Full CRM replacement', 'Complex multi-team routing', 'Advanced custom dashboard'],
     visual: 'lead-follow-up',
     cta: 'Select this product',
+    detailsHref: '/solutions/lead-capture',
   },
   {
     id: 'inbox-routing',
@@ -114,6 +115,7 @@ const products: Product[] = [
     notIncluded: ['Full helpdesk platform', 'Complex AI classification across many departments', 'Large historical email migration'],
     visual: 'inbox-routing',
     cta: 'Select this product',
+    detailsHref: '/solutions/workflow-automation',
   },
   {
     id: 'dashboard',
@@ -128,6 +130,7 @@ const products: Product[] = [
     notIncluded: ['Full internal app', 'Complex role-based permissions', 'Large-scale analytics warehouse'],
     visual: 'dashboard',
     cta: 'Select this product',
+    detailsHref: '/solutions/web-apps',
   },
   {
     id: 'quote-generator',
@@ -142,6 +145,7 @@ const products: Product[] = [
     notIncluded: ['Complex accounting platform replacement', 'Legal document review', 'Full custom ERP workflow'],
     visual: 'quote-generator',
     cta: 'Select this product',
+    detailsHref: '/solutions/workflow-automation',
   },
   {
     id: 'client-portal',
@@ -156,6 +160,7 @@ const products: Product[] = [
     notIncluded: ['Large multi-tenant enterprise platform', 'Advanced billing system', 'Complex custom permission structures beyond starter scope'],
     visual: 'client-portal',
     cta: 'Select this product',
+    detailsHref: '/solutions/web-apps',
   },
   {
     id: 'support-assistant',

@@ -299,7 +299,7 @@ const relatedModules = [
   {
     title: 'Quote and Document Generator',
     copy: 'Turn captured records into quotes, documents, approvals, and saved files.',
-    href: '/solutions',
+    href: '/solutions/workflow-automation',
   },
 ];
 

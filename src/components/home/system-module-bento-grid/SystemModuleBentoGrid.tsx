@@ -121,7 +121,7 @@ const systemModules: SystemModule[] = [
     labels: ['Learn', 'Adopt', 'Repeat', 'Improve'],
     tools: ['Templates', 'SOPs', 'Classes', 'Coaching', 'Handover'],
     cta: 'Explore training',
-    href: '/education',
+    href: '/solutions/training',
     visual: 'training',
     icon: GraduationCap,
     span: 'lg:col-span-6 min-h-[320px]',
