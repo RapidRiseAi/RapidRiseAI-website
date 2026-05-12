@@ -212,7 +212,7 @@ const relatedModules = [
   {
     title: 'Support Assistant Starter',
     copy: 'Capture repeated questions and hand off cleaner support requests.',
-    href: '/solutions/lead-capture',
+    href: '/solutions/support-assistant',
   },
 ];
 

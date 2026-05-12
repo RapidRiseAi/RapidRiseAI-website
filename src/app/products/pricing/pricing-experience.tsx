@@ -47,6 +47,7 @@ type Product = {
   notIncluded: string[];
   visual: VisualType;
   cta: string;
+  detailsHref?: string;
 };
 
 type AddOn = {
@@ -169,6 +170,7 @@ const products: Product[] = [
     notIncluded: ['Fully autonomous support department', 'Large multilingual knowledge base buildout', 'Complex CRM/helpdesk integration unless scoped separately'],
     visual: 'support-assistant',
     cta: 'Select this product',
+    detailsHref: '/solutions/support-assistant',
   },
 ];
 
@@ -509,6 +511,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
       <div className="mt-auto pt-6">
         <p className="mb-3 text-xs text-[#94A3B8]">Final scope confirmed before build.</p>
         <CommandButton href={`${quoteHref}?product=${product.id}`} ariaLabel={`Select ${product.name}`} className="w-full">{product.cta}</CommandButton>
+        {product.detailsHref ? <CommandButton href={product.detailsHref} variant="secondary" ariaLabel={`View ${product.name} details`} className="mt-3 w-full">View details</CommandButton> : null}
       </div>
     </article>
   );

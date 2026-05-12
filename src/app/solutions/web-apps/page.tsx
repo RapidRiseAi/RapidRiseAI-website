@@ -294,7 +294,7 @@ const relatedModules = [
   {
     title: 'Support Assistant Starter',
     copy: 'Capture support requests and hand them off into the internal system.',
-    href: '/solutions',
+    href: '/solutions/support-assistant',
   },
   {
     title: 'Quote and Document Generator',
