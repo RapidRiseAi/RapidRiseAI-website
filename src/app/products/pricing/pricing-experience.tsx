@@ -47,6 +47,7 @@ type Product = {
   notIncluded: string[];
   visual: VisualType;
   cta: string;
+  detailsHref?: string;
 };
 
 type AddOn = {
@@ -99,6 +100,7 @@ const products: Product[] = [
     notIncluded: ['Full CRM replacement', 'Complex multi-team routing', 'Advanced custom dashboard'],
     visual: 'lead-follow-up',
     cta: 'Select this product',
+    detailsHref: '/solutions/lead-capture',
   },
   {
     id: 'inbox-routing',
@@ -113,6 +115,7 @@ const products: Product[] = [
     notIncluded: ['Full helpdesk platform', 'Complex AI classification across many departments', 'Large historical email migration'],
     visual: 'inbox-routing',
     cta: 'Select this product',
+    detailsHref: '/solutions/workflow-automation',
   },
   {
     id: 'dashboard',
@@ -127,6 +130,7 @@ const products: Product[] = [
     notIncluded: ['Full internal app', 'Complex role-based permissions', 'Large-scale analytics warehouse'],
     visual: 'dashboard',
     cta: 'Select this product',
+    detailsHref: '/solutions/web-apps',
   },
   {
     id: 'quote-generator',
@@ -141,6 +145,7 @@ const products: Product[] = [
     notIncluded: ['Complex accounting platform replacement', 'Legal document review', 'Full custom ERP workflow'],
     visual: 'quote-generator',
     cta: 'Select this product',
+    detailsHref: '/solutions/workflow-automation',
   },
   {
     id: 'client-portal',
@@ -155,6 +160,7 @@ const products: Product[] = [
     notIncluded: ['Large multi-tenant enterprise platform', 'Advanced billing system', 'Complex custom permission structures beyond starter scope'],
     visual: 'client-portal',
     cta: 'Select this product',
+    detailsHref: '/solutions/web-apps',
   },
   {
     id: 'support-assistant',
@@ -169,6 +175,7 @@ const products: Product[] = [
     notIncluded: ['Fully autonomous support department', 'Large multilingual knowledge base buildout', 'Complex CRM/helpdesk integration unless scoped separately'],
     visual: 'support-assistant',
     cta: 'Select this product',
+    detailsHref: '/solutions/support-assistant',
   },
 ];
 
@@ -509,6 +516,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
       <div className="mt-auto pt-6">
         <p className="mb-3 text-xs text-[#94A3B8]">Final scope confirmed before build.</p>
         <CommandButton href={`${quoteHref}?product=${product.id}`} ariaLabel={`Select ${product.name}`} className="w-full">{product.cta}</CommandButton>
+        {product.detailsHref ? <CommandButton href={product.detailsHref} variant="secondary" ariaLabel={`View ${product.name} details`} className="mt-3 w-full">View details</CommandButton> : null}
       </div>
     </article>
   );

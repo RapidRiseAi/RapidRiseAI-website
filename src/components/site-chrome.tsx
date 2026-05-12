@@ -255,7 +255,7 @@ const footerSystems = [
   { label: 'Web Apps and Internal Tools', href: '/solutions/web-apps' },
   { label: 'Websites that Convert', href: '/solutions/websites' },
   { label: 'Training and Enablement', href: '/solutions/training' },
-  { label: 'Support Assistant', href: '/solutions/lead-capture' },
+  { label: 'Support Assistant', href: '/solutions/support-assistant' },
 ];
 
 const footerLegalLinks = [

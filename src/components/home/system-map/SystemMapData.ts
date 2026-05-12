@@ -50,13 +50,13 @@ export const destinations: Destination[] = [
     { title: 'Connect the Tools', text: 'Link the platforms your team already uses.', icon: GitBranch },
     { title: 'Improve Over Time', text: 'Use data and feedback to refine the system.', icon: Gauge },
   ] },
-  { id: 'dashboards', title: 'Dashboards', label: 'VISIBILITY', shortDescription: 'Live visibility across performance & KPIs.', description: 'See the numbers, tasks, leads, and outcomes that matter without digging through scattered tools.', href: '/solutions#dashboards', icon: BarChart3, slot: 'top', routePoint: { x: 500, y: 110 }, cta: 'View Dashboard Work', secondaryCta: 'See how reporting works', benefits: [
+  { id: 'dashboards', title: 'Dashboards', label: 'VISIBILITY', shortDescription: 'Live visibility across performance & KPIs.', description: 'See the numbers, tasks, leads, and outcomes that matter without digging through scattered tools.', href: '/solutions/web-apps', icon: BarChart3, slot: 'top', routePoint: { x: 500, y: 110 }, cta: 'View Dashboard Work', secondaryCta: 'See how reporting works', benefits: [
     { title: 'Real-Time Clarity', text: 'Track important activity in one place.', icon: Gauge },
     { title: 'Better Decisions', text: 'Surface trends before they become problems.', icon: Target },
     { title: 'Team Accountability', text: 'Make ownership and progress visible.', icon: Users },
     { title: 'Cleaner Reporting', text: 'Replace guesswork with structured insight.', icon: BarChart3 },
   ] },
-  { id: 'automation', title: 'Automation', label: 'EFFICIENCY', shortDescription: 'Remove manual work and streamline ops.', description: 'Remove repetitive manual work and create connected workflows that keep the business moving.', href: '/solutions#workflow-automation', icon: Zap, slot: 'upperRight', routePoint: { x: 732, y: 198 }, cta: 'Automate My Workflow', secondaryCta: 'Explore automation ideas', benefits: [
+  { id: 'automation', title: 'Automation', label: 'EFFICIENCY', shortDescription: 'Remove manual work and streamline ops.', description: 'Remove repetitive manual work and create connected workflows that keep the business moving.', href: '/solutions/workflow-automation', icon: Zap, slot: 'upperRight', routePoint: { x: 732, y: 198 }, cta: 'Automate My Workflow', secondaryCta: 'Explore automation ideas', benefits: [
     { title: 'Save Time', text: 'Automate repetitive admin and follow-ups.', icon: Zap },
     { title: 'Reduce Mistakes', text: 'Standardize handoffs and data capture.', icon: ShieldCheck },
     { title: 'Respond Faster', text: 'Trigger actions the moment something happens.', icon: Sparkles },
@@ -68,13 +68,13 @@ export const destinations: Destination[] = [
     { title: 'Visual Proof', text: 'Review systems, dashboards, apps, and websites.', icon: Globe },
     { title: 'Confidence Before You Commit', text: 'Know what quality looks like.', icon: ShieldCheck },
   ] },
-  { id: 'internal-tools', title: 'Internal Tools', label: 'OPERATIONS', shortDescription: 'Custom portals and workflows for your team.', description: 'Build custom portals, dashboards, calculators, and workflow tools around how your team actually works.', href: '/solutions#web-apps', icon: Settings2, slot: 'right', routePoint: { x: 832, y: 408 }, cta: 'Build Internal Tools', secondaryCta: 'See examples', benefits: [
+  { id: 'internal-tools', title: 'Internal Tools', label: 'OPERATIONS', shortDescription: 'Custom portals and workflows for your team.', description: 'Build custom portals, dashboards, calculators, and workflow tools around how your team actually works.', href: '/solutions/web-apps', icon: Settings2, slot: 'right', routePoint: { x: 832, y: 408 }, cta: 'Build Internal Tools', secondaryCta: 'See examples', benefits: [
     { title: 'Custom Fit', text: 'Tools designed around your real process.', icon: Target },
     { title: 'Team Control', text: 'Give staff clean interfaces to manage work.', icon: Users },
     { title: 'Cleaner Handoffs', text: 'Move tasks between people without confusion.', icon: GitBranch },
     { title: 'Better Oversight', text: 'Give owners visibility without micromanaging.', icon: Gauge },
   ] },
-  { id: 'websites', title: 'Websites', label: 'CONVERSION', shortDescription: 'High-converting sites that turn visitors into customers.', description: 'Replace flat, outdated websites with premium pages built to create trust, explain value, and convert visitors.', href: '/solutions#websites', icon: Globe, slot: 'lowerLeft', routePoint: { x: 267, y: 734 }, cta: 'Upgrade My Website', secondaryCta: 'View website work', benefits: [
+  { id: 'websites', title: 'Websites', label: 'CONVERSION', shortDescription: 'High-converting sites that turn visitors into customers.', description: 'Replace flat, outdated websites with premium pages built to create trust, explain value, and convert visitors.', href: '/solutions/websites', icon: Globe, slot: 'lowerLeft', routePoint: { x: 267, y: 734 }, cta: 'Upgrade My Website', secondaryCta: 'View website work', benefits: [
     { title: 'Strong First Impression', text: 'Make the business feel credible instantly.', icon: Sparkles },
     { title: 'Clear Service Flow', text: 'Guide visitors to the right action.', icon: Target },
     { title: 'Better Mobile Experience', text: 'Design for how people actually browse.', icon: Users },
