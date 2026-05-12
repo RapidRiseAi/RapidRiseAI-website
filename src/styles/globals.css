@@ -2099,3 +2099,175 @@ body.mobile-view #mobile-sticky-cta-bar {
     display: none;
   }
 }
+
+.internal-tools-page {
+  background:
+    radial-gradient(circle at 50% 16%, rgba(0, 145, 255, 0.13), transparent 34%),
+    radial-gradient(circle at 82% 54%, rgba(0, 220, 255, 0.06), transparent 30%),
+    #020711;
+}
+
+.internal-tools-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(80, 210, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(80, 210, 255, 0.07) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, black, transparent 92%);
+  opacity: 0.55;
+}
+
+.internal-tools-page::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.28) 100%);
+}
+
+.internal-tools-page > section {
+  position: relative;
+  z-index: 1;
+}
+
+.internal-product-visual::before,
+.internal-system-map::before,
+.internal-dashboard-mockup::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(80, 210, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(80, 210, 255, 0.08) 1px, transparent 1px);
+  background-size: 34px 34px;
+  opacity: 0.4;
+}
+
+.internal-product-visual > *,
+.internal-system-map > *,
+.internal-dashboard-mockup > * {
+  position: relative;
+  z-index: 1;
+}
+
+.internal-role-chip,
+.internal-screen-card,
+.internal-approval-card,
+.internal-notification-card,
+.internal-reveal-card {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: internal-card-in 620ms ease forwards;
+  animation-delay: var(--internal-delay, 0ms);
+}
+
+.internal-screen-card:nth-of-type(2) { animation-delay: 180ms; }
+.internal-screen-card:nth-of-type(3) { animation-delay: 300ms; }
+
+.internal-manual-chip {
+  animation: internal-manual-fade 2200ms ease forwards;
+}
+
+.internal-warning-dot {
+  box-shadow: 0 0 0 0 rgba(245, 165, 36, 0.62);
+  animation: internal-warning-pulse 900ms ease-out 1;
+}
+
+.internal-flow-line {
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: internal-line-grow 1200ms ease forwards;
+}
+
+.internal-tool-card,
+.internal-record-row,
+.internal-approval-preview {
+  transition: transform 220ms ease, border-color 220ms ease, background 220ms ease, box-shadow 220ms ease;
+}
+
+.internal-tool-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(56, 223, 255, 0.42);
+  box-shadow: 0 18px 60px rgba(14, 165, 255, 0.14);
+}
+
+.internal-record-row:hover + .internal-record-row {
+  background: rgba(56, 223, 255, 0.03);
+}
+
+.internal-approval-preview:hover {
+  border-color: rgba(51, 230, 138, 0.32);
+  background: rgba(51, 230, 138, 0.08);
+}
+
+.role-panel {
+  display: none;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: internal-card-in 260ms ease forwards;
+}
+
+.role-tabs-shell:has(#role-admin:checked) label[for='role-admin'],
+.role-tabs-shell:has(#role-team:checked) label[for='role-team'],
+.role-tabs-shell:has(#role-client:checked) label[for='role-client'],
+.role-tabs-shell:has(#role-manager:checked) label[for='role-manager'] {
+  border-color: rgba(56, 223, 255, 0.58);
+  background: rgba(56, 223, 255, 0.14);
+  color: #f8fafc;
+  box-shadow: 0 0 24px rgba(56, 223, 255, 0.12);
+}
+
+.role-tabs-shell:has(#role-admin:checked) .role-panel-admin,
+.role-tabs-shell:has(#role-team:checked) .role-panel-team,
+.role-tabs-shell:has(#role-client:checked) .role-panel-client,
+.role-tabs-shell:has(#role-manager:checked) .role-panel-manager {
+  display: block;
+}
+
+@keyframes internal-card-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes internal-line-grow {
+  to { transform: scaleX(1); }
+}
+
+@keyframes internal-manual-fade {
+  0%, 45% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+@keyframes internal-warning-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(245, 165, 36, 0.62); }
+  100% { box-shadow: 0 0 0 14px rgba(245, 165, 36, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .internal-role-chip,
+  .internal-screen-card,
+  .internal-approval-card,
+  .internal-notification-card,
+  .internal-reveal-card,
+  .internal-manual-chip,
+  .internal-warning-dot,
+  .internal-flow-line,
+  .role-panel {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .internal-tools-page::before {
+    background-size: 48px 48px;
+    opacity: 0.28;
+  }
+}
