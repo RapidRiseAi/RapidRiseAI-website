@@ -128,7 +128,7 @@ function visibleFor(activeStep: number, from: number, reduceMotion: boolean) {
 
 function StoryStepList({ activeIndex, onStepClick }: { activeIndex: number; onStepClick: (index: number) => void }) {
   return (
-    <nav aria-label="System story steps" className="relative rounded-[30px] border border-cyan-200/14 bg-slate-950/46 p-3 shadow-[0_18px_54px_rgba(0,0,0,0.30)] backdrop-blur-md">
+    <nav aria-label="System story steps" className="story-step-list relative rounded-[30px] border border-cyan-200/14 bg-slate-950/46 p-3 shadow-[0_18px_54px_rgba(0,0,0,0.30)] backdrop-blur-md">
       <div className="absolute bottom-6 left-[28px] top-6 w-px bg-cyan-200/12" aria-hidden="true" />
       <motion.div
         className="absolute left-[28px] top-6 w-px bg-gradient-to-b from-cyan-200 via-[#38dfff] to-cyan-500/20 shadow-[0_0_18px_rgba(56,223,255,0.34)]"
@@ -147,7 +147,7 @@ function StoryStepList({ activeIndex, onStepClick }: { activeIndex: number; onSt
                 type="button"
                 onClick={() => onStepClick(index)}
                 aria-current={active ? 'step' : undefined}
-                className={`group relative grid w-full grid-cols-[34px_1fr] gap-3 rounded-2xl border px-3 py-3 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/70 ${
+                className={`group relative grid w-full grid-cols-[34px_minmax(0,1fr)] gap-3 rounded-2xl border px-3 py-2.5 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/70 ${
                   active
                     ? 'border-cyan-200/42 bg-cyan-400/10 shadow-[0_0_24px_rgba(56,223,255,0.12)]'
                     : complete
@@ -159,9 +159,9 @@ function StoryStepList({ activeIndex, onStepClick }: { activeIndex: number; onSt
                   {complete ? <Check className="h-3.5 w-3.5" /> : String(step.step).padStart(2, '0')}
                 </span>
                 <span>
-                  <span className="flex items-center gap-2">
+                  <span className="flex min-w-0 items-center gap-2">
                     <Icon className={`h-3.5 w-3.5 ${active ? 'text-cyan-100' : complete ? 'text-cyan-300/80' : 'text-slate-500'}`} />
-                    <span className={`text-sm font-semibold ${active ? 'text-white' : complete ? 'text-cyan-100/82' : 'text-slate-400'}`}>{step.title}</span>
+                    <span className={`min-w-0 text-sm font-semibold leading-tight ${active ? 'text-white' : complete ? 'text-cyan-100/82' : 'text-slate-400'}`}>{step.title}</span>
                   </span>
                   <span className={`mt-1 block text-xs leading-relaxed ${active ? 'text-slate-200' : 'text-slate-500'}`}>{step.microcopy}</span>
                   <span className={`mt-2 inline-flex rounded-full border px-2 py-0.5 text-[0.56rem] font-semibold uppercase tracking-[0.12em] ${active ? 'border-cyan-300/34 bg-cyan-400/10 text-cyan-100' : complete ? 'border-cyan-300/20 bg-cyan-400/7 text-cyan-200/70' : 'border-slate-500/18 bg-slate-900/50 text-slate-500'}`}>{complete ? 'Completed' : active ? step.state : 'Upcoming'}</span>
@@ -411,7 +411,7 @@ function CommandCenterSummary({ activeStep, reduceMotion }: { activeStep: number
 
 function StickySystemVisual({ activeIndex, reduceMotion }: { activeIndex: number; reduceMotion: boolean }) {
   return (
-    <div className="relative h-[calc(100vh-140px)] min-h-[620px] max-h-[720px] overflow-hidden rounded-[34px] border border-[rgba(0,210,255,0.24)] bg-[radial-gradient(circle_at_50%_45%,rgba(0,180,255,0.10),transparent_36%),rgba(3,10,24,0.78)] p-7 shadow-[0_28px_90px_rgba(0,0,0,0.42),inset_0_0_80px_rgba(0,160,255,0.05)] backdrop-blur-[18px]">
+    <div className="story-visual-surface relative h-[calc(100vh-150px)] min-h-[590px] max-h-[720px] overflow-hidden rounded-[34px] border border-[rgba(0,210,255,0.24)] bg-[radial-gradient(circle_at_50%_45%,rgba(0,180,255,0.10),transparent_36%),rgba(3,10,24,0.78)] p-7 shadow-[0_28px_90px_rgba(0,0,0,0.42),inset_0_0_80px_rgba(0,160,255,0.05)] backdrop-blur-[18px]">
       <div className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(rgba(125,220,255,0.72)_1px,transparent_1px),linear-gradient(90deg,rgba(125,220,255,0.72)_1px,transparent_1px)] [background-size:44px_44px]" />
       <div className="relative z-20 flex items-center justify-between gap-4">
         <div>
@@ -478,37 +478,66 @@ function MobileStoryStepCard({ step, index }: { step: StoryStep; index: number }
 export function StickySystemStory() {
   const reduceMotion = useReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
-  const markerRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const scrollTrackRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const markers = markerRefs.current.filter(Boolean) as HTMLDivElement[];
-    if (!markers.length) return;
+    if (typeof window === 'undefined') return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (!visible) return;
-        const index = Number((visible.target as HTMLElement).dataset.stepIndex ?? 0);
-        setActiveIndex(index);
-      },
-      { root: null, rootMargin: '-42% 0px -42% 0px', threshold: [0, 0.2, 0.5, 0.8, 1] },
-    );
+    let frame = 0;
+    const updateActiveStep = () => {
+      frame = 0;
+      const track = scrollTrackRef.current;
+      if (!track) return;
 
-    markers.forEach((marker) => observer.observe(marker));
-    return () => observer.disconnect();
+      const rect = track.getBoundingClientRect();
+      const scrollableDistance = Math.max(1, rect.height - window.innerHeight);
+      const progress = Math.min(0.999, Math.max(0, -rect.top / scrollableDistance));
+      const nextIndex = Math.min(
+        systemStorySteps.length - 1,
+        Math.max(0, Math.floor(progress * systemStorySteps.length)),
+      );
+
+      setActiveIndex((current) => (current === nextIndex ? current : nextIndex));
+    };
+
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(updateActiveStep);
+    };
+
+    updateActiveStep();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
   }, []);
 
   const handleStepClick = useCallback((index: number) => {
-    markerRefs.current[index]?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+    const track = scrollTrackRef.current;
+    if (!track || typeof window === 'undefined') {
+      setActiveIndex(index);
+      return;
+    }
+
+    const trackTop = track.getBoundingClientRect().top + window.scrollY;
+    const scrollableDistance = Math.max(1, track.offsetHeight - window.innerHeight);
+    const targetProgress = (index + 0.08) / systemStorySteps.length;
+
+    window.scrollTo({
+      top: trackTop + scrollableDistance * targetProgress,
+      behavior: reduceMotion ? 'auto' : 'smooth',
+    });
     setActiveIndex(index);
   }, [reduceMotion]);
 
   const activeStep = useMemo(() => systemStorySteps[activeIndex], [activeIndex]);
 
   return (
-    <section className="sticky-system-story homepage-section relative overflow-hidden px-4 py-20 text-white sm:px-6 lg:px-8 lg:py-36" aria-labelledby="sticky-system-story-title">
+    <section className="sticky-system-story homepage-section relative overflow-visible px-4 py-20 text-white sm:px-6 lg:px-8 lg:py-36" aria-labelledby="sticky-system-story-title">
       <div className="pointer-events-none absolute inset-0 border-t border-cyan-200/[0.07] bg-[radial-gradient(circle_at_70%_28%,rgba(0,145,255,0.13),transparent_34%),radial-gradient(circle_at_30%_62%,rgba(0,220,255,0.06),transparent_30%),#020711]" />
       <div className="pointer-events-none absolute inset-0 opacity-[0.052] [background-image:linear-gradient(rgba(125,190,255,0.72)_1px,transparent_1px),linear-gradient(90deg,rgba(125,190,255,0.72)_1px,transparent_1px)] [background-size:72px_72px]" />
 
@@ -519,8 +548,9 @@ export function StickySystemStory() {
           <p className="mt-5 max-w-[720px] text-[clamp(1rem,1.45vw,1.25rem)] leading-[1.58] text-slate-300">From first enquiry to tracked outcome, every step becomes visible.</p>
         </motion.div>
 
-        <div className="relative mt-14 hidden min-h-[180vh] lg:block">
-          <div className="sticky top-24 z-20 grid grid-cols-[0.38fr_0.62fr] items-start gap-14">
+        <div ref={scrollTrackRef} className="sticky-story-scroll-track relative mt-14 hidden lg:block" style={{ ['--step-count' as string]: systemStorySteps.length }}>
+          <div className="sticky-story-pin sticky top-[clamp(84px,10vh,120px)] z-20 flex min-h-[calc(100vh-150px)] items-center overflow-visible">
+            <div className="sticky-story-layout grid w-full grid-cols-[minmax(310px,0.38fr)_minmax(560px,0.62fr)] items-center gap-[clamp(1.75rem,4vw,3.5rem)]">
             <div>
               <div className="mb-5 rounded-3xl border border-cyan-200/14 bg-slate-950/42 p-5 backdrop-blur-md" aria-live="polite">
                 <p className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-cyan-200">Active state</p>
@@ -530,18 +560,7 @@ export function StickySystemStory() {
               <StoryStepList activeIndex={activeIndex} onStepClick={handleStepClick} />
             </div>
             <StickySystemVisual activeIndex={activeIndex} reduceMotion={Boolean(reduceMotion)} />
-          </div>
-
-          <div className="absolute inset-x-0 top-0 z-0" aria-hidden="true">
-            {systemStorySteps.map((step, index) => (
-              <div
-                key={step.id}
-                ref={(element) => { markerRefs.current[index] = element; }}
-                data-step-index={index}
-                className="absolute left-0 h-[34vh] w-px"
-                style={{ top: `${index * 20}vh` }}
-              />
-            ))}
+            </div>
           </div>
         </div>
 

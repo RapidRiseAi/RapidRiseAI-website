@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { createPortal } from 'react-dom';
 import {
   AnimatePresence,
   motion,
@@ -205,13 +206,49 @@ const systemPills: SystemPill[] = [
 
 const transitionEase = [0.22, 1, 0.36, 1] as const;
 
+
+type FloatingPosition = { left: number; top: number };
+
+function getFloatingPosition(rect: DOMRect, floatingWidth = 320, floatingHeight = 170): FloatingPosition {
+  const padding = 16;
+  let left = rect.left + rect.width / 2 - floatingWidth / 2;
+  left = Math.max(padding, Math.min(left, window.innerWidth - floatingWidth - padding));
+
+  let top = rect.top - floatingHeight - 14;
+  if (top < padding) top = rect.bottom + 14;
+  top = Math.max(padding, Math.min(top, window.innerHeight - floatingHeight - padding));
+
+  return { left, top };
+}
+
+function FloatingLeakTooltip({ node, position }: { node: LeakNode; position: FloatingPosition }) {
+  if (typeof document === 'undefined') return null;
+  return createPortal(<LeakTooltip node={node} position={position} />, document.body);
+}
+
+function FloatingPillTooltip({ pill, position }: { pill: SystemPill; position: FloatingPosition }) {
+  if (typeof document === 'undefined') return null;
+  return createPortal(
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 8 }}
+      style={{ left: position.left, top: position.top }}
+      className="floating-tooltip pointer-events-none px-3 py-2 text-[0.76rem] leading-relaxed text-cyan-50"
+    >
+      {pill.description}
+    </motion.div>,
+    document.body,
+  );
+}
+
 function WorkflowNode({ node, active, dimmed, fixed, delay, onActivate, onClear }: {
   node: LeakNode;
   active: boolean;
   dimmed: boolean;
   fixed: boolean;
   delay: number;
-  onActivate: () => void;
+  onActivate: (target: HTMLElement) => void;
   onClear: () => void;
 }) {
   const Icon = node.icon;
@@ -225,9 +262,9 @@ function WorkflowNode({ node, active, dimmed, fixed, delay, onActivate, onClear 
       viewport={{ once: true, margin: '-8% 0px -8% 0px' }}
       transition={{ duration: 0.45, delay, ease: transitionEase }}
       style={{ left: node.position.left, top: node.position.top, rotate: node.tilt }}
-      onMouseEnter={onActivate}
+      onMouseEnter={(event) => onActivate(event.currentTarget)}
       onMouseLeave={onClear}
-      onFocus={onActivate}
+      onFocus={(event) => onActivate(event.currentTarget)}
       onBlur={onClear}
       className={`group absolute z-30 w-[min(17vw,184px)] rounded-2xl border bg-[rgba(3,12,27,0.86)] px-3.5 py-3 text-left shadow-[0_18px_40px_rgba(0,0,0,0.32)] backdrop-blur-md transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/70 ${active ? 'border-cyan-200/60 shadow-[0_0_0_1px_rgba(125,235,255,0.14),0_0_34px_rgba(0,210,255,0.24),0_18px_42px_rgba(0,0,0,0.38)]' : 'border-[rgba(120,190,255,0.18)]'} ${dimmed ? 'opacity-45' : 'opacity-100'}`}
     >
@@ -249,14 +286,15 @@ function WorkflowNode({ node, active, dimmed, fixed, delay, onActivate, onClear 
   );
 }
 
-function LeakTooltip({ node }: { node: LeakNode }) {
+function LeakTooltip({ node, position }: { node: LeakNode; position: FloatingPosition }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 8, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 6, scale: 0.98 }}
       transition={{ duration: 0.18 }}
-      className="pointer-events-none absolute z-50 w-[290px] rounded-2xl border border-cyan-200/18 bg-slate-950/95 p-3 text-left shadow-[0_18px_54px_rgba(0,0,0,0.62)] backdrop-blur-xl"
+      style={{ left: position.left, top: position.top }}
+      className="floating-tooltip pointer-events-none w-[min(320px,calc(100vw-32px))] rounded-2xl border border-cyan-200/18 bg-slate-950/95 p-3 text-left shadow-[0_18px_54px_rgba(0,0,0,0.62)] backdrop-blur-xl"
     >
       <p className="flex items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-amber-200"><TriangleAlert className="h-3.5 w-3.5" /> {node.leak}</p>
       <p className="mt-2 text-[0.8rem] leading-relaxed text-slate-200">{node.tooltip}</p>
@@ -271,7 +309,7 @@ function LeakBadge({ node, active, dimmed, fixed, delay, onActivate, onClear }: 
   dimmed: boolean;
   fixed: boolean;
   delay: number;
-  onActivate: () => void;
+  onActivate: (target: HTMLElement) => void;
   onClear: () => void;
 }) {
   return (
@@ -283,9 +321,9 @@ function LeakBadge({ node, active, dimmed, fixed, delay, onActivate, onClear }: 
       viewport={{ once: true }}
       transition={{ duration: 0.35, delay, ease: transitionEase }}
       style={{ left: `calc(${node.position.left} + 104px)`, top: `calc(${node.position.top} + 72px)` }}
-      onMouseEnter={onActivate}
+      onMouseEnter={(event) => onActivate(event.currentTarget)}
       onMouseLeave={onClear}
-      onFocus={onActivate}
+      onFocus={(event) => onActivate(event.currentTarget)}
       onBlur={onClear}
       className={`absolute z-40 inline-flex h-7 items-center gap-1.5 rounded-full border px-2.5 text-[0.64rem] font-semibold uppercase tracking-[0.08em] backdrop-blur-md transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/70 ${fixed ? 'border-[rgba(0,210,255,0.38)] bg-[rgba(0,210,255,0.10)] text-[#bdefff] shadow-[0_0_18px_rgba(0,210,255,0.16)]' : node.critical ? 'border-[rgba(255,80,80,0.28)] bg-[rgba(70,16,18,0.55)] text-red-100' : 'border-[rgba(245,165,36,0.36)] bg-[rgba(245,165,36,0.10)] text-amber-100'} ${active ? 'scale-[1.03] shadow-[0_0_24px_rgba(245,165,36,0.25)]' : ''} ${dimmed ? 'opacity-40' : 'opacity-100'}`}
     >
@@ -299,7 +337,7 @@ function SystemLayerPill({ pill, active, selected, onActivate, onClear, reduceMo
   pill: SystemPill;
   active: boolean;
   selected: boolean;
-  onActivate: () => void;
+  onActivate: (target: HTMLElement) => void;
   onClear: () => void;
   reduceMotion: boolean;
 }) {
@@ -310,9 +348,9 @@ function SystemLayerPill({ pill, active, selected, onActivate, onClear, reduceMo
       animate={active ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
       transition={{ duration: 0.45, delay: 0.15 }}
       style={{ left: pill.x, top: pill.y }}
-      onMouseEnter={onActivate}
+      onMouseEnter={(event) => onActivate(event.currentTarget)}
       onMouseLeave={onClear}
-      onFocus={onActivate}
+      onFocus={(event) => onActivate(event.currentTarget)}
       onBlur={onClear}
       className={`absolute z-40 inline-flex h-8 -translate-x-1/2 items-center gap-1.5 rounded-full border border-[rgba(0,210,255,0.38)] bg-[rgba(0,210,255,0.10)] px-3 text-[0.66rem] font-semibold uppercase tracking-[0.12em] text-[#bdefff] backdrop-blur-md transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/70 ${selected ? 'border-cyan-100/70 bg-cyan-300/18 shadow-[0_0_24px_rgba(0,210,255,0.22)]' : ''}`}
     >
@@ -355,6 +393,8 @@ export function BusinessLeakMap() {
   const [systemActive, setSystemActive] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
   const [hoveredPill, setHoveredPill] = useState<SystemAction | null>(null);
+  const [tooltipPosition, setTooltipPosition] = useState<FloatingPosition | null>(null);
+  const [pillTooltipPosition, setPillTooltipPosition] = useState<FloatingPosition | null>(null);
   const [openCards, setOpenCards] = useState<string[]>(['website']);
 
   useEffect(() => {
@@ -370,8 +410,28 @@ export function BusinessLeakMap() {
   const hoveredNode = useMemo(() => leakNodes.find((node) => node.id === hovered) ?? null, [hovered]);
   const activePill = systemPills.find((pill) => pill.label === hoveredPill) ?? null;
 
+  function activateNode(nodeId: string, target: HTMLElement) {
+    setHovered(nodeId);
+    setTooltipPosition(getFloatingPosition(target.getBoundingClientRect()));
+  }
+
+  function clearNode() {
+    setHovered(null);
+    setTooltipPosition(null);
+  }
+
+  function activatePill(label: SystemAction, target: HTMLElement) {
+    setHoveredPill(label);
+    setPillTooltipPosition(getFloatingPosition(target.getBoundingClientRect(), 260, 90));
+  }
+
+  function clearPill() {
+    setHoveredPill(null);
+    setPillTooltipPosition(null);
+  }
+
   return (
-    <section ref={sectionRef} className="business-leak-map-section homepage-section relative overflow-hidden px-4 py-20 text-white sm:px-6 lg:px-8 lg:py-28" aria-labelledby="business-leak-map-title">
+    <section ref={sectionRef} className="business-leak-map-section homepage-section relative overflow-visible px-4 py-20 text-white sm:px-6 lg:px-8 lg:py-28" aria-labelledby="business-leak-map-title">
       <div className="pointer-events-none absolute inset-0 border-t border-cyan-200/[0.08] bg-[radial-gradient(circle_at_50%_20%,rgba(0,145,255,0.10),transparent_34%),radial-gradient(circle_at_74%_52%,rgba(0,220,255,0.05),transparent_32%)]" />
       <div className="pointer-events-none absolute inset-0 opacity-[0.055] [background-image:linear-gradient(rgba(125,190,255,0.72)_1px,transparent_1px),linear-gradient(90deg,rgba(125,190,255,0.72)_1px,transparent_1px)] [background-size:72px_72px]" />
 
@@ -413,30 +473,24 @@ export function BusinessLeakMap() {
             <motion.div initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }} animate={systemActive ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.98 }} transition={{ duration: reduceMotion ? 0 : 0.8, ease: transitionEase }} className="pointer-events-none absolute inset-x-8 bottom-20 top-8 z-20 rounded-[28px] border border-cyan-300/16 bg-[radial-gradient(circle_at_50%_42%,rgba(0,210,255,0.12),transparent_34%),linear-gradient(135deg,rgba(0,118,255,0.09),transparent_52%)] system-layer-breathe" />
 
             {systemPills.map((pill) => (
-              <SystemLayerPill key={pill.label} pill={pill} active={systemActive} selected={hoveredPill === pill.label} onActivate={() => setHoveredPill(pill.label)} onClear={() => setHoveredPill(null)} reduceMotion={Boolean(reduceMotion)} />
+              <SystemLayerPill key={pill.label} pill={pill} active={systemActive} selected={hoveredPill === pill.label} onActivate={(target) => activatePill(pill.label, target)} onClear={clearPill} reduceMotion={Boolean(reduceMotion)} />
             ))}
-            {activePill ? (
-              <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} style={{ left: activePill.x, top: 'calc(82% + 42px)' }} className="absolute z-50 w-[250px] -translate-x-1/2 rounded-2xl border border-cyan-200/18 bg-slate-950/94 px-3 py-2 text-[0.76rem] leading-relaxed text-cyan-50 shadow-[0_18px_46px_rgba(0,0,0,0.55)]">{activePill.description}</motion.div>
-            ) : null}
+            {activePill && pillTooltipPosition ? <FloatingPillTooltip pill={activePill} position={pillTooltipPosition} /> : null}
 
             {leakNodes.map((node, index) => {
               const active = hovered === node.id;
               const dimmed = Boolean(hovered && hovered !== node.id);
-              return <WorkflowNode key={node.id} node={node} active={active} dimmed={dimmed} fixed={systemActive} delay={0.4 + index * 0.07} onActivate={() => setHovered(node.id)} onClear={() => setHovered(null)} />;
+              return <WorkflowNode key={node.id} node={node} active={active} dimmed={dimmed} fixed={systemActive} delay={0.4 + index * 0.07} onActivate={(target) => activateNode(node.id, target)} onClear={clearNode} />;
             })}
 
             {leakNodes.map((node, index) => {
               const active = hovered === node.id;
               const dimmed = Boolean(hovered && hovered !== node.id);
-              return <LeakBadge key={`${node.id}-badge`} node={node} active={active} dimmed={dimmed} fixed={systemActive} delay={1.3 + index * 0.075} onActivate={() => setHovered(node.id)} onClear={() => setHovered(null)} />;
+              return <LeakBadge key={`${node.id}-badge`} node={node} active={active} dimmed={dimmed} fixed={systemActive} delay={1.3 + index * 0.075} onActivate={(target) => activateNode(node.id, target)} onClear={clearNode} />;
             })}
 
             <AnimatePresence>
-              {hoveredNode ? (
-                <div style={{ left: `calc(${hoveredNode.position.left} + 30px)`, top: `calc(${hoveredNode.position.top} - 104px)` }} className="absolute z-50">
-                  <LeakTooltip node={hoveredNode} />
-                </div>
-              ) : null}
+              {hoveredNode && tooltipPosition ? <FloatingLeakTooltip node={hoveredNode} position={tooltipPosition} /> : null}
             </AnimatePresence>
 
             <motion.div initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={systemActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }} transition={{ duration: 0.5, delay: reduceMotion ? 0 : 0.7 }} className="absolute inset-x-8 bottom-6 z-50 flex items-center justify-between gap-5 rounded-2xl border border-cyan-200/14 bg-slate-950/52 px-5 py-4 backdrop-blur-md">

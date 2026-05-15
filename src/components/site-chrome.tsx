@@ -103,7 +103,7 @@ export function Header() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-[120] px-2 pt-2 md:px-4">
+    <header className="sticky top-0 z-[var(--z-sticky-nav)] px-2 pt-2 md:px-4">
       <Container
         className={cn(
           'relative flex h-16 items-center justify-between gap-3 rounded-2xl border border-transparent transition-all duration-300 max-md:h-[58px] max-md:gap-2',
@@ -162,7 +162,7 @@ export function Header() {
             initial={reduceMotion ? false : { opacity: 0 }}
             animate={reduceMotion ? undefined : { opacity: 1 }}
             exit={reduceMotion ? undefined : { opacity: 0 }}
-            className="fixed inset-0 z-[140] bg-black/70 md:hidden"
+            className="fixed inset-0 z-[var(--z-modal)] bg-black/70 md:hidden"
             onClick={() => setOpen(false)}
             aria-hidden="true"
           >
