@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 
 export function SiteShell({ children, className }: React.PropsWithChildren<{ className?: string }>) {
-  return <div className={cn('relative isolate overflow-hidden', className)}>{children}</div>;
+  return <div className={cn('relative isolate overflow-x-clip overflow-y-visible', className)}>{children}</div>;
 }
 
 export function Container({ children, className }: React.PropsWithChildren<{ className?: string }>) {
@@ -13,7 +13,7 @@ export function SectionShell({ children, className }: React.PropsWithChildren<{ 
 }
 
 export function PageHero({ children, className }: React.PropsWithChildren<{ className?: string }>) {
-  return <section className={cn('hero-padding relative overflow-hidden', className)}>{children}</section>;
+  return <section className={cn('hero-padding relative overflow-x-clip overflow-y-visible', className)}>{children}</section>;
 }
 
 export function SectionHeader({ eyebrow, title, description, className }: { eyebrow?: string; title: string; description?: string; className?: string }) {

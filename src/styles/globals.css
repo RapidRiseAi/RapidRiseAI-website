@@ -2704,3 +2704,269 @@ body.mobile-view #mobile-sticky-cta-bar {
     opacity: 0.28;
   }
 }
+
+/* Full-site layout safety pass: predictable layers, unclipped content, and responsive resilience. */
+:root {
+  --z-background: 0;
+  --z-decorative: 1;
+  --z-routes: 3;
+  --z-cards: 10;
+  --z-section-footer: 20;
+  --z-sticky-nav: 100;
+  --z-dropdown: 300;
+  --z-modal: 800;
+  --z-tooltip: 1000;
+}
+
+html {
+  scroll-padding-top: 110px;
+  overflow-x: clip;
+}
+
+body {
+  overflow-x: clip;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:where(main, section, article, aside, header, footer, div, form, nav, ul, ol, li) {
+  min-width: 0;
+}
+
+:where(img, video, canvas, svg) {
+  max-width: 100%;
+}
+
+:where(a, button, input, textarea, select) {
+  min-width: 0;
+}
+
+:where(h1, h2, h3, h4, p, li, span, strong, a, button) {
+  overflow-wrap: anywhere;
+}
+
+:where(.homepage-shell,
+  .quote-command-shell,
+  .contact-command-shell,
+  .about-command-shell,
+  .education-command-shell,
+  .pricing-command-shell,
+  .lead-capture-page,
+  .workflow-automation-page,
+  .smart-workspace-page,
+  .internal-tools-page,
+  .training-enablement-page,
+  .support-assistant-page,
+  .websites-convert-page) {
+  overflow-x: clip !important;
+  overflow-y: visible !important;
+  isolation: isolate;
+}
+
+:where(.quote-command-shell,
+  .contact-command-shell,
+  .about-command-shell,
+  .education-command-shell,
+  .pricing-command-shell) > :where(section, div) {
+  position: relative;
+  z-index: var(--z-cards);
+}
+
+:where(.premium-card,
+  .product-card,
+  .education-card,
+  .about-card,
+  .contact-form-panel,
+  .contact-trust-panel,
+  .quote-form-panel,
+  .dynamic-diagnostic-panel,
+  .card-surface,
+  .system-card,
+  .system-glass-panel,
+  .website-card,
+  .support-capability-card,
+  .training-path-card,
+  .training-deliverable-card,
+  .build-type-card) {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+:where(.premium-card,
+  .product-card,
+  .education-card,
+  .about-card,
+  .website-card,
+  .support-capability-card,
+  .training-path-card,
+  .training-deliverable-card):hover,
+:where(.premium-card,
+  .product-card,
+  .education-card,
+  .about-card,
+  .website-card,
+  .support-capability-card,
+  .training-path-card,
+  .training-deliverable-card):focus-within {
+  will-change: transform;
+}
+
+:where(.floating-tooltip,
+  .floating-popover,
+  .hover-preview-popover,
+  [role='tooltip']) {
+  position: fixed;
+  z-index: var(--z-tooltip);
+  width: min(340px, calc(100vw - 32px));
+  max-width: calc(100vw - 32px);
+  border-radius: 16px;
+  background: rgba(3, 10, 24, 0.96);
+  border: 1px solid rgba(56, 223, 255, 0.24);
+  color: #f8fafc;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55), 0 0 30px rgba(56, 223, 255, 0.15);
+  backdrop-filter: blur(18px);
+}
+
+:where(.decorative-layer,
+  .route-line-layer,
+  .background-glow-layer) {
+  pointer-events: none;
+}
+
+.premium-hero-glow::before,
+.homepage-shell::before,
+.homepage-shell::after,
+.pricing-command-shell::before,
+.pricing-command-shell::after,
+.education-command-shell::before,
+.education-command-shell::after,
+.about-command-shell::before,
+.about-command-shell::after,
+.contact-command-shell::before,
+.contact-command-shell::after,
+.quote-command-shell::before,
+.quote-command-shell::after {
+  pointer-events: none;
+}
+
+.sticky-system-story {
+  z-index: var(--z-cards);
+}
+
+.sticky-story-scroll-track {
+  min-height: calc(var(--step-count, 8) * 92vh);
+}
+
+.sticky-story-pin {
+  height: calc(100vh - clamp(100px, 14vh, 150px));
+}
+
+.story-step-list {
+  overflow: visible;
+}
+
+.story-visual-surface {
+  contain: layout paint;
+}
+
+@media (min-width: 1024px) and (max-height: 850px) {
+  .story-step-list {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(56, 223, 255, 0.35) transparent;
+  }
+
+  .story-step-list ol {
+    padding-right: 0.15rem;
+  }
+
+  .story-step-list button {
+    padding-top: 0.55rem;
+    padding-bottom: 0.55rem;
+  }
+
+  .story-visual-surface {
+    min-height: 560px;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1180px) {
+  .sticky-story-layout {
+    grid-template-columns: minmax(290px, 0.4fr) minmax(500px, 0.6fr) !important;
+    gap: 1.75rem !important;
+  }
+
+  .story-visual-surface {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .sticky-story-scroll-track {
+    min-height: auto;
+  }
+
+  .sticky-story-pin {
+    position: relative;
+    height: auto;
+    min-height: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  html {
+    scroll-padding-top: 78px;
+  }
+
+  :where(.pricing-section,
+    .education-section,
+    .about-section,
+    .contact-section,
+    .quote-section) {
+    padding-left: clamp(1rem, 5vw, 1.5rem);
+    padding-right: clamp(1rem, 5vw, 1.5rem);
+  }
+
+  :where(.premium-card,
+    .product-card,
+    .education-card,
+    .about-card,
+    .contact-form-panel,
+    .contact-trust-panel,
+    .quote-form-panel,
+    .dynamic-diagnostic-panel,
+    .card-surface) {
+    border-radius: 22px;
+  }
+
+  :where(.mini-flow,
+    .education-mini-flow,
+    .about-mini-flow,
+    .contact-mini-flow) {
+    gap: 0.45rem;
+  }
+
+  :where(.mini-chip,
+    .education-mini-chip,
+    .about-mini-status) {
+    position: static;
+    margin-top: 0.75rem;
+    display: inline-flex;
+    width: fit-content;
+  }
+
+  :where(.comparison-row,
+    .dashboard-list-item,
+    .manual-card,
+    .system-card-row,
+    .quote-step-indicator,
+    .contact-form-state) {
+    align-items: flex-start;
+  }
+}

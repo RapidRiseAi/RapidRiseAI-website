@@ -29,7 +29,7 @@ export function RapidRiseSystemMap() {
   return (
     <section id="home-hero" className="hero-shell contents text-white">
       <div className="contents">
-        <div className="fixed left-0 right-0 top-2 z-[2147483646] flex justify-center px-3">
+        <div className="fixed left-0 right-0 top-2 z-[var(--z-sticky-nav)] flex justify-center px-3">
           <div className="hero-command-nav flex w-full max-w-[520px] items-center justify-end gap-3 rounded-2xl px-3 py-2">
             <button
               type="button"
@@ -48,7 +48,7 @@ export function RapidRiseSystemMap() {
       </div>
         {showSystemMapPopup ? (
         <div
-          className="hero-navigation-overlay fixed inset-0 z-[2147483647] overflow-y-auto"
+          className="hero-navigation-overlay fixed inset-0 z-[var(--z-modal)] overflow-y-auto"
           role="dialog"
           aria-modal="true"
           aria-label="Navigation system map popup"
